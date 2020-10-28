@@ -11,7 +11,7 @@ class Login extends Controller
 
     public function index()
     {
-        return view('admin.auth.login.index');
+        return view('admin.auth.login.form');
     }
 
     public function attempt(Request $request)
