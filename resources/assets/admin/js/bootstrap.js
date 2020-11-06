@@ -1,9 +1,18 @@
-window._ = require('lodash');
+// Lodash
+window._ = require('lodash')
 
-window.$      = window.jQuery = require('jquery');
+// Axios
+window.axios                                             = require('axios')
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+window.axios.defaults.baseURL                            = window.data.url.api
 
-window.axios = require('axios');
+// Set default parameters
+window.axios.interceptors.request.use((config) => {
+    config.params              = config.params || {};
+    config.params['api_token'] = window.data.user.api_token
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    return config;
+});
 
-window.Vue = require('vue');
+// Vue
+window.Vue = require('vue')

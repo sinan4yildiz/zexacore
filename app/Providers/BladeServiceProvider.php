@@ -27,16 +27,8 @@ class BladeServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        Blade::directive('svg', function ($filename) {
-            return "<?php echo SVG::file(Str::of($filename)->trim(\"'\")); ?>";
-        });
-
-        Blade::directive('icon', function ($filename) {
-            return "<?php echo SVG::icon(Str::of($filename)->trim(\"'\")); ?>";
-        });
-
-        Blade::directive('flag', function ($filename) {
-            return "<?php echo SVG::flag(Str::of($filename)->trim(\"'\")); ?>";
+        Blade::directive('svg', function ($expression) {
+            return "<?php echo SVG::get(Str::of($expression)->trim(\"'\")); ?>";
         });
 
     }

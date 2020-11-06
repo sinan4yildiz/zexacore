@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
 // Admin
 Route::group([
     'as'        => 'admin.',
@@ -11,17 +10,7 @@ Route::group([
 ], function () {
 
     // Unauthorized
-    Route::group([
-        'as' => 'auth.',
-        /*'middleware' => 'admin.unauthorized'*/
-    ], function () {
-        // Login
-        Route::get('login', 'Auth\Login@index')->name('login');
-        Route::post('login', 'Auth\Login@attempt')->name('attempt');
-
-        // Forgotten password
-        Route::match(['get', 'post'], 'forgotten-password', 'Auth\ForgottenPassword@index')->name('forgotten_password');
-    });
+    Auth::routes(['register' => false]);
 
     // Authorized
     Route::group([
@@ -29,20 +18,7 @@ Route::group([
     ], function () {
 
         // Application
-        Route::get('/{any?}', 'AppController@index')->where('any', '.*');
+        Route::get('/{any?}', 'AppController@index')->where('any', '.*')->name('dashboard');
 
     });
-});
-
-
-// Web
-Route::group([
-    'as'        => 'web.',
-    'namespace' => 'Web',
-], function () {
-    Route::get('/', 'Home@index')->name('home');
-
-    Route::get('{slug}', function ($slug) {
-        return app()->call('App\Http\Controllers\Web\Home', [], 'index');
-    })->where('slug', '[^?]*');
 });

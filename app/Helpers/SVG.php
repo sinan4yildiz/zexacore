@@ -8,55 +8,23 @@ use Illuminate\Support\Str;
 
 class SVG
 {
-    protected static $filename;
-    protected static $subfolder = null;
-
-    public static function icon(string $filename)
+    public static function get($parameters)
     {
-        static::$subfolder = 'icons';
+        $parameters = explode(',', $parameters);
 
-        return static::get($filename);
-    }
-
-    public static function flag(string $filename)
-    {
-        static::$subfolder = 'flags';
-
-        return static::get($filename);
-    }
-
-    public static function file(string $filename)
-    {
-        return static::get($filename);
-    }
-
-    private static function get($filename)
-    {
-        static::$filename = $filename;
-
-        $file = static::path(static::$filename);
+        $file = resource_path('assets/admin/svg/' . head($parameters) . '.svg');
 
         if (!File::exists($file)) {
-            Log::warning('SVG not found: ' . $file);
+            Log::warning('SVG not found: ' . head($parameters));
 
             return false;
         }
 
-        return File::get($file);
+        $source = File::get($file);
+
+        $source = Str::of($source)->replace('<svg', '<svg class="' . trim(end($parameters)) . '"');
+
+        return $source;
     }
 
-    private static function path()
-    {
-        $path = 'assets/:admin/svg/:subfolder/:name.svg';
-
-        $svg = preg_replace_array('/:[a-z_]+/', [
-            env('APP_ADMIN_DIR'),
-            static::$subfolder,
-            static::$filename,
-        ], $path);
-
-        $resource = resource_path($svg);
-
-        return Str::of($resource)->replace('//', '/');
-    }
 }

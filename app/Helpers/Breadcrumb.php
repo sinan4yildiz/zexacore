@@ -20,7 +20,7 @@ class Breadcrumb
     public static function get()
     {
         array_unshift(static::$items, [
-            'title' => trans('admin/modules/dashboard.heading'),
+            'title' => trans('admin/common.dashboard'),
             'href'  => route('admin.dashboard')
         ]);
 

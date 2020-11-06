@@ -1,10 +1,10 @@
-const mix = require('laravel-mix');
+const mix         = require('laravel-mix');
 const tailwindcss = require('tailwindcss')
 
-mix.js('resources/assets/' + process.env.APP_ADMIN_DIR + '/js/app.js', 'assets/' + process.env.APP_ADMIN_DIR + '/js')
+mix.js('resources/assets/admin/js/app.js', 'assets/' + process.env.APP_ADMIN_DIR + '/js')
    .version();
 
-mix.sass('resources/assets/' + process.env.APP_ADMIN_DIR + '/sass/app.scss', 'assets/' + process.env.APP_ADMIN_DIR + '/css')
+mix.sass('resources/assets/admin/sass/app.scss', 'assets/' + process.env.APP_ADMIN_DIR + '/css')
    .options({
        processCssUrls: false,
        postCss: [
@@ -13,4 +13,4 @@ mix.sass('resources/assets/' + process.env.APP_ADMIN_DIR + '/sass/app.scss', 'as
    })
    .version();
 
-mix.copyDirectory('resources/assets/' + process.env.APP_ADMIN_DIR + '/images', 'public/assets/' + process.env.APP_ADMIN_DIR + '/images');
+mix.copyDirectory('resources/assets/admin/images', 'public/assets/' + process.env.APP_ADMIN_DIR + '/images');

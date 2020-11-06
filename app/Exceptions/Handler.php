@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
+
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -26,12 +28,14 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Register the exception handling callbacks for the application.
-     *
-     * @return void
+     * Authentication exception
      */
-    public function register()
+    protected function unauthenticated($request, AuthenticationException $exception)
     {
-        //
+        if ($request->expectsJson()) {
+            return response()->json(['errors' => [trans('api/common.auth.failed')]], 401);
+        }
+
+        return redirect()->route('admin.login');
     }
 }

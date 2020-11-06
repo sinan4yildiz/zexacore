@@ -3,5 +3,5 @@
 @section('title', trans('admin/common.dashboard'))
 
 @section('content')
-    <App></App>
+    <App/>
 @endsection

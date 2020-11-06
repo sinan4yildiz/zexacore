@@ -1,14 +1,58 @@
-/*// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
-// Variables
-@import 'variables';
-
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';*/
-
+// Tailwind
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
+
+
+// App
+main {
+
+}
+
+svg {
+  display: inline-block;
+}
+
+// Sidebar
+aside {
+  nav {
+    > ul {
+
+      // Parent
+      > li {
+        > .active, .router-link-exact-active {
+          color: theme('colors.black');
+
+          > svg {
+            fill: theme('colors.black');
+
+            &:nth-child(2) {
+              transform: rotate(180deg);
+            }
+          }
+
+          // Children
+          & + ul {
+            display: block !important;
+
+            li {
+              a {
+                &.router-link-exact-active {
+                  color: theme('colors.black');
+
+                  span {
+                    border-color: theme('colors.black');
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.page-header {
+
+}
