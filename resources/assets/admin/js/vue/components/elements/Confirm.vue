@@ -34,14 +34,10 @@
             </div>
             <div class="bg-gray-50 px-4 py-4 sm:px-4 sm:flex sm:flex-row-reverse border-t border-gray-200">
               <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                <button @click="confirm" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-md hover:bg-red-400 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                  Confirm
-                </button>
+                <Button v-on:click="confirm" theme="red" label="Confirm"/>
               </span>
               <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                <button @click="cancel" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-600 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                  Cancel
-                </button>
+                <Button v-on:click="cancel" theme="light" label="Cancel"/>
               </span>
             </div>
           </div>
@@ -78,6 +74,9 @@ export default {
   },
   mixins: [
     clickaway
-  ]
+  ],
+  components: {
+    Button: require('./Button').default,
+  }
 }
 </script>
