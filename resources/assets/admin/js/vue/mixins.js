@@ -1,25 +1,29 @@
 const mixins = {
     install(Vue) {
         Vue.mixin({
+            data: function () {
+                return {
+                    currentUser: window.data.currentUser
+                }
+            },
             methods: {
-                $headMeta: function (key) {
-                    return document.head.querySelector('meta[name="' + key + '"]').content
-                },
-                $getCookie: function (cname) {
-                    var name          = cname + '='
-                    var decodedCookie = decodeURIComponent(document.cookie)
-                    var ca            = decodedCookie.split(';')
-                    for (var i = 0; i < ca.length; i++) {
-                        var c = ca[i]
-                        while (c.charAt(0) == ' ') {
-                            c = c.substring(1)
-                        }
-                        if(c.indexOf(name) == 0) {
-                            return c.substring(name.length, c.length)
-                        }
-                    }
+                $snackbar: function (text, type = 'success', timeout = 5000) {
+                    this.$store.commit('App/setSnackbar', {text: text, type: type})
 
-                    return ''
+                    if(timeout) {
+                        _.delay(() => {
+                            this.$store.commit('App/setSnackbar', {})
+                        }, timeout)
+                    }
+                },
+                $scrollTo: function (element, offset = 110) {
+                    if(element) {
+                        const y = element.getBoundingClientRect().top + window.scrollY;
+                        window.scroll({
+                            top: y - offset,
+                            behavior: 'smooth'
+                        });
+                    }
                 }
             }
         })

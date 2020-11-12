@@ -21,7 +21,7 @@
     </div>
 
     <!-- User -->
-    <Dropdown class="ml-auto relative mr-6">
+    <Dropdown class="ml-auto mr-6">
       <template #toggler>
         <button type="button"
                 class="flex items-center relative ml-auto text-left text-gray-600 hover:text-gray-700 focus:outline-none">
@@ -30,7 +30,7 @@
             {{ initials }}
           </div>
           <div class="name flex items-center">
-            {{ user.firstname }} {{ user.lastname }}
+            {{ currentUser.firstname }} {{ currentUser.lastname }}
             <svg class="w-5 h-5 ml-1 mt-px fill-current text-gray-500">
               <use xlink:href="#icon-chevron-solid"></use>
             </svg>
@@ -61,10 +61,9 @@
 <script>
 export default {
   name: "Header",
-  props: ['user'],
   computed: {
     initials: function () {
-      return this.user.firstname.slice(0, 1) + this.user.lastname.slice(0, 1);
+      return this.currentUser.firstname.slice(0, 1) + this.currentUser.lastname.slice(0, 1);
     }
   },
   methods: {
@@ -80,7 +79,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-
-</style>

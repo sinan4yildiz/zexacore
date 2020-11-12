@@ -47,8 +47,13 @@ export default {
           window.location.reload()
           break
 
+          // Not found
+        case 404:
+          this.$snackbar('This action URL not found. Please check the request.', 'warning')
+          break
+
         default:
-          alert('Unkown error ' + error.response.status)
+          this.$snackbar('Something went wrong. Please check error logs or the response of the request.', 'error', false)
           break
       }
 
@@ -58,7 +63,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

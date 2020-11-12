@@ -28,6 +28,31 @@
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
     </symbol>
 
+    <!-- Check -->
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+    </symbol>
+
+    <!-- Check circke -->
+    <symbol id="icon-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </symbol>
+
+    <!-- Minus circle -->
+    <symbol id="icon-minus-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </symbol>
+
+    <!-- Exclamation triangle -->
+    <symbol id="icon-exclamation-triangle" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+    </symbol>
+
+    <!-- Exclamation cricle -->
+    <symbol id="icon-exclamation-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </symbol>
+
     <!-- Plus -->
     <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
@@ -54,6 +79,11 @@
     <!-- Search -->
     <symbol id="icon-search" viewBox="0 0 20 20" fill="currentColor">
       <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+    </symbol>
+
+    <!-- 3 dots -->
+    <symbol id="icon-3dots-solid" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
     </symbol>
 
     <!-- Plus -->
@@ -115,7 +145,3 @@ export default {
   name: "SVGLibrary"
 }
 </script>
-
-<style scoped>
-
-</style>

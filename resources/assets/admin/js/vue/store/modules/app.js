@@ -1,15 +1,19 @@
 const state = {
-    snackbars: [],
+    snackbar: {},
 }
 
 const getters = {
-    allSnackbars: (state) => state.snackbars,
+    getSnackbar: (state) => state.snackbar,
 }
 
-const actions = {}
+const actions = {
+    closeSnackbar({commit}, object) {
+        commit('setSnackbar', {})
+    },
+}
 
 const mutations = {
-    setSnackbar: (state, snackbar) => (state.snackbars = snackbar),
+    setSnackbar: (state, snackbar) => (state.snackbar = snackbar),
 }
 
 export default {

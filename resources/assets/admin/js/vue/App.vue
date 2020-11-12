@@ -2,35 +2,35 @@
   <div class="min-h-screen">
 
     <!-- If connection is gone -->
-    <Offline></Offline>
+    <Offline/>
 
     <!-- Header -->
-    <Header :user="user"></Header>
+    <Header/>
 
     <!-- Wrapper -->
     <div class="flex">
 
       <!-- Sidebar -->
-      <Sidebar></Sidebar>
+      <Sidebar/>
 
       <!-- Right hand side -->
       <div class="flex-grow px-32">
 
         <!-- Page content -->
         <main>
-          <RouterView></RouterView>
+          <RouterView/>
         </main>
 
         <!-- Footer -->
-        <Footer></Footer>
+        <Footer/>
       </div>
     </div>
 
-    <!-- Snackbars -->
-    <!--<Snackbars></Snackbars>-->
+    <!-- Snackbar -->
+    <Snackbar/>
 
     <!-- SVG Library -->
-    <SVGLibrary></SVGLibrary>
+    <SVGLibrary/>
   </div>
 </template>
 
@@ -40,7 +40,6 @@ export default {
   data() {
     return {
       metaTitle: null,
-      user: window.data.user,
     }
   },
   watch: {
@@ -67,7 +66,7 @@ export default {
     Dropdown: require('./components/elements/Dropdown').default,
     SVGLibrary: require('./components/SVGLibrary').default,
     Offline: require('./components/elements/Offline').default,
-    /*Snackbars: require('./components/elements/Snackbars').default,*/
+    Snackbar: require('./components/elements/Snackbar').default,
   }
 }
 </script>

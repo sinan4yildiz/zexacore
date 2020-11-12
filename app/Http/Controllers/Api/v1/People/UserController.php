@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Requests\Users\UserRequest;
 use App\Http\Resources\People\UserResource;
+use Illuminate\Support\Facades\Request;
 
 class UserController extends Controller
 {
@@ -25,12 +26,32 @@ class UserController extends Controller
     {
         $users = User::orderBy(
             $this->sortable[request('sorted')] ?? $this->sorted,
-            request('ordered') ?? $this->ordered,
+            request('ordered') ?? $this->ordered
         );
+
+        if (Request::has('keyword')) {
+            $users->where(function ($query) {
+                $query->orWhere('firstname', 'LIKE', '%' . Request::input('keyword') . '%')
+                    ->orWhere('lastname', 'LIKE', '%' . Request::input('keyword') . '%')
+                    ->orWhere('email', 'LIKE', '%' . Request::input('keyword') . '%');
+            });
+        }
+
+        if (Request::has('status')) {
+            $users->where('is_active', (int) Request::input('status'));
+        }
+
+        if (Request::has('date-start')) {
+            $users->whereDate('created_at', '>=', Request::input('date-start'));
+        }
+
+        if (Request::has('date-end')) {
+            $users->whereDate('created_at', '<=', Request::input('date-end'));
+        }
 
         $users = $users->paginate(10);
 
-        /*sleep(1);*/
+        /*sleep(3);*/
 
         return UserResource::collection($users)->additional([
             'meta' => [
@@ -44,9 +65,53 @@ class UserController extends Controller
     }
 
     /**
+     * Activate an user
+     *
+     * @param $id
+     *
+     */
+    public function activate($id)
+    {
+        $item = User::findOrFail($id);
+        $item->is_active = true;
+        $item->save();
+
+        return new UserResource($item);
+    }
+
+    /**
+     * Deactivate an user
+     *
+     * @param $id
+     *
+     */
+    public function deactivate($id)
+    {
+        $item = User::findOrFail($id);
+        $item->is_active = false;
+        $item->save();
+
+        return new UserResource($item);
+    }
+
+    /**
+     * Remove an user
+     *
+     * @param $id
+     *
+     */
+    public function remove($id)
+    {
+        $item = User::findOrFail($id);
+        $item->delete();
+
+        return new UserResource($item);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Users\UserRequest  $request
+     * @param  \App\Http\Requests\Users\People\UserRequest  $request
      *
      * @param $id
      *

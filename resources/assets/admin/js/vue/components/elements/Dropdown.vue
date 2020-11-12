@@ -1,6 +1,6 @@
 <template>
-  <div class="dropdown" v-bind:class="{'open': isOpen}" v-on-clickaway="close">
-    <div @click="isOpen = !isOpen">
+  <div class="dropdown relative" v-bind:class="{'open': isOpen}" v-on-clickaway="close">
+    <div @click="isOpen = !isOpen" class="inline-block">
       <slot name="toggler"></slot>
     </div>
     <transition
@@ -11,8 +11,8 @@
         leave-class="opacity-100 scale-100"
         leave-to-class="opacity-0 scale-95"
     >
-      <div v-show="isOpen" class="origin-top-right absolute right-0 mt-2 w-56 shadow-lg" @click="close">
-        <div class="rounded-md bg-white py-2 shadow-xs">
+      <div v-if="isOpen" v-bind:class="width || 'w-56'" class="origin-top-right absolute right-0 mt-2 shadow-lg rounded-md z-10" @click="close">
+        <div class="rounded-md bg-white py-2 shadow-xs text-left">
           <slot name="content"></slot>
         </div>
       </div>
@@ -28,6 +28,7 @@ export default {
   mixins: [
     clickaway
   ],
+  props: ['width'],
   data() {
     return {
       isOpen: false
@@ -42,7 +43,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

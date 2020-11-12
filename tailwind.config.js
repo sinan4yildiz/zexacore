@@ -12,6 +12,7 @@ module.exports = {
         extend: {
             colors: {
                 green: {
+                    '50': '#E0FFEF',
                     '100': '#D2FFE7',
                     '200': '#A3FFCE',
                     '300': '#61FFAB',
@@ -35,7 +36,7 @@ module.exports = {
                     '900': '#0043A9',
                 },
                 yellow: {
-                    '100': '#FDECC2',
+                    '100': '#FFF7E6',
                     '200': '#FFDA92',
                     '300': '#FFCE6D',
                     '400': '#FDBF3E',
@@ -58,7 +59,7 @@ module.exports = {
                 },
                 gray: {
                     '50': '#F9FAFB',
-                    '100': '#F7FAFC',
+                    '100': '#F5F8FC',
                     '200': '#EDF2F7',
                     '300': '#E2E8F0',
                     '400': '#CBD5E0',
@@ -73,9 +74,14 @@ module.exports = {
                 '3/2': '0.875rem',
                 '7': '1.75rem',
                 '11': '2.75rem',
+                '26': '6.5rem',
+                '69': '17.25rem',
                 '72': '18rem',
                 '84': '21rem',
                 '96': '24rem',
+            },
+            inset: {
+                '1/2': '50%',
             },
             fontSize: {
                 'md': '1.125rem',
@@ -83,6 +89,9 @@ module.exports = {
             opacity: {
                 '10': '.1',
                 '15': '.15',
+            },
+            boxShadow: {
+                'inner-px-blue-500': 'inset 0 0 0 1px #3283FD',
             },
             animation: {
                 'spin-fast': 'spin 500ms linear infinite',
@@ -94,11 +103,12 @@ module.exports = {
         },
         shadowOutlineColors: {
             'blue': '#A2C7FF',
+            'red': '#FD6975',
         }
     },
     variants: {
-        shadowOutline: ['focus'],
-        /*textColor: ({after}) => after(['active']),*/
+        shadowOutline: ['focus', 'active'],
+        zIndex: ['focus'],
     },
     plugins: [
         require('@tailwindcss/custom-forms'),

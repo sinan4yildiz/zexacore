@@ -9,7 +9,7 @@ window.axios.defaults.baseURL                            = window.data.url.api
 // Set default parameters
 window.axios.interceptors.request.use((config) => {
     config.params              = config.params || {};
-    config.params['api_token'] = window.data.user.api_token
+    config.params['api_token'] = window.data.currentUser.api_token
 
     return config;
 });

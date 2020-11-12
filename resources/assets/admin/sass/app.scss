@@ -5,12 +5,23 @@
 
 
 // App
+html {
+  scroll-behavior: smooth;
+}
+
 main {
 
 }
 
 svg {
   display: inline-block;
+}
+
+input[type="date" ] {
+  &::-webkit-calendar-picker-indicator {
+    outline: none !important;
+    cursor: pointer;
+  }
 }
 
 // Sidebar
@@ -53,6 +64,21 @@ aside {
   }
 }
 
-.page-header {
+// Tables
+table {
+  tbody {
+    tr {
+      &:last-child {
+        td {
+          &:first-child {
+            border-bottom-left-radius: 0.5rem;
+          }
 
+          &:last-child {
+            border-bottom-right-radius: 0.5rem;
+          }
+        }
+      }
+    }
+  }
 }
