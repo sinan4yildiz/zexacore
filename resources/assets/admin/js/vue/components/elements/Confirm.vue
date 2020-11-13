@@ -37,7 +37,7 @@
                 <Button v-on:click="confirm" theme="red" label="Confirm"/>
               </span>
               <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                <Button v-on:click="cancel" theme="light" label="Cancel"/>
+                <Button v-on:click="cancel" theme="default" label="Cancel"/>
               </span>
             </div>
           </div>

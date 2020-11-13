@@ -2506,15 +2506,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Button",
-  props: ['type', 'theme', 'label'],
+  props: ['type', 'theme', 'label', 'icon', 'loading'],
   data: function data() {
     return {
       themes: {
-        blue: 'text-white bg-blue-600 border-transparent hover:bg-blue-400 focus:border-blue-500 focus:shadow-outline-blue shadow-md',
-        red: 'text-white bg-red-600 border-transparent hover:bg-red-400 focus:border-red-500 focus:shadow-outline-red shadow-md',
-        light: 'text-gray-700 bg-white border-gray-300 hover:text-gray-600 focus:border-blue-300 focus:shadow-outline-blue shadow-sm'
+        'blue': 'text-white bg-blue-600 border-transparent hover:bg-blue-500 focus:border-blue-500 focus:shadow-outline-blue shadow-md rounded-md border',
+        'red': 'text-white bg-red-600 border-transparent hover:bg-red-400 focus:border-red-500 focus:shadow-outline-red shadow-md rounded-md border',
+        'default': 'text-gray-600 bg-white border-gray-300 hover:text-gray-800 focus:border-blue-300 focus:shadow-outline-blue shadow-sm rounded-md border',
+        'blue-outline': 'text-blue-600 bg-blue-50 hover:bg-blue-500 hover:text-white shadow-inner-px-blue-500 rounded-md',
+        'text-green': 'block w-full text-left text-green-600 hover:bg-green-50',
+        'text-yellow': 'block w-full text-left text-yellow-600 hover:bg-yellow-100',
+        'text-red': 'block w-full text-left text-red-600 hover:bg-red-100 ',
+        'text-default': 'block w-full text-left text-gray-700 hover:bg-gray-100 hover:text-black focus:bg-gray-200'
       }
     };
   }
@@ -2732,12 +2747,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Filters",
@@ -2772,7 +2781,9 @@ __webpack_require__.r(__webpack_exports__);
       this.isOpen = false;
     }
   },
-  mounted: function mounted() {}
+  components: {
+    Button: __webpack_require__(/*! ./Button */ "./resources/assets/admin/js/vue/components/elements/Button.vue")["default"]
+  }
 });
 
 /***/ }),
@@ -2796,44 +2807,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Input",
-  props: ['name', 'type', 'label', 'placeholder', 'errors', 'data'],
+  props: ['type', 'name', 'label', 'placeholder', 'errors', 'value'],
   data: function data() {
     return {
-      value: ''
+      val: this.value
     };
   },
   computed: {
-    hasError: function hasError() {
-      return this.errors && this.errors[this.name] && this.errors[this.name].length > 0;
+    error: function error() {
+      if (this.errors[this.name]) {
+        return this.errors[this.name][0];
+      }
     }
   },
   methods: {
     updateField: function updateField() {
-      this.clearErrors(this.name);
-      this.$emit('update:field', this.value);
-    },
-    errorMessage: function errorMessage() {
-      if (this.hasError) {
-        return this.errors[this.name][0];
-      }
-    },
-    clearErrors: function clearErrors() {
-      if (this.hasError) {
-        return this.errors[this.name] = null;
-      }
-    },
-    errorClassObject: function errorClassObject() {
-      return {
-        'error-field': this.hasError
-      };
-    }
-  },
-  watch: {
-    data: function data(val) {
-      this.value = val;
+      this.errors[this.name] = false;
+      this.$emit('update:field', this.val);
     }
   }
 });
@@ -2901,9 +2893,10 @@ __webpack_require__.r(__webpack_exports__);
           _this.$snackbar('This action URL not found. Please check the request.', 'warning');
 
           break;
+        // Not found
 
-        default:
-          _this.$snackbar('Something went wrong. Please check error logs or the response of the request.', 'error', false);
+        case 500:
+          _this.$snackbar('Something went wrong. Please check error logs or the response of the request.', 'error');
 
           break;
       }
@@ -3335,8 +3328,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_clickaway__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-clickaway */ "./node_modules/vue-clickaway/dist/vue-clickaway.common.js");
-/* harmony import */ var vue_clickaway__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_clickaway__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue_clickaway__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-clickaway */ "./node_modules/vue-clickaway/dist/vue-clickaway.common.js");
+/* harmony import */ var vue_clickaway__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_clickaway__WEBPACK_IMPORTED_MODULE_1__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -3390,27 +3390,56 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "UsersEdit",
+  name: "UserEdit",
   props: ['editData'],
   data: function data() {
     return {
-      isOpen: this.editData
+      fields: {},
+      errors: {},
+      processing: false,
+      isOpen: this.editData ? true : false
     };
   },
-  watch: {
-    editData: function editData(open) {
-      this.isOpen = open;
-    }
-  },
-  methods: {
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Users', ['updateUser'])), {}, {
     update: function update() {
-      console.log('update');
-      /*this.$emit('update')*/
+      var _this = this;
+
+      this.processing = true;
+      this.updateUser(this.fields).then(function (response) {
+        _this.$snackbar('The user has been updated successfuly!');
+
+        _this.close();
+      })["catch"](function (error) {
+        _this.errors = error.errors;
+      })["finally"](function () {
+        _.delay(function () {
+          _this.processing = false;
+        }, 500);
+      });
     },
-    cancel: function cancel() {
+    close: function close() {
       this.isOpen = false;
+      this.fields = {};
+      this.errors = {};
       this.$emit('cancel');
+    }
+  }),
+  watch: {
+    editData: function editData(data) {
+      this.isOpen = data ? true : false;
+
+      if (data) {
+        this.fields = {
+          id: data.id,
+          firstname: data.firstname,
+          lastname: data.lastname,
+          title: data.title,
+          email: data.email,
+          password: null
+        };
+      }
     }
   },
   components: {
@@ -3418,7 +3447,7 @@ __webpack_require__.r(__webpack_exports__);
     Input: __webpack_require__(/*! ../../../components/elements/Input */ "./resources/assets/admin/js/vue/components/elements/Input.vue")["default"],
     Button: __webpack_require__(/*! ../../../components/elements/Button */ "./resources/assets/admin/js/vue/components/elements/Button.vue")["default"]
   },
-  mixins: [vue_clickaway__WEBPACK_IMPORTED_MODULE_0__["mixin"]]
+  mixins: [vue_clickaway__WEBPACK_IMPORTED_MODULE_1__["mixin"]]
 });
 
 /***/ }),
@@ -3441,19 +3470,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3580,11 +3596,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       editData: null
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('Users', ['allUsers'])),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('Users', ['fetchAllUsers', 'activateUser', 'deactivateUser', 'removeUser', 'setParameters'])), {}, {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('Users', ['users'])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('Users', ['fetchUsers', 'activateUser', 'deactivateUser', 'removeUser', 'setParameters'])), {}, {
     setQuery: function setQuery(args) {
       this.setParameters(args);
-      this.fetchAllUsers();
+      this.fetchUsers();
     },
     applyFilters: lodash__WEBPACK_IMPORTED_MODULE_0___default.a.debounce(function (filters) {
       this.setQuery(filters);
@@ -3605,7 +3621,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.setParameters({
       page: null
     });
-    this.fetchAllUsers();
+    this.fetchUsers();
   },
   components: {
     Edit: __webpack_require__(/*! ./Edit */ "./resources/assets/admin/js/vue/views/People/Users/Edit.vue")["default"],
@@ -3613,7 +3629,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     Dropdown: __webpack_require__(/*! ../../../components/elements/Dropdown */ "./resources/assets/admin/js/vue/components/elements/Dropdown.vue")["default"],
     Filters: __webpack_require__(/*! ../../../components/elements/Filters */ "./resources/assets/admin/js/vue/components/elements/Filters.vue")["default"],
     Confirm: __webpack_require__(/*! ../../../components/elements/Confirm */ "./resources/assets/admin/js/vue/components/elements/Confirm.vue")["default"],
-    Breadcrumb: __webpack_require__(/*! ../../../components/elements/Breadcrumb */ "./resources/assets/admin/js/vue/components/elements/Breadcrumb.vue")["default"]
+    Breadcrumb: __webpack_require__(/*! ../../../components/elements/Breadcrumb */ "./resources/assets/admin/js/vue/components/elements/Breadcrumb.vue")["default"],
+    Button: __webpack_require__(/*! ../../../components/elements/Button */ "./resources/assets/admin/js/vue/components/elements/Button.vue")["default"]
   }
 });
 
@@ -23373,16 +23390,37 @@ var render = function() {
     "button",
     {
       staticClass:
-        "text-sm rounded-md border px-4 py-2 leading-5 font-medium focus:outline-none transition ease-in-out duration-150",
+        "flex align-items-center text-sm px-4 py-2 leading-5 font-medium focus:outline-none transition duration-150 ease-in-out",
       class: _vm.themes[_vm.theme],
-      attrs: { type: _vm.type || "button" },
+      attrs: { type: _vm.type || "button", disabled: _vm.loading },
       on: {
         click: function($event) {
           return _vm.$emit("click")
         }
       }
     },
-    [_vm._v(_vm._s(_vm.label))]
+    [
+      _vm.loading
+        ? _c(
+            "span",
+            { staticClass: "inline-block -ml-1 mr-2 w-5 h-5 text-center" },
+            [
+              _vm.loading
+                ? _c(
+                    "svg",
+                    { staticClass: "w-4 h-4 animate-spin animate-spin-fast" },
+                    [_c("use", { attrs: { "xlink:href": "#icon-loading" } })]
+                  )
+                : _vm._e()
+            ]
+          )
+        : _vm.icon
+        ? _c("svg", { staticClass: "-ml-1 mr-2 w-5 h-5" }, [
+            _c("use", { attrs: { "xlink:href": "#icon-" + _vm.icon } })
+          ])
+        : _vm._e(),
+      _vm._v("\n  " + _vm._s(_vm.label) + "\n")
+    ]
   )
 }
 var staticRenderFns = []
@@ -23560,7 +23598,7 @@ var render = function() {
                               },
                               [
                                 _c("Button", {
-                                  attrs: { theme: "light", label: "Cancel" },
+                                  attrs: { theme: "default", label: "Cancel" },
                                   on: { click: _vm.cancel }
                                 })
                               ],
@@ -23720,21 +23758,11 @@ var render = function() {
           }
         },
         [
-          _c(
-            "button",
-            {
-              staticClass:
-                "inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm leading-5 font-medium rounded-md text-gray-600 bg-white hover:text-gray-700 focus:border-blue-300 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out",
-              attrs: { type: "button" }
-            },
-            [
-              _c("svg", { staticClass: "-ml-1 mr-2 w-5 h-5" }, [
-                _c("use", { attrs: { "xlink:href": "#icon-filter" } })
-              ]),
-              _vm._v("\n      Filters\n    ")
-            ]
-          )
-        ]
+          _c("Button", {
+            attrs: { theme: "default", label: "Filters", icon: "filter" }
+          })
+        ],
+        1
       ),
       _vm._v(" "),
       _c(
@@ -23943,21 +23971,116 @@ var render = function() {
       [_vm._v(_vm._s(_vm.label))]
     ),
     _vm._v(" "),
-    _c("input", {
-      staticClass:
-        "form-input block w-full py-3 px-4 text-sm border border-gray-300 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out",
-      attrs: {
-        type: _vm.type || "text",
-        name: _vm.name,
-        id: "field-" + _vm.name,
-        placeholder: _vm.placeholder
-      }
-    }),
+    (_vm.type || "text") === "checkbox"
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.val,
+              expression: "val"
+            }
+          ],
+          staticClass:
+            "form-input block w-full px-4 py-3 text-sm border border-gray-300 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out",
+          class: { "border-red-300": _vm.error },
+          attrs: {
+            name: _vm.name,
+            id: "field-" + _vm.name,
+            placeholder: _vm.placeholder,
+            type: "checkbox"
+          },
+          domProps: {
+            checked: Array.isArray(_vm.val)
+              ? _vm._i(_vm.val, null) > -1
+              : _vm.val
+          },
+          on: {
+            input: _vm.updateField,
+            change: function($event) {
+              var $$a = _vm.val,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v)
+                if ($$el.checked) {
+                  $$i < 0 && (_vm.val = $$a.concat([$$v]))
+                } else {
+                  $$i > -1 &&
+                    (_vm.val = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+                }
+              } else {
+                _vm.val = $$c
+              }
+            }
+          }
+        })
+      : (_vm.type || "text") === "radio"
+      ? _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.val,
+              expression: "val"
+            }
+          ],
+          staticClass:
+            "form-input block w-full px-4 py-3 text-sm border border-gray-300 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out",
+          class: { "border-red-300": _vm.error },
+          attrs: {
+            name: _vm.name,
+            id: "field-" + _vm.name,
+            placeholder: _vm.placeholder,
+            type: "radio"
+          },
+          domProps: { checked: _vm._q(_vm.val, null) },
+          on: {
+            input: _vm.updateField,
+            change: function($event) {
+              _vm.val = null
+            }
+          }
+        })
+      : _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.val,
+              expression: "val"
+            }
+          ],
+          staticClass:
+            "form-input block w-full px-4 py-3 text-sm border border-gray-300 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out",
+          class: { "border-red-300": _vm.error },
+          attrs: {
+            name: _vm.name,
+            id: "field-" + _vm.name,
+            placeholder: _vm.placeholder,
+            type: _vm.type || "text"
+          },
+          domProps: { value: _vm.val },
+          on: {
+            input: [
+              function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.val = $event.target.value
+              },
+              _vm.updateField
+            ]
+          }
+        }),
     _vm._v(" "),
-    _c("p", {
-      staticClass: "text-red-600 text-sm",
-      domProps: { textContent: _vm._s(_vm.errorMessage()) }
-    })
+    _vm.error
+      ? _c("p", {
+          staticClass: "mt-1 ml-1 text-red-600 text-xs",
+          domProps: { textContent: _vm._s(_vm.error) }
+        })
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -24090,7 +24213,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "fixed top-0 left-1/2 mt-26 w-96 shadow-xl transform -translate-x-1/2 rounded-md bg-white"
+                "fixed top-0 left-1/2 mt-26 w-96 shadow-xl transform -translate-x-1/2 rounded-md bg-white z-20"
             },
             [
               _c("div", { staticClass: "flex p-4 rounded-md shadow-xs" }, [
@@ -24640,19 +24763,25 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c(
-                      "div",
+                      "form",
                       {
                         directives: [
                           {
                             name: "on-clickaway",
                             rawName: "v-on-clickaway",
-                            value: _vm.cancel,
-                            expression: "cancel"
+                            value: _vm.close,
+                            expression: "close"
                           }
                         ],
                         staticClass:
                           "inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-xl w-full",
-                        attrs: { role: "dialog", "aria-modal": "true" }
+                        attrs: { role: "dialog", "aria-modal": "true" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.update($event)
+                          }
+                        }
                       },
                       [
                         _c(
@@ -24675,59 +24804,87 @@ var render = function() {
                         _c("ul", { staticClass: "bg-white px-5 py-6" }, [
                           _c(
                             "li",
-                            { staticClass: "mb-3" },
+                            { staticClass: "mb-4" },
+                            [
+                              _c("Input", {
+                                attrs: {
+                                  name: "firstname",
+                                  label: "First name",
+                                  placeholder: "First name",
+                                  value: _vm.editData.firstname,
+                                  errors: _vm.errors
+                                },
+                                on: {
+                                  "update:field": function($event) {
+                                    _vm.fields.firstname = $event
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "li",
+                            { staticClass: "mb-4" },
+                            [
+                              _c("Input", {
+                                attrs: {
+                                  name: "lastname",
+                                  label: "Last name",
+                                  placeholder: "Last name",
+                                  value: _vm.editData.lastname,
+                                  errors: _vm.errors
+                                },
+                                on: {
+                                  "update:field": function($event) {
+                                    _vm.fields.lastname = $event
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "li",
+                            { staticClass: "mb-4" },
+                            [
+                              _c("Input", {
+                                attrs: {
+                                  name: "title",
+                                  label: "Title",
+                                  placeholder: "e.g. Content Editor",
+                                  value: _vm.editData.title,
+                                  errors: _vm.errors
+                                },
+                                on: {
+                                  "update:field": function($event) {
+                                    _vm.fields.title = $event
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "li",
+                            { staticClass: "mb-4" },
                             [
                               _c("Input", {
                                 attrs: {
                                   name: "email",
                                   type: "email",
                                   label: "E-mail address",
-                                  placeholder: "user@email.com"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            { staticClass: "mb-3" },
-                            [
-                              _c("Input", {
-                                attrs: {
-                                  name: "firstname",
-                                  label: "First name",
-                                  placeholder: "First name"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            { staticClass: "mb-3" },
-                            [
-                              _c("Input", {
-                                attrs: {
-                                  name: "lastname",
-                                  label: "Last name",
-                                  placeholder: "Last name"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            { staticClass: "mb-3" },
-                            [
-                              _c("Input", {
-                                attrs: {
-                                  name: "title",
-                                  label: "Title",
-                                  placeholder: "e.g. Content Editor"
+                                  placeholder: "user@email.com",
+                                  value: _vm.editData.email,
+                                  errors: _vm.errors
+                                },
+                                on: {
+                                  "update:field": function($event) {
+                                    _vm.fields.email = $event
+                                  }
                                 }
                               })
                             ],
@@ -24743,7 +24900,13 @@ var render = function() {
                                   name: "password",
                                   type: "password",
                                   label: "Password",
-                                  placeholder: "●●●●●"
+                                  placeholder: "●●●●●",
+                                  errors: _vm.errors
+                                },
+                                on: {
+                                  "update:field": function($event) {
+                                    _vm.fields.password = $event
+                                  }
                                 }
                               })
                             ],
@@ -24766,8 +24929,13 @@ var render = function() {
                               },
                               [
                                 _c("Button", {
-                                  attrs: { theme: "blue", label: "Update" },
-                                  on: { click: _vm.update }
+                                  attrs: {
+                                    type: "submit",
+                                    theme: "blue",
+                                    label: "Update",
+                                    icon: "check",
+                                    loading: _vm.processing
+                                  }
                                 })
                               ],
                               1
@@ -24781,8 +24949,8 @@ var render = function() {
                               },
                               [
                                 _c("Button", {
-                                  attrs: { theme: "light", label: "Cancel" },
-                                  on: { click: _vm.cancel }
+                                  attrs: { theme: "default", label: "Cancel" },
+                                  on: { click: _vm.close }
                                 })
                               ],
                               1
@@ -24903,17 +25071,17 @@ var render = function() {
             _vm._v(" "),
             _c(
               "RouterLink",
-              {
-                staticClass:
-                  "inline-flex items-center px-4 py-2 shadow-inner-px-blue-500 text-sm leading-5 font-medium rounded-md text-blue-600 bg-blue-50 hover:bg-blue-500 hover:text-white focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out",
-                attrs: { to: { name: "users.create" } }
-              },
+              { attrs: { to: { name: "users.create" } } },
               [
-                _c("svg", { staticClass: "-ml-1 mr-2 w-5 h-5" }, [
-                  _c("use", { attrs: { "xlink:href": "#icon-plus" } })
-                ]),
-                _vm._v("\n        Create new\n      ")
-              ]
+                _c("Button", {
+                  attrs: {
+                    theme: "blue-outline",
+                    label: "Create new",
+                    icon: "plus"
+                  }
+                })
+              ],
+              1
             )
           ],
           1
@@ -24923,8 +25091,8 @@ var render = function() {
       _c("Table", {
         attrs: {
           columns: _vm.columns,
-          meta: _vm.allUsers.data ? _vm.allUsers.meta : false,
-          loading: _vm.allUsers.data ? false : true
+          meta: _vm.users.data ? _vm.users.meta : false,
+          loading: _vm.users.data ? false : true
         },
         on: {
           query: function($event) {
@@ -24936,11 +25104,11 @@ var render = function() {
             key: "body",
             fn: function() {
               return [
-                _vm.allUsers.data && _vm.allUsers.data.length
+                _vm.users.data && _vm.users.data.length
                   ? _c(
                       "tbody",
                       { staticClass: "bg-white divide-y divide-gray-300" },
-                      _vm._l(_vm.allUsers.data, function(user, index) {
+                      _vm._l(_vm.users.data, function(user, index) {
                         return _c("tr", [
                           _c(
                             "td",
@@ -25047,11 +25215,16 @@ var render = function() {
                             [
                               user.id == _vm.currentUser.id
                                 ? _c(
-                                    "RouterLink",
+                                    "button",
                                     {
                                       staticClass:
-                                        "text-indigo-600 hover:text-indigo-900",
-                                      attrs: { to: { name: "users.index" } }
+                                        "text-indigo-600 hover:text-indigo-800 focus:outline-none",
+                                      attrs: { type: "button" },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.editData = user
+                                        }
+                                      }
                                     },
                                     [_vm._v("Your profile")]
                                   )
@@ -25093,73 +25266,62 @@ var render = function() {
                                           key: "content",
                                           fn: function() {
                                             return [
-                                              _c(
-                                                "button",
-                                                {
-                                                  staticClass:
-                                                    "block w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 hover:bg-gray-100 hover:text-black focus:bg-gray-200 focus:outline-none transition duration-150 ease-in-out",
-                                                  attrs: { type: "button" },
-                                                  on: {
-                                                    click: function($event) {
-                                                      _vm.editData = user
-                                                    }
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "\n                Edit\n              "
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c("button", {
-                                                staticClass:
-                                                  "block w-full px-4 py-2 text-sm text-left leading-5 focus:outline-none transition duration-150 ease-in-out",
-                                                class: {
-                                                  "text-green-600 hover:bg-green-50": !user.is_active,
-                                                  "text-yellow-600 hover:bg-yellow-100":
-                                                    user.is_active
-                                                },
-                                                attrs: { type: "button" },
-                                                domProps: {
-                                                  textContent: _vm._s(
-                                                    user.is_active
-                                                      ? "Deactivate"
-                                                      : "Activate"
-                                                  )
+                                              _c("Button", {
+                                                attrs: {
+                                                  theme: "text-default",
+                                                  label: "Edit"
                                                 },
                                                 on: {
                                                   click: function($event) {
-                                                    user.is_active
-                                                      ? _vm.deactivateUser(user)
-                                                      : _vm.activateUser(user)
+                                                    _vm.editData = user
                                                   }
                                                 }
                                               }),
+                                              _vm._v(" "),
+                                              user.is_active
+                                                ? _c("Button", {
+                                                    attrs: {
+                                                      theme: "text-yellow",
+                                                      label: "Deactivate"
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.deactivateUser(
+                                                          user
+                                                        )
+                                                      }
+                                                    }
+                                                  })
+                                                : _c("Button", {
+                                                    attrs: {
+                                                      theme: "text-green",
+                                                      label: "Activate"
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.activateUser(
+                                                          user
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
                                               _vm._v(" "),
                                               _c("div", {
                                                 staticClass:
                                                   "my-2 border-t border-gray-200"
                                               }),
                                               _vm._v(" "),
-                                              _c(
-                                                "button",
-                                                {
-                                                  staticClass:
-                                                    "block w-full px-4 py-2 text-sm text-left leading-5 text-red-600 hover:bg-red-100 focus:outline-none transition duration-150 ease-in-out",
-                                                  attrs: { type: "button" },
-                                                  on: {
-                                                    click: function($event) {
-                                                      _vm.confirmData = user
-                                                    }
-                                                  }
+                                              _c("Button", {
+                                                attrs: {
+                                                  theme: "text-red",
+                                                  label: "Remove"
                                                 },
-                                                [
-                                                  _vm._v(
-                                                    "\n                Remove\n              "
-                                                  )
-                                                ]
-                                              )
+                                                on: {
+                                                  click: function($event) {
+                                                    _vm.confirmData = user
+                                                  }
+                                                }
+                                              })
                                             ]
                                           },
                                           proxy: true
@@ -43374,16 +43536,16 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var state = {
-  users: [],
+  users: {},
   parameters: {}
 };
 var getters = {
-  allUsers: function allUsers(state) {
+  users: function users(state) {
     return state.users;
   }
 };
 var actions = {
-  fetchAllUsers: function fetchAllUsers(_ref) {
+  fetchUsers: function fetchUsers(_ref) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       var commit, state;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
@@ -43395,7 +43557,7 @@ var actions = {
               return axios.get('users', {
                 params: state.parameters
               }).then(function (response) {
-                commit('mutateUsers', response.data);
+                commit('mutateAll', response.data);
               });
 
             case 3:
@@ -43406,17 +43568,29 @@ var actions = {
       }, _callee);
     }))();
   },
-  activateUser: function activateUser(_ref2, user) {
+  updateUser: function updateUser(_ref2, user) {
+    var commit = _ref2.commit,
+        dispatch = _ref2.dispatch;
+    return new Promise(function (resolve, reject) {
+      axios.put('users/update/' + user.id, user).then(function (response) {
+        commit('mutateUpdated', response.data);
+        resolve(response.data.data);
+      })["catch"](function (error) {
+        reject(error.response.data);
+      });
+    });
+  },
+  activateUser: function activateUser(_ref3, user) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              commit = _ref2.commit;
+              commit = _ref3.commit;
               _context2.next = 3;
               return axios.patch('users/activate/' + user.id).then(function (response) {
-                commit('mutateUser', response.data);
+                commit('mutateUpdated', response.data);
               });
 
             case 3:
@@ -43427,17 +43601,17 @@ var actions = {
       }, _callee2);
     }))();
   },
-  deactivateUser: function deactivateUser(_ref3, user) {
+  deactivateUser: function deactivateUser(_ref4, user) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              commit = _ref3.commit;
+              commit = _ref4.commit;
               _context3.next = 3;
               return axios.patch('users/deactivate/' + user.id).then(function (response) {
-                commit('mutateUser', response.data);
+                commit('mutateUpdated', response.data);
               });
 
             case 3:
@@ -43448,14 +43622,14 @@ var actions = {
       }, _callee3);
     }))();
   },
-  removeUser: function removeUser(_ref4, user) {
+  removeUser: function removeUser(_ref5, user) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              commit = _ref4.commit;
+              commit = _ref5.commit;
               _context4.next = 3;
               return axios["delete"]('users/remove/' + user.id).then(function (response) {
                 commit('mutateRemoved', user.id);
@@ -43469,13 +43643,16 @@ var actions = {
       }, _callee4);
     }))();
   },
-  setParameters: function setParameters(_ref5, object) {
-    var commit = _ref5.commit;
-    commit('mutateParameters', _.cloneDeep(object));
+  setParameters: function setParameters(_ref6, parameters) {
+    var commit = _ref6.commit;
+    commit('mutateParameters', _.cloneDeep(parameters));
   }
 };
 var mutations = {
-  mutateUser: function mutateUser(state, updated) {
+  mutateAll: function mutateAll(state, users) {
+    return state.users = users;
+  },
+  mutateUpdated: function mutateUpdated(state, updated) {
     var index = state.users.data.findIndex(function (user) {
       return user.id === updated.data.id;
     });
@@ -43488,9 +43665,6 @@ var mutations = {
     return state.users.data = state.users.data.filter(function (user) {
       return user.id !== id;
     });
-  },
-  mutateUsers: function mutateUsers(state, users) {
-    return state.users = users;
   },
   mutateParameters: function mutateParameters(state, parameters) {
     state.parameters = _.pickBy(_.size(parameters) ? _.merge(state.parameters, parameters) : {}, _.identity);

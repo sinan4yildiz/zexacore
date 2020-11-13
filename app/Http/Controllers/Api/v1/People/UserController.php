@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\v1\People;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Http\Requests\Users\UserRequest;
+use App\Http\Requests\People\UserRequest;
 use App\Http\Resources\People\UserResource;
 use Illuminate\Support\Facades\Request;
 
@@ -65,58 +65,11 @@ class UserController extends Controller
     }
 
     /**
-     * Activate an user
+     * Store the new user
      *
+     * @param  \App\Http\Requests\People\UserRequest  $request
      * @param $id
      *
-     */
-    public function activate($id)
-    {
-        $item = User::findOrFail($id);
-        $item->is_active = true;
-        $item->save();
-
-        return new UserResource($item);
-    }
-
-    /**
-     * Deactivate an user
-     *
-     * @param $id
-     *
-     */
-    public function deactivate($id)
-    {
-        $item = User::findOrFail($id);
-        $item->is_active = false;
-        $item->save();
-
-        return new UserResource($item);
-    }
-
-    /**
-     * Remove an user
-     *
-     * @param $id
-     *
-     */
-    public function remove($id)
-    {
-        $item = User::findOrFail($id);
-        $item->delete();
-
-        return new UserResource($item);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\Users\People\UserRequest  $request
-     *
-     * @param $id
-     *
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(UserRequest $request)
     {
@@ -131,43 +84,70 @@ class UserController extends Controller
     }
 
     /**
-     * Update the resource in storage
+     * Update the existing user
      *
-     * @param  \App\Http\Requests\Users\UserRequest  $request
+     * @param  \App\Http\Requests\People\UserRequest  $request
      * @param $id
      *
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(UserRequest $request, $id)
     {
-        $user = User::findOrFail($id);
+        $item = User::findOrFail($id);
 
-        if (!empty($request->password)) {
-            $request->merge(['password' => Hash::make($request['password'])]);
+        if (Request::filled('password')) {
+            $item->password = Hash::make($request->password);
         }
 
-        $user->update($request->all());
+        $item->firstname = $request->firstname;
+        $item->lastname = $request->lastname;
+        $item->email = $request->email;
+        $item->title = $request->title;
+        $item->save();
 
-        return $this->sendResponse($user, 'User Information has been updated');
+        return new UserResource($item);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Activate the user
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     *
      */
-    public function destroy($id)
+    public function activate($id)
     {
+        $item = User::findOrFail($id);
+        $item->is_active = true;
+        $item->save();
 
-        $this->authorize('isAdmin');
+        return new UserResource($item);
+    }
 
-        $user = User::findOrFail($id);
-        // delete the user
+    /**
+     * Deactivate the user
+     *
+     * @param $id
+     *
+     */
+    public function deactivate($id)
+    {
+        $item = User::findOrFail($id);
+        $item->is_active = false;
+        $item->save();
 
-        $user->delete();
+        return new UserResource($item);
+    }
 
-        return $this->sendResponse([$user], 'User has been Deleted');
+    /**
+     * Remove the user
+     *
+     * @param $id
+     *
+     */
+    public function remove($id)
+    {
+        $item = User::findOrFail($id);
+        $item->delete();
+
+        return new UserResource($item);
     }
 }

@@ -14,36 +14,36 @@
             <div class="absolute inset-0 bg-gray-800 opacity-50"></div>
           </div>
           <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-          <div v-on-clickaway="cancel" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-xl w-full" role="dialog" aria-modal="true">
+          <form v-on:submit.prevent="update" v-on-clickaway="close" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-xl w-full" role="dialog" aria-modal="true">
             <div class="bg-gray-50 px-5 py-4 flex border-b border-gray-200">
               {{ editData.firstname }} {{ editData.lastname }}
             </div>
             <ul class="bg-white px-5 py-6">
-              <li class="mb-3">
-                <Input name="email" type="email" label="E-mail address" placeholder="user@email.com"/>
+              <li class="mb-4">
+                <Input name="firstname" label="First name" placeholder="First name" :value="editData.firstname" @update:field="fields.firstname = $event" :errors="errors"/>
               </li>
-              <li class="mb-3">
-                <Input name="firstname" label="First name" placeholder="First name"/>
+              <li class="mb-4">
+                <Input name="lastname" label="Last name" placeholder="Last name" :value="editData.lastname" @update:field="fields.lastname = $event" :errors="errors"/>
               </li>
-              <li class="mb-3">
-                <Input name="lastname" label="Last name" placeholder="Last name"/>
+              <li class="mb-4">
+                <Input name="title" label="Title" placeholder="e.g. Content Editor" :value="editData.title" @update:field="fields.title = $event" :errors="errors"/>
               </li>
-              <li class="mb-3">
-                <Input name="title" label="Title" placeholder="e.g. Content Editor"/>
+              <li class="mb-4">
+                <Input name="email" type="email" label="E-mail address" placeholder="user@email.com" :value="editData.email" @update:field="fields.email = $event" :errors="errors"/>
               </li>
               <li class="mb-1">
-                <Input name="password" type="password" label="Password" placeholder="●●●●●"/>
+                <Input name="password" type="password" label="Password" placeholder="●●●●●" @update:field="fields.password = $event" :errors="errors"/>
               </li>
             </ul>
             <div class="bg-gray-50 px-5 py-4 flex border-t border-gray-200">
               <span class="flex w-full rounded-md shadow-sm sm:mr-3 sm:w-auto">
-                <Button v-on:click="update" theme="blue" label="Update"/>
+                <Button type="submit" theme="blue" label="Update" icon="check" :loading="processing"/>
               </span>
               <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                <Button v-on:click="cancel" theme="light" label="Cancel"/>
+                <Button @click="close" theme="default" label="Cancel"/>
               </span>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </transition>
@@ -51,31 +51,68 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
 import {mixin as clickaway} from "vue-clickaway";
 
 export default {
-  name: "UsersEdit",
+  name: "UserEdit",
   props: ['editData'],
+
   data() {
     return {
-      isOpen: this.editData
+      fields: {},
+      errors: {},
+      processing: false,
+      isOpen: this.editData ? true : false
     }
   },
-  watch: {
-    editData: function (open) {
-      this.isOpen = open
-    }
-  },
+
   methods: {
+    ...mapActions('Users', ['updateUser']),
+
     update: function () {
-      console.log('update')
-      /*this.$emit('update')*/
+      this.processing = true
+
+      this.updateUser(this.fields)
+          .then((response) => {
+            this.$snackbar('The user has been updated successfuly!')
+            this.close()
+          })
+          .catch(error => {
+            this.errors = error.errors
+          })
+          .finally(() => {
+            _.delay(() => {
+              this.processing = false
+            }, 500)
+          })
     },
-    cancel: function () {
+
+    close: function () {
       this.isOpen = false
+      this.fields = {}
+      this.errors = {}
       this.$emit('cancel')
     }
   },
+
+  watch: {
+    editData: function (data) {
+      this.isOpen = data ? true : false
+
+      if(data) {
+        this.fields = {
+          id: data.id,
+          firstname: data.firstname,
+          lastname: data.lastname,
+          title: data.title,
+          email: data.email,
+          password: null,
+        }
+      }
+    }
+  },
+
   components: {
     Breadcrumb: require('../../../components/elements/Breadcrumb').default,
     Input: require('../../../components/elements/Input').default,

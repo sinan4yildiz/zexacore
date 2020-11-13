@@ -19,28 +19,24 @@
         </div>
 
         <!-- Filters -->
-        <Filters class="mr-3" :fields="['status', 'date-start', 'date-end']" v-on:filtered="applyFilters($event)"/>
+        <Filters class="mr-3" :fields="['status', 'date-start', 'date-end']" @filtered="applyFilters($event)"/>
 
         <!-- Create new -->
-        <RouterLink :to="{name: 'users.create'}"
-                    class="inline-flex items-center px-4 py-2 shadow-inner-px-blue-500 text-sm leading-5 font-medium rounded-md text-blue-600 bg-blue-50 hover:bg-blue-500 hover:text-white focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
-          <svg class="-ml-1 mr-2 w-5 h-5">
-            <use xlink:href="#icon-plus"></use>
-          </svg>
-          Create new
+        <RouterLink :to="{name: 'users.create'}">
+          <Button theme="blue-outline" label="Create new" icon="plus"/>
         </RouterLink>
       </div>
     </header>
 
     <Table
         :columns="columns"
-        :meta="allUsers.data ? allUsers.meta : false"
-        :loading="allUsers.data ? false : true"
-        v-on:query="setQuery($event)"
+        :meta="users.data ? users.meta : false"
+        :loading="users.data ? false : true"
+        @query="setQuery($event)"
     >
       <template #body>
-        <tbody v-if="allUsers.data && allUsers.data.length" class="bg-white divide-y divide-gray-300">
-        <tr v-for="(user, index) in allUsers.data">
+        <tbody v-if="users.data && users.data.length" class="bg-white divide-y divide-gray-300">
+        <tr v-for="(user, index) in users.data">
           <td class="px-6 py-4 whitespace-no-wrap">
             <div class="flex items-center">
               <div
@@ -67,7 +63,7 @@
             <time v-bind:title="user.created_at_raw">{{ user.created_at }}</time>
           </td>
           <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-            <RouterLink v-if="user.id == currentUser.id" :to="{name: 'users.index'}" class="text-indigo-600 hover:text-indigo-900">Your profile</RouterLink>
+            <button v-if="user.id == currentUser.id" @click="editData = user" type="button" class="text-indigo-600 hover:text-indigo-800 focus:outline-none">Your profile</button>
             <Dropdown v-else :width="'w-48'">
               <template #toggler>
                 <button type="button" class="p-2 text-gray-400 hover:text-gray-800 focus:text-gray-800 focus:outline-none transition duration-150 ease-in-out">
@@ -77,20 +73,11 @@
                 </button>
               </template>
               <template #content>
-                <button @click="editData = user" type="button"
-                        class="block w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 hover:bg-gray-100 hover:text-black focus:bg-gray-200 focus:outline-none transition duration-150 ease-in-out">
-                  Edit
-                </button>
-                <button v-bind:class="{'text-green-600 hover:bg-green-50': !user.is_active, 'text-yellow-600 hover:bg-yellow-100': user.is_active}"
-                        @click="user.is_active ? deactivateUser(user) : activateUser(user)"
-                        v-text="user.is_active ? 'Deactivate' : 'Activate'" type="button"
-                        class="block w-full px-4 py-2 text-sm text-left leading-5 focus:outline-none transition duration-150 ease-in-out">
-                </button>
+                <Button @click="editData = user" theme="text-default" label="Edit"/>
+                <Button v-if="user.is_active" @click="deactivateUser(user)" theme="text-yellow" label="Deactivate"/>
+                <Button v-else @click="activateUser(user)" theme="text-green" label="Activate"/>
                 <div class="my-2 border-t border-gray-200"></div>
-                <button @click="confirmData = user" type="button"
-                        class="block w-full px-4 py-2 text-sm text-left leading-5 text-red-600 hover:bg-red-100 focus:outline-none transition duration-150 ease-in-out">
-                  Remove
-                </button>
+                <Button @click="confirmData = user" theme="text-red" label="Remove"/>
               </template>
             </Dropdown>
           </td>
@@ -100,10 +87,10 @@
     </Table>
 
     <!-- Edit modal -->
-    <Edit :editData="editData" v-on:cancel="editData = null"></Edit>
+    <Edit :editData="editData" @cancel="editData = null"></Edit>
 
     <!-- Confirm dialog -->
-    <Confirm :confirmData="confirmData" v-on:confirm="confirmRemove($event)" v-on:cancel="confirmData = null"></Confirm>
+    <Confirm :confirmData="confirmData" @confirm="confirmRemove($event)" @cancel="confirmData = null"></Confirm>
   </section>
 </template>
 
@@ -146,14 +133,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('Users', ['allUsers'])
+    ...mapGetters('Users', ['users'])
   },
   methods: {
-    ...mapActions('Users', ['fetchAllUsers', 'activateUser', 'deactivateUser', 'removeUser', 'setParameters']),
+    ...mapActions('Users', ['fetchUsers', 'activateUser', 'deactivateUser', 'removeUser', 'setParameters']),
 
     setQuery: function (args) {
       this.setParameters(args)
-      this.fetchAllUsers()
+      this.fetchUsers()
     },
 
     applyFilters: _.debounce(function (filters) {
@@ -172,7 +159,7 @@ export default {
   },
   created() {
     this.setParameters({page: null})
-    this.fetchAllUsers()
+    this.fetchUsers()
   },
   components: {
     Edit: require('./Edit').default,
@@ -181,6 +168,7 @@ export default {
     Filters: require('../../../components/elements/Filters').default,
     Confirm: require('../../../components/elements/Confirm').default,
     Breadcrumb: require('../../../components/elements/Breadcrumb').default,
+    Button: require('../../../components/elements/Button').default,
   }
 }
 </script>

@@ -1,13 +1,7 @@
 <template>
   <div class="dropdown relative" v-bind:class="{'open': isOpen}" v-on-clickaway="close">
     <div @click="isOpen = !isOpen" class="inline-block">
-      <button type="button"
-              class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm leading-5 font-medium rounded-md text-gray-600 bg-white hover:text-gray-700 focus:border-blue-300 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out">
-        <svg class="-ml-1 mr-2 w-5 h-5">
-          <use xlink:href="#icon-filter"></use>
-        </svg>
-        Filters
-      </button>
+      <Button theme="default" label="Filters" icon="filter"/>
     </div>
     <transition
         enter-active-class="transition ease-out duration-100 transform"
@@ -99,7 +93,8 @@ export default {
       this.isOpen = false;
     }
   },
-  mounted() {
+  components: {
+    Button: require('./Button').default
   }
 }
 </script>

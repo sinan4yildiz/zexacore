@@ -52,8 +52,9 @@ export default {
           this.$snackbar('This action URL not found. Please check the request.', 'warning')
           break
 
-        default:
-          this.$snackbar('Something went wrong. Please check error logs or the response of the request.', 'error', false)
+          // Not found
+        case 500:
+          this.$snackbar('Something went wrong. Please check error logs or the response of the request.', 'error')
           break
       }
 

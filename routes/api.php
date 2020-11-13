@@ -17,6 +17,8 @@ Route::group([
     ], function () {
 
         Route::get('/', 'UserController@index')->name('index');
+        Route::post('/create', 'UserController@create')->name('create');
+        Route::put('/update/{id}', 'UserController@update')->name('update');
         Route::patch('/activate/{id}', 'UserController@activate')->name('activate');
         Route::patch('/deactivate/{id}', 'UserController@deactivate')->name('deactivate');
         Route::delete('/remove/{id}', 'UserController@remove')->name('remove');
