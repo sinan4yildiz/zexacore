@@ -16,7 +16,19 @@ const actions = {
                        commit('mutateAll', response.data);
                    });
     },
-    updateUser({commit, dispatch}, user) {
+    createUser({commit}, user) {
+        return new Promise((resolve, reject) => {
+            axios.post('users/create', user)
+                 .then(response => {
+                     commit('mutateCreated', response.data);
+                     resolve(response.data.data)
+                 })
+                 .catch(error => {
+                     reject(error.response.data)
+                 });
+        })
+    },
+    updateUser({commit}, user) {
         return new Promise((resolve, reject) => {
             axios.put('users/update/' + user.id, user)
                  .then(response => {
@@ -53,6 +65,9 @@ const actions = {
 
 const mutations = {
     mutateAll: (state, users) => (state.users = users),
+    mutateCreated: (state, created) => {
+        state.users.data.unshift(created.data)
+    },
     mutateUpdated: (state, updated) => {
         const index = state.users.data.findIndex(user => user.id === updated.data.id);
 

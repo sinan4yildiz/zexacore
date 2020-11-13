@@ -22,9 +22,7 @@
         <Filters class="mr-3" :fields="['status', 'date-start', 'date-end']" @filtered="applyFilters($event)"/>
 
         <!-- Create new -->
-        <RouterLink :to="{name: 'users.create'}">
-          <Button theme="blue-outline" label="Create new" icon="plus"/>
-        </RouterLink>
+        <Button @click="createModal = true" theme="blue-outline" label="Create new" icon="plus"/>
       </div>
     </header>
 
@@ -34,7 +32,7 @@
         :loading="users.data ? false : true"
         @query="setQuery($event)"
     >
-      <template #body>
+      <template #tbody>
         <tbody v-if="users.data && users.data.length" class="bg-white divide-y divide-gray-300">
         <tr v-for="(user, index) in users.data">
           <td class="px-6 py-4 whitespace-no-wrap">
@@ -86,11 +84,14 @@
       </template>
     </Table>
 
-    <!-- Edit modal -->
-    <Edit :editData="editData" @cancel="editData = null"></Edit>
+    <!-- Create modal -->
+    <Create :createModal="createModal" @cancel="createModal = false"/>
 
-    <!-- Confirm dialog -->
-    <Confirm :confirmData="confirmData" @confirm="confirmRemove($event)" @cancel="confirmData = null"></Confirm>
+    <!-- Edit modal -->
+    <Edit :editData="editData" @cancel="editData = false"/>
+
+    <!-- Confirm remove -->
+    <Confirm :confirmData="confirmData" @confirm="confirmRemove($event)" @cancel="confirmData = false"/>
   </section>
 </template>
 
@@ -100,6 +101,7 @@ import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'UsersIndex',
+
   data() {
     return {
       columns: [
@@ -128,13 +130,16 @@ export default {
         }
       ],
       keyword: null,
-      confirmData: null,
-      editData: null,
+      confirmData: false,
+      createModal: false,
+      editData: false,
     }
   },
+
   computed: {
     ...mapGetters('Users', ['users'])
   },
+
   methods: {
     ...mapActions('Users', ['fetchUsers', 'activateUser', 'deactivateUser', 'removeUser', 'setParameters']),
 
@@ -149,19 +154,23 @@ export default {
 
     confirmRemove: function (user) {
       this.removeUser(user)
-      this.confirmData = null
+      this.confirmData = false
     }
   },
+
   watch: {
     keyword() {
       this.applyFilters({keyword: this.keyword})
     }
   },
+
   created() {
-    this.setParameters({page: null})
+    this.setParameters({page: false})
     this.fetchUsers()
   },
+
   components: {
+    Create: require('./Create').default,
     Edit: require('./Edit').default,
     Table: require('../../../components/elements/Table').default,
     Dropdown: require('../../../components/elements/Dropdown').default,

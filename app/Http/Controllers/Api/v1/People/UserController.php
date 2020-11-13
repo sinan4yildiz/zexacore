@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Http\Requests\People\UserRequest;
 use App\Http\Resources\People\UserResource;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -65,22 +66,25 @@ class UserController extends Controller
     }
 
     /**
-     * Store the new user
+     * Create the new user
      *
      * @param  \App\Http\Requests\People\UserRequest  $request
      * @param $id
      *
      */
-    public function store(UserRequest $request)
+    public function create(UserRequest $request)
     {
-        $user = User::create([
-            'name'     => $request['name'],
-            'email'    => $request['email'],
-            'password' => Hash::make($request['password']),
-            'type'     => $request['type'],
-        ]);
+        $item = new User;
+        $item->firstname = $request->firstname;
+        $item->lastname = $request->lastname;
+        $item->email = $request->email;
+        $item->title = $request->title;
+        $item->password = Hash::make($request->password);
+        $item->api_token = Str::random(32);
+        $item->is_active = true;
+        $item->save();
 
-        return $this->sendResponse($user, 'User Created Successfully');
+        return new UserResource($item);
     }
 
     /**

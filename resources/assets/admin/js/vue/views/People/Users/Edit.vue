@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import {mapActions} from 'vuex'
 import {mixin as clickaway} from "vue-clickaway";
 
 export default {
@@ -63,7 +63,12 @@ export default {
       fields: {},
       errors: {},
       processing: false,
-      isOpen: this.editData ? true : false
+    }
+  },
+
+  computed: {
+    isOpen: function () {
+      return this.editData ? true : false
     }
   },
 
@@ -89,7 +94,6 @@ export default {
     },
 
     close: function () {
-      this.isOpen = false
       this.fields = {}
       this.errors = {}
       this.$emit('cancel')
@@ -98,8 +102,6 @@ export default {
 
   watch: {
     editData: function (data) {
-      this.isOpen = data ? true : false
-
       if(data) {
         this.fields = {
           id: data.id,
@@ -114,7 +116,6 @@ export default {
   },
 
   components: {
-    Breadcrumb: require('../../../components/elements/Breadcrumb').default,
     Input: require('../../../components/elements/Input').default,
     Button: require('../../../components/elements/Button').default,
   },

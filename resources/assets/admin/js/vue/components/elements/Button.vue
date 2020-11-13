@@ -1,11 +1,11 @@
 <template>
-  <button @click="$emit('click')" :type="type || 'button'" class="flex align-items-center text-sm px-4 py-2 leading-5 font-medium focus:outline-none transition duration-150 ease-in-out" v-bind:class="themes[theme]" v-bind:disabled="loading">
-    <span v-if="loading" class="inline-block -ml-1 mr-2 w-5 h-5 text-center">
+  <button @click="$emit('click')" :type="type || 'button'" class="flex align-items-center text-sm px-5 py-2 leading-5 font-medium focus:outline-none transition duration-150 ease-in-out" v-bind:class="themes[theme]" v-bind:disabled="loading">
+    <span v-if="loading" class="inline-block -ml-2 mr-2 w-5 h-5 text-center">
       <svg v-if="loading" class="w-4 h-4 animate-spin animate-spin-fast">
         <use xlink:href="#icon-loading"></use>
       </svg>
     </span>
-    <svg v-else-if="icon" class="-ml-1 mr-2 w-5 h-5">
+    <svg v-else-if="icon" class="-ml-2 mr-2 w-5 h-5">
       <use v-bind:xlink:href="'#icon-' + icon"></use>
     </svg>
     {{ label }}
@@ -22,6 +22,7 @@ export default {
     return {
       themes: {
         'blue': 'text-white bg-blue-600 border-transparent hover:bg-blue-500 focus:border-blue-500 focus:shadow-outline-blue shadow-md rounded-md border',
+        'indigo': 'text-white bg-indigo-600 border-transparent hover:bg-indigo-500 focus:border-indigo-500 focus:shadow-outline-indigo shadow-md rounded-md border',
         'red': 'text-white bg-red-600 border-transparent hover:bg-red-400 focus:border-red-500 focus:shadow-outline-red shadow-md rounded-md border',
         'default': 'text-gray-600 bg-white border-gray-300 hover:text-gray-800 focus:border-blue-300 focus:shadow-outline-blue shadow-sm rounded-md border',
 

@@ -114,7 +114,7 @@ return [
     'starts_with'          => 'This field must start with one of the following: :values.',
     'string'               => 'This field must be a string.',
     'timezone'             => 'This field must be a valid zone.',
-    'unique'               => 'This field has already been taken.',
+    'unique'               => 'This has already been taken.',
     'uploaded'             => 'This field failed to upload.',
     'url'                  => 'This field format is invalid.',
     'uuid'                 => 'This field must be a valid UUID.',

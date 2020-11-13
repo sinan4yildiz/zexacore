@@ -8,11 +8,11 @@ const mixins = {
             },
             methods: {
                 $snackbar: function (text, type = 'success', timeout = 5000) {
-                    this.$store.commit('App/setSnackbar', {text: text, type: type})
+                    this.$store.dispatch('App/setSnackbar', {text: text, type: type})
 
                     if(timeout) {
                         _.delay(() => {
-                            this.$store.commit('App/setSnackbar', {})
+                            this.$store.dispatch('App/closeSnackbar')
                         }, timeout)
                     }
                 },

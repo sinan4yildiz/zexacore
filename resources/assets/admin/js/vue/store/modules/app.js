@@ -7,7 +7,10 @@ const getters = {
 }
 
 const actions = {
-    closeSnackbar({commit}, object) {
+    setSnackbar({commit}, object) {
+        commit('setSnackbar', object)
+    },
+    closeSnackbar({commit}) {
         commit('setSnackbar', {})
     },
 }

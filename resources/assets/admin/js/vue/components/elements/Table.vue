@@ -15,7 +15,7 @@
           </th>
         </tr>
         </thead>
-        <slot name="body">
+        <slot name="tbody">
           <tbody>
           <tr v-if="loading">
             <td v-bind:colspan="columns.length"
@@ -57,13 +57,16 @@
 export default {
   name: "Table",
   props: ['columns', 'meta', 'loading'],
+
   data() {
     return {}
   },
+
   methods: {
     isSortable: function (column) {
       return this.meta.total ? _.includes(this.meta.sorting.sortable, column.field) : false
     },
+
     columnClasses: function (column, index) {
       let classes = [column.classes]
 
@@ -79,6 +82,7 @@ export default {
 
       return classes
     },
+
     handleSorting: function (column) {
       if(this.isSortable(column)) {
         return this.$emit('query', {
@@ -87,10 +91,12 @@ export default {
         })
       }
     },
+
     handlePagination: function (page) {
       return this.$emit('query', {page: page.label})
     }
   },
+
   watch: {
     'meta.current_page'(a, b) {
       if(b === undefined)
