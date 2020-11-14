@@ -37,7 +37,7 @@
             </ul>
             <div class="bg-gray-50 px-5 py-4 flex border-t border-gray-200">
               <span class="flex w-full rounded-md shadow-sm sm:mr-3 sm:w-auto">
-                <Button type="submit" theme="blue" label="Update" icon="check" :loading="processing"/>
+                <Button type="submit" theme="indigo" label="Update" icon="check" :loading="processing"/>
               </span>
               <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                 <Button @click="close" theme="default" label="Cancel"/>

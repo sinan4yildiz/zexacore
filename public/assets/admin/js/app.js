@@ -2824,13 +2824,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Input",
   props: ['type', 'name', 'label', 'placeholder', 'errors', 'value'],
   data: function data() {
     return {
-      val: this.value,
-      inputType: this.type
+      inputValue: this.value,
+      inputType: this.type,
+      inputPlaceholder: this.placeholder
     };
   },
   computed: {
@@ -2841,15 +2844,18 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    handleType: function handleType() {
-      return this.inputType;
-    },
     togglePassword: function togglePassword() {
-      this.inputType = this.inputType == 'text' ? 'password' : 'text';
+      if (this.inputType == 'text') {
+        this.inputType = 'password';
+        this.inputPlaceholder = '●●●●●';
+      } else {
+        this.inputType = 'text';
+        this.inputPlaceholder = 'Enter password';
+      }
     },
     updateField: function updateField() {
       this.errors[this.name] = false;
-      this.$emit('update:field', this.val);
+      this.$emit('update:field', this.inputValue);
     }
   }
 });
@@ -24130,7 +24136,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "relative" }, [
+  return _c("div", { staticClass: "field" }, [
     _c(
       "label",
       {
@@ -24141,131 +24147,136 @@ var render = function() {
       [_vm._v(_vm._s(_vm.label))]
     ),
     _vm._v(" "),
-    _vm.handleType() === "checkbox"
-      ? _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.val,
-              expression: "val"
-            }
-          ],
-          staticClass:
-            "form-input block w-full px-4 py-3 text-sm border border-gray-300 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out",
-          class: { "border-red-300": _vm.error },
-          attrs: {
-            name: _vm.name,
-            id: "field-" + _vm.name,
-            placeholder: _vm.placeholder,
-            type: "checkbox"
-          },
-          domProps: {
-            checked: Array.isArray(_vm.val)
-              ? _vm._i(_vm.val, null) > -1
-              : _vm.val
-          },
-          on: {
-            input: _vm.updateField,
-            change: function($event) {
-              var $$a = _vm.val,
-                $$el = $event.target,
-                $$c = $$el.checked ? true : false
-              if (Array.isArray($$a)) {
-                var $$v = null,
-                  $$i = _vm._i($$a, $$v)
-                if ($$el.checked) {
-                  $$i < 0 && (_vm.val = $$a.concat([$$v]))
+    _c("span", { staticClass: "block relative" }, [
+      _vm.inputType === "checkbox"
+        ? _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.inputValue,
+                expression: "inputValue"
+              }
+            ],
+            staticClass:
+              "form-input block w-full px-4 py-3 text-sm border border-gray-300 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out",
+            class: { "border-red-300": _vm.error },
+            attrs: {
+              name: _vm.name,
+              id: "field-" + _vm.name,
+              placeholder: _vm.inputPlaceholder,
+              type: "checkbox"
+            },
+            domProps: {
+              checked: Array.isArray(_vm.inputValue)
+                ? _vm._i(_vm.inputValue, null) > -1
+                : _vm.inputValue
+            },
+            on: {
+              input: _vm.updateField,
+              change: function($event) {
+                var $$a = _vm.inputValue,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.inputValue = $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      (_vm.inputValue = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
+                  }
                 } else {
-                  $$i > -1 &&
-                    (_vm.val = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+                  _vm.inputValue = $$c
                 }
-              } else {
-                _vm.val = $$c
               }
             }
-          }
-        })
-      : _vm.handleType() === "radio"
-      ? _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.val,
-              expression: "val"
-            }
-          ],
-          staticClass:
-            "form-input block w-full px-4 py-3 text-sm border border-gray-300 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out",
-          class: { "border-red-300": _vm.error },
-          attrs: {
-            name: _vm.name,
-            id: "field-" + _vm.name,
-            placeholder: _vm.placeholder,
-            type: "radio"
-          },
-          domProps: { checked: _vm._q(_vm.val, null) },
-          on: {
-            input: _vm.updateField,
-            change: function($event) {
-              _vm.val = null
-            }
-          }
-        })
-      : _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.val,
-              expression: "val"
-            }
-          ],
-          staticClass:
-            "form-input block w-full px-4 py-3 text-sm border border-gray-300 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out",
-          class: { "border-red-300": _vm.error },
-          attrs: {
-            name: _vm.name,
-            id: "field-" + _vm.name,
-            placeholder: _vm.placeholder,
-            type: _vm.handleType()
-          },
-          domProps: { value: _vm.val },
-          on: {
-            input: [
-              function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.val = $event.target.value
-              },
-              _vm.updateField
-            ]
-          }
-        }),
-    _vm._v(" "),
-    _vm.type == "password"
-      ? _c(
-          "button",
-          {
+          })
+        : _vm.inputType === "radio"
+        ? _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.inputValue,
+                expression: "inputValue"
+              }
+            ],
             staticClass:
-              "absolute right-0 bottom-0 px-4 py-3 text-gray-600 hover:text-gray-900 focus:outline-none",
-            attrs: { type: "button" },
-            on: { click: _vm.togglePassword }
-          },
-          [
-            _c("svg", { staticClass: "w-5 h-5" }, [
-              _c("use", {
-                attrs: {
-                  "xlink:href":
-                    "#icon-" + (_vm.inputType == "password" ? "eye" : "eye-off")
-                }
-              })
-            ])
-          ]
-        )
-      : _vm._e(),
+              "form-input block w-full px-4 py-3 text-sm border border-gray-300 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out",
+            class: { "border-red-300": _vm.error },
+            attrs: {
+              name: _vm.name,
+              id: "field-" + _vm.name,
+              placeholder: _vm.inputPlaceholder,
+              type: "radio"
+            },
+            domProps: { checked: _vm._q(_vm.inputValue, null) },
+            on: {
+              input: _vm.updateField,
+              change: function($event) {
+                _vm.inputValue = null
+              }
+            }
+          })
+        : _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.inputValue,
+                expression: "inputValue"
+              }
+            ],
+            staticClass:
+              "form-input block w-full px-4 py-3 text-sm border border-gray-300 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out",
+            class: { "border-red-300": _vm.error },
+            attrs: {
+              name: _vm.name,
+              id: "field-" + _vm.name,
+              placeholder: _vm.inputPlaceholder,
+              type: _vm.inputType
+            },
+            domProps: { value: _vm.inputValue },
+            on: {
+              input: [
+                function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.inputValue = $event.target.value
+                },
+                _vm.updateField
+              ]
+            }
+          }),
+      _vm._v(" "),
+      _vm.type == "password"
+        ? _c(
+            "button",
+            {
+              staticClass:
+                "absolute right-0 bottom-0 px-4 py-3 text-gray-600 hover:text-gray-900 focus:outline-none",
+              attrs: { type: "button" },
+              on: { click: _vm.togglePassword }
+            },
+            [
+              _c("svg", { staticClass: "w-5 h-5" }, [
+                _c("use", {
+                  attrs: {
+                    "xlink:href":
+                      "#icon-" +
+                      (_vm.inputType == "password" ? "eye" : "eye-off")
+                  }
+                })
+              ])
+            ]
+          )
+        : _vm._e()
+    ]),
     _vm._v(" "),
     _vm.error
       ? _c("p", {
@@ -25072,9 +25083,9 @@ var render = function() {
                                 _c("Button", {
                                   attrs: {
                                     type: "submit",
-                                    theme: "indigo",
+                                    theme: "blue",
                                     label: "Create",
-                                    icon: "check",
+                                    icon: "plus",
                                     loading: _vm.processing
                                   }
                                 })
@@ -25338,7 +25349,7 @@ var render = function() {
                                 _c("Button", {
                                   attrs: {
                                     type: "submit",
-                                    theme: "blue",
+                                    theme: "indigo",
                                     label: "Update",
                                     icon: "check",
                                     loading: _vm.processing
