@@ -1,5 +1,5 @@
 <template>
-  <aside class="inline-flex w-56 min-h-screen">
+  <aside class="inline-flex w-56 flex-shrink-0 min-h-screen">
     <nav class="block w-full">
       <ul class="pl-8">
         <li v-for="(parent, i) in navigation" :key="i">
@@ -160,7 +160,7 @@ export default {
             },
             {
               title: "Languages",
-              route: "languages",
+              route: "languages.index",
             },
             {
               title: "Maintenance",
@@ -174,27 +174,27 @@ export default {
   methods: {
     checkNavigation: function (index = null) {
       this.navigation = this.navigation.map((parent, i) => {
-        parent.active = index === i ? !parent.active : false;
+        parent.active = index === i ? !parent.active : false
 
         if(!index && parent.children) {
           var a = parent.children.find((child) => {
             return child.route === this.$route.name;
-          });
+          })
 
           parent.active = a ? true : false;
         }
 
-        return parent;
-      });
+        return parent
+      })
     },
   },
   watch: {
     $route() {
-      this.checkNavigation();
+      this.checkNavigation()
     }
   },
   mounted() {
-    this.checkNavigation();
+    this.checkNavigation()
   }
 }
 </script>

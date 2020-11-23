@@ -9,7 +9,7 @@
               v-bind:class="columnClasses(column, index)"
               class="px-6 pt-3/2 pb-3 bg-gray-50 text-left text-xs leading-5 font-medium text-gray-600 uppercase tracking-wider">
             {{ column.title }}
-            <svg v-if="column.field == (meta.total && meta.sorting.sorted)" class="w-4 h-4 ml-2">
+            <svg v-if="column.field && column.field == (meta.total && meta.sorting.sorted)" class="w-4 h-4 ml-2">
               <use v-bind:xlink:href="'#icon-sort-' + meta.sorting.ordered"></use>
             </svg>
           </th>
@@ -27,7 +27,7 @@
           </tr>
           <tr v-else-if="!$slots.body">
             <td v-bind:colspan="columns.length"
-                class="px-6 py-5 text-sm text-center bg-white text-gray-600 font-light whitespace-no-wrap">
+                class="px-6 py-5 text-sm text-center bg-white text-gray-600 font-light leading-6 whitespace-no-wrap">
               No results found here.
             </td>
           </tr>

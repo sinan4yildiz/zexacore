@@ -11,7 +11,7 @@
         leave-class="opacity-100 scale-100"
         leave-to-class="opacity-0 scale-95"
     >
-      <div v-show="isOpen" v-bind:class="width || 'w-96'" class="filters origin-top-right absolute right-0 mt-3 shadow-lg rounded-md z-10">
+      <div v-show="isOpen" v-bind:class="width || 'w-97'" class="filters origin-top-right absolute right-0 mt-3 shadow-lg rounded-md z-10">
         <form v-on:submit.prevent="apply" v-on:change="apply" class="rounded-md pt-4 bg-gray-50 shadow-xs text-left">
 
           <!-- Status active/inactive -->

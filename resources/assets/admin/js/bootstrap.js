@@ -1,6 +1,9 @@
 // Lodash
 window._ = require('lodash')
 
+// Sortable
+window.sortablejs = require('sortablejs')
+
 // Axios
 window.axios                                             = require('axios')
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'

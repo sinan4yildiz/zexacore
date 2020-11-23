@@ -94,6 +94,9 @@ export default new VueRouter({
         {
             path: '/activities',
             name: 'activities',
+            meta: {
+                title: 'Activities'
+            },
             component: require('./views/People/Activities/Index.vue').default,
         },
 
@@ -122,8 +125,25 @@ export default new VueRouter({
         },
         {
             path: '/languages',
-            name: 'languages',
-            component: require('./views/System/Languages/Index.vue').default,
+            component: DefaultView,
+            meta: {
+                title: 'Languages'
+            },
+            children: [
+                {
+                    path: '',
+                    name: 'languages.index',
+                    component: require('./views/System/Languages/Index.vue').default,
+                },
+                {
+                    path: 'create',
+                    name: 'languages.create',
+                    component: require('./views/System/Languages/Create.vue').default,
+                    meta: {
+                        title: 'Create language'
+                    }
+                },
+            ]
         },
         {
             path: '/maintenance',

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\v1\People;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Requests\People\UserRequest;
@@ -22,14 +24,18 @@ class UserController extends Controller
     protected $sorted = 'created_at';
     protected $ordered = 'desc';
 
-
+    /**
+     * List of users
+     *
+     */
     public function index()
     {
-        $users = User::orderBy(
-            $this->sortable[request('sorted')] ?? $this->sorted,
-            request('ordered') ?? $this->ordered
-        );
+        $users = User::orderBy($this->sortable[request('sorted')] ?? $this->sorted, request('ordered', $this->ordered));
 
+
+        /**
+         * Filters
+         */
         if (Request::has('keyword')) {
             $users->where(function ($query) {
                 $query->orWhere('firstname', 'LIKE', '%' . Request::input('keyword') . '%')
@@ -37,23 +43,26 @@ class UserController extends Controller
                     ->orWhere('email', 'LIKE', '%' . Request::input('keyword') . '%');
             });
         }
-
         if (Request::has('status')) {
             $users->where('is_active', (int) Request::input('status'));
         }
-
         if (Request::has('date-start')) {
             $users->whereDate('created_at', '>=', Request::input('date-start'));
         }
-
         if (Request::has('date-end')) {
             $users->whereDate('created_at', '<=', Request::input('date-end'));
         }
 
+
+        /**
+         * Query
+         */
         $users = $users->paginate(10);
 
-        /*sleep(3);*/
 
+        /**
+         * Response structure
+         */
         return UserResource::collection($users)->additional([
             'meta' => [
                 'sorting' => [
@@ -74,15 +83,30 @@ class UserController extends Controller
      */
     public function create(UserRequest $request)
     {
+        /**
+         * Store the user
+         */
         $item = new User;
-        $item->firstname = $request->firstname;
-        $item->lastname = $request->lastname;
-        $item->email = $request->email;
-        $item->title = $request->title;
-        $item->password = Hash::make($request->password);
+        $item->firstname = request('firstname');
+        $item->lastname = request('lastname');
+        $item->email = request('email');
+        $item->title = request('title');
+        $item->password = Hash::make(request('password'));
         $item->api_token = Str::random(32);
         $item->is_active = true;
         $item->save();
+
+
+        /**
+         * Record the activity
+         */
+        $activity = new Activity;
+        $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
+        $activity->description = trans('admin/activitiy.user.create', [
+            'firstname' => request('firstname'),
+            'lastname'  => request('lastname')
+        ]);
+        $activity->save();
 
         return new UserResource($item);
     }
@@ -96,17 +120,35 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
+        /**
+         * Save the user data
+         */
         $item = User::findOrFail($id);
-
         if (Request::filled('password')) {
-            $item->password = Hash::make($request->password);
+            $item->password = Hash::make(request('password'));
         }
-
-        $item->firstname = $request->firstname;
-        $item->lastname = $request->lastname;
-        $item->email = $request->email;
-        $item->title = $request->title;
+        $item->firstname = request('firstname');
+        $item->lastname = request('lastname');
+        $item->email = request('email');
+        $item->title = request('title');
         $item->save();
+
+
+        /**
+         * Record the activity
+         */
+        $activity = new Activity;
+        $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
+
+        if (Auth::user()->id == $id) {
+            $activity->description = trans('admin/activitiy.user.update_own');
+        } else {
+            $activity->description = trans('admin/activitiy.user.update', [
+                'firstname' => request('firstname'),
+                'lastname'  => request('lastname')
+            ]);
+        }
+        $activity->save();
 
         return new UserResource($item);
     }
@@ -119,9 +161,24 @@ class UserController extends Controller
      */
     public function activate($id)
     {
+        /**
+         * Activate the user
+         */
         $item = User::findOrFail($id);
         $item->is_active = true;
         $item->save();
+
+
+        /**
+         * Record the activity
+         */
+        $activity = new Activity;
+        $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
+        $activity->description = trans('admin/activitiy.user.activate', [
+            'firstname' => $item->firstname,
+            'lastname'  => $item->lastname
+        ]);
+        $activity->save();
 
         return new UserResource($item);
     }
@@ -134,9 +191,24 @@ class UserController extends Controller
      */
     public function deactivate($id)
     {
+        /**
+         * Deactivate the user
+         */
         $item = User::findOrFail($id);
         $item->is_active = false;
         $item->save();
+
+
+        /**
+         * Record the activity
+         */
+        $activity = new Activity;
+        $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
+        $activity->description = trans('admin/activitiy.user.deactivate', [
+            'firstname' => $item->firstname,
+            'lastname'  => $item->lastname
+        ]);
+        $activity->save();
 
         return new UserResource($item);
     }
@@ -149,8 +221,23 @@ class UserController extends Controller
      */
     public function remove($id)
     {
+        /**
+         * Remove the user
+         */
         $item = User::findOrFail($id);
         $item->delete();
+
+
+        /**
+         * Record the activity
+         */
+        $activity = new Activity;
+        $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
+        $activity->description = trans('admin/activitiy.user.remove', [
+            'firstname' => $item->firstname,
+            'lastname'  => $item->lastname
+        ]);
+        $activity->save();
 
         return new UserResource($item);
     }

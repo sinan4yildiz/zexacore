@@ -32,6 +32,6 @@ class UserSeeder extends Seeder
             'api_token'      => Str::random(32),
         ]);
 
-        User::factory()->times(54)->create();
+        User::factory()->times(18)->create();
     }
 }

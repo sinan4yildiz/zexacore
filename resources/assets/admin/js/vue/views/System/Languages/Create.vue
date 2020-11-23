@@ -16,23 +16,20 @@
           <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
           <form v-on:submit.prevent="create" v-on-clickaway="close" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-xl w-full" role="dialog" aria-modal="true">
             <div class="bg-gray-50 px-5 py-4 flex border-b border-gray-200">
-              Create a new user
+              Create a new language
             </div>
             <ul class="bg-white px-5 py-6">
               <li class="mb-4">
-                <Input name="firstname" label="First name" placeholder="First name" @update:field="fields.firstname = $event" :errors="errors"/>
+                <Input name="name" label="Name" placeholder="e.g. German" @update:field="fields.name = $event" :errors="errors"/>
               </li>
               <li class="mb-4">
-                <Input name="lastname" label="Last name" placeholder="Last name" @update:field="fields.lastname = $event" :errors="errors"/>
+                <Input name="native" label="Native name" placeholder="e.g. Deutsch" @update:field="fields.native = $event" :errors="errors"/>
               </li>
               <li class="mb-4">
-                <Input name="title" label="Title" placeholder="e.g. Content Editor" @update:field="fields.title = $event" :errors="errors"/>
+                <Input name="code" label="Code" placeholder="e.g. de-de" @update:field="fields.code = $event" :errors="errors"/>
               </li>
               <li class="mb-4">
-                <Input name="email" type="email" label="E-mail address" placeholder="user@email.com" @update:field="fields.email = $event" :errors="errors"/>
-              </li>
-              <li class="mb-1">
-                <Input name="password" type="password" label="Password" placeholder="●●●●●" @update:field="fields.password = $event" :errors="errors"/>
+                <Input name="locale" label="Locale" placeholder="e.g. de_DE.UTF-8, de_DE@euro, de_DE, german" @update:field="fields.locale = $event" :errors="errors"/>
               </li>
             </ul>
             <div class="bg-gray-50 px-5 py-4 flex border-t border-gray-200">
@@ -55,7 +52,7 @@ import {mapActions} from 'vuex'
 import {mixin as clickaway} from "vue-clickaway";
 
 export default {
-  name: "UserCreate",
+  name: "LanguageCreate",
 
   props: ['createModal'],
 
@@ -74,14 +71,14 @@ export default {
   },
 
   methods: {
-    ...mapActions('Users', ['createUser']),
+    ...mapActions('Languages', ['createLanguage']),
 
     create: function () {
       this.processing = true
 
-      this.createUser(this.fields)
+      this.createLanguage(this.fields)
           .then((response) => {
-            this.$snackbar('The new user has been saved successfuly!')
+            this.$snackbar('The new language has been created successfuly!')
             this.close()
           })
           .catch(error => {

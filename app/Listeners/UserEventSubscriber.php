@@ -2,6 +2,8 @@
 
 namespace App\Listeners;
 
+use App\Models\Activity;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class UserEventSubscriber
@@ -14,6 +16,12 @@ class UserEventSubscriber
         // Regenerate API token
         $event->user->api_token = Str::random(32);
         $event->user->save();
+
+        // Activity
+        $activity = new Activity;
+        $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
+        $activity->description = trans('admin/activitiy.auth.login');
+        $activity->save();
     }
 
     /**
@@ -24,6 +32,12 @@ class UserEventSubscriber
         // Empty API token
         $event->user->api_token = null;
         $event->user->save();
+
+        // Activity
+        $activity = new Activity;
+        $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
+        $activity->description = trans('admin/activitiy.auth.logout');
+        $activity->save();
     }
 
     /**

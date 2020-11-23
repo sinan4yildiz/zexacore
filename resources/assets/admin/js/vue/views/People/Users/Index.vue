@@ -1,11 +1,11 @@
 <template>
   <section>
-    <header class="flex items-center mb-5 pl-1">
+    <header class="flex items-center mb-5">
       <div>
         <h1 class="mb-2 text-2xl font-lighter leading-7 text-gray-800 sm:text-3xl sm:leading-9 sm:truncate">Users</h1>
         <Breadcrumb/>
       </div>
-      <div class="flex items-center ml-auto pr-1">
+      <div class="flex items-center ml-auto">
 
         <!-- Search -->
         <div class="search w-69 relative mr-3">
@@ -39,12 +39,12 @@
             <div class="flex items-center">
               <div
                   v-text="user.firstname.slice(0, 1) + user.lastname.slice(0, 1)"
-                  class="flex items-center justify-center w-10 h-10 shadow-sm rounded-3xl text-gray-500 bg-gray-200 tracking-widest"></div>
+                  class="flex flex-shrink-0 items-center justify-center w-10 h-10 shadow-sm rounded-3xl text-gray-500 bg-gray-200 tracking-widest"></div>
               <div class="ml-5">
                 <div class="text-sm leading-5 font-bold text-gray-900">
                   {{ user.firstname }} {{ user.lastname }}
                 </div>
-                <div v-text="user.title" class="text-xs leading-5 font-light text-gray-600"></div>
+                <div v-text="user.title" class="text-xs leading-5 font-light text-gray-600 whitespace-normal"></div>
               </div>
             </div>
           </td>
