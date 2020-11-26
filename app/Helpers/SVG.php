@@ -20,9 +20,7 @@ class SVG
             return false;
         }
 
-        $source = File::get($file);
-
-        $source = Str::of($source)->replace('<svg', '<svg class="' . trim(end($parameters)) . '"');
+        $source = Str::of(File::get($file))->replace('<svg', '<svg class="' . trim(end($parameters)) . '"');
 
         return $source;
     }

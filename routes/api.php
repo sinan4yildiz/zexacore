@@ -9,6 +9,21 @@ Route::group([
     'namespace'  => 'Api\v1',
 ], function () {
 
+    // Content types
+    Route::group([
+        'as'        => 'content_types',
+        'prefix'    => 'content-types',
+        'namespace' => 'Structure',
+    ], function () {
+        Route::get('/', 'ContentTypeController@index')->name('index');
+        Route::post('/create', 'ContentTypeController@create')->name('create');
+        Route::put('/update/{id}', 'ContentTypeController@update')->name('update');
+        Route::patch('/order', 'ContentTypeController@order')->name('order');
+        Route::patch('/activate/{id}', 'ContentTypeController@activate')->name('activate');
+        Route::patch('/deactivate/{id}', 'ContentTypeController@deactivate')->name('deactivate');
+        Route::delete('/remove/{id}', 'ContentTypeController@remove')->name('remove');
+    });
+
     // Users
     Route::group([
         'as'        => 'users',
@@ -45,5 +60,15 @@ Route::group([
         Route::patch('/activate/{id}', 'LanguageController@activate')->name('activate');
         Route::patch('/deactivate/{id}', 'LanguageController@deactivate')->name('deactivate');
         Route::delete('/remove/{id}', 'LanguageController@remove')->name('remove');
+    });
+
+    // Settings
+    Route::group([
+        'as'        => 'settings',
+        'prefix'    => 'settings',
+        'namespace' => 'System',
+    ], function () {
+        Route::get('/', 'SettingController@index')->name('index');
+        Route::put('/update', 'SettingController@update')->name('update');
     });
 });

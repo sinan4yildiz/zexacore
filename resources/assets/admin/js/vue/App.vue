@@ -37,11 +37,20 @@
 <script>
 export default {
   name: "App",
+
   data() {
     return {
       metaTitle: null,
     }
   },
+
+  methods: {
+    setMetaTitle: function (to) {
+      if(this.$route.matched.length)
+        this.metaTitle = to.meta.title || this.$route.matched[0].meta.title
+    },
+  },
+
   watch: {
     $route(to) {
       this.setMetaTitle(to)
@@ -51,14 +60,11 @@ export default {
       document.title = this.metaTitle
     }
   },
-  methods: {
-    setMetaTitle: function (to) {
-      this.metaTitle = to.meta.title || this.$route.matched[0].meta.title
-    },
-  },
+
   created() {
     this.setMetaTitle(this.$route)
   },
+
   components: {
     Header: require('./components/Header').default,
     Sidebar: require('./components/Sidebar').default,

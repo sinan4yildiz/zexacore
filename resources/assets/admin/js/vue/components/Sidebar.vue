@@ -114,7 +114,7 @@ export default {
             },
             {
               title: "Content types",
-              route: "content-types",
+              route: "content_types",
             },
           ]
         },
@@ -124,7 +124,7 @@ export default {
           children: [
             {
               title: "Users",
-              route: "users.index",
+              route: "users",
             },
             {
               title: "Activities",
@@ -160,7 +160,7 @@ export default {
             },
             {
               title: "Languages",
-              route: "languages.index",
+              route: "languages",
             },
             {
               title: "Maintenance",
@@ -173,15 +173,20 @@ export default {
   },
   methods: {
     checkNavigation: function (index = null) {
+      if(!this.$route.matched.length) {
+        return false
+      }
+
       this.navigation = this.navigation.map((parent, i) => {
         parent.active = index === i ? !parent.active : false
 
         if(!index && parent.children) {
           var a = parent.children.find((child) => {
-            return child.route === this.$route.name;
+            var p = this.$route.name.split('.')
+            return child.route === this.$route.name || p[0] === child.route
           })
 
-          parent.active = a ? true : false;
+          parent.active = a ? true : false
         }
 
         return parent

@@ -9,18 +9,48 @@ html {
   scroll-behavior: smooth;
 }
 
-main {
-
+svg {
+  @apply inline-block;
 }
 
-svg {
-  display: inline-block;
+textarea {
+  min-height: 4.25rem;
+}
+
+label {
+  @apply select-none;
+
+  &.required {
+    &:after {
+      content: '*';
+      color: theme('colors.red.500');
+      margin-left: .25rem;
+    }
+  }
+}
+
+.form-select {
+  background-position: right 0.625rem center;
+  background-size: 1.625em 1.625em;
 }
 
 input[type="date" ] {
   &::-webkit-calendar-picker-indicator {
     outline: none !important;
     cursor: pointer;
+  }
+}
+
+// Switcher
+.switcher input {
+  &:checked {
+    & + .switcher-bg {
+      background-color: theme('colors.green.600');
+    }
+
+    & ~ .switcher-dot {
+      transform: translate(calc(100% - .25rem), -50%);
+    }
   }
 }
 
@@ -48,7 +78,7 @@ aside {
 
             li {
               a {
-                &.router-link-exact-active {
+                &.router-link-active {
                   color: theme('colors.black');
 
                   span {

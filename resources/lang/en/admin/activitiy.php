@@ -10,19 +10,31 @@ return [
 
     'user' => [
         'create'     => 'Created a new user named :firstname :lastname',
-        'update'     => 'Updated the user named :firstname :lastname',
+        'update'     => 'Updated a user named :firstname :lastname',
         'update_own' => 'Updated its own profile',
-        'activate'   => 'Activated the user named :firstname :lastname',
-        'deactivate' => 'Deactivated the user named :firstname :lastname',
-        'remove'     => 'Removed the user named :firstname :lastname',
+        'activate'   => 'Activated a user named :firstname :lastname',
+        'deactivate' => 'Deactivated a user named :firstname :lastname',
+        'remove'     => 'Removed a user named :firstname :lastname',
     ],
 
     'language' => [
         'create'     => 'Created a new language named :name',
-        'update'     => 'Updated the language named :name',
-        'activate'   => 'Activated the language named :name',
-        'deactivate' => 'Deactivated the language named :name',
-        'remove'     => 'Removed the language named :name',
+        'update'     => 'Updated a language named :name',
+        'activate'   => 'Activated a language named :name',
+        'deactivate' => 'Deactivated a language named :name',
+        'remove'     => 'Removed a language named :name',
+    ],
+
+    'content_type' => [
+        'create'     => 'Created a new content type named :title',
+        'update'     => 'Updated a content type named :title',
+        'activate'   => 'Activated a content type named :title',
+        'deactivate' => 'Deactivated a content type named :title',
+        'remove'     => 'Removed a content type named :title',
+    ],
+
+    'setting' => [
+        'update' => 'Updated settings',
     ],
 
     'auth' => [

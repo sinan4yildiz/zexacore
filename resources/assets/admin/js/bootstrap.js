@@ -1,6 +1,18 @@
 // Lodash
 window._ = require('lodash')
 
+// Lodash mixins
+window._.mixin({
+    'move': function (obj, from, to) {
+        let n   = 1;
+        const e = obj.splice(from, n)[0];
+        n       = 0;
+        obj.splice(to, n, e);
+
+        return obj;
+    }
+})
+
 // Sortable
 window.sortablejs = require('sortablejs')
 

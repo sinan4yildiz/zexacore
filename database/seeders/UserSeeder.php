@@ -10,14 +10,14 @@ use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
+    static $table = 'users';
+
+
     /**
      * Run the database seeds.
      *
      * @return void
      */
-
-    static $table = 'users';
-
     public static function run()
     {
         DB::table(static::$table)->truncate();

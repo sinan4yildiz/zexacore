@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\System;
+namespace App\Http\Controllers\Api\v1\Structure;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Language;
-use App\Http\Requests\System\LanguageRequest;
-use App\Http\Resources\System\LanguageResource;
+use App\Models\ContentType;
+use App\Http\Requests\Structure\ContentTypeRequest;
+use App\Http\Resources\Structure\ContentTypeResource;
 
-class LanguageController extends Controller
+class ContentTypeController extends Controller
 {
     protected $sortable = [];
 
@@ -17,24 +17,33 @@ class LanguageController extends Controller
     protected $ordered = 'asc';
 
     /**
-     * List of languages
+     * List of content types
      *
      */
     public function index()
     {
-        $languages = Language::orderBy($this->sortable[request('sorted')] ?? $this->sorted, request('ordered', $this->ordered));
+        $content_types = ContentType::with('translation')->orderBy($this->sortable[request('sorted')] ?? $this->sorted, request('ordered', $this->ordered));
+
+        /*$content_types = ContentType::join('content_type_translations AS ctt',
+            function ($join) {
+                $join->on('content_types.id', '=', 'ctt.content_type_id')->where('ctt.language_id', '=', 'en');
+            })
+            ->groupBy('countries.id')
+            ->orderBy('t.name', 'desc')
+            ->with('translations')
+            ->get();*/
 
 
         /**
          * Query
          */
-        $languages = $languages->paginate(10);
+        $content_types = $content_types->paginate(10);
 
 
         /**
          * Response structure
          */
-        return LanguageResource::collection($languages)->additional([
+        return ContentTypeResource::collection($content_types)->additional([
             'meta' => [
                 'sorting' => [
                     'sorted'   => request('sorted', $this->sorted),
@@ -46,18 +55,18 @@ class LanguageController extends Controller
     }
 
     /**
-     * Create the new language
+     * Create the new content type
      *
-     * @param  \App\Http\Requests\System\LanguageRequest  $request
+     * @param  \App\Http\Requests\Structure\ContentTypeRequest  $request
      * @param $id
      *
      */
-    public function create(LanguageRequest $request)
+    public function create(ContentTypeRequest $request)
     {
         /**
-         * Store the language
+         * Store the content type
          */
-        $item = new Language;
+        $item = new ContentType();
         $item->name = request('name');
         $item->native = request('native');
         $item->code = request('code');
@@ -72,27 +81,27 @@ class LanguageController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.language.create', [
+        $activity->description = trans('admin/activitiy.content_type.create', [
             'name' => request('name')
         ]);
         $activity->save();
 
-        return new LanguageResource($item);
+        return new ContentTypeResource($item);
     }
 
     /**
-     * Update the existing language
+     * Update the existing content type
      *
-     * @param  \App\Http\Requests\System\LanguageRequest  $request
+     * @param  \App\Http\Requests\Structure\ContentTypeRequest  $request
      * @param $id
      *
      */
-    public function update(LanguageRequest $request, $id)
+    public function update(ContentTypeRequest $request, $id)
     {
         /**
-         * Save the language data
+         * Save the content type data
          */
-        $item = Language::findOrFail($id);
+        $item = ContentType::findOrFail($id);
         $item->name = request('name');
         $item->native = request('native');
         $item->code = request('code');
@@ -105,22 +114,22 @@ class LanguageController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.language.update', [
+        $activity->description = trans('admin/activitiy.content_type.update', [
             'name' => request('name')
         ]);
         $activity->save();
 
-        return new LanguageResource($item);
+        return new ContentTypeResource($item);
     }
 
     /**
-     * Order the languages
+     * Order the content type
      *
      */
     public function order()
     {
         collect(request('orders'))->each(function ($order) {
-            $item = Language::find($order['id']);
+            $item = ContentType::find($order['id']);
 
             if ($item) {
                 $item->sort_order = $order['order'];
@@ -130,7 +139,7 @@ class LanguageController extends Controller
     }
 
     /**
-     * Activate the language
+     * Activate the content type
      *
      * @param $id
      *
@@ -140,7 +149,7 @@ class LanguageController extends Controller
         /**
          * Activate
          */
-        $item = Language::findOrFail($id);
+        $item = ContentType::findOrFail($id);
         $item->is_active = true;
         $item->save();
 
@@ -150,16 +159,16 @@ class LanguageController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.language.activate', [
+        $activity->description = trans('admin/activitiy.content_type.activate', [
             'name' => $item->name,
         ]);
         $activity->save();
 
-        return new LanguageResource($item);
+        return new ContentTypeResource($item);
     }
 
     /**
-     * Deactivate the language
+     * Deactivate the content type
      *
      * @param $id
      *
@@ -169,7 +178,7 @@ class LanguageController extends Controller
         /**
          * Deactivate
          */
-        $item = Language::findOrFail($id);
+        $item = ContentType::findOrFail($id);
         $item->is_active = false;
         $item->save();
 
@@ -179,16 +188,16 @@ class LanguageController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.language.deactivate', [
+        $activity->description = trans('admin/activitiy.content_type.deactivate', [
             'name' => $item->name,
         ]);
         $activity->save();
 
-        return new LanguageResource($item);
+        return new ContentTypeResource($item);
     }
 
     /**
-     * Remove the language
+     * Remove the content type
      *
      * @param $id
      *
@@ -198,7 +207,7 @@ class LanguageController extends Controller
         /**
          * Remove
          */
-        $item = Language::findOrFail($id);
+        $item = ContentType::with('translation')->findOrFail($id);
         $item->delete();
 
 
@@ -207,11 +216,11 @@ class LanguageController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.language.remove', [
+        $activity->description = trans('admin/activitiy.content_type.remove', [
             'name' => $item->name,
         ]);
         $activity->save();
 
-        return new LanguageResource($item);
+        return new ContentTypeResource($item);
     }
 }

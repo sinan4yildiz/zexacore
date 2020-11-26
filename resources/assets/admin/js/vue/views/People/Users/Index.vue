@@ -102,6 +102,8 @@ import {mapGetters, mapActions} from 'vuex'
 export default {
   name: 'UsersIndex',
 
+  props: ['editCurrentUser'],
+
   data() {
     return {
       columns: [
@@ -167,6 +169,12 @@ export default {
   created() {
     this.setParameters({page: false})
     this.fetchUsers()
+
+    if(this.editCurrentUser) {
+      _.delay(() => {
+        this.editData = this.editCurrentUser
+      }, 300)
+    }
   },
 
   components: {

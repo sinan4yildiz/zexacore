@@ -16,7 +16,7 @@
           <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
           <form v-on:submit.prevent="update" v-on-clickaway="close" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-xl w-full" role="dialog" aria-modal="true">
             <div class="bg-gray-50 px-5 py-4 flex border-b border-gray-200">
-              {{ editData.firstname }} {{ editData.lastname }}
+              {{ editData.name }}
             </div>
             <ul class="bg-white px-5 py-6">
               <li class="mb-4">
@@ -28,13 +28,13 @@
               <li class="mb-4">
                 <Input name="code" label="Code" placeholder="e.g. de-de" :value="editData.code" @update:field="fields.code = $event" :errors="errors"/>
               </li>
-              <li class="mb-4">
-                <Input name="locale" label="Locale" placeholder="e.g. de_DE.UTF-8, de_DE@euro, de_DE, german" :value="editData.locale" @update:field="fields.locale = $event" :errors="errors"/>
+              <li class="mb-1">
+                <Input name="locale" label="Locale" placeholder="e.g. de_DE.UTF-8, de_DE@EUR, de_DE, german" :value="editData.locale" @update:field="fields.locale = $event" :errors="errors"/>
               </li>
             </ul>
             <div class="bg-gray-50 px-5 py-4 flex border-t border-gray-200">
               <span class="flex w-full rounded-md shadow-sm sm:mr-3 sm:w-auto">
-                <Button type="submit" theme="indigo" label="Update" icon="check" :loading="processing"/>
+                <Button type="submit" theme="blue" label="Update" icon="check" :loading="processing"/>
               </span>
               <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                 <Button @click="close" theme="default" label="Cancel"/>

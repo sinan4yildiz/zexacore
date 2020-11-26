@@ -24,6 +24,7 @@
             admin: '{{ env('APP_URL'). env('APP_ADMIN_DIR') }}'
         },
         currentUser: @json(Auth::user()),
+        config: @json($settings),
     };
 </script>
 <script src="{{ asset(mix('/assets/'. env('APP_ADMIN_DIR') .'/js/app.js')) }}"></script>

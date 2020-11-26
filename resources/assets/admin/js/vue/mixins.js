@@ -3,11 +3,12 @@ const mixins = {
         Vue.mixin({
             data: function () {
                 return {
-                    currentUser: window.data.currentUser
+                    currentUser: window.data.currentUser,
+                    config: window.data.config,
                 }
             },
             methods: {
-                $snackbar: function (text, type = 'success', timeout = 5000) {
+                $snackbar: function (text, type = 'success', timeout = 2000) {
                     this.$store.dispatch('App/setSnackbar', {text: text, type: type})
 
                     if(timeout) {

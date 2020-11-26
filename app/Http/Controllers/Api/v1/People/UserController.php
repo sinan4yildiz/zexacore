@@ -162,7 +162,7 @@ class UserController extends Controller
     public function activate($id)
     {
         /**
-         * Activate the user
+         * Activate
          */
         $item = User::findOrFail($id);
         $item->is_active = true;
@@ -192,7 +192,7 @@ class UserController extends Controller
     public function deactivate($id)
     {
         /**
-         * Deactivate the user
+         * Deactivate
          */
         $item = User::findOrFail($id);
         $item->is_active = false;
@@ -222,7 +222,7 @@ class UserController extends Controller
     public function remove($id)
     {
         /**
-         * Remove the user
+         * Remove
          */
         $item = User::findOrFail($id);
         $item->delete();

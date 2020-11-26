@@ -14,7 +14,7 @@
             <div class="absolute inset-0 bg-gray-800 opacity-50"></div>
           </div>
           <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-          <form v-on:submit.prevent="create" v-on-clickaway="close" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-xl w-full" role="dialog" aria-modal="true">
+          <form v-on:submit.prevent="create" v-on-clickaway="close" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-xl w-full">
             <div class="bg-gray-50 px-5 py-4 flex border-b border-gray-200">
               Create a new user
             </div>

@@ -64,40 +64,46 @@ export default new VueRouter({
         },
         {
             path: '/content-types',
-            name: 'content-types',
+            name: 'content_types',
             component: require('./views/Structure/ContentTypes/Index.vue').default,
+            meta: {
+                title: 'Content types'
+            },
+        },
+        {
+            path: '/content-types/create',
+            name: 'content_types.create',
+            component: require('./views/Structure/ContentTypes/Create.vue').default,
+            meta: {
+                title: 'Create content type'
+            },
+        },
+        {
+            path: '/content-types/edit/:id',
+            name: 'content_types.edit',
+            component: require('./views/Structure/ContentTypes/Edit.vue').default,
+            meta: {
+                title: 'Edit content type'
+            },
         },
 
         /* People */
         {
             path: '/users',
-            component: DefaultView,
+            name: 'users',
+            component: require('./views/People/Users/Index.vue').default,
+            props: true,
             meta: {
                 title: 'Users'
-            },
-            children: [
-                {
-                    path: '',
-                    name: 'users.index',
-                    component: require('./views/People/Users/Index.vue').default,
-                },
-                {
-                    path: 'create',
-                    name: 'users.create',
-                    component: require('./views/People/Users/Create.vue').default,
-                    meta: {
-                        title: 'Create user'
-                    }
-                },
-            ]
+            }
         },
         {
             path: '/activities',
             name: 'activities',
+            component: require('./views/People/Activities/Index.vue').default,
             meta: {
                 title: 'Activities'
             },
-            component: require('./views/People/Activities/Index.vue').default,
         },
 
         /* Tools */
@@ -122,28 +128,17 @@ export default new VueRouter({
             path: '/settings',
             name: 'settings',
             component: require('./views/System/Settings/Index.vue').default,
+            meta: {
+                title: 'Settings'
+            },
         },
         {
             path: '/languages',
-            component: DefaultView,
+            name: 'languages',
+            component: require('./views/System/Languages/Index.vue').default,
             meta: {
                 title: 'Languages'
             },
-            children: [
-                {
-                    path: '',
-                    name: 'languages.index',
-                    component: require('./views/System/Languages/Index.vue').default,
-                },
-                {
-                    path: 'create',
-                    name: 'languages.create',
-                    component: require('./views/System/Languages/Create.vue').default,
-                    meta: {
-                        title: 'Create language'
-                    }
-                },
-            ]
         },
         {
             path: '/maintenance',

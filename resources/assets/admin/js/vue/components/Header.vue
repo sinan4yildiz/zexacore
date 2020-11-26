@@ -39,11 +39,11 @@
       </template>
       <template #content>
         <div class="mb-2 px-4 pt-2 pb-3 text-gray-500 font-thin border-b border-gray-200">Account</div>
-        <RouterLink :to="{name: 'users.index'}"
+        <RouterLink :to="{name: 'users', params: {editCurrentUser: currentUser}}"
                     class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-black focus:bg-gray-200 focus:outline-none transition duration-150 ease-in-out">
           Your profile
         </RouterLink>
-        <RouterLink :to="{name: 'articles'}"
+        <RouterLink :to="{name: 'users', params: {editCurrentUser: currentUser}}"
                     class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-black focus:bg-gray-200 focus:outline-none transition duration-150 ease-in-out">
           Change password
         </RouterLink>
