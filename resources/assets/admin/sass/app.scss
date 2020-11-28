@@ -17,6 +17,10 @@ textarea {
   min-height: 4.25rem;
 }
 
+.has-error {
+  @apply border-red-300;
+}
+
 label {
   @apply select-none;
 

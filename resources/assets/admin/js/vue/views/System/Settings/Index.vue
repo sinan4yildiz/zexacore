@@ -8,7 +8,7 @@
       <div class="flex items-center ml-auto">
 
         <!-- Save -->
-        <Button @click="save" theme="blue-outline" label="Save settings" icon="check" :loading="processing"/>
+        <Button @click="save" theme="blue" label="Save settings" icon="check" :loading="processing"/>
       </div>
     </header>
     <form v-on:submit.prevent="save">
@@ -16,7 +16,7 @@
       <!-- General -->
       <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-12">
         <div class="flex items-center px-4 py-4 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">General</h3>
+          <h2 class="text-lg leading-6 font-medium text-gray-900">General</h2>
           <span class="bg-gray-50 px-3 py-1 rounded-sm ml-4 max-w-2xl text-xs text-gray-600">Generic configurations of the website</span>
         </div>
         <ul class="border-t border-gray-300">
@@ -82,7 +82,7 @@
       <!-- Localization -->
       <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-12">
         <div class="flex items-center px-4 py-4 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">Localization</h3>
+          <h2 class="text-lg leading-6 font-medium text-gray-900">Localization</h2>
           <span class="bg-gray-50 px-3 py-1 rounded-sm ml-4 max-w-2xl text-xs text-gray-600">Configure localization settings</span>
         </div>
         <ul class="border-t border-gray-300">
@@ -226,7 +226,7 @@
 
       <!-- Save -->
       <div class="flex justify-center">
-        <Button type="submit" theme="blue-outline" label="Save settings" icon="check" :loading="processing"/>
+        <Button type="submit" theme="blue" label="Save settings" icon="check" :loading="processing"/>
       </div>
 
     </form>
@@ -288,11 +288,11 @@ export default {
   },
 
   components: {
-    Input: require('../../../components/elements/Input').default,
-    Select: require('../../../components/elements/Select').default,
-    Textarea: require('../../../components/elements/Textarea').default,
-    Switcher: require('../../../components/elements/Switcher').default,
-    Button: require('../../../components/elements/Button').default,
+    Input: require('../../../components/form/Input').default,
+    Select: require('../../../components/form/Select').default,
+    Textarea: require('../../../components/form/Textarea').default,
+    Switcher: require('../../../components/form/Switcher').default,
+    Button: require('../../../components/form/Button').default,
     Breadcrumb: require('../../../components/elements/Breadcrumb').default,
   }
 }

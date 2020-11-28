@@ -94,7 +94,7 @@ module.exports = {
                 '15': '.15',
             },
             boxShadow: {
-                'inner-px-blue-500': 'inset 0 0 0 1px #3283FD',
+                'inner-px-blue-600': 'inset 0 0 0 1px #0368FF',
             },
             animation: {
                 'spin-fast': 'spin 500ms linear infinite',

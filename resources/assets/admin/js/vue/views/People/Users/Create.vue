@@ -101,8 +101,8 @@ export default {
   },
 
   components: {
-    Input: require('../../../components/elements/Input').default,
-    Button: require('../../../components/elements/Button').default,
+    Input: require('../../../components/form/Input').default,
+    Button: require('../../../components/form/Button').default,
   },
   mixins: [
     clickaway

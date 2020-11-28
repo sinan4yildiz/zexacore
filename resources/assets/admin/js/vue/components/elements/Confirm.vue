@@ -76,7 +76,7 @@ export default {
     clickaway
   ],
   components: {
-    Button: require('./Button').default,
+    Button: require('../form/Button').default,
   }
 }
 </script>

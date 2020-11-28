@@ -94,7 +94,7 @@ export default {
     }
   },
   components: {
-    Button: require('./Button').default
+    Button: require('../form/Button').default
   }
 }
 </script>

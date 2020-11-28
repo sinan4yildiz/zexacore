@@ -78,10 +78,10 @@ export default {
   },
 
   methods: {
-    ...mapActions('Activities', ['fetchActivities', 'setParameters']),
+    ...mapActions('Activities', ['fetchActivities', 'setActivitiesQuery']),
 
     setQuery: function (args) {
-      this.setParameters(args)
+      this.setActivitiesQuery(args)
       this.fetchActivities()
     },
 
@@ -97,7 +97,7 @@ export default {
   },
 
   created() {
-    this.setParameters({page: false})
+    this.setActivitiesQuery({page: false})
     this.fetchActivities()
   },
 
@@ -105,7 +105,7 @@ export default {
     Table: require('../../../components/elements/Table').default,
     Filters: require('../../../components/elements/Filters').default,
     Breadcrumb: require('../../../components/elements/Breadcrumb').default,
-    Button: require('../../../components/elements/Button').default,
+    Button: require('../../../components/form/Button').default,
   }
 }
 </script>

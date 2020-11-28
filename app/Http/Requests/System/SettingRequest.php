@@ -18,7 +18,7 @@ class SettingRequest extends FormRequest
             'brand_name'          => 'sometimes|required',
             'company_name'        => 'sometimes|required',
             'email_address'       => 'sometimes|required|string|email|max:191',
-            'default_language_id' => 'required|integer|exists:languages,id'
+            'default_language_id' => 'sometimes|required|integer|exists:languages,id'
         ];
     }
 

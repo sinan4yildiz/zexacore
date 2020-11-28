@@ -9,7 +9,7 @@
 
         <!-- Create new -->
         <RouterLink :to="{name: 'content_types.create'}">
-          <Button theme="blue-outline" label="Create new" icon="plus"/>
+          <Button theme="blue" label="Create new" icon="plus"/>
         </RouterLink>
       </div>
     </header>
@@ -107,10 +107,10 @@ export default {
   },
 
   methods: {
-    ...mapActions('ContentTypes', ['fetchContentTypes', 'activateContentType', 'deactivateContentType', 'removeContentType', 'orderContentTypes', 'setParameters']),
+    ...mapActions('ContentTypes', ['fetchContentTypes', 'activateContentType', 'deactivateContentType', 'removeContentType', 'orderContentTypes', 'setContentTypesQuery']),
 
     setQuery: function (args) {
-      this.setParameters(args)
+      this.setContentTypesQuery(args)
       this.fetchContentTypes()
     },
 
@@ -131,7 +131,7 @@ export default {
   },
 
   created() {
-    this.setParameters({page: false})
+    this.setContentTypesQuery({page: false})
     this.fetchContentTypes()
   },
 
@@ -141,7 +141,7 @@ export default {
     Filters: require('../../../components/elements/Filters').default,
     Confirm: require('../../../components/elements/Confirm').default,
     Breadcrumb: require('../../../components/elements/Breadcrumb').default,
-    Button: require('../../../components/elements/Button').default,
+    Button: require('../../../components/form/Button').default,
   }
 }
 </script>

@@ -22,7 +22,7 @@
         <Filters class="mr-3" :fields="['status', 'date-start', 'date-end']" @filtered="applyFilters($event)"/>
 
         <!-- Create new -->
-        <Button @click="createModal = true" theme="blue-outline" label="Create new" icon="plus"/>
+        <Button @click="createModal = true" theme="blue" label="Create new" icon="plus"/>
       </div>
     </header>
 
@@ -143,10 +143,10 @@ export default {
   },
 
   methods: {
-    ...mapActions('Users', ['fetchUsers', 'activateUser', 'deactivateUser', 'removeUser', 'setParameters']),
+    ...mapActions('Users', ['fetchUsers', 'activateUser', 'deactivateUser', 'removeUser', 'setUsersQuery']),
 
     setQuery: function (args) {
-      this.setParameters(args)
+      this.setUsersQuery(args)
       this.fetchUsers()
     },
 
@@ -167,7 +167,7 @@ export default {
   },
 
   created() {
-    this.setParameters({page: false})
+    this.setUsersQuery({page: null})
     this.fetchUsers()
 
     if(this.editCurrentUser) {
@@ -185,7 +185,7 @@ export default {
     Filters: require('../../../components/elements/Filters').default,
     Confirm: require('../../../components/elements/Confirm').default,
     Breadcrumb: require('../../../components/elements/Breadcrumb').default,
-    Button: require('../../../components/elements/Button').default,
+    Button: require('../../../components/form/Button').default,
   }
 }
 </script>

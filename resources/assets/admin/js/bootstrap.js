@@ -10,7 +10,7 @@ window._.mixin({
         obj.splice(to, n, e);
 
         return obj;
-    }
+    },
 })
 
 // Sortable

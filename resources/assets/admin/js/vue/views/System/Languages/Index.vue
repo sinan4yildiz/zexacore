@@ -8,7 +8,7 @@
       <div class="flex items-center ml-auto">
 
         <!-- Create new -->
-        <Button @click="createModal = true" theme="blue-outline" label="Create new" icon="plus"/>
+        <Button @click="createModal = true" theme="blue" label="Create new" icon="plus"/>
       </div>
     </header>
 
@@ -122,10 +122,10 @@ export default {
   },
 
   methods: {
-    ...mapActions('Languages', ['fetchLanguages', 'activateLanguage', 'deactivateLanguage', 'removeLanguage', 'orderLanguages', 'setParameters']),
+    ...mapActions('Languages', ['fetchLanguages', 'activateLanguage', 'deactivateLanguage', 'removeLanguage', 'orderLanguages', 'setLanguagesQuery']),
 
     setQuery: function (args) {
-      this.setParameters(args)
+      this.setLanguagesQuery(args)
       this.fetchLanguages()
     },
 
@@ -146,7 +146,7 @@ export default {
   },
 
   created() {
-    this.setParameters({page: false})
+    this.setLanguagesQuery({page: false})
     this.fetchLanguages()
   },
 
@@ -158,7 +158,7 @@ export default {
     Filters: require('../../../components/elements/Filters').default,
     Confirm: require('../../../components/elements/Confirm').default,
     Breadcrumb: require('../../../components/elements/Breadcrumb').default,
-    Button: require('../../../components/elements/Button').default,
+    Button: require('../../../components/form/Button').default,
   }
 }
 </script>

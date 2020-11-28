@@ -1,6 +1,6 @@
 const state = {
     languages: {},
-    parameters: {},
+    query: {},
 }
 
 const getters = {
@@ -10,7 +10,7 @@ const getters = {
 const actions = {
     async fetchLanguages({commit, state}) {
         await axios.get('languages', {
-                       params: state.parameters
+                       params: state.query
                    })
                    .then(response => {
                        commit('mutateAll', response.data);
@@ -68,8 +68,8 @@ const actions = {
                        commit('mutateRemoved', language.id);
                    });
     },
-    setParameters({commit}, parameters) {
-        commit('mutateParameters', _.cloneDeep(parameters))
+    setLanguagesQuery({commit}, query) {
+        commit('mutateQuery', _.cloneDeep(query))
     },
 }
 
@@ -89,8 +89,8 @@ const mutations = {
         /*_.move(state.languages.data, ordered.oldIndex, ordered.newIndex)*/
     },
     mutateRemoved: (state, id) => (state.languages.data = state.languages.data.filter(language => language.id !== id)),
-    mutateParameters: (state, parameters) => {
-        state.parameters = _.pickBy(_.size(parameters) ? _.merge(state.parameters, parameters) : {}, _.identity)
+    mutateQuery: (state, query) => {
+        state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
     },
 }
 

@@ -13,7 +13,7 @@
                 :placeholder="inputPlaceholder"
                 v-bind="attr"
                 class="form-input block w-full px-4 py-3 text-sm border border-gray-400 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out"
-                v-bind:class="{'border-red-300': error}"
+                v-bind:class="{'has-error': error}"
       ></textarea>
     </span>
     <p v-if="error" class="mt-1 ml-1 text-red-600 text-xs" v-text="error"></p>

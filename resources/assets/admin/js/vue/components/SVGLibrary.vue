@@ -10,10 +10,13 @@
     <!-- Chevron -->
     <symbol id="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/> </symbol>
 
+    <!-- Arrow left -->
+    <symbol id="icon-arrow-left" viewBox="0 0 28 28" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 21l-7-7m0 0l7-7m-7 7h18"/></symbol>
+
     <!-- Check -->
     <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></symbol>
 
-    <!-- Check circke -->
+    <!-- Check circle -->
     <symbol id="icon-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></symbol>
 
     <!-- Minus circle -->
@@ -43,11 +46,12 @@
     <!-- Sort desc -->
     <symbol id="icon-sort-desc" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"/></symbol>
 
+
     <!--
       //  Solid icons
     -->
 
-    <!-- Search -->
+    <!-- Sech -->
     <symbol id="icon-search" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></symbol>
 
     <!-- 3 dots -->
@@ -64,6 +68,9 @@
 
     <!-- Chevron -->
     <symbol id="icon-chevron-solid" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></symbol>
+
+    <!-- Arrow left -->
+    <symbol id="icon-arrow-left-solid" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"/></symbol>
 
     <!-- Home -->
     <symbol id="icon-home-solid" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></symbol>

@@ -1,6 +1,6 @@
 const state = {
     contentTypes: {},
-    parameters: {},
+    query: {},
 }
 
 const getters = {
@@ -10,7 +10,7 @@ const getters = {
 const actions = {
     async fetchContentTypes({commit, state}) {
         await axios.get('content-types', {
-                       params: state.parameters
+                       params: state.query
                    })
                    .then(response => {
                        commit('mutateAll', response.data);
@@ -68,8 +68,8 @@ const actions = {
                        commit('mutateRemoved', contentType.id);
                    });
     },
-    setParameters({commit}, parameters) {
-        commit('mutateParameters', _.cloneDeep(parameters))
+    setContentTypesQuery({commit}, query) {
+        commit('mutateQuery', _.cloneDeep(query))
     },
 }
 
@@ -89,8 +89,8 @@ const mutations = {
         /*_.move(state.contentTypes.data, ordered.oldIndex, ordered.newIndex)*/
     },
     mutateRemoved: (state, id) => (state.contentTypes.data = state.contentTypes.data.filter(contentType => contentType.id !== id)),
-    mutateParameters: (state, parameters) => {
-        state.parameters = _.pickBy(_.size(parameters) ? _.merge(state.parameters, parameters) : {}, _.identity)
+    mutateQuery: (state, query) => {
+        state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
     },
 }
 

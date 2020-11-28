@@ -26,10 +26,21 @@ export default {
     }
   },
   created() {
+    var parentRoute = this.$router.resolve({name: this.$route.name.split('.')[0]}).resolved
+
+    // Parent route if exists
+    if(parentRoute.name !== this.$route.name) {
+      this.breadcrumbs.push({
+        title: parentRoute.meta.title,
+        path: parentRoute.path
+      })
+    }
+
+    // Current route
     this.$route.matched.forEach((e, i) => {
       if(e.meta.title) {
         this.breadcrumbs.push({
-          title: e.meta.title,
+          title: e.meta.breadcrumb || e.meta.title,
           path: e.path
         })
       }

@@ -7,7 +7,6 @@
       <span v-if="label[0] && inputChecked" class="switcher-label-checked ml-3 text-gray-600 font-medium text-xs uppercase">{{ label[0] }}</span>
       <span v-if="label[1] && !inputChecked" class="switcher-label ml-3 text-gray-600 font-medium text-xs uppercase">{{ label[1] }}</span>
     </label>
-    <p v-if="error" class="mt-1 ml-1 text-red-600 text-xs" v-text="error"></p>
   </div>
 </template>
 
@@ -16,7 +15,7 @@ export default {
   name: "Switcher",
 
   props: [
-    'name', 'label', 'checked', 'attr', 'classes', 'errors'
+    'name', 'label', 'checked', 'attr', 'classes'
   ],
 
   data: function () {
@@ -25,17 +24,8 @@ export default {
     }
   },
 
-  computed: {
-    error: function () {
-      if(this.errors[this.name]) {
-        return this.errors[this.name][0];
-      }
-    },
-  },
-
   watch: {
     inputChecked: function () {
-      this.errors[this.name] = false
       this.$emit('update:field', this.inputChecked)
     }
   },

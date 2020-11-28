@@ -1,6 +1,6 @@
 const state = {
     activities: {},
-    parameters: {},
+    query: {},
 }
 
 const getters = {
@@ -10,21 +10,21 @@ const getters = {
 const actions = {
     async fetchActivities({commit, state}) {
         await axios.get('activities', {
-                       params: state.parameters
+                       params: state.query
                    })
                    .then(response => {
                        commit('mutateAll', response.data);
                    });
     },
-    setParameters({commit}, parameters) {
-        commit('mutateParameters', _.cloneDeep(parameters))
+    setActivitiesQuery({commit}, query) {
+        commit('mutateQuery', _.cloneDeep(query))
     },
 }
 
 const mutations = {
     mutateAll: (state, activities) => (state.activities = activities),
-    mutateParameters: (state, parameters) => {
-        state.parameters = _.pickBy(_.size(parameters) ? _.merge(state.parameters, parameters) : {}, _.identity)
+    mutateQuery: (state, query) => {
+        state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
     },
 }
 

@@ -160,7 +160,7 @@ class ContentTypeController extends Controller
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
         $activity->description = trans('admin/activitiy.content_type.activate', [
-            'name' => $item->name,
+            'title' => $item->translation->title,
         ]);
         $activity->save();
 
@@ -189,7 +189,7 @@ class ContentTypeController extends Controller
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
         $activity->description = trans('admin/activitiy.content_type.deactivate', [
-            'name' => $item->name,
+            'title' => $item->translation->title,
         ]);
         $activity->save();
 
@@ -217,7 +217,7 @@ class ContentTypeController extends Controller
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
         $activity->description = trans('admin/activitiy.content_type.remove', [
-            'name' => $item->name,
+            'title' => $item->translation->title,
         ]);
         $activity->save();
 

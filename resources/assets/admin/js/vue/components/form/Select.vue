@@ -7,7 +7,7 @@
             :id="'field-' + name"
             v-bind="attr"
             class="form-select block w-full px-4 py-3 text-sm border border-gray-400 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm"
-            v-bind:class="{'border-red-300': error, 'transition duration-150 ease-in-out': selectValue, 'text-gray-500': !selectValue}"
+            v-bind:class="{'has-error': error, 'transition duration-150 ease-in-out': selectValue, 'text-gray-500': !selectValue}"
     >
       <option v-if="selectPlaceholder" value="">{{ placeholder }}</option>
       <option v-for="(option, index) in options" v-bind:value="option.value">{{ option.label }}</option>

@@ -18280,8 +18280,8 @@ video {
   box-shadow: none;
 }
 
-.shadow-inner-px-blue-500 {
-  box-shadow: inset 0 0 0 1px #3283FD;
+.shadow-inner-px-blue-600 {
+  box-shadow: inset 0 0 0 1px #0368FF;
 }
 
 .hover\:shadow-xs:hover {
@@ -18324,8 +18324,8 @@ video {
   box-shadow: none;
 }
 
-.hover\:shadow-inner-px-blue-500:hover {
-  box-shadow: inset 0 0 0 1px #3283FD;
+.hover\:shadow-inner-px-blue-600:hover {
+  box-shadow: inset 0 0 0 1px #0368FF;
 }
 
 .focus\:shadow-xs:focus {
@@ -18368,8 +18368,8 @@ video {
   box-shadow: none;
 }
 
-.focus\:shadow-inner-px-blue-500:focus {
-  box-shadow: inset 0 0 0 1px #3283FD;
+.focus\:shadow-inner-px-blue-600:focus {
+  box-shadow: inset 0 0 0 1px #0368FF;
 }
 
 .fill-current {
@@ -24552,6 +24552,12 @@ svg {
 
 textarea {
   min-height: 4.25rem;
+}
+
+.has-error {
+  --border-opacity: 1;
+  border-color: #FD6975;
+  border-color: rgba(253, 105, 117, var(--border-opacity));
 }
 
 label {
@@ -42075,8 +42081,8 @@ table tbody tr:last-child td:last-child {
     box-shadow: none;
   }
 
-  .sm\:shadow-inner-px-blue-500 {
-    box-shadow: inset 0 0 0 1px #3283FD;
+  .sm\:shadow-inner-px-blue-600 {
+    box-shadow: inset 0 0 0 1px #0368FF;
   }
 
   .sm\:hover\:shadow-xs:hover {
@@ -42119,8 +42125,8 @@ table tbody tr:last-child td:last-child {
     box-shadow: none;
   }
 
-  .sm\:hover\:shadow-inner-px-blue-500:hover {
-    box-shadow: inset 0 0 0 1px #3283FD;
+  .sm\:hover\:shadow-inner-px-blue-600:hover {
+    box-shadow: inset 0 0 0 1px #0368FF;
   }
 
   .sm\:focus\:shadow-xs:focus {
@@ -42163,8 +42169,8 @@ table tbody tr:last-child td:last-child {
     box-shadow: none;
   }
 
-  .sm\:focus\:shadow-inner-px-blue-500:focus {
-    box-shadow: inset 0 0 0 1px #3283FD;
+  .sm\:focus\:shadow-inner-px-blue-600:focus {
+    box-shadow: inset 0 0 0 1px #0368FF;
   }
 
   .sm\:fill-current {
@@ -65650,8 +65656,8 @@ table tbody tr:last-child td:last-child {
     box-shadow: none;
   }
 
-  .md\:shadow-inner-px-blue-500 {
-    box-shadow: inset 0 0 0 1px #3283FD;
+  .md\:shadow-inner-px-blue-600 {
+    box-shadow: inset 0 0 0 1px #0368FF;
   }
 
   .md\:hover\:shadow-xs:hover {
@@ -65694,8 +65700,8 @@ table tbody tr:last-child td:last-child {
     box-shadow: none;
   }
 
-  .md\:hover\:shadow-inner-px-blue-500:hover {
-    box-shadow: inset 0 0 0 1px #3283FD;
+  .md\:hover\:shadow-inner-px-blue-600:hover {
+    box-shadow: inset 0 0 0 1px #0368FF;
   }
 
   .md\:focus\:shadow-xs:focus {
@@ -65738,8 +65744,8 @@ table tbody tr:last-child td:last-child {
     box-shadow: none;
   }
 
-  .md\:focus\:shadow-inner-px-blue-500:focus {
-    box-shadow: inset 0 0 0 1px #3283FD;
+  .md\:focus\:shadow-inner-px-blue-600:focus {
+    box-shadow: inset 0 0 0 1px #0368FF;
   }
 
   .md\:fill-current {
@@ -89225,8 +89231,8 @@ table tbody tr:last-child td:last-child {
     box-shadow: none;
   }
 
-  .lg\:shadow-inner-px-blue-500 {
-    box-shadow: inset 0 0 0 1px #3283FD;
+  .lg\:shadow-inner-px-blue-600 {
+    box-shadow: inset 0 0 0 1px #0368FF;
   }
 
   .lg\:hover\:shadow-xs:hover {
@@ -89269,8 +89275,8 @@ table tbody tr:last-child td:last-child {
     box-shadow: none;
   }
 
-  .lg\:hover\:shadow-inner-px-blue-500:hover {
-    box-shadow: inset 0 0 0 1px #3283FD;
+  .lg\:hover\:shadow-inner-px-blue-600:hover {
+    box-shadow: inset 0 0 0 1px #0368FF;
   }
 
   .lg\:focus\:shadow-xs:focus {
@@ -89313,8 +89319,8 @@ table tbody tr:last-child td:last-child {
     box-shadow: none;
   }
 
-  .lg\:focus\:shadow-inner-px-blue-500:focus {
-    box-shadow: inset 0 0 0 1px #3283FD;
+  .lg\:focus\:shadow-inner-px-blue-600:focus {
+    box-shadow: inset 0 0 0 1px #0368FF;
   }
 
   .lg\:fill-current {
@@ -112800,8 +112806,8 @@ table tbody tr:last-child td:last-child {
     box-shadow: none;
   }
 
-  .xl\:shadow-inner-px-blue-500 {
-    box-shadow: inset 0 0 0 1px #3283FD;
+  .xl\:shadow-inner-px-blue-600 {
+    box-shadow: inset 0 0 0 1px #0368FF;
   }
 
   .xl\:hover\:shadow-xs:hover {
@@ -112844,8 +112850,8 @@ table tbody tr:last-child td:last-child {
     box-shadow: none;
   }
 
-  .xl\:hover\:shadow-inner-px-blue-500:hover {
-    box-shadow: inset 0 0 0 1px #3283FD;
+  .xl\:hover\:shadow-inner-px-blue-600:hover {
+    box-shadow: inset 0 0 0 1px #0368FF;
   }
 
   .xl\:focus\:shadow-xs:focus {
@@ -112888,8 +112894,8 @@ table tbody tr:last-child td:last-child {
     box-shadow: none;
   }
 
-  .xl\:focus\:shadow-inner-px-blue-500:focus {
-    box-shadow: inset 0 0 0 1px #3283FD;
+  .xl\:focus\:shadow-inner-px-blue-600:focus {
+    box-shadow: inset 0 0 0 1px #0368FF;
   }
 
   .xl\:fill-current {

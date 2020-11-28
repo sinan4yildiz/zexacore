@@ -75,7 +75,8 @@ export default new VueRouter({
             name: 'content_types.create',
             component: require('./views/Structure/ContentTypes/Create.vue').default,
             meta: {
-                title: 'Create content type'
+                title: 'Create content type',
+                breadcrumb: 'Create',
             },
         },
         {
@@ -83,7 +84,8 @@ export default new VueRouter({
             name: 'content_types.edit',
             component: require('./views/Structure/ContentTypes/Edit.vue').default,
             meta: {
-                title: 'Edit content type'
+                title: 'Edit content type',
+                breadcrumb: 'Edit',
             },
         },
 

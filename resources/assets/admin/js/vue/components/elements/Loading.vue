@@ -52,6 +52,15 @@ export default {
           this.$snackbar('This action URL not found. Please check the request.', 'warning')
           break
 
+          // Unprocessable entity
+        case 422:
+          _.delay(() => {
+            var e = document.querySelector('.has-error:first-child')
+            if(!e.closest('.modal'))
+              this.$scrollTo(e)
+          }, 300)
+          break
+
           // Not found
         case 500:
           this.$snackbar('Something went wrong. Please check error logs or the response of the request.', 'error')
