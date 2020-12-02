@@ -32,9 +32,7 @@
 export default {
   name: "Slug",
 
-  props: [
-    'name', 'label', 'placeholder', 'value', 'attr', 'source', 'required', 'classes', 'errors'
-  ],
+  props: ['name', 'label', 'placeholder', 'value', 'attr', 'source', 'required', 'classes', 'errors'],
 
   data: function () {
     return {

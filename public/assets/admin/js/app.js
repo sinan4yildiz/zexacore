@@ -2243,6 +2243,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SVGLibrary"
 });
@@ -3305,10 +3308,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "LanguageSwitcher",
-  props: ['defaultId'],
+  name: "LanguageBar",
+  props: {
+    translations: [Object, Array],
+    defaultId: [String, Number],
+    changeable: {
+      type: Boolean,
+      "default": true
+    }
+  },
   data: function data() {
     return {
       defaultLanguageId: this.defaultId,
@@ -3325,6 +3342,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Languages', ['fetchLanguages'])), {}, {
+    isTranslated: function isTranslated(id) {
+      return _.map(this.translations, 'id').includes(id);
+    },
     change: function change(id) {
       this.defaultLanguageId = id;
       this.$emit('input', this.defaultLanguageId);
@@ -25214,6 +25234,25 @@ var render = function() {
         "symbol",
         {
           attrs: {
+            id: "icon-pencil-solid",
+            viewBox: "0 0 20 20",
+            fill: "currentColor"
+          }
+        },
+        [
+          _c("path", {
+            attrs: {
+              d:
+                "M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+            }
+          })
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "symbol",
+        {
+          attrs: {
             id: "icon-users-solid",
             viewBox: "0 0 20 20",
             fill: "currentColor"
@@ -27132,6 +27171,7 @@ var render = function() {
                   {
                     staticClass:
                       "flex items-center text-lg font-medium leading-6 text-gray-900 focus:outline-none",
+                    class: { "cursor-text": !_vm.translations },
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
@@ -27152,30 +27192,34 @@ var render = function() {
                         _vm._s(_vm.defaultLanguage.name) +
                         "\n        "
                     ),
-                    _c(
-                      "svg",
-                      {
-                        staticClass:
-                          "w-4 h-4 ml-1 fill-current text-gray-600 transition ease-in-out duration-300 transform",
-                        class: { "-rotate-180": _vm.isOpen }
-                      },
-                      [
-                        _c("use", {
-                          attrs: { "xlink:href": "#icon-chevron-solid" }
-                        })
-                      ]
-                    )
+                    _vm.translations
+                      ? _c(
+                          "svg",
+                          {
+                            staticClass:
+                              "w-4 h-4 ml-1 fill-current text-gray-600 transition ease-in-out duration-300 transform",
+                            class: { "-rotate-180": _vm.isOpen }
+                          },
+                          [
+                            _c("use", {
+                              attrs: { "xlink:href": "#icon-chevron-solid" }
+                            })
+                          ]
+                        )
+                      : _vm._e()
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass:
-                      "bg-gray-100 px-3 py-1 rounded-sm ml-4 max-w-2xl text-xs text-gray-700"
-                  },
-                  [_vm._v("Change to create in a different language")]
-                )
+                _vm.translations
+                  ? _c(
+                      "span",
+                      {
+                        staticClass:
+                          "bg-gray-100 px-3 py-1 rounded-sm ml-4 max-w-2xl text-xs text-gray-700"
+                      },
+                      [_vm._v("Change to edit in a different language")]
+                    )
+                  : _vm._e()
               ])
             : _vm._e()
         ]
@@ -27191,7 +27235,10 @@ var render = function() {
           }
         },
         [
-          _vm.languages.data && _vm.languages.data.length > 1 && _vm.isOpen
+          _vm.languages.data &&
+          _vm.languages.data.length > 1 &&
+          _vm.isOpen &&
+          _vm.translations
             ? _c(
                 "ul",
                 { staticClass: "flex items-center mt-4" },
@@ -27207,14 +27254,14 @@ var render = function() {
                           expression: "language.id != defaultLanguageId"
                         }
                       ],
-                      staticClass: "mr-4"
+                      staticClass: "mr-5"
                     },
                     [
                       _c(
                         "button",
                         {
                           staticClass:
-                            "flex items-center text-gray-700 hover:text-black focus:outline-none",
+                            "flex items-center text-gray-600 hover:text-black focus:outline-none",
                           attrs: { type: "button" },
                           on: {
                             click: function($event) {
@@ -27231,7 +27278,15 @@ var render = function() {
                           _vm._v(" "),
                           _c("span", { staticClass: "text-sm leading-4" }, [
                             _vm._v(_vm._s(language.name))
-                          ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.isTranslated(language.id)
+                            ? _c("svg", { staticClass: "w-3 h-3 ml-1" }, [
+                                _c("use", {
+                                  attrs: { "xlink:href": "#icon-pencil-solid" }
+                                })
+                              ])
+                            : _vm._e()
                         ]
                       )
                     ]
@@ -27968,7 +28023,7 @@ var render = function() {
             key: "tbody",
             fn: function() {
               return [
-                _vm.activities.data && _vm.activities.data.length
+                _vm.activities.data
                   ? _c(
                       "tbody",
                       { staticClass: "bg-white divide-y divide-gray-300" },
@@ -28700,7 +28755,7 @@ var render = function() {
             key: "tbody",
             fn: function() {
               return [
-                _vm.users.data && _vm.users.data.length
+                _vm.users.data
                   ? _c(
                       "tbody",
                       { staticClass: "bg-white divide-y divide-gray-300" },
@@ -29662,32 +29717,38 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.update($event)
-          }
-        }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "bg-white shadow overflow-hidden sm:rounded-lg mb-8" },
-          [
-            _c("LanguageBar", {
-              attrs: { defaultId: _vm.config.default_language_id },
-              on: {
-                input: function($event) {
-                  _vm.form.language_id = $event
-                }
+    _vm.contentType.data
+      ? _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.update($event)
               }
-            }),
-            _vm._v(" "),
-            _vm.contentType.data
-              ? _c(
+            }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "bg-white shadow overflow-hidden sm:rounded-lg mb-8"
+              },
+              [
+                _c("LanguageBar", {
+                  attrs: {
+                    translations: _vm.contentType.data.translations,
+                    defaultId: _vm.config.default_language_id
+                  },
+                  on: {
+                    input: function($event) {
+                      _vm.form.language_id = $event
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
                   "ul",
                   [
                     _c("InputHidden", {
@@ -30020,50 +30081,57 @@ var render = function() {
                   ],
                   1
                 )
-              : _c("div", { staticClass: "text-center py-8" }, [
-                  _c(
-                    "svg",
-                    {
-                      staticClass:
-                        "w-5 h-5 animate-spin animate-spin-fast text-blue-600"
-                    },
-                    [_c("use", { attrs: { "xlink:href": "#icon-loading" } })]
-                  )
-                ])
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "flex items-center" },
-          [
-            _c(
-              "RouterLink",
-              { staticClass: "mr-3", attrs: { to: { name: "content_types" } } },
-              [
-                _c("Button", {
-                  attrs: { theme: "link", label: "Back", icon: "arrow-left" }
-                })
               ],
               1
             ),
             _vm._v(" "),
-            _c("Button", {
-              attrs: {
-                type: "submit",
-                theme: "blue",
-                size: "wide",
-                label: "Save",
-                icon: "check",
-                loading: _vm.processing
-              }
-            })
-          ],
-          1
+            _c(
+              "div",
+              { staticClass: "flex items-center" },
+              [
+                _c(
+                  "RouterLink",
+                  {
+                    staticClass: "mr-3",
+                    attrs: { to: { name: "content_types" } }
+                  },
+                  [
+                    _c("Button", {
+                      attrs: {
+                        theme: "link",
+                        label: "Back",
+                        icon: "arrow-left"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("Button", {
+                  attrs: {
+                    type: "submit",
+                    theme: "blue",
+                    size: "wide",
+                    label: "Save",
+                    icon: "check",
+                    loading: _vm.processing
+                  }
+                })
+              ],
+              1
+            )
+          ]
         )
-      ]
-    )
+      : _c("div", { staticClass: "text-center py-8" }, [
+          _c(
+            "svg",
+            {
+              staticClass:
+                "w-5 h-5 animate-spin animate-spin-fast text-blue-600"
+            },
+            [_c("use", { attrs: { "xlink:href": "#icon-loading" } })]
+          )
+        ])
   ])
 }
 var staticRenderFns = [
@@ -30282,7 +30350,7 @@ var render = function() {
             key: "tbody",
             fn: function() {
               return [
-                _vm.contentTypes.data && _vm.contentTypes.data.length
+                _vm.contentTypes.data
                   ? _c(
                       "tbody",
                       {
@@ -31160,7 +31228,7 @@ var render = function() {
             key: "tbody",
             fn: function() {
               return [
-                _vm.languages.data && _vm.languages.data.length
+                _vm.languages.data
                   ? _c(
                       "tbody",
                       {

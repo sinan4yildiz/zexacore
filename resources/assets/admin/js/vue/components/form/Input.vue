@@ -32,9 +32,7 @@
 export default {
   name: "Input",
 
-  props: [
-    'type', 'name', 'label', 'placeholder', 'value', 'attr', 'required', 'classes', 'errors'
-  ],
+  props: ['type', 'name', 'label', 'placeholder', 'value', 'attr', 'required', 'classes', 'errors'],
 
   data: function () {
     return {

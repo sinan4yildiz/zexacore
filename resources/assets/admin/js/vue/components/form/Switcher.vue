@@ -14,9 +14,7 @@
 export default {
   name: "Switcher",
 
-  props: [
-    'name', 'label', 'checked', 'attr', 'required', 'classes'
-  ],
+  props: ['name', 'label', 'checked', 'attr', 'required', 'classes'],
 
   data: function () {
     return {

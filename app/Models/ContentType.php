@@ -17,6 +17,11 @@ class ContentType extends Model
         return $language_id ? $translation->first() : $translation;
     }
 
+    public function translations()
+    {
+        return $this->hasMany(ContentTypeTranslation::class, 'content_type_id');
+    }
+
     public function slug($language_id = null)
     {
         $slug = $this->hasOne(Slug::class, 'value')->where([

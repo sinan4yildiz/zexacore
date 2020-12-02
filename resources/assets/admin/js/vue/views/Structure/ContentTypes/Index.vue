@@ -21,7 +21,7 @@
         @query="setQuery($event)"
     >
       <template #tbody>
-        <tbody v-if="contentTypes.data && contentTypes.data.length" v-sortable="{handle: 'td:first-child', onUpdate: orderContentTypes}" class="bg-white divide-y divide-gray-300">
+        <tbody v-if="contentTypes.data" v-sortable="{handle: 'td:first-child', onUpdate: orderContentTypes}" class="bg-white divide-y divide-gray-300">
         <tr v-for="(contentType, index) in contentTypes.data" v-bind:data-id="contentType.id">
           <td class="bg-gray-50 text-gray-500 hover:text-gray-700 text-center cursor-move transition duration-150 ease-in-out">
             <svg class="w-4 h-4">

@@ -9,9 +9,7 @@
 export default {
   name: "InputHidden",
 
-  props: [
-    'name', 'value'
-  ],
+  props: ['name', 'value'],
 
   data: function () {
     return {

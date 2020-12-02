@@ -24,9 +24,7 @@
 export default {
   name: "Select",
 
-  props: [
-    'name', 'label', 'placeholder', 'options', 'selected', 'required', 'attr', 'classes', 'errors'
-  ],
+  props: ['name', 'label', 'placeholder', 'options', 'selected', 'required', 'attr', 'classes', 'errors'],
 
   data: function () {
     return {

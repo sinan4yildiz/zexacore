@@ -30,7 +30,7 @@
         @query="setQuery($event)"
     >
       <template #tbody>
-        <tbody v-if="activities.data && activities.data.length" class="bg-white divide-y divide-gray-300">
+        <tbody v-if="activities.data" class="bg-white divide-y divide-gray-300">
         <tr v-for="(activity, index) in activities.data">
           <td class="px-6 py-4 whitespace-no-wrap">
             <div class="text-sm mb-1 leading-5 font-bold text-gray-900">

@@ -22,9 +22,7 @@
 export default {
   name: "Textarea",
 
-  props: [
-    'name', 'label', 'placeholder', 'value', 'attr', 'required', 'classes', 'errors'
-  ],
+  props: ['name', 'label', 'placeholder', 'value', 'attr', 'required', 'classes', 'errors'],
 
   data: function () {
     return {

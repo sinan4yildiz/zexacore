@@ -17,10 +17,10 @@
       </div>
     </header>
 
-    <form v-on:submit.prevent="update">
+    <form v-if="contentType.data" v-on:submit.prevent="update">
       <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-8">
-        <LanguageBar :defaultId="config.default_language_id" @input="form.language_id = $event"/>
-        <ul v-if="contentType.data">
+        <LanguageBar :translations="contentType.data.translations" :defaultId="config.default_language_id" @input="form.language_id = $event"/>
+        <ul>
           <InputHidden name="id" :value="contentType.data.id" @input="form.id = $event"/>
           <li class="bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <div>
@@ -100,11 +100,6 @@
             </div>
           </li>
         </ul>
-        <div v-else class="text-center py-8">
-          <svg class="w-5 h-5 animate-spin animate-spin-fast text-blue-600">
-            <use xlink:href="#icon-loading"></use>
-          </svg>
-        </div>
       </div>
       <div class="flex items-center">
         <!-- Back -->
@@ -116,6 +111,11 @@
         <Button type="submit" theme="blue" size="wide" label="Save" icon="check" :loading="processing"/>
       </div>
     </form>
+    <div v-else class="text-center py-8">
+      <svg class="w-5 h-5 animate-spin animate-spin-fast text-blue-600">
+        <use xlink:href="#icon-loading"></use>
+      </svg>
+    </div>
   </section>
 </template>
 

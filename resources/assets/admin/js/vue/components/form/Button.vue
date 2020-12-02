@@ -16,9 +16,7 @@
 export default {
   name: "Button",
 
-  props: [
-    'type', 'theme', 'label', 'icon', 'size', 'loading',
-  ],
+  props: ['type', 'theme', 'label', 'icon', 'size', 'loading'],
 
   computed: {
     iconClasses: function () {

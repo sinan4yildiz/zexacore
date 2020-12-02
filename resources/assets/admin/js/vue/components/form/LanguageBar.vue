@@ -6,16 +6,20 @@
         enter-to-class="opacity-100 translate-y-0"
     >
       <div v-if="defaultLanguage" class="flex items-center">
-        <button @click="isOpen = !isOpen" type="button" class="flex items-center text-lg font-medium leading-6 text-gray-900 focus:outline-none">
+        <button @click="isOpen = !isOpen"
+                type="button"
+                v-bind:class="{'cursor-text': !translations}"
+                class="flex items-center text-lg font-medium leading-6 text-gray-900 focus:outline-none"
+        >
           <svg class="w-6 h-5 mr-2">
             <use v-bind:xlink:href="'#flag-' + defaultLanguage.code"></use>
           </svg>
           {{ defaultLanguage.name }}
-          <svg class="w-4 h-4 ml-1 fill-current text-gray-600 transition ease-in-out duration-300 transform" v-bind:class="{'-rotate-180': isOpen}">
+          <svg v-if="translations" class="w-4 h-4 ml-1 fill-current text-gray-600 transition ease-in-out duration-300 transform" v-bind:class="{'-rotate-180': isOpen}">
             <use xlink:href="#icon-chevron-solid"></use>
           </svg>
         </button>
-        <span class="bg-gray-100 px-3 py-1 rounded-sm ml-4 max-w-2xl text-xs text-gray-700">Change to create in a different language</span>
+        <span v-if="translations" class="bg-gray-100 px-3 py-1 rounded-sm ml-4 max-w-2xl text-xs text-gray-700">Change to edit in a different language</span>
       </div>
     </transition>
     <transition
@@ -23,13 +27,16 @@
         enter-class="opacity-0 -translate-y-2"
         enter-to-class="opacity-100 translate-y-0"
     >
-      <ul v-if="languages.data && languages.data.length > 1 && isOpen" class="flex items-center mt-4">
-        <li v-for="(language, index) in languages.data" v-show="language.id != defaultLanguageId" class="mr-4">
-          <button type="button" @click="change(language.id)" class="flex items-center text-gray-700 hover:text-black focus:outline-none">
+      <ul v-if="languages.data && languages.data.length > 1 && isOpen && translations" class="flex items-center mt-4">
+        <li v-for="(language, index) in languages.data" v-show="language.id != defaultLanguageId" class="mr-5">
+          <button type="button" @click="change(language.id)" class="flex items-center text-gray-600 hover:text-black focus:outline-none">
             <svg class="w-5 h-4 mr-1-half">
               <use v-bind:xlink:href="'#flag-' + language.code"></use>
             </svg>
             <span class="text-sm leading-4">{{ language.name }}</span>
+            <svg v-if="isTranslated(language.id)" class="w-3 h-3 ml-1">
+              <use xlink:href="#icon-pencil-solid"></use>
+            </svg>
           </button>
         </li>
       </ul>
@@ -41,11 +48,16 @@
 import {mapGetters, mapActions} from 'vuex'
 
 export default {
-  name: "LanguageSwitcher",
+  name: "LanguageBar",
 
-  props: [
-    'defaultId'
-  ],
+  props: {
+    translations: [Object, Array],
+    defaultId: [String, Number],
+    changeable: {
+      type: Boolean,
+      default: true
+    }
+  },
 
   data: function () {
     return {
@@ -66,6 +78,10 @@ export default {
 
   methods: {
     ...mapActions('Languages', ['fetchLanguages']),
+
+    isTranslated: function (id) {
+      return _.map(this.translations, 'id').includes(id)
+    },
 
     change: function (id) {
       this.defaultLanguageId = id

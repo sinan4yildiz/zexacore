@@ -11,7 +11,7 @@ class ContentTypeResource extends JsonResource
     {
         return [
             'id'                => $this->id,
-            'title'             => $this->translation->title ?? trans('admin/common.no_translation'),
+            'title'             => $this->translation->title,
             'description'       => $this->translation->description ?? null,
             'description_plain' => Str::limit(strip_tags($this->translation->description ?? null), 140),
             'meta_title'        => $this->translation->meta_title ?? null,
@@ -22,6 +22,7 @@ class ContentTypeResource extends JsonResource
             'is_indexable'      => $this->is_indexable,
             'sort_order'        => $this->sort_order,
             'is_active'         => $this->is_active,
+            'translations'      => $this->translations,
         ];
     }
 }

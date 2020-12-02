@@ -25,12 +25,12 @@ class ContentTypeController extends Controller
      */
     public function index()
     {
-        $items = ContentType::with('translation')->with('slug')->orderBy($this->sortable[request('sorted')] ?? $this->sorted, request('ordered', $this->ordered));
+        $items = ContentType::with('translation')->with('slug');
 
         /**
          * Query
          */
-        $items = $items->paginate(10);
+        $items = $items->orderBy($this->sortable[request('sorted')] ?? $this->sorted, request('ordered', $this->ordered))->paginate(10);
 
 
         /**
@@ -56,7 +56,7 @@ class ContentTypeController extends Controller
         /**
          * Query
          */
-        $item = ContentType::with('translation')->findOrFail($id);
+        $item = ContentType::with('translations')->findOrFail($id);
 
 
         /**
@@ -287,7 +287,7 @@ class ContentTypeController extends Controller
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
         $activity->description = trans('admin/activitiy.content_type.remove', [
-            'title' => $item->translation->title ?? trans('admin/common.no_translation'),
+            'title' => $item->translation->title,
         ]);
         $activity->save();
 
