@@ -15,27 +15,27 @@
           </div>
           <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
           <form v-on:submit.prevent="create" v-on-clickaway="close" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-xl w-full">
-            <div class="bg-gray-50 px-5 py-4 flex border-b border-gray-200">
+            <div class="bg-gray-50 px-5 py-4 flex border-b border-gray-300">
               Create a new user
             </div>
             <ul class="bg-white px-5 py-6">
               <li class="mb-4">
-                <Input name="firstname" label="First name" placeholder="First name" @update:field="fields.firstname = $event" :errors="errors"/>
+                <Input name="firstname" label="First name" placeholder="First name" :required="true" @input="form.firstname = $event" :errors="errors"/>
               </li>
               <li class="mb-4">
-                <Input name="lastname" label="Last name" placeholder="Last name" @update:field="fields.lastname = $event" :errors="errors"/>
+                <Input name="lastname" label="Last name" placeholder="Last name" :required="true" @input="form.lastname = $event" :errors="errors"/>
               </li>
               <li class="mb-4">
-                <Input name="title" label="Title" placeholder="e.g. Content Editor" @update:field="fields.title = $event" :errors="errors"/>
+                <Input name="title" label="Title" placeholder="e.g. Content Editor" @input="form.title = $event" :errors="errors"/>
               </li>
               <li class="mb-4">
-                <Input name="email" type="email" label="E-mail address" placeholder="user@email.com" @update:field="fields.email = $event" :errors="errors"/>
+                <Input name="email" type="email" label="E-mail address" placeholder="user@email.com" :required="true" @input="form.email = $event" :errors="errors"/>
               </li>
               <li class="mb-1">
-                <Input name="password" type="password" label="Password" placeholder="●●●●●" @update:field="fields.password = $event" :errors="errors"/>
+                <Input name="password" type="password" label="Password" placeholder="●●●●●" :required="true" @input="form.password = $event" :errors="errors"/>
               </li>
             </ul>
-            <div class="bg-gray-50 px-5 py-4 flex border-t border-gray-200">
+            <div class="bg-gray-50 px-5 py-4 flex border-t border-gray-300">
               <span class="flex w-full rounded-md shadow-sm sm:mr-3 sm:w-auto">
                 <Button type="submit" theme="blue" label="Create" icon="plus" :loading="processing"/>
               </span>
@@ -61,7 +61,7 @@ export default {
 
   data() {
     return {
-      fields: {},
+      form: {},
       errors: {},
       processing: false,
     }
@@ -79,9 +79,9 @@ export default {
     create: function () {
       this.processing = true
 
-      this.createUser(this.fields)
+      this.createUser(this.form)
           .then((response) => {
-            this.$snackbar('The new user has been saved successfuly!')
+            this.$snackbar('The new user has been created successfuly!')
             this.close()
           })
           .catch(error => {

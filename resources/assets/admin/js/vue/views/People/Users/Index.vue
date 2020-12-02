@@ -19,7 +19,7 @@
         </div>
 
         <!-- Filters -->
-        <Filters class="mr-3" :fields="['status', 'date-start', 'date-end']" @filtered="applyFilters($event)"/>
+        <Filters class="mr-3" :filters="['status', 'date-start', 'date-end']" @filtered="applyFilters($event)"/>
 
         <!-- Create new -->
         <Button @click="createModal = true" theme="blue" label="Create new" icon="plus"/>

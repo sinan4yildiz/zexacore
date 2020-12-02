@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Setting;
 use App\Http\Requests\System\SettingRequest;
 use App\Http\Resources\System\SettingResource;
+use Illuminate\Support\Facades\Cache;
 
 class SettingController extends Controller
 {
@@ -46,6 +47,12 @@ class SettingController extends Controller
                 ['value' => $value]
             );
         });
+
+
+        /**
+         * Forget the cache
+         */
+        Cache::forget('settings');
 
 
         /**

@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api\v1\Structure;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
+use App\Models\ContentTypeTranslation;
+use App\Models\Slug;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ContentType;
 use App\Http\Requests\Structure\ContentTypeRequest;
 use App\Http\Resources\Structure\ContentTypeResource;
+use Illuminate\Support\Str;
 
 class ContentTypeController extends Controller
 {
@@ -17,33 +20,23 @@ class ContentTypeController extends Controller
     protected $ordered = 'asc';
 
     /**
-     * List of content types
+     * Data for listing
      *
      */
     public function index()
     {
-        $content_types = ContentType::with('translation')->orderBy($this->sortable[request('sorted')] ?? $this->sorted, request('ordered', $this->ordered));
-
-        /*$content_types = ContentType::join('content_type_translations AS ctt',
-            function ($join) {
-                $join->on('content_types.id', '=', 'ctt.content_type_id')->where('ctt.language_id', '=', 'en');
-            })
-            ->groupBy('countries.id')
-            ->orderBy('t.name', 'desc')
-            ->with('translations')
-            ->get();*/
-
+        $items = ContentType::with('translation')->with('slug')->orderBy($this->sortable[request('sorted')] ?? $this->sorted, request('ordered', $this->ordered));
 
         /**
          * Query
          */
-        $content_types = $content_types->paginate(10);
+        $items = $items->paginate(10);
 
 
         /**
          * Response structure
          */
-        return ContentTypeResource::collection($content_types)->additional([
+        return ContentTypeResource::collection($items)->additional([
             'meta' => [
                 'sorting' => [
                     'sorted'   => request('sorted', $this->sorted),
@@ -55,7 +48,25 @@ class ContentTypeController extends Controller
     }
 
     /**
-     * Create the new content type
+     * Get a specific data
+     *
+     */
+    public function single($id)
+    {
+        /**
+         * Query
+         */
+        $item = ContentType::with('translation')->findOrFail($id);
+
+
+        /**
+         * Response structure
+         */
+        return new ContentTypeResource($item);
+    }
+
+    /**
+     * Create the new item
      *
      * @param  \App\Http\Requests\Structure\ContentTypeRequest  $request
      * @param $id
@@ -64,16 +75,41 @@ class ContentTypeController extends Controller
     public function create(ContentTypeRequest $request)
     {
         /**
-         * Store the content type
+         * Store the item
          */
         $item = new ContentType();
-        $item->name = request('name');
-        $item->native = request('native');
-        $item->code = request('code');
-        $item->locale = request('locale');
+        $item->has_listing = request('has_listing', false);
+        $item->is_indexable = request('is_indexable', true);
+        $item->is_active = request('is_active', true);
         $item->sort_order = request('sort_order', 1);
-        $item->is_active = true;
         $item->save();
+
+
+        /**
+         * Store the translation
+         */
+        $translation = new ContentTypeTranslation();
+        $translation->content_type_id = $item->id;
+        $translation->language_id = request('language_id');
+        $translation->title = request('title');
+        $translation->description = request('description');
+        $translation->meta_title = request('meta_title');
+        $translation->meta_description = request('meta_description');
+        $translation->meta_keywords = request('meta_keywords');
+        $translation->save();
+
+
+        /**
+         * Store the slug
+         */
+        if ($request->has_listing) {
+            $slug = new Slug();
+            $slug->language_id = request('language_id');
+            $slug->query = config('constant.slugs.paths.content_types');
+            $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
+            $slug->value = $item->id;
+            $slug->save();
+        }
 
 
         /**
@@ -82,7 +118,7 @@ class ContentTypeController extends Controller
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
         $activity->description = trans('admin/activitiy.content_type.create', [
-            'name' => request('name')
+            'title' => request('title')
         ]);
         $activity->save();
 
@@ -90,7 +126,7 @@ class ContentTypeController extends Controller
     }
 
     /**
-     * Update the existing content type
+     * Update the existing item
      *
      * @param  \App\Http\Requests\Structure\ContentTypeRequest  $request
      * @param $id
@@ -99,14 +135,48 @@ class ContentTypeController extends Controller
     public function update(ContentTypeRequest $request, $id)
     {
         /**
-         * Save the content type data
+         * Save the item data
          */
         $item = ContentType::findOrFail($id);
-        $item->name = request('name');
-        $item->native = request('native');
-        $item->code = request('code');
-        $item->locale = request('locale');
+        $item->has_listing = request('has_listing', false);
+        $item->is_indexable = request('is_indexable', true);
+        $item->is_active = request('is_active', true);
         $item->save();
+
+
+        /**
+         * Save the translation
+         */
+        $translation = $item->translation(request('language_id'));
+        $translation->title = request('title');
+        $translation->description = request('description');
+        $translation->meta_title = request('meta_title');
+        $translation->meta_description = request('meta_description');
+        $translation->meta_keywords = request('meta_keywords');
+        $translation->save();
+
+
+        /**
+         * Remove the existing slug
+         */
+        $_slug = Slug::where([
+            ['value', $item->id],
+            ['language_id', $translation->language_id],
+            ['query', config('constant.slugs.paths.content_types')],
+        ]);
+        $_slug->delete();
+
+        /**
+         * Save the slug
+         */
+        if ($request->has_listing) {
+            $slug = new Slug();
+            $slug->language_id = $translation->language_id;
+            $slug->query = config('constant.slugs.paths.content_types');
+            $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
+            $slug->value = $item->id;
+            $slug->save();
+        }
 
 
         /**
@@ -115,7 +185,7 @@ class ContentTypeController extends Controller
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
         $activity->description = trans('admin/activitiy.content_type.update', [
-            'name' => request('name')
+            'title' => request('title')
         ]);
         $activity->save();
 
@@ -123,7 +193,7 @@ class ContentTypeController extends Controller
     }
 
     /**
-     * Order the content type
+     * Order the items
      *
      */
     public function order()
@@ -139,7 +209,7 @@ class ContentTypeController extends Controller
     }
 
     /**
-     * Activate the content type
+     * Activate the item
      *
      * @param $id
      *
@@ -168,7 +238,7 @@ class ContentTypeController extends Controller
     }
 
     /**
-     * Deactivate the content type
+     * Deactivate the item
      *
      * @param $id
      *
@@ -197,7 +267,7 @@ class ContentTypeController extends Controller
     }
 
     /**
-     * Remove the content type
+     * Remove the item
      *
      * @param $id
      *
@@ -217,7 +287,7 @@ class ContentTypeController extends Controller
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
         $activity->description = trans('admin/activitiy.content_type.remove', [
-            'title' => $item->translation->title,
+            'title' => $item->translation->title ?? trans('admin/common.no_translation'),
         ]);
         $activity->save();
 

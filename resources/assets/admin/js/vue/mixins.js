@@ -17,6 +17,18 @@ const mixins = {
                         }, timeout)
                     }
                 },
+
+                $isInViewport: function (element) {
+                    var r = element.getBoundingClientRect(),
+                        h = document.documentElement
+                    return (
+                        r.top >= 0 &&
+                        r.left >= 0 &&
+                        r.bottom <= (window.innerHeight || h.clientHeight) &&
+                        r.right <= (window.innerWidth || h.clientWidth)
+                    );
+                },
+
                 $scrollTo: function (element, offset = 110) {
                     if(element) {
                         const y = element.getBoundingClientRect().top + window.scrollY;

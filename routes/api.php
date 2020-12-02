@@ -16,6 +16,7 @@ Route::group([
         'namespace' => 'Structure',
     ], function () {
         Route::get('/', 'ContentTypeController@index')->name('index');
+        Route::get('/{id}', 'ContentTypeController@single')->name('single');
         Route::post('/create', 'ContentTypeController@create')->name('create');
         Route::put('/update/{id}', 'ContentTypeController@update')->name('update');
         Route::patch('/order', 'ContentTypeController@order')->name('order');

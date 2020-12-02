@@ -33,7 +33,7 @@
               </svg>
               {{ language.name }}
             </div>
-            <div class="text-xs leading-5 font-light text-gray-600 pl-8">{{ language.locale }}</div>
+            <div class="text-xs leading-5 font-light text-gray-600">{{ language.locale }}</div>
           </td>
           <td class="px-6 py-4 whitespace-no-wrap">
             <div class="text-sm leading-5 text-gray-600">{{ language.code }}</div>

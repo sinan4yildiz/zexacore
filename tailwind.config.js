@@ -64,6 +64,7 @@ module.exports = {
                     '300': '#E2E8F0',
                     '400': '#CBD5E0',
                     '500': '#A0AEC0',
+                    '550': '#8792A2',
                     '600': '#718096',
                     '700': '#4A5568',
                     '800': '#2D3748',
@@ -71,6 +72,7 @@ module.exports = {
                 },
             },
             spacing: {
+                '1-half': '0.375rem',
                 '3-half': '0.875rem',
                 '7': '1.75rem',
                 '11': '2.75rem',
@@ -95,6 +97,7 @@ module.exports = {
             },
             boxShadow: {
                 'inner-px-blue-600': 'inset 0 0 0 1px #0368FF',
+                'px-b-white': '0px 1px 0px 0px #FFFFFF',
             },
             animation: {
                 'spin-fast': 'spin 500ms linear infinite',

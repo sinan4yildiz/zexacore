@@ -1,13 +1,21 @@
 const state = {
+    contentType: {},
     contentTypes: {},
     query: {},
 }
 
 const getters = {
+    contentType: (state) => state.contentType,
     contentTypes: (state) => state.contentTypes,
 }
 
 const actions = {
+    async getContentType({commit, state}, id) {
+        await axios.get('content-types/' + id)
+                   .then(response => {
+                       commit('mutateSingle', response.data);
+                   });
+    },
     async fetchContentTypes({commit, state}) {
         await axios.get('content-types', {
                        params: state.query
@@ -20,7 +28,6 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.post('content-types/create', contentType)
                  .then(response => {
-                     commit('mutateCreated', response.data);
                      resolve(response.data.data)
                  })
                  .catch(error => {
@@ -32,7 +39,6 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.put('content-types/update/' + contentType.id, contentType)
                  .then(response => {
-                     commit('mutateUpdated', response.data);
                      resolve(response.data.data)
                  })
                  .catch(error => {
@@ -68,6 +74,9 @@ const actions = {
                        commit('mutateRemoved', contentType.id);
                    });
     },
+    clearContentType({commit}) {
+        commit('mutateSingle', {});
+    },
     setContentTypesQuery({commit}, query) {
         commit('mutateQuery', _.cloneDeep(query))
     },
@@ -75,9 +84,7 @@ const actions = {
 
 const mutations = {
     mutateAll: (state, contentTypes) => (state.contentTypes = contentTypes),
-    mutateCreated: (state, created) => {
-        state.contentTypes.data.unshift(created.data)
-    },
+    mutateSingle: (state, contentType) => (state.contentType = contentType),
     mutateUpdated: (state, updated) => {
         const index = state.contentTypes.data.findIndex(contentType => contentType.id === updated.data.id);
 

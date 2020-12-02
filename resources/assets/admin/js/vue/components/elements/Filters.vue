@@ -15,7 +15,7 @@
         <form v-on:submit.prevent="apply" v-on:change="apply" class="rounded-md pt-4 bg-gray-50 shadow-xs text-left">
 
           <!-- Status active/inactive -->
-          <div v-if="fields.includes('status')" class="px-4 mb-3">
+          <div v-if="filters.includes('status')" class="px-4 mb-3">
             <label for="filter-status"
                    class="block text-xs font-medium leading-5 text-gray-700 mb-1 ml-1">Status</label>
             <select name="status" id="filter-status" class="form-select mt-1 block w-full py-2 px-3 text-sm border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out">
@@ -26,14 +26,14 @@
           </div>
 
           <!-- Date start -->
-          <div v-if="fields.includes('date-start')" class="px-4 mb-3">
+          <div v-if="filters.includes('date-start')" class="px-4 mb-3">
             <label for="filter-date-start"
                    class="block text-xs font-medium leading-5 text-gray-700 mb-1 ml-1">Date start</label>
             <input type="date" name="date-start" id="filter-date-start" placeholder="dd/mm/yyyy" class="form-input mt-1 block w-full py-2 px-3 text-sm border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out">
           </div>
 
           <!-- Date end -->
-          <div v-if="fields.includes('date-end')" class="px-4">
+          <div v-if="filters.includes('date-end')" class="px-4">
             <label for="filter-date-end"
                    class="block text-xs font-medium leading-5 text-gray-700 mb-1 ml-1">Date end</label>
             <input type="date" name="date-end" id="filter-date-end" placeholder="dd/mm/yyyy" class="form-input mt-1 block w-full py-2 px-3 text-sm border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out">
@@ -61,7 +61,7 @@ export default {
   mixins: [
     clickaway
   ],
-  props: ['fields', 'width'],
+  props: ['filters', 'width'],
   data() {
     return {
       filtered: {},

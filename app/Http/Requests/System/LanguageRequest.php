@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class LanguageRequest extends FormRequest
 {
     /**
-     * Define validation rules to store method for resource creation
+     * Define validation rules to create method for resource creation
      *
      * @return array
      *

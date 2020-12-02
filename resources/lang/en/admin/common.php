@@ -10,4 +10,5 @@ return [
 
     'site_title' => 'Zexacore',
     'dashboard'  => 'Dashboard',
+    'no_translation' => '[no translation]',
 ];

@@ -23,8 +23,10 @@
             api: '{{ env('APP_URL') . 'api' }}',
             admin: '{{ env('APP_URL'). env('APP_ADMIN_DIR') }}'
         },
+        @auth
         currentUser: @json(Auth::user()),
         config: @json($settings),
+        @endauth
     };
 </script>
 <script src="{{ asset(mix('/assets/'. env('APP_ADMIN_DIR') .'/js/app.js')) }}"></script>

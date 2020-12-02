@@ -98,7 +98,7 @@ return [
     'present'              => 'This field must be present.',
     'regex'                => 'This field format is invalid.',
     'required'             => 'This field is required.',
-    'required_if'          => 'This field is required when :other is :value.',
+    'required_if'          => 'This field is required.',
     'required_unless'      => 'This field is required unless :other is in :values.',
     'required_with'        => 'This field is required when :values is present.',
     'required_with_all'    => 'This field is required when :values are present.',

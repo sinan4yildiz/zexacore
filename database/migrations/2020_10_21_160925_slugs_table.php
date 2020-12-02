@@ -4,9 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ContentTypesTable extends Migration
+class SlugsTable extends Migration
 {
-    static $table = 'content_types';
+    static $table = 'slugs';
 
 
     /**
@@ -17,11 +17,11 @@ class ContentTypesTable extends Migration
     public function up()
     {
         Schema::create(static::$table, function (Blueprint $table) {
-            $table->increments('id');
-            $table->boolean('has_listing')->default(false);
-            $table->boolean('is_indexable')->default(true);
-            $table->boolean('is_active')->default(true);
-            $table->integer('sort_order')->default(1)->unsigned();
+            $table->id();
+            $table->integer('language_id')->index();
+            $table->string('keyword');
+            $table->string('query');
+            $table->integer('value')->index()->unsigned();
         });
     }
 

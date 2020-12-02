@@ -21,6 +21,12 @@ textarea {
   @apply border-red-300;
 }
 
+.rotatable {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: rotate(0deg);
+}
+
 label {
   @apply select-none;
 

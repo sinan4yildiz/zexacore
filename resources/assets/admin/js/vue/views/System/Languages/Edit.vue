@@ -15,24 +15,24 @@
           </div>
           <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
           <form v-on:submit.prevent="update" v-on-clickaway="close" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-xl w-full" role="dialog" aria-modal="true">
-            <div class="bg-gray-50 px-5 py-4 flex border-b border-gray-200">
+            <div class="bg-gray-50 px-5 py-4 flex border-b border-gray-300">
               {{ editData.name }}
             </div>
             <ul class="bg-white px-5 py-6">
               <li class="mb-4">
-                <Input name="name" label="Name" placeholder="e.g. German" :value="editData.name" @update:field="fields.name = $event" :errors="errors"/>
+                <Input name="name" label="Name" placeholder="e.g. German" :value="editData.name" :required="true" @input="form.name = $event" :errors="errors"/>
               </li>
               <li class="mb-4">
-                <Input name="native" label="Native name" placeholder="e.g. Deutsch" :value="editData.native" @update:field="fields.native = $event" :errors="errors"/>
+                <Input name="native" label="Native name" placeholder="e.g. Deutsch" :value="editData.native" :required="true" @input="form.native = $event" :errors="errors"/>
               </li>
               <li class="mb-4">
-                <Input name="code" label="Code" placeholder="e.g. de-de" :value="editData.code" @update:field="fields.code = $event" :errors="errors"/>
+                <Input name="code" label="Code" placeholder="e.g. de-de" :value="editData.code" :required="true" @input="form.code = $event" :errors="errors"/>
               </li>
               <li class="mb-1">
-                <Input name="locale" label="Locale" placeholder="e.g. de_DE.UTF-8, de_DE@EUR, de_DE, german" :value="editData.locale" @update:field="fields.locale = $event" :errors="errors"/>
+                <Input name="locale" label="Locale" placeholder="e.g. de_DE.UTF-8, de_DE@EUR, de_DE, german" :required="true" :value="editData.locale" @input="form.locale = $event" :errors="errors"/>
               </li>
             </ul>
-            <div class="bg-gray-50 px-5 py-4 flex border-t border-gray-200">
+            <div class="bg-gray-50 px-5 py-4 flex border-t border-gray-300">
               <span class="flex w-full rounded-md shadow-sm sm:mr-3 sm:w-auto">
                 <Button type="submit" theme="blue" label="Update" icon="check" :loading="processing"/>
               </span>
@@ -57,7 +57,7 @@ export default {
 
   data() {
     return {
-      fields: {},
+      form: {},
       errors: {},
       processing: false,
     }
@@ -75,7 +75,7 @@ export default {
     update: function () {
       this.processing = true
 
-      this.updateLanguage(this.fields)
+      this.updateLanguage(this.form)
           .then((response) => {
             this.$snackbar('The language has been updated successfuly!')
             this.close()
@@ -91,7 +91,7 @@ export default {
     },
 
     close: function () {
-      this.fields = {}
+      this.form = {}
       this.errors = {}
       this.$emit('cancel')
     }
@@ -100,7 +100,7 @@ export default {
   watch: {
     editData: function (data) {
       if(data) {
-        this.fields = {
+        this.form = {
           id: data.id,
           name: data.name,
           native: data.native,

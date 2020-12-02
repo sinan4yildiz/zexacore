@@ -6,21 +6,21 @@
            class="block text-sm font-medium leading-5 text-gray-700 mb-1 ml-1 select-none">{{ label }}</label>
     <div class="relative">
       <input v-model="inputValue"
-             :type="inputType"
+             v-slugify
+             type="text"
              :name="name"
              :id="name"
-             :placeholder="inputPlaceholder"
+             :placeholder="placeholder"
              v-bind="attr"
              v-bind:class="{'has-error': error}"
              class="form-input block w-full px-4 py-3 text-sm border border-gray-400 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out"
       >
-      <button v-if="type == 'password'"
-              @click="togglePassword"
+      <button @click="generate"
               type="button"
               class="absolute leading-3 top-0 right-0 bottom-0 px-4 py-3 text-gray-600 hover:text-gray-900 focus:outline-none"
       >
-        <svg class="w-5 h-5 transition duration-300 ease-out pointer-events-none">
-          <use v-bind:xlink:href="'#icon-' + (inputType == 'password' ? 'eye' : 'eye-off')"></use>
+        <svg class="w-5 h-5 w-5 h-5 transition duration-300 ease-out transform rotatable pointer-events-none">
+          <use xlink:href="#icon-refresh"></use>
         </svg>
       </button>
     </div>
@@ -30,17 +30,16 @@
 
 <script>
 export default {
-  name: "Input",
+  name: "Slug",
 
   props: [
-    'type', 'name', 'label', 'placeholder', 'value', 'attr', 'required', 'classes', 'errors'
+    'name', 'label', 'placeholder', 'value', 'attr', 'source', 'required', 'classes', 'errors'
   ],
 
   data: function () {
     return {
       inputValue: this.value,
-      inputType: this.type,
-      inputPlaceholder: this.placeholder
+      rotate: 180
     }
   },
 
@@ -52,8 +51,25 @@ export default {
     },
   },
 
+  methods: {
+    generate(e) {
+      this.inputValue = window.slugify(this.$parent.$el.querySelector(this.source).value)
+
+      if(e !== undefined) {
+        e.target.querySelector('svg').style.transform = 'rotate(' + this.rotate + 'deg)'
+        this.rotate += 180
+      }
+    }
+  },
+
   created() {
     this.$emit('input', this.inputValue)
+  },
+
+  mounted() {
+    if(!this.inputValue) {
+      this.generate()
+    }
   },
 
   watch: {
@@ -61,18 +77,6 @@ export default {
       this.errors[this.name] = false
       this.$emit('input', this.inputValue)
     }
-  },
-
-  methods: {
-    togglePassword: function () {
-      if(this.inputType == 'text') {
-        this.inputType        = 'password'
-        this.inputPlaceholder = '●●●●●'
-      } else {
-        this.inputType        = 'text'
-        this.inputPlaceholder = 'Enter password'
-      }
-    },
   },
 }
 </script>

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class UserRequest extends FormRequest
 {
     /**
-     * Define validation rules to store method for resource creation
+     * Define validation rules to create method for resource creation
      *
      * @return array
      *
@@ -18,7 +18,7 @@ class UserRequest extends FormRequest
             'firstname' => 'required',
             'lastname'  => 'required',
             'password'  => 'required|min:6',
-            'email'     => 'required|string|email|max:191|unique:users,email,' . $this->id
+            'email'     => 'required|string|email|max:191|unique:users,email'
         ];
     }
 

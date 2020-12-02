@@ -19,7 +19,7 @@
         </div>
 
         <!-- Filters -->
-        <Filters :fields="['date-start', 'date-end']" @filtered="applyFilters($event)"/>
+        <Filters :filters="['date-start', 'date-end']" @filtered="applyFilters($event)"/>
       </div>
     </header>
 

@@ -28,13 +28,16 @@ class ContentTypeSeeder extends Seeder
         // Content types
         DB::table(static::$table)->insert([
             [
-                'sort_order' => 1,
+                'has_listing' => 1,
+                'sort_order'  => 1,
             ],
             [
-                'sort_order' => 2,
+                'has_listing' => 1,
+                'sort_order'  => 2,
             ],
             [
-                'sort_order' => 3,
+                'has_listing' => 1,
+                'sort_order'  => 3,
             ],
         ]);
 

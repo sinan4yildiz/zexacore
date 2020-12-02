@@ -15,24 +15,24 @@
           </div>
           <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
           <form v-on:submit.prevent="create" v-on-clickaway="close" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-xl w-full">
-            <div class="bg-gray-50 px-5 py-4 flex border-b border-gray-200">
+            <div class="bg-gray-50 px-5 py-4 flex border-b border-gray-300">
               Create a new language
             </div>
             <ul class="bg-white px-5 py-6">
               <li class="mb-4">
-                <Input name="name" label="Name" placeholder="e.g. German" @update:field="fields.name = $event" :errors="errors"/>
+                <Input name="name" label="Name" placeholder="e.g. German" :required="true" @input="form.name = $event" :errors="errors"/>
               </li>
               <li class="mb-4">
-                <Input name="native" label="Native name" placeholder="e.g. Deutsch" @update:field="fields.native = $event" :errors="errors"/>
+                <Input name="native" label="Native name" placeholder="e.g. Deutsch" :required="true" @input="form.native = $event" :errors="errors"/>
               </li>
               <li class="mb-4">
-                <Input name="code" label="Code" placeholder="e.g. de-de" @update:field="fields.code = $event" :errors="errors"/>
+                <Input name="code" label="Code" placeholder="e.g. de-de" :required="true" @input="form.code = $event" :errors="errors"/>
               </li>
               <li class="mb-1">
-                <Input name="locale" label="Locale" placeholder="e.g. de_DE.UTF-8, de_DE@EUR, de_DE, german" @update:field="fields.locale = $event" :errors="errors"/>
+                <Input name="locale" label="Locale" placeholder="e.g. de_DE.UTF-8, de_DE@EUR, de_DE, german" :required="true" @input="form.locale = $event" :errors="errors"/>
               </li>
             </ul>
-            <div class="bg-gray-50 px-5 py-4 flex border-t border-gray-200">
+            <div class="bg-gray-50 px-5 py-4 flex border-t border-gray-300">
               <span class="flex w-full rounded-md shadow-sm sm:mr-3 sm:w-auto">
                 <Button type="submit" theme="blue" label="Create" icon="plus" :loading="processing"/>
               </span>
@@ -58,7 +58,7 @@ export default {
 
   data() {
     return {
-      fields: {},
+      form: {},
       errors: {},
       processing: false,
     }
@@ -76,7 +76,7 @@ export default {
     create: function () {
       this.processing = true
 
-      this.createLanguage(this.fields)
+      this.createLanguage(this.form)
           .then((response) => {
             this.$snackbar('The new language has been created successfuly!')
             this.close()

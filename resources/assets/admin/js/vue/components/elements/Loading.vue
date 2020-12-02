@@ -56,8 +56,10 @@ export default {
         case 422:
           _.delay(() => {
             var e = document.querySelector('.has-error:first-child')
-            if(!e.closest('.modal'))
+
+            if(e && !e.closest('.modal') && !this.$isInViewport(e)) {
               this.$scrollTo(e)
+            }
           }, 300)
           break
 

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class ContentTypeRequest extends FormRequest
 {
     /**
-     * Define validation rules to store method for resource creation
+     * Define validation rules to create method for resource creation
      *
      * @return array
      *
@@ -15,10 +15,8 @@ class ContentTypeRequest extends FormRequest
     public function createRules(): array
     {
         return [
-            'name'   => 'required',
-            'native' => 'required',
-            'code'   => 'required',
-            'locale' => 'required',
+            'title' => 'required',
+            'slug'  => 'required_if:has_listing,1|unique:slugs,keyword,' . $this->slug . ',id,language_id,' . $this->language_id,
         ];
     }
 
@@ -31,10 +29,8 @@ class ContentTypeRequest extends FormRequest
     public function updateRules(): array
     {
         return [
-            'name'   => 'required',
-            'native' => 'required',
-            'code'   => 'required',
-            'locale' => 'required',
+            'title' => 'required',
+            'slug'  => 'required_if:has_listing,1|unique:slugs,keyword,' . $this->id . ',value,language_id,' . $this->language_id,
         ];
     }
 

@@ -1,21 +1,19 @@
 <template>
   <div class="field w-full" v-bind:class="classes">
     <label v-if="label"
-           :for="'field-' + name"
-           class="block text-sm font-medium leading-5 text-gray-700 mb-1 ml-1 select-none"
-    >
-      {{ label }}
-    </label>
-    <span class="block relative">
+           :for="name"
+           v-bind:class="{'required': required}"
+           class="block text-sm font-medium leading-5 text-gray-700 mb-1 ml-1 select-none">{{ label }}</label>
+    <div class="relative">
       <textarea v-model="inputValue"
                 :name="name"
-                :id="'field-' + name"
+                :id="name"
                 :placeholder="inputPlaceholder"
                 v-bind="attr"
                 class="form-input block w-full px-4 py-3 text-sm border border-gray-400 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out"
                 v-bind:class="{'has-error': error}"
       ></textarea>
-    </span>
+    </div>
     <p v-if="error" class="mt-1 ml-1 text-red-600 text-xs" v-text="error"></p>
   </div>
 </template>
@@ -25,7 +23,7 @@ export default {
   name: "Textarea",
 
   props: [
-    'name', 'label', 'placeholder', 'value', 'attr', 'classes', 'errors'
+    'name', 'label', 'placeholder', 'value', 'attr', 'required', 'classes', 'errors'
   ],
 
   data: function () {
@@ -43,10 +41,14 @@ export default {
     },
   },
 
+  created() {
+    this.$emit('input', this.inputValue)
+  },
+
   watch: {
     inputValue: function () {
       this.errors[this.name] = false
-      this.$emit('update:field', this.inputValue)
+      this.$emit('input', this.inputValue)
     }
   },
 }
