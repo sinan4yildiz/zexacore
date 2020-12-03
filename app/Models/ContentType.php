@@ -10,25 +10,15 @@ class ContentType extends Model
 
     public $timestamps = false;
 
-    public function translation($language_id = null)
+    public function translation($language_code = null)
     {
-        $translation = $this->hasOne(ContentTypeTranslation::class)->where('language_id', $language_id ?? config('settings.default_language_id'));
+        $translation = $this->hasOne(ContentTypeTranslation::class)->where('language_code', $language_code ?? config('settings.default_language_code'));
 
-        return $language_id ? $translation->first() : $translation;
+        return $language_code ? $translation->first() : $translation;
     }
 
     public function translations()
     {
         return $this->hasMany(ContentTypeTranslation::class, 'content_type_id');
-    }
-
-    public function slug($language_id = null)
-    {
-        $slug = $this->hasOne(Slug::class, 'value')->where([
-            ['language_id', $language_id ?? config('settings.default_language_id')],
-            ['query', config('constant.slugs.paths.content_types')],
-        ]);
-
-        return $language_id ? $slug->first() : $slug;
     }
 }

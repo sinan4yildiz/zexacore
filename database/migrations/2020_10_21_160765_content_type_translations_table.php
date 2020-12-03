@@ -19,7 +19,7 @@ class ContentTypeTranslationsTable extends Migration
         Schema::create(static::$table, function (Blueprint $table) {
             $table->id();
             $table->integer('content_type_id')->index()->unsigned();
-            $table->integer('language_id')->index()->unsigned();
+            $table->char('language_code', 2)->index();
 
             // Translation fields
             $table->string('title');

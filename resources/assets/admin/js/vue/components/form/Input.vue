@@ -55,6 +55,10 @@ export default {
   },
 
   watch: {
+    value: function () {
+      this.inputValue = this.value
+    },
+
     inputValue: function () {
       this.errors[this.name] = false
       this.$emit('input', this.inputValue)

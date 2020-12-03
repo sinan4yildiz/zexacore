@@ -19,7 +19,7 @@
 
     <form v-on:submit.prevent="create">
       <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-8">
-        <LanguageBar :defaultId="config.default_language_id" @input="form.language_id = $event"/>
+        <LanguageBar @input="form.language_code = $event"/>
         <ul>
           <li class="bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <div>

@@ -18,7 +18,7 @@ class SlugsTable extends Migration
     {
         Schema::create(static::$table, function (Blueprint $table) {
             $table->id();
-            $table->integer('language_id')->index();
+            $table->char('language_code', 2)->index();
             $table->string('keyword');
             $table->string('query');
             $table->integer('value')->index()->unsigned();

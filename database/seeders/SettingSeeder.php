@@ -89,8 +89,8 @@ class SettingSeeder extends Seeder
 
             // Localization
             [
-                'key'   => 'default_language_id',
-                'value' => 1,
+                'key'   => 'default_language_code',
+                'value' => 'en',
             ],
             [
                 'key'   => 'default_time_zone',

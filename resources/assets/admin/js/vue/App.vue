@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
+
 export default {
   name: "App",
 
@@ -44,16 +46,30 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters('Languages', ['languages']),
+  },
+
   methods: {
+    ...mapActions('Languages', ['fetchLanguages']),
+
     setMetaTitle: function (to) {
       if(this.$route.matched.length)
         this.metaTitle = to.meta.title || this.$route.matched[0].meta.title
     },
+
+    // Prefetch the languages for translatable modules
+    prefetchLanguages: function () {
+      if(this.$route.meta.translatable && !this.languages.data) {
+        this.fetchLanguages()
+      }
+    }
   },
 
   watch: {
     $route(to) {
       this.setMetaTitle(to)
+      this.prefetchLanguages()
     },
 
     metaTitle() {
@@ -63,6 +79,7 @@ export default {
 
   created() {
     this.setMetaTitle(this.$route)
+    this.prefetchLanguages()
   },
 
   components: {

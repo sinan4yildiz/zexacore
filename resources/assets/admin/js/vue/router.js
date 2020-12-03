@@ -67,7 +67,8 @@ export default new VueRouter({
             name: 'content_types',
             component: require('./views/Structure/ContentTypes/Index.vue').default,
             meta: {
-                title: 'Content types'
+                title: 'Content types',
+                translatable: true
             },
         },
         {
@@ -77,15 +78,17 @@ export default new VueRouter({
             meta: {
                 title: 'Create content type',
                 breadcrumb: 'Create',
+                translatable: true
             },
         },
         {
-            path: '/content-types/edit/:id',
+            path: '/content-types/edit/:id/:language?',
             name: 'content_types.edit',
             component: require('./views/Structure/ContentTypes/Edit.vue').default,
             meta: {
                 title: 'Edit content type',
                 breadcrumb: 'Edit',
+                translatable: true
             },
         },
 

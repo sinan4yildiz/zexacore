@@ -17,10 +17,10 @@
       </div>
     </header>
 
-    <form v-if="contentType.data" v-on:submit.prevent="update">
+    <form v-on:submit.prevent="update">
       <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-8">
-        <LanguageBar :translations="contentType.data.translations" :defaultId="config.default_language_id" @input="form.language_id = $event"/>
-        <ul>
+        <LanguageBar :translations="contentType.data ? contentType.data.translations : {}" :current="this.$route.params.language" @input="form.language_code = $event"/>
+        <ul v-if="contentType.data">
           <InputHidden name="id" :value="contentType.data.id" @input="form.id = $event"/>
           <li class="bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <div>
@@ -28,11 +28,11 @@
               <p class="text-gray-550 text-xs">Enter a title that best describes the content.</p>
             </div>
             <div class="mt-1 sm:mt-0 sm:col-span-2">
-              <Input name="title" placeholder="Title" :value="contentType.data.title" @input="form.title = $event" :errors="errors"/>
+              <Input name="title" placeholder="Title" :value="translation('title')" @input="form.title = $event" :errors="errors"/>
             </div>
           </li>
           <li class="bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-1 sm:gap-4 sm:px-6">
-            <Textarea name="description" label="Description" placeholder="Description" :value="contentType.data.description" :attr="{rows: 10}" @input="form.description = $event" :errors="errors"/>
+            <Textarea name="description" label="Description" placeholder="Description" :value="translation('description')" :attr="{rows: 10}" @input="form.description = $event" :errors="errors"/>
           </li>
           <li class="bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <div>
@@ -40,7 +40,7 @@
               <p class="text-gray-550 text-xs">If empty then the name will be used as meta title.</p>
             </div>
             <div class="mt-1 sm:mt-0 sm:col-span-2">
-              <Input name="meta_title" placeholder="Meta title" :value="contentType.data.meta_title" @input="form.meta_title = $event" :errors="errors"/>
+              <Input name="meta_title" placeholder="Meta title" :value="translation('meta_title')" @input="form.meta_title = $event" :errors="errors"/>
             </div>
           </li>
           <li class="bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -49,7 +49,7 @@
               <p class="text-gray-550 text-xs">Write a short description that summarizes the content.</p>
             </div>
             <div class="mt-1 sm:mt-0 sm:col-span-2">
-              <Input name="meta_description" placeholder="Meta description" :value="contentType.data.meta_description" @input="form.meta_description = $event" :errors="errors"/>
+              <Input name="meta_description" placeholder="Meta description" :value="translation('meta_description')" @input="form.meta_description = $event" :errors="errors"/>
             </div>
           </li>
           <li v-if="config.enable_meta_keywords == 1" class="bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -58,7 +58,7 @@
               <p class="text-gray-550 text-xs">Keywords to give more information to search engines about the content.</p>
             </div>
             <div class="mt-1 sm:mt-0 sm:col-span-2">
-              <Input name="meta_keywords" placeholder="Meta keywords" :value="contentType.data.meta_keywords" @input="form.meta_keywords = $event" :errors="errors"/>
+              <Input name="meta_keywords" placeholder="Meta keywords" :value="translation('meta_keywords')" @input="form.meta_keywords = $event" :errors="errors"/>
             </div>
           </li>
           <li class="bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -78,7 +78,7 @@
               </p>
             </div>
             <div class="mt-1 sm:mt-0 sm:col-span-2">
-              <Slug name="slug" placeholder="URL alias" source="#title" :value="contentType.data.slug" @input="form.slug = $event" :errors="errors"/>
+              <Slug name="slug" placeholder="URL alias" source="#title" :value="translation('slug')" @input="form.slug = $event" :errors="errors"/>
             </div>
           </li>
           <li class="bg-gray-50 border-b border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -100,6 +100,11 @@
             </div>
           </li>
         </ul>
+        <div v-else class="text-center py-8">
+          <svg class="w-5 h-5 animate-spin animate-spin-fast text-blue-600">
+            <use xlink:href="#icon-loading"></use>
+          </svg>
+        </div>
       </div>
       <div class="flex items-center">
         <!-- Back -->
@@ -111,11 +116,6 @@
         <Button type="submit" theme="blue" size="wide" label="Save" icon="check" :loading="processing"/>
       </div>
     </form>
-    <div v-else class="text-center py-8">
-      <svg class="w-5 h-5 animate-spin animate-spin-fast text-blue-600">
-        <use xlink:href="#icon-loading"></use>
-      </svg>
-    </div>
   </section>
 </template>
 
@@ -129,6 +129,7 @@ export default {
     return {
       form: {
         // Add the fields here when you want to use them as v-model
+        language_code: null,
         slug: null,
         has_listing: null
       },
@@ -138,11 +139,25 @@ export default {
   },
 
   computed: {
-    ...mapGetters('ContentTypes', ['contentType'])
+    ...mapGetters('ContentTypes', ['contentType']),
+
+    translationIndex: function () {
+      return _.findIndex(this.contentType.data.translations, (c) => {
+        return c.language_code == (this.form.language_code ?? this.config.default_language_code)
+      })
+    }
   },
 
   methods: {
     ...mapActions('ContentTypes', ['getContentType', 'updateContentType', 'clearContentType']),
+
+    translation: function (field) {
+      var translations = this.contentType.data.translations
+
+      if(translations[this.translationIndex]) {
+        return translations[this.translationIndex][field]
+      }
+    },
 
     update: function () {
       this.processing = true

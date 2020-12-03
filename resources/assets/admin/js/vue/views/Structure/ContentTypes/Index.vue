@@ -30,9 +30,20 @@
           </td>
           <td class="px-6 py-4 whitespace-no-wrap">
             <div class="flex items-center text-sm mb-1 leading-5 font-bold text-gray-900">
-              {{ contentType.title }}
+              {{ contentType.translation.title }}
             </div>
-            <div class="text-xs leading-5 font-light text-gray-600">{{ contentType.description_plain }}</div>
+            <div class="text-xs leading-5 font-light text-gray-600">{{ contentType.translation.description_plain }}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-no-wrap">
+            <ul>
+              <li v-for="(language) in languages.data" class="inline-block m-1 cursor-pointer">
+                <RouterLink :to="{name: 'content_types.edit', params: {id: contentType.id, language: language.code}}">
+                  <svg class="w-6 h-5" v-bind:class="{'opacity-50': !hasTranslation(contentType, language.code)}">
+                    <use v-bind:xlink:href="'#flag-' + language.code"></use>
+                  </svg>
+                </RouterLink>
+              </li>
+            </ul>
           </td>
           <td class="px-6 py-4 whitespace-no-wrap">
             <span v-if="contentType.is_active"
@@ -89,6 +100,10 @@ export default {
           field: 'title',
         },
         {
+          title: 'Translations',
+          field: 'translations',
+        },
+        {
           title: 'Status',
           field: 'status',
           classes: 'w-48',
@@ -103,11 +118,16 @@ export default {
   },
 
   computed: {
-    ...mapGetters('ContentTypes', ['contentTypes'])
+    ...mapGetters('ContentTypes', ['contentTypes']),
+    ...mapGetters('Languages', ['languages'])
   },
 
   methods: {
     ...mapActions('ContentTypes', ['fetchContentTypes', 'activateContentType', 'deactivateContentType', 'removeContentType', 'orderContentTypes', 'setContentTypesQuery']),
+
+    hasTranslation: function (item, code) {
+      return _.map(item.translations, 'language_code').includes(code)
+    },
 
     setQuery: function (args) {
       this.setContentTypesQuery(args)

@@ -1920,6 +1920,13 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1956,6 +1963,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "App",
   data: function data() {
@@ -1963,14 +1971,22 @@ __webpack_require__.r(__webpack_exports__);
       metaTitle: null
     };
   },
-  methods: {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('Languages', ['languages'])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Languages', ['fetchLanguages'])), {}, {
     setMetaTitle: function setMetaTitle(to) {
       if (this.$route.matched.length) this.metaTitle = to.meta.title || this.$route.matched[0].meta.title;
+    },
+    // Prefetch the languages for translatable modules
+    prefetchLanguages: function prefetchLanguages() {
+      if (this.$route.meta.translatable && !this.languages.data) {
+        this.fetchLanguages();
+      }
     }
-  },
+  }),
   watch: {
     $route: function $route(to) {
       this.setMetaTitle(to);
+      this.prefetchLanguages();
     },
     metaTitle: function metaTitle() {
       document.title = this.metaTitle;
@@ -1978,6 +1994,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.setMetaTitle(this.$route);
+    this.prefetchLanguages();
   },
   components: {
     Header: __webpack_require__(/*! ./components/Header */ "./resources/assets/admin/js/vue/components/Header.vue")["default"],
@@ -3202,6 +3219,9 @@ __webpack_require__.r(__webpack_exports__);
     this.$emit('input', this.inputValue);
   },
   watch: {
+    value: function value() {
+      this.inputValue = this.value;
+    },
     inputValue: function inputValue() {
       this.errors[this.name] = false;
       this.$emit('input', this.inputValue);
@@ -3320,15 +3340,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: "LanguageBar",
   props: {
     translations: [Object, Array],
-    defaultId: [String, Number],
-    changeable: {
-      type: Boolean,
-      "default": true
-    }
+    current: String
   },
   data: function data() {
     return {
-      defaultLanguageId: this.defaultId,
+      defaultLanguageCode: this.current || this.$parent.config.default_language_code,
       isOpen: false
     };
   },
@@ -3337,23 +3353,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       return _.find(this.languages.data, function (i) {
-        return i.id == _this.defaultLanguageId;
+        return i.code == _this.defaultLanguageCode;
       });
     }
   }),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Languages', ['fetchLanguages'])), {}, {
-    isTranslated: function isTranslated(id) {
-      return _.map(this.translations, 'id').includes(id);
+  methods: {
+    isTranslated: function isTranslated(code) {
+      return _.map(this.translations, 'language_code').includes(code);
     },
-    change: function change(id) {
-      this.defaultLanguageId = id;
-      this.$emit('input', this.defaultLanguageId);
+    change: function change(code) {
+      this.defaultLanguageCode = code;
+      this.$emit('input', this.defaultLanguageCode);
+      this.$router.replace({
+        params: {
+          language: code
+        }
+      });
       this.isOpen = false;
     }
-  }),
+  },
   created: function created() {
-    this.fetchLanguages();
-    this.$emit('input', this.defaultLanguageId);
+    this.$emit('input', this.defaultLanguageCode);
   }
 });
 
@@ -3410,6 +3430,9 @@ __webpack_require__.r(__webpack_exports__);
     this.$emit('input', this.inputValue);
   },
   watch: {
+    selected: function selected() {
+      this.selectValue = this.selected;
+    },
     selectValue: function selectValue() {
       this.errors[this.name] = false;
       this.$emit('input', this.selectValue);
@@ -3493,6 +3516,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   watch: {
+    value: function value() {
+      this.inputValue = this.value;
+    },
     inputValue: function inputValue() {
       this.errors[this.name] = false;
       this.$emit('input', this.inputValue);
@@ -3535,6 +3561,9 @@ __webpack_require__.r(__webpack_exports__);
     this.$emit('input', this.inputChecked);
   },
   watch: {
+    checked: function checked() {
+      this.inputChecked = this.checked;
+    },
     inputChecked: function inputChecked() {
       this.$emit('input', this.inputChecked);
     }
@@ -3592,6 +3621,9 @@ __webpack_require__.r(__webpack_exports__);
     this.$emit('input', this.inputValue);
   },
   watch: {
+    value: function value() {
+      this.inputValue = this.value;
+    },
     inputValue: function inputValue() {
       this.errors[this.name] = false;
       this.$emit('input', this.inputValue);
@@ -4628,6 +4660,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       form: {
         // Add the fields here when you want to use them as v-model
+        language_code: null,
         slug: null,
         has_listing: null
       },
@@ -4635,23 +4668,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       processing: false
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('ContentTypes', ['contentType'])),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('ContentTypes', ['getContentType', 'updateContentType', 'clearContentType'])), {}, {
-    update: function update() {
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('ContentTypes', ['contentType'])), {}, {
+    translationIndex: function translationIndex() {
       var _this = this;
+
+      return _.findIndex(this.contentType.data.translations, function (c) {
+        var _this$form$language_c;
+
+        return c.language_code == ((_this$form$language_c = _this.form.language_code) !== null && _this$form$language_c !== void 0 ? _this$form$language_c : _this.config.default_language_code);
+      });
+    }
+  }),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('ContentTypes', ['getContentType', 'updateContentType', 'clearContentType'])), {}, {
+    translation: function translation(field) {
+      var translations = this.contentType.data.translations;
+
+      if (translations[this.translationIndex]) {
+        return translations[this.translationIndex][field];
+      }
+    },
+    update: function update() {
+      var _this2 = this;
 
       this.processing = true;
       this.updateContentType(this.form).then(function (response) {
-        _this.$snackbar('The content type has been updated successfuly!');
+        _this2.$snackbar('The content type has been updated successfuly!');
 
-        _this.$router.push({
+        _this2.$router.push({
           name: 'content_types'
         });
       })["catch"](function (error) {
-        _this.errors = error.errors;
+        _this2.errors = error.errors;
       })["finally"](function () {
         _.delay(function () {
-          _this.processing = false;
+          _this2.processing = false;
         }, 500);
       });
     }
@@ -4767,6 +4817,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4780,6 +4841,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         title: 'Title',
         field: 'title'
       }, {
+        title: 'Translations',
+        field: 'translations'
+      }, {
         title: 'Status',
         field: 'status',
         classes: 'w-48'
@@ -4790,8 +4854,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       confirmData: false
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('ContentTypes', ['contentTypes'])),
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('ContentTypes', ['contentTypes'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('Languages', ['languages'])),
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('ContentTypes', ['fetchContentTypes', 'activateContentType', 'deactivateContentType', 'removeContentType', 'orderContentTypes', 'setContentTypesQuery'])), {}, {
+    hasTranslation: function hasTranslation(item, code) {
+      return lodash__WEBPACK_IMPORTED_MODULE_0___default.a.map(item.translations, 'language_code').includes(code);
+    },
     setQuery: function setQuery(args) {
       this.setContentTypesQuery(args);
       this.fetchContentTypes();
@@ -5558,6 +5625,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'SettingsIndex',
@@ -5573,7 +5641,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return _.map(this.languages.data, function (item) {
         return {
           label: item.name,
-          value: item.id
+          value: item.code
         };
       });
     }
@@ -25293,7 +25361,7 @@ var render = function() {
         "symbol",
         {
           attrs: {
-            id: "flag-en-gb",
+            id: "flag-en",
             viewBox: "0 0 512 512",
             fill: "none",
             stroke: "none"
@@ -25338,7 +25406,7 @@ var render = function() {
         "symbol",
         {
           attrs: {
-            id: "flag-tr-tr",
+            id: "flag-tr",
             viewBox: "0 0 512 512",
             fill: "none",
             stroke: "none"
@@ -25367,7 +25435,7 @@ var render = function() {
         "symbol",
         {
           attrs: {
-            id: "flag-de-de",
+            id: "flag-de",
             viewBox: "0 0 512 512",
             fill: "none",
             stroke: "none"
@@ -25400,7 +25468,7 @@ var render = function() {
         "symbol",
         {
           attrs: {
-            id: "flag-fr-fr",
+            id: "flag-fr",
             viewBox: "0 0 512 512",
             fill: "none",
             stroke: "none"
@@ -25436,7 +25504,7 @@ var render = function() {
         "symbol",
         {
           attrs: {
-            id: "flag-ru-ru",
+            id: "flag-ru",
             viewBox: "0 0 512 512",
             fill: "none",
             stroke: "none"
@@ -25469,7 +25537,7 @@ var render = function() {
         "symbol",
         {
           attrs: {
-            id: "flag-es-es",
+            id: "flag-es",
             viewBox: "0 0 512 512",
             fill: "none",
             stroke: "none"
@@ -25697,7 +25765,7 @@ var render = function() {
         "symbol",
         {
           attrs: {
-            id: "flag-ua-ua",
+            id: "flag-ua",
             viewBox: "0 0 512 512",
             fill: "none",
             stroke: "none"
@@ -27235,10 +27303,7 @@ var render = function() {
           }
         },
         [
-          _vm.languages.data &&
-          _vm.languages.data.length > 1 &&
-          _vm.isOpen &&
-          _vm.translations
+          _vm.languages.data && _vm.isOpen && _vm.translations
             ? _c(
                 "ul",
                 { staticClass: "flex items-center mt-4" },
@@ -27250,8 +27315,8 @@ var render = function() {
                         {
                           name: "show",
                           rawName: "v-show",
-                          value: language.id != _vm.defaultLanguageId,
-                          expression: "language.id != defaultLanguageId"
+                          value: language.code != _vm.defaultLanguageCode,
+                          expression: "language.code != defaultLanguageCode"
                         }
                       ],
                       staticClass: "mr-5"
@@ -27265,7 +27330,7 @@ var render = function() {
                           attrs: { type: "button" },
                           on: {
                             click: function($event) {
-                              return _vm.change(language.id)
+                              return _vm.change(language.code)
                             }
                           }
                         },
@@ -27280,7 +27345,7 @@ var render = function() {
                             _vm._v(_vm._s(language.name))
                           ]),
                           _vm._v(" "),
-                          _vm.isTranslated(language.id)
+                          _vm.isTranslated(language.code)
                             ? _c("svg", { staticClass: "w-3 h-3 ml-1" }, [
                                 _c("use", {
                                   attrs: { "xlink:href": "#icon-pencil-solid" }
@@ -29150,10 +29215,9 @@ var render = function() {
           { staticClass: "bg-white shadow overflow-hidden sm:rounded-lg mb-8" },
           [
             _c("LanguageBar", {
-              attrs: { defaultId: _vm.config.default_language_id },
               on: {
                 input: function($event) {
-                  _vm.form.language_id = $event
+                  _vm.form.language_code = $event
                 }
               }
             }),
@@ -29717,38 +29781,37 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm.contentType.data
-      ? _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.update($event)
-              }
-            }
-          },
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.update($event)
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "bg-white shadow overflow-hidden sm:rounded-lg mb-8" },
           [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "bg-white shadow overflow-hidden sm:rounded-lg mb-8"
+            _c("LanguageBar", {
+              attrs: {
+                translations: _vm.contentType.data
+                  ? _vm.contentType.data.translations
+                  : {},
+                current: this.$route.params.language
               },
-              [
-                _c("LanguageBar", {
-                  attrs: {
-                    translations: _vm.contentType.data.translations,
-                    defaultId: _vm.config.default_language_id
-                  },
-                  on: {
-                    input: function($event) {
-                      _vm.form.language_id = $event
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
+              on: {
+                input: function($event) {
+                  _vm.form.language_code = $event
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.contentType.data
+              ? _c(
                   "ul",
                   [
                     _c("InputHidden", {
@@ -29777,7 +29840,7 @@ var render = function() {
                               attrs: {
                                 name: "title",
                                 placeholder: "Title",
-                                value: _vm.contentType.data.title,
+                                value: _vm.translation("title"),
                                 errors: _vm.errors
                               },
                               on: {
@@ -29804,7 +29867,7 @@ var render = function() {
                             name: "description",
                             label: "Description",
                             placeholder: "Description",
-                            value: _vm.contentType.data.description,
+                            value: _vm.translation("description"),
                             attr: { rows: 10 },
                             errors: _vm.errors
                           },
@@ -29835,7 +29898,7 @@ var render = function() {
                               attrs: {
                                 name: "meta_title",
                                 placeholder: "Meta title",
-                                value: _vm.contentType.data.meta_title,
+                                value: _vm.translation("meta_title"),
                                 errors: _vm.errors
                               },
                               on: {
@@ -29867,7 +29930,7 @@ var render = function() {
                               attrs: {
                                 name: "meta_description",
                                 placeholder: "Meta description",
-                                value: _vm.contentType.data.meta_description,
+                                value: _vm.translation("meta_description"),
                                 errors: _vm.errors
                               },
                               on: {
@@ -29900,7 +29963,7 @@ var render = function() {
                                   attrs: {
                                     name: "meta_keywords",
                                     placeholder: "Meta keywords",
-                                    value: _vm.contentType.data.meta_keywords,
+                                    value: _vm.translation("meta_keywords"),
                                     errors: _vm.errors
                                   },
                                   on: {
@@ -29999,7 +30062,7 @@ var render = function() {
                                     name: "slug",
                                     placeholder: "URL alias",
                                     source: "#title",
-                                    value: _vm.contentType.data.slug,
+                                    value: _vm.translation("slug"),
                                     errors: _vm.errors
                                   },
                                   on: {
@@ -30081,57 +30144,50 @@ var render = function() {
                   ],
                   1
                 )
+              : _c("div", { staticClass: "text-center py-8" }, [
+                  _c(
+                    "svg",
+                    {
+                      staticClass:
+                        "w-5 h-5 animate-spin animate-spin-fast text-blue-600"
+                    },
+                    [_c("use", { attrs: { "xlink:href": "#icon-loading" } })]
+                  )
+                ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "flex items-center" },
+          [
+            _c(
+              "RouterLink",
+              { staticClass: "mr-3", attrs: { to: { name: "content_types" } } },
+              [
+                _c("Button", {
+                  attrs: { theme: "link", label: "Back", icon: "arrow-left" }
+                })
               ],
               1
             ),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "flex items-center" },
-              [
-                _c(
-                  "RouterLink",
-                  {
-                    staticClass: "mr-3",
-                    attrs: { to: { name: "content_types" } }
-                  },
-                  [
-                    _c("Button", {
-                      attrs: {
-                        theme: "link",
-                        label: "Back",
-                        icon: "arrow-left"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("Button", {
-                  attrs: {
-                    type: "submit",
-                    theme: "blue",
-                    size: "wide",
-                    label: "Save",
-                    icon: "check",
-                    loading: _vm.processing
-                  }
-                })
-              ],
-              1
-            )
-          ]
+            _c("Button", {
+              attrs: {
+                type: "submit",
+                theme: "blue",
+                size: "wide",
+                label: "Save",
+                icon: "check",
+                loading: _vm.processing
+              }
+            })
+          ],
+          1
         )
-      : _c("div", { staticClass: "text-center py-8" }, [
-          _c(
-            "svg",
-            {
-              staticClass:
-                "w-5 h-5 animate-spin animate-spin-fast text-blue-600"
-            },
-            [_c("use", { attrs: { "xlink:href": "#icon-loading" } })]
-          )
-        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -30404,7 +30460,7 @@ var render = function() {
                                   [
                                     _vm._v(
                                       "\n            " +
-                                        _vm._s(contentType.title) +
+                                        _vm._s(contentType.translation.title) +
                                         "\n          "
                                     )
                                   ]
@@ -30418,9 +30474,73 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(
-                                      _vm._s(contentType.description_plain)
+                                      _vm._s(
+                                        contentType.translation
+                                          .description_plain
+                                      )
                                     )
                                   ]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              { staticClass: "px-6 py-4 whitespace-no-wrap" },
+                              [
+                                _c(
+                                  "ul",
+                                  _vm._l(_vm.languages.data, function(
+                                    language
+                                  ) {
+                                    return _c(
+                                      "li",
+                                      {
+                                        staticClass:
+                                          "inline-block m-1 cursor-pointer"
+                                      },
+                                      [
+                                        _c(
+                                          "RouterLink",
+                                          {
+                                            attrs: {
+                                              to: {
+                                                name: "content_types.edit",
+                                                params: {
+                                                  id: contentType.id,
+                                                  language: language.code
+                                                }
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "svg",
+                                              {
+                                                staticClass: "w-6 h-5",
+                                                class: {
+                                                  "opacity-50": !_vm.hasTranslation(
+                                                    contentType,
+                                                    language.code
+                                                  )
+                                                }
+                                              },
+                                              [
+                                                _c("use", {
+                                                  attrs: {
+                                                    "xlink:href":
+                                                      "#flag-" + language.code
+                                                  }
+                                                })
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  }),
+                                  0
                                 )
                               ]
                             ),
@@ -31247,211 +31367,216 @@ var render = function() {
                         staticClass: "bg-white divide-y divide-gray-300"
                       },
                       _vm._l(_vm.languages.data, function(language, index) {
-                        return _c("tr", { attrs: { "data-id": language.id } }, [
-                          _c(
-                            "td",
-                            {
-                              staticClass:
-                                "bg-gray-50 text-gray-500 hover:text-gray-700 text-center cursor-move transition duration-150 ease-in-out"
-                            },
-                            [
-                              _c("svg", { staticClass: "w-4 h-4" }, [
-                                _c("use", {
-                                  attrs: { "xlink:href": "#icon-6dots-solid" }
-                                })
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "td",
-                            { staticClass: "px-6 py-4 whitespace-no-wrap" },
-                            [
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "flex items-center text-sm mb-1 leading-5 font-bold text-gray-900"
-                                },
-                                [
-                                  _c("svg", { staticClass: "w-6 h-5 mr-2" }, [
-                                    _c("use", {
-                                      attrs: {
-                                        "xlink:href": "#flag-" + language.code
-                                      }
-                                    })
-                                  ]),
-                                  _vm._v(
-                                    "\n            " +
-                                      _vm._s(language.name) +
-                                      "\n          "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "text-xs leading-5 font-light text-gray-600"
-                                },
-                                [_vm._v(_vm._s(language.locale))]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "td",
-                            { staticClass: "px-6 py-4 whitespace-no-wrap" },
-                            [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "text-sm leading-5 text-gray-600"
-                                },
-                                [_vm._v(_vm._s(language.code))]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "td",
-                            { staticClass: "px-6 py-4 whitespace-no-wrap" },
-                            [
-                              language.is_active
-                                ? _c(
-                                    "span",
-                                    {
-                                      staticClass:
-                                        "px-2 inline-flex text-xs leading-5 font-semibold rounded-md bg-green-100 text-green-900"
-                                    },
-                                    [_vm._v("Active")]
-                                  )
-                                : _c(
-                                    "span",
-                                    {
-                                      staticClass:
-                                        "px-2 inline-flex text-xs leading-5 font-semibold rounded-md bg-red-100 text-red-600"
-                                    },
-                                    [_vm._v("Inactive")]
-                                  )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "td",
-                            {
-                              staticClass:
-                                "px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium"
-                            },
-                            [
-                              _c("Dropdown", {
-                                attrs: { width: "w-48" },
-                                scopedSlots: _vm._u(
+                        return _c(
+                          "tr",
+                          { attrs: { "data-id": language.code } },
+                          [
+                            _c(
+                              "td",
+                              {
+                                staticClass:
+                                  "bg-gray-50 text-gray-500 hover:text-gray-700 text-center cursor-move transition duration-150 ease-in-out"
+                              },
+                              [
+                                _c("svg", { staticClass: "w-4 h-4" }, [
+                                  _c("use", {
+                                    attrs: { "xlink:href": "#icon-6dots-solid" }
+                                  })
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              { staticClass: "px-6 py-4 whitespace-no-wrap" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "flex items-center text-sm mb-1 leading-5 font-bold text-gray-900"
+                                  },
                                   [
-                                    {
-                                      key: "toggler",
-                                      fn: function() {
-                                        return [
-                                          _c(
-                                            "button",
-                                            {
-                                              staticClass:
-                                                "p-2 text-gray-400 hover:text-gray-800 focus:text-gray-800 focus:outline-none transition duration-150 ease-in-out",
-                                              attrs: { type: "button" }
-                                            },
-                                            [
-                                              _c(
-                                                "svg",
-                                                { staticClass: "w-6 h-6" },
-                                                [
-                                                  _c("use", {
-                                                    attrs: {
-                                                      "xlink:href":
-                                                        "#icon-3dots-solid"
-                                                    }
-                                                  })
-                                                ]
-                                              )
-                                            ]
-                                          )
-                                        ]
-                                      },
-                                      proxy: true
-                                    },
-                                    {
-                                      key: "content",
-                                      fn: function() {
-                                        return [
-                                          _c("Button", {
-                                            attrs: {
-                                              theme: "text-default",
-                                              label: "Edit"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                _vm.editData = language
-                                              }
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          language.is_active
-                                            ? _c("Button", {
-                                                attrs: {
-                                                  theme: "text-yellow",
-                                                  label: "Deactivate"
-                                                },
-                                                on: {
-                                                  click: function($event) {
-                                                    return _vm.deactivateLanguage(
-                                                      language
-                                                    )
-                                                  }
-                                                }
-                                              })
-                                            : _c("Button", {
-                                                attrs: {
-                                                  theme: "text-green",
-                                                  label: "Activate"
-                                                },
-                                                on: {
-                                                  click: function($event) {
-                                                    return _vm.activateLanguage(
-                                                      language
-                                                    )
-                                                  }
-                                                }
-                                              }),
-                                          _vm._v(" "),
-                                          _c("div", {
-                                            staticClass:
-                                              "my-2 border-t border-gray-200"
-                                          }),
-                                          _vm._v(" "),
-                                          _c("Button", {
-                                            attrs: {
-                                              theme: "text-red",
-                                              label: "Remove"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                _vm.confirmData = language
-                                              }
-                                            }
-                                          })
-                                        ]
-                                      },
-                                      proxy: true
-                                    }
-                                  ],
-                                  null,
-                                  true
+                                    _c("svg", { staticClass: "w-6 h-5 mr-2" }, [
+                                      _c("use", {
+                                        attrs: {
+                                          "xlink:href": "#flag-" + language.code
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(
+                                      "\n            " +
+                                        _vm._s(language.name) +
+                                        "\n          "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "text-xs leading-5 font-light text-gray-600"
+                                  },
+                                  [_vm._v(_vm._s(language.locale))]
                                 )
-                              })
-                            ],
-                            1
-                          )
-                        ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              { staticClass: "px-6 py-4 whitespace-no-wrap" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "text-sm leading-5 text-gray-600"
+                                  },
+                                  [_vm._v(_vm._s(language.code))]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              { staticClass: "px-6 py-4 whitespace-no-wrap" },
+                              [
+                                language.is_active
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "px-2 inline-flex text-xs leading-5 font-semibold rounded-md bg-green-100 text-green-900"
+                                      },
+                                      [_vm._v("Active")]
+                                    )
+                                  : _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "px-2 inline-flex text-xs leading-5 font-semibold rounded-md bg-red-100 text-red-600"
+                                      },
+                                      [_vm._v("Inactive")]
+                                    )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              {
+                                staticClass:
+                                  "px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium"
+                              },
+                              [
+                                _c("Dropdown", {
+                                  attrs: { width: "w-48" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "toggler",
+                                        fn: function() {
+                                          return [
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "p-2 text-gray-400 hover:text-gray-800 focus:text-gray-800 focus:outline-none transition duration-150 ease-in-out",
+                                                attrs: { type: "button" }
+                                              },
+                                              [
+                                                _c(
+                                                  "svg",
+                                                  { staticClass: "w-6 h-6" },
+                                                  [
+                                                    _c("use", {
+                                                      attrs: {
+                                                        "xlink:href":
+                                                          "#icon-3dots-solid"
+                                                      }
+                                                    })
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        },
+                                        proxy: true
+                                      },
+                                      {
+                                        key: "content",
+                                        fn: function() {
+                                          return [
+                                            _c("Button", {
+                                              attrs: {
+                                                theme: "text-default",
+                                                label: "Edit"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.editData = language
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            language.is_active
+                                              ? _c("Button", {
+                                                  attrs: {
+                                                    theme: "text-yellow",
+                                                    label: "Deactivate"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.deactivateLanguage(
+                                                        language
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              : _c("Button", {
+                                                  attrs: {
+                                                    theme: "text-green",
+                                                    label: "Activate"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.activateLanguage(
+                                                        language
+                                                      )
+                                                    }
+                                                  }
+                                                }),
+                                            _vm._v(" "),
+                                            _c("div", {
+                                              staticClass:
+                                                "my-2 border-t border-gray-200"
+                                            }),
+                                            _vm._v(" "),
+                                            _c("Button", {
+                                              attrs: {
+                                                theme: "text-red",
+                                                label: "Remove"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.confirmData = language
+                                                }
+                                              }
+                                            })
+                                          ]
+                                        },
+                                        proxy: true
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                })
+                              ],
+                              1
+                            )
+                          ]
+                        )
                       }),
                       0
                     )
@@ -31858,15 +31983,15 @@ var render = function() {
                     [
                       _c("Select", {
                         attrs: {
-                          name: "default_language_id",
+                          name: "default_language_code",
                           placeholder: "Select language",
                           options: _vm.languageOptions,
-                          selected: _vm.config.default_language_id,
+                          selected: _vm.config.default_language_code,
                           errors: _vm.errors
                         },
                         on: {
                           input: function($event) {
-                            _vm.form.default_language_id = $event
+                            _vm.form.default_language_code = $event
                           }
                         }
                       })
@@ -32313,13 +32438,18 @@ var staticRenderFns = [
         "label",
         {
           staticClass: "text-sm font-medium text-gray-800 required",
-          attrs: { for: "default_language_id" }
+          attrs: { for: "default_language_code" }
         },
         [_vm._v("Default language")]
       ),
       _vm._v(" "),
       _c("p", { staticClass: "text-gray-550 text-xs" }, [
-        _vm._v("Select the default language of the website.")
+        _vm._v("Select the default language of the website.\n              "),
+        _c("strong", { staticClass: "block" }, [
+          _vm._v(
+            "Make sure all contents has a translation of the default language."
+          )
+        ])
       ])
     ])
   },
@@ -50804,7 +50934,8 @@ var DefaultView = {
     name: 'content_types',
     component: __webpack_require__(/*! ./views/Structure/ContentTypes/Index.vue */ "./resources/assets/admin/js/vue/views/Structure/ContentTypes/Index.vue")["default"],
     meta: {
-      title: 'Content types'
+      title: 'Content types',
+      translatable: true
     }
   }, {
     path: '/content-types/create',
@@ -50812,15 +50943,17 @@ var DefaultView = {
     component: __webpack_require__(/*! ./views/Structure/ContentTypes/Create.vue */ "./resources/assets/admin/js/vue/views/Structure/ContentTypes/Create.vue")["default"],
     meta: {
       title: 'Create content type',
-      breadcrumb: 'Create'
+      breadcrumb: 'Create',
+      translatable: true
     }
   }, {
-    path: '/content-types/edit/:id',
+    path: '/content-types/edit/:id/:language?',
     name: 'content_types.edit',
     component: __webpack_require__(/*! ./views/Structure/ContentTypes/Edit.vue */ "./resources/assets/admin/js/vue/views/Structure/ContentTypes/Edit.vue")["default"],
     meta: {
       title: 'Edit content type',
-      breadcrumb: 'Edit'
+      breadcrumb: 'Edit',
+      translatable: true
     }
   },
   /* People */

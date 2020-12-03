@@ -27,6 +27,10 @@ export default {
   },
 
   watch: {
+    checked: function () {
+      this.inputChecked = this.checked
+    },
+
     inputChecked: function () {
       this.$emit('input', this.inputChecked)
     }

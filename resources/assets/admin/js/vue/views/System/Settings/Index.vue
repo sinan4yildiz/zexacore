@@ -88,11 +88,12 @@
         <ul class="border-t border-gray-300">
           <li class="bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <div>
-              <label for="default_language_id" class="text-sm font-medium text-gray-800 required">Default language</label>
-              <p class="text-gray-550 text-xs">Select the default language of the website.</p>
+              <label for="default_language_code" class="text-sm font-medium text-gray-800 required">Default language</label>
+              <p class="text-gray-550 text-xs">Select the default language of the website.
+                <strong class="block">Make sure all contents has a translation of the default language.</strong></p>
             </div>
             <div class="mt-1 sm:mt-0 sm:col-span-2">
-              <Select name="default_language_id" placeholder="Select language" :options="languageOptions" :selected="config.default_language_id" @input="form.default_language_id = $event" :errors="errors"/>
+              <Select name="default_language_code" placeholder="Select language" :options="languageOptions" :selected="config.default_language_code" @input="form.default_language_code = $event" :errors="errors"/>
             </div>
           </li>
         </ul>
@@ -254,7 +255,7 @@ export default {
       return _.map(this.languages.data, function (item) {
         return {
           label: item.name,
-          value: item.id,
+          value: item.code,
         }
       })
     },

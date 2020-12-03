@@ -46,6 +46,10 @@ export default {
   },
 
   watch: {
+    selected: function () {
+      this.selectValue = this.selected
+    },
+
     selectValue: function () {
       this.errors[this.name] = false
       this.$emit('input', this.selectValue)

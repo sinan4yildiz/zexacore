@@ -27,14 +27,14 @@
         enter-class="opacity-0 -translate-y-2"
         enter-to-class="opacity-100 translate-y-0"
     >
-      <ul v-if="languages.data && languages.data.length > 1 && isOpen && translations" class="flex items-center mt-4">
-        <li v-for="(language, index) in languages.data" v-show="language.id != defaultLanguageId" class="mr-5">
-          <button type="button" @click="change(language.id)" class="flex items-center text-gray-600 hover:text-black focus:outline-none">
+      <ul v-if="languages.data && isOpen && translations" class="flex items-center mt-4">
+        <li v-for="(language, index) in languages.data" v-show="language.code != defaultLanguageCode" class="mr-5">
+          <button type="button" @click="change(language.code)" class="flex items-center text-gray-600 hover:text-black focus:outline-none">
             <svg class="w-5 h-4 mr-1-half">
               <use v-bind:xlink:href="'#flag-' + language.code"></use>
             </svg>
             <span class="text-sm leading-4">{{ language.name }}</span>
-            <svg v-if="isTranslated(language.id)" class="w-3 h-3 ml-1">
+            <svg v-if="isTranslated(language.code)" class="w-3 h-3 ml-1">
               <use xlink:href="#icon-pencil-solid"></use>
             </svg>
           </button>
@@ -52,16 +52,12 @@ export default {
 
   props: {
     translations: [Object, Array],
-    defaultId: [String, Number],
-    changeable: {
-      type: Boolean,
-      default: true
-    }
+    current: String
   },
 
   data: function () {
     return {
-      defaultLanguageId: this.defaultId,
+      defaultLanguageCode: this.current || this.$parent.config.default_language_code,
       isOpen: false
     }
   },
@@ -71,28 +67,26 @@ export default {
 
     defaultLanguage: function () {
       return _.find(this.languages.data, (i) => {
-        return i.id == this.defaultLanguageId;
+        return i.code == this.defaultLanguageCode;
       })
     },
   },
 
   methods: {
-    ...mapActions('Languages', ['fetchLanguages']),
-
-    isTranslated: function (id) {
-      return _.map(this.translations, 'id').includes(id)
+    isTranslated: function (code) {
+      return _.map(this.translations, 'language_code').includes(code)
     },
 
-    change: function (id) {
-      this.defaultLanguageId = id
-      this.$emit('input', this.defaultLanguageId)
+    change: function (code) {
+      this.defaultLanguageCode = code
+      this.$emit('input', this.defaultLanguageCode)
+      this.$router.replace({params: {language: code}})
       this.isOpen = false
     }
   },
 
   created() {
-    this.fetchLanguages()
-    this.$emit('input', this.defaultLanguageId)
+    this.$emit('input', this.defaultLanguageCode)
   },
 }
 </script>

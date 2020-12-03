@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\ContentType;
 use App\Http\Requests\Structure\ContentTypeRequest;
 use App\Http\Resources\Structure\ContentTypeResource;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 
 class ContentTypeController extends Controller
@@ -25,7 +26,7 @@ class ContentTypeController extends Controller
      */
     public function index()
     {
-        $items = ContentType::with('translation')->with('slug');
+        $items = ContentType::with('translation');
 
         /**
          * Query
@@ -90,7 +91,7 @@ class ContentTypeController extends Controller
          */
         $translation = new ContentTypeTranslation();
         $translation->content_type_id = $item->id;
-        $translation->language_id = request('language_id');
+        $translation->language_code = request('language_code');
         $translation->title = request('title');
         $translation->description = request('description');
         $translation->meta_title = request('meta_title');
@@ -104,7 +105,7 @@ class ContentTypeController extends Controller
          */
         if ($request->has_listing) {
             $slug = new Slug();
-            $slug->language_id = request('language_id');
+            $slug->language_code = request('language_code');
             $slug->query = config('constant.slugs.paths.content_types');
             $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
             $slug->value = $item->id;
@@ -145,15 +146,21 @@ class ContentTypeController extends Controller
 
 
         /**
-         * Save the translation
+         * Save or create a new translation
          */
-        $translation = $item->translation(request('language_id'));
-        $translation->title = request('title');
-        $translation->description = request('description');
-        $translation->meta_title = request('meta_title');
-        $translation->meta_description = request('meta_description');
-        $translation->meta_keywords = request('meta_keywords');
-        $translation->save();
+        $translation = ContentTypeTranslation::updateOrCreate(
+            [
+                'content_type_id' => $item->id,
+                'language_code'     => request('language_code')
+            ],
+            [
+                'title'            => request('title'),
+                'description'      => request('description'),
+                'meta_title'       => request('meta_title'),
+                'meta_description' => request('meta_description'),
+                'meta_keywords'    => request('meta_keywords'),
+            ]
+        );
 
 
         /**
@@ -161,9 +168,11 @@ class ContentTypeController extends Controller
          */
         $_slug = Slug::where([
             ['value', $item->id],
-            ['language_id', $translation->language_id],
             ['query', config('constant.slugs.paths.content_types')],
         ]);
+        if ($item->has_listing) {
+            $_slug->where('language_code', $translation->language_code);
+        }
         $_slug->delete();
 
         /**
@@ -171,7 +180,7 @@ class ContentTypeController extends Controller
          */
         if ($request->has_listing) {
             $slug = new Slug();
-            $slug->language_id = $translation->language_id;
+            $slug->language_code = $translation->language_code;
             $slug->query = config('constant.slugs.paths.content_types');
             $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
             $slug->value = $item->id;

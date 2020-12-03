@@ -16,7 +16,7 @@ class ContentTypeRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'slug'  => 'required_if:has_listing,1|unique:slugs,keyword,' . $this->slug . ',id,language_id,' . $this->language_id,
+            'slug'  => 'required_if:has_listing,1|unique:slugs,keyword,' . $this->slug . ',id,language_code,' . $this->language_code,
         ];
     }
 
@@ -30,7 +30,7 @@ class ContentTypeRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'slug'  => 'required_if:has_listing,1|unique:slugs,keyword,' . $this->id . ',value,language_id,' . $this->language_id,
+            'slug'  => 'required_if:has_listing,1|unique:slugs,keyword,' . $this->id . ',value,language_code,' . $this->language_code,
         ];
     }
 
