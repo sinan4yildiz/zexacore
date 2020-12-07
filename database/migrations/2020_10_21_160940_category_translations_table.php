@@ -4,9 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ContentTypeTranslationsTable extends Migration
+class CategoryTranslationsTable extends Migration
 {
-    static $table = 'content_type_translations';
+    static $table = 'category_translations';
 
     /**
      * Run the migrations.
@@ -17,7 +17,7 @@ class ContentTypeTranslationsTable extends Migration
     {
         Schema::create(static::$table, function (Blueprint $table) {
             $table->id();
-            $table->integer('content_type_id')->index()->unsigned();
+            $table->integer('category_id')->index()->unsigned();
             $table->char('language_code', 2)->index();
 
             // Translatable fields
@@ -28,8 +28,8 @@ class ContentTypeTranslationsTable extends Migration
             $table->string('meta_keywords')->nullable();
 
             // Foreign key
-            $table->foreign('content_type_id')
-                ->references('id')->on('content_types')
+            $table->foreign('category_id')
+                ->references('id')->on('categories')
                 ->onDelete('cascade');
         });
     }

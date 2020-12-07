@@ -39,6 +39,10 @@ class ContentTypeSeeder extends Seeder
                 'has_listing' => 1,
                 'sort_order'  => 3,
             ],
+            [
+                'has_listing' => 1,
+                'sort_order'  => 4,
+            ],
         ]);
 
         // Content type translations
@@ -58,23 +62,35 @@ class ContentTypeSeeder extends Seeder
             [
                 'content_type_id' => 2,
                 'language_code'   => 'en',
+                'title'           => 'Products',
+                'description'     => 'The products sold by your company.',
+            ],
+            [
+                'content_type_id' => 2,
+                'language_code'   => 'tr',
+                'title'           => 'Ürünler',
+                'description'     => 'Bu içerik tipi firmanızın satışını sunduğu ürünleri içerir.',
+            ],
+            [
+                'content_type_id' => 3,
+                'language_code'   => 'en',
                 'title'           => 'References',
                 'description'     => 'This type of content includes your reference works.',
             ],
             [
-                'content_type_id' => 2,
+                'content_type_id' => 3,
                 'language_code'   => 'tr',
                 'title'           => 'Referanslar',
                 'description'     => 'Bu içerik tipi firmanızın yaptığı referans çalışmaları içerir.',
             ],
             [
-                'content_type_id' => 3,
+                'content_type_id' => 4,
                 'language_code'   => 'en',
                 'title'           => 'Blog',
                 'description'     => 'You can post your blogs through this content type.',
             ],
             [
-                'content_type_id' => 3,
+                'content_type_id' => 4,
                 'language_code'   => 'tr',
                 'title'           => 'Blog',
                 'description'     => 'Blog yazılarınızı bu içerik tipi ile yazabilirsiniz.',

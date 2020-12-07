@@ -84,7 +84,7 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key'   => 'enable_meta_keywords',
-                'value' => false,
+                'value' => true,
             ],
 
             // Localization

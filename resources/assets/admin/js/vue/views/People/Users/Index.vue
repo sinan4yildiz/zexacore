@@ -33,7 +33,7 @@
         @query="setQuery($event)"
     >
       <template #tbody>
-        <tbody v-if="users.data" class="bg-white divide-y divide-gray-300">
+        <tbody v-if="users.data && users.data.length" class="bg-white divide-y divide-gray-300">
         <tr v-for="(user, index) in users.data">
           <td class="px-6 py-4 whitespace-no-wrap">
             <div class="flex items-center">
@@ -167,7 +167,7 @@ export default {
   },
 
   created() {
-    this.setUsersQuery({page: null})
+    this.setUsersQuery({})
     this.fetchUsers()
 
     if(this.editCurrentUser) {

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 // Modules
 import App from './modules/app'
+import Categories from './modules/Structure/categories'
 import ContentTypes from './modules/Structure/contentTypes'
 import Users from './modules/People/users'
 import Activities from './modules/People/activities'
@@ -14,6 +15,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     modules: {
         App,
+        Categories,
         ContentTypes,
         Users,
         Activities,

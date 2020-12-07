@@ -8,6 +8,11 @@ const DefaultView = {template: '<RouterView/>'}
 export default new VueRouter({
     base: window.data.url.admin.replace(window.location.origin, ''),
     routes: [
+
+        /*
+        * Dashboard
+        *
+        * */
         {
             path: '/',
             name: 'dashboard',
@@ -17,7 +22,11 @@ export default new VueRouter({
             }
         },
 
-        /* Content */
+
+        /*
+        * Content
+        *
+        * */
         {
             path: '/articles',
             name: 'articles',
@@ -34,7 +43,11 @@ export default new VueRouter({
             component: require('./views/Content/Uploads/Index.vue').default,
         },
 
-        /* Forms */
+
+        /*
+        * Contact
+        *
+        * */
         {
             path: '/messages',
             name: 'messages',
@@ -46,7 +59,11 @@ export default new VueRouter({
             component: require('./views/Forms/Forms/Index.vue').default,
         },
 
-        /* Structure */
+
+        /*
+        * Structure
+        *
+        * */
         {
             path: '/menus',
             name: 'menus',
@@ -57,11 +74,39 @@ export default new VueRouter({
             name: 'fields',
             component: require('./views/Structure/Fields/Index.vue').default,
         },
+
+        // Categories
         {
             path: '/categories',
             name: 'categories',
             component: require('./views/Structure/Categories/Index.vue').default,
+            meta: {
+                title: 'Categories',
+                translatable: true
+            },
         },
+        {
+            path: '/categories/create',
+            name: 'categories.create',
+            component: require('./views/Structure/Categories/Create.vue').default,
+            meta: {
+                title: 'Create category',
+                breadcrumb: 'Create',
+                translatable: true
+            },
+        },
+        {
+            path: '/categories/edit/:id/:language?',
+            name: 'categories.edit',
+            component: require('./views/Structure/Categories/Edit.vue').default,
+            meta: {
+                title: 'Edit category',
+                breadcrumb: 'Edit',
+                translatable: true
+            },
+        },
+
+        // Content types
         {
             path: '/content-types',
             name: 'content_types',
@@ -92,7 +137,11 @@ export default new VueRouter({
             },
         },
 
-        /* People */
+
+        /*
+        * People
+        *
+        * */
         {
             path: '/users',
             name: 'users',
@@ -111,12 +160,11 @@ export default new VueRouter({
             },
         },
 
-        /* Tools */
-        {
-            path: '/slugs',
-            name: 'slugs',
-            component: require('./views/Tools/Slugs/Index.vue').default,
-        },
+
+        /*
+        * Tools
+        *
+        * */
         {
             path: '/redirections',
             name: 'redirections',
@@ -128,7 +176,11 @@ export default new VueRouter({
             component: require('./views/Tools/Translations/Index.vue').default,
         },
 
-        /* System */
+
+        /*
+        * System
+        *
+        * */
         {
             path: '/settings',
             name: 'settings',

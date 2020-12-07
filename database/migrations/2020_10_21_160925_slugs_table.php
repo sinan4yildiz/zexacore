@@ -8,7 +8,6 @@ class SlugsTable extends Migration
 {
     static $table = 'slugs';
 
-
     /**
      * Run the migrations.
      *

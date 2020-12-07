@@ -42,7 +42,7 @@ export default {
   },
 
   created() {
-    this.$emit('input', this.inputValue)
+    this.$emit('input', this.selectValue)
   },
 
   watch: {

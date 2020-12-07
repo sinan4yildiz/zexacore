@@ -1673,6 +1673,12 @@ video {
   border-color: rgba(237, 242, 247, var(--divide-opacity));
 }
 
+.divide-gray-250 > :not(template) ~ :not(template) {
+  --divide-opacity: 1;
+  border-color: #E5EBEF;
+  border-color: rgba(229, 235, 239, var(--divide-opacity));
+}
+
 .divide-gray-300 > :not(template) ~ :not(template) {
   --divide-opacity: 1;
   border-color: #E2E8F0;
@@ -2386,6 +2392,12 @@ video {
   background-color: rgba(237, 242, 247, var(--bg-opacity));
 }
 
+.bg-gray-250 {
+  --bg-opacity: 1;
+  background-color: #E5EBEF;
+  background-color: rgba(229, 235, 239, var(--bg-opacity));
+}
+
 .bg-gray-300 {
   --bg-opacity: 1;
   background-color: #E2E8F0;
@@ -2970,6 +2982,12 @@ video {
   background-color: rgba(237, 242, 247, var(--bg-opacity));
 }
 
+.hover\:bg-gray-250:hover {
+  --bg-opacity: 1;
+  background-color: #E5EBEF;
+  background-color: rgba(229, 235, 239, var(--bg-opacity));
+}
+
 .hover\:bg-gray-300:hover {
   --bg-opacity: 1;
   background-color: #E2E8F0;
@@ -3552,6 +3570,12 @@ video {
   --bg-opacity: 1;
   background-color: #EDF2F7;
   background-color: rgba(237, 242, 247, var(--bg-opacity));
+}
+
+.focus\:bg-gray-250:focus {
+  --bg-opacity: 1;
+  background-color: #E5EBEF;
+  background-color: rgba(229, 235, 239, var(--bg-opacity));
 }
 
 .focus\:bg-gray-300:focus {
@@ -4171,6 +4195,11 @@ video {
   --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
 }
 
+.from-gray-250 {
+  --gradient-from-color: #E5EBEF;
+  --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+}
+
 .from-gray-300 {
   --gradient-from-color: #E2E8F0;
   --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -4661,6 +4690,11 @@ video {
   --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
 }
 
+.via-gray-250 {
+  --gradient-via-color: #E5EBEF;
+  --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+}
+
 .via-gray-300 {
   --gradient-via-color: #E2E8F0;
   --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -5144,6 +5178,10 @@ video {
   --gradient-to-color: #EDF2F7;
 }
 
+.to-gray-250 {
+  --gradient-to-color: #E5EBEF;
+}
+
 .to-gray-300 {
   --gradient-to-color: #E2E8F0;
 }
@@ -5541,6 +5579,11 @@ video {
 .hover\:from-gray-200:hover {
   --gradient-from-color: #EDF2F7;
   --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
+}
+
+.hover\:from-gray-250:hover {
+  --gradient-from-color: #E5EBEF;
+  --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
 }
 
 .hover\:from-gray-300:hover {
@@ -6033,6 +6076,11 @@ video {
   --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
 }
 
+.hover\:via-gray-250:hover {
+  --gradient-via-color: #E5EBEF;
+  --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+}
+
 .hover\:via-gray-300:hover {
   --gradient-via-color: #E2E8F0;
   --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -6516,6 +6564,10 @@ video {
   --gradient-to-color: #EDF2F7;
 }
 
+.hover\:to-gray-250:hover {
+  --gradient-to-color: #E5EBEF;
+}
+
 .hover\:to-gray-300:hover {
   --gradient-to-color: #E2E8F0;
 }
@@ -6913,6 +6965,11 @@ video {
 .focus\:from-gray-200:focus {
   --gradient-from-color: #EDF2F7;
   --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
+}
+
+.focus\:from-gray-250:focus {
+  --gradient-from-color: #E5EBEF;
+  --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
 }
 
 .focus\:from-gray-300:focus {
@@ -7405,6 +7462,11 @@ video {
   --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
 }
 
+.focus\:via-gray-250:focus {
+  --gradient-via-color: #E5EBEF;
+  --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+}
+
 .focus\:via-gray-300:focus {
   --gradient-via-color: #E2E8F0;
   --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -7886,6 +7948,10 @@ video {
 
 .focus\:to-gray-200:focus {
   --gradient-to-color: #EDF2F7;
+}
+
+.focus\:to-gray-250:focus {
+  --gradient-to-color: #E5EBEF;
 }
 
 .focus\:to-gray-300:focus {
@@ -8452,6 +8518,12 @@ video {
   --border-opacity: 1;
   border-color: #EDF2F7;
   border-color: rgba(237, 242, 247, var(--border-opacity));
+}
+
+.border-gray-250 {
+  --border-opacity: 1;
+  border-color: #E5EBEF;
+  border-color: rgba(229, 235, 239, var(--border-opacity));
 }
 
 .border-gray-300 {
@@ -9038,6 +9110,12 @@ video {
   border-color: rgba(237, 242, 247, var(--border-opacity));
 }
 
+.hover\:border-gray-250:hover {
+  --border-opacity: 1;
+  border-color: #E5EBEF;
+  border-color: rgba(229, 235, 239, var(--border-opacity));
+}
+
 .hover\:border-gray-300:hover {
   --border-opacity: 1;
   border-color: #E2E8F0;
@@ -9620,6 +9698,12 @@ video {
   --border-opacity: 1;
   border-color: #EDF2F7;
   border-color: rgba(237, 242, 247, var(--border-opacity));
+}
+
+.focus\:border-gray-250:focus {
+  --border-opacity: 1;
+  border-color: #E5EBEF;
+  border-color: rgba(229, 235, 239, var(--border-opacity));
 }
 
 .focus\:border-gray-300:focus {
@@ -14743,6 +14827,24 @@ video {
   color: rgba(237, 242, 247, var(--placeholder-opacity));
 }
 
+.placeholder-gray-250::-moz-placeholder {
+  --placeholder-opacity: 1;
+  color: #E5EBEF;
+  color: rgba(229, 235, 239, var(--placeholder-opacity));
+}
+
+.placeholder-gray-250:-ms-input-placeholder {
+  --placeholder-opacity: 1;
+  color: #E5EBEF;
+  color: rgba(229, 235, 239, var(--placeholder-opacity));
+}
+
+.placeholder-gray-250::placeholder {
+  --placeholder-opacity: 1;
+  color: #E5EBEF;
+  color: rgba(229, 235, 239, var(--placeholder-opacity));
+}
+
 .placeholder-gray-300::-moz-placeholder {
   --placeholder-opacity: 1;
   color: #E2E8F0;
@@ -16493,6 +16595,24 @@ video {
   --placeholder-opacity: 1;
   color: #EDF2F7;
   color: rgba(237, 242, 247, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-gray-250:focus::-moz-placeholder {
+  --placeholder-opacity: 1;
+  color: #E5EBEF;
+  color: rgba(229, 235, 239, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-gray-250:focus:-ms-input-placeholder {
+  --placeholder-opacity: 1;
+  color: #E5EBEF;
+  color: rgba(229, 235, 239, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-gray-250:focus::placeholder {
+  --placeholder-opacity: 1;
+  color: #E5EBEF;
+  color: rgba(229, 235, 239, var(--placeholder-opacity));
 }
 
 .focus\:placeholder-gray-300:focus::-moz-placeholder {
@@ -18704,6 +18824,12 @@ video {
   color: rgba(237, 242, 247, var(--text-opacity));
 }
 
+.text-gray-250 {
+  --text-opacity: 1;
+  color: #E5EBEF;
+  color: rgba(229, 235, 239, var(--text-opacity));
+}
+
 .text-gray-300 {
   --text-opacity: 1;
   color: #E2E8F0;
@@ -19288,6 +19414,12 @@ video {
   color: rgba(237, 242, 247, var(--text-opacity));
 }
 
+.hover\:text-gray-250:hover {
+  --text-opacity: 1;
+  color: #E5EBEF;
+  color: rgba(229, 235, 239, var(--text-opacity));
+}
+
 .hover\:text-gray-300:hover {
   --text-opacity: 1;
   color: #E2E8F0;
@@ -19870,6 +20002,12 @@ video {
   --text-opacity: 1;
   color: #EDF2F7;
   color: rgba(237, 242, 247, var(--text-opacity));
+}
+
+.focus\:text-gray-250:focus {
+  --text-opacity: 1;
+  color: #E5EBEF;
+  color: rgba(229, 235, 239, var(--text-opacity));
 }
 
 .focus\:text-gray-300:focus {
@@ -25827,6 +25965,12 @@ table tbody tr:last-child td:last-child {
     border-color: rgba(237, 242, 247, var(--divide-opacity));
   }
 
+  .sm\:divide-gray-250 > :not(template) ~ :not(template) {
+    --divide-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--divide-opacity));
+  }
+
   .sm\:divide-gray-300 > :not(template) ~ :not(template) {
     --divide-opacity: 1;
     border-color: #E2E8F0;
@@ -26540,6 +26684,12 @@ table tbody tr:last-child td:last-child {
     background-color: rgba(237, 242, 247, var(--bg-opacity));
   }
 
+  .sm\:bg-gray-250 {
+    --bg-opacity: 1;
+    background-color: #E5EBEF;
+    background-color: rgba(229, 235, 239, var(--bg-opacity));
+  }
+
   .sm\:bg-gray-300 {
     --bg-opacity: 1;
     background-color: #E2E8F0;
@@ -27124,6 +27274,12 @@ table tbody tr:last-child td:last-child {
     background-color: rgba(237, 242, 247, var(--bg-opacity));
   }
 
+  .sm\:hover\:bg-gray-250:hover {
+    --bg-opacity: 1;
+    background-color: #E5EBEF;
+    background-color: rgba(229, 235, 239, var(--bg-opacity));
+  }
+
   .sm\:hover\:bg-gray-300:hover {
     --bg-opacity: 1;
     background-color: #E2E8F0;
@@ -27706,6 +27862,12 @@ table tbody tr:last-child td:last-child {
     --bg-opacity: 1;
     background-color: #EDF2F7;
     background-color: rgba(237, 242, 247, var(--bg-opacity));
+  }
+
+  .sm\:focus\:bg-gray-250:focus {
+    --bg-opacity: 1;
+    background-color: #E5EBEF;
+    background-color: rgba(229, 235, 239, var(--bg-opacity));
   }
 
   .sm\:focus\:bg-gray-300:focus {
@@ -28325,6 +28487,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .sm\:from-gray-250 {
+    --gradient-from-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .sm\:from-gray-300 {
     --gradient-from-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -28815,6 +28982,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .sm\:via-gray-250 {
+    --gradient-via-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .sm\:via-gray-300 {
     --gradient-via-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -29298,6 +29470,10 @@ table tbody tr:last-child td:last-child {
     --gradient-to-color: #EDF2F7;
   }
 
+  .sm\:to-gray-250 {
+    --gradient-to-color: #E5EBEF;
+  }
+
   .sm\:to-gray-300 {
     --gradient-to-color: #E2E8F0;
   }
@@ -29695,6 +29871,11 @@ table tbody tr:last-child td:last-child {
   .sm\:hover\:from-gray-200:hover {
     --gradient-from-color: #EDF2F7;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
+  }
+
+  .sm\:hover\:from-gray-250:hover {
+    --gradient-from-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
   }
 
   .sm\:hover\:from-gray-300:hover {
@@ -30187,6 +30368,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .sm\:hover\:via-gray-250:hover {
+    --gradient-via-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .sm\:hover\:via-gray-300:hover {
     --gradient-via-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -30670,6 +30856,10 @@ table tbody tr:last-child td:last-child {
     --gradient-to-color: #EDF2F7;
   }
 
+  .sm\:hover\:to-gray-250:hover {
+    --gradient-to-color: #E5EBEF;
+  }
+
   .sm\:hover\:to-gray-300:hover {
     --gradient-to-color: #E2E8F0;
   }
@@ -31067,6 +31257,11 @@ table tbody tr:last-child td:last-child {
   .sm\:focus\:from-gray-200:focus {
     --gradient-from-color: #EDF2F7;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
+  }
+
+  .sm\:focus\:from-gray-250:focus {
+    --gradient-from-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
   }
 
   .sm\:focus\:from-gray-300:focus {
@@ -31559,6 +31754,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .sm\:focus\:via-gray-250:focus {
+    --gradient-via-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .sm\:focus\:via-gray-300:focus {
     --gradient-via-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -32040,6 +32240,10 @@ table tbody tr:last-child td:last-child {
 
   .sm\:focus\:to-gray-200:focus {
     --gradient-to-color: #EDF2F7;
+  }
+
+  .sm\:focus\:to-gray-250:focus {
+    --gradient-to-color: #E5EBEF;
   }
 
   .sm\:focus\:to-gray-300:focus {
@@ -32606,6 +32810,12 @@ table tbody tr:last-child td:last-child {
     --border-opacity: 1;
     border-color: #EDF2F7;
     border-color: rgba(237, 242, 247, var(--border-opacity));
+  }
+
+  .sm\:border-gray-250 {
+    --border-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--border-opacity));
   }
 
   .sm\:border-gray-300 {
@@ -33192,6 +33402,12 @@ table tbody tr:last-child td:last-child {
     border-color: rgba(237, 242, 247, var(--border-opacity));
   }
 
+  .sm\:hover\:border-gray-250:hover {
+    --border-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--border-opacity));
+  }
+
   .sm\:hover\:border-gray-300:hover {
     --border-opacity: 1;
     border-color: #E2E8F0;
@@ -33774,6 +33990,12 @@ table tbody tr:last-child td:last-child {
     --border-opacity: 1;
     border-color: #EDF2F7;
     border-color: rgba(237, 242, 247, var(--border-opacity));
+  }
+
+  .sm\:focus\:border-gray-250:focus {
+    --border-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--border-opacity));
   }
 
   .sm\:focus\:border-gray-300:focus {
@@ -38897,6 +39119,24 @@ table tbody tr:last-child td:last-child {
     color: rgba(237, 242, 247, var(--placeholder-opacity));
   }
 
+  .sm\:placeholder-gray-250::-moz-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-gray-250:-ms-input-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-gray-250::placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
   .sm\:placeholder-gray-300::-moz-placeholder {
     --placeholder-opacity: 1;
     color: #E2E8F0;
@@ -40647,6 +40887,24 @@ table tbody tr:last-child td:last-child {
     --placeholder-opacity: 1;
     color: #EDF2F7;
     color: rgba(237, 242, 247, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-gray-250:focus::-moz-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-gray-250:focus:-ms-input-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-gray-250:focus::placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
   }
 
   .sm\:focus\:placeholder-gray-300:focus::-moz-placeholder {
@@ -42858,6 +43116,12 @@ table tbody tr:last-child td:last-child {
     color: rgba(237, 242, 247, var(--text-opacity));
   }
 
+  .sm\:text-gray-250 {
+    --text-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--text-opacity));
+  }
+
   .sm\:text-gray-300 {
     --text-opacity: 1;
     color: #E2E8F0;
@@ -43442,6 +43706,12 @@ table tbody tr:last-child td:last-child {
     color: rgba(237, 242, 247, var(--text-opacity));
   }
 
+  .sm\:hover\:text-gray-250:hover {
+    --text-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--text-opacity));
+  }
+
   .sm\:hover\:text-gray-300:hover {
     --text-opacity: 1;
     color: #E2E8F0;
@@ -44024,6 +44294,12 @@ table tbody tr:last-child td:last-child {
     --text-opacity: 1;
     color: #EDF2F7;
     color: rgba(237, 242, 247, var(--text-opacity));
+  }
+
+  .sm\:focus\:text-gray-250:focus {
+    --text-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--text-opacity));
   }
 
   .sm\:focus\:text-gray-300:focus {
@@ -49749,6 +50025,12 @@ table tbody tr:last-child td:last-child {
     border-color: rgba(237, 242, 247, var(--divide-opacity));
   }
 
+  .md\:divide-gray-250 > :not(template) ~ :not(template) {
+    --divide-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--divide-opacity));
+  }
+
   .md\:divide-gray-300 > :not(template) ~ :not(template) {
     --divide-opacity: 1;
     border-color: #E2E8F0;
@@ -50462,6 +50744,12 @@ table tbody tr:last-child td:last-child {
     background-color: rgba(237, 242, 247, var(--bg-opacity));
   }
 
+  .md\:bg-gray-250 {
+    --bg-opacity: 1;
+    background-color: #E5EBEF;
+    background-color: rgba(229, 235, 239, var(--bg-opacity));
+  }
+
   .md\:bg-gray-300 {
     --bg-opacity: 1;
     background-color: #E2E8F0;
@@ -51046,6 +51334,12 @@ table tbody tr:last-child td:last-child {
     background-color: rgba(237, 242, 247, var(--bg-opacity));
   }
 
+  .md\:hover\:bg-gray-250:hover {
+    --bg-opacity: 1;
+    background-color: #E5EBEF;
+    background-color: rgba(229, 235, 239, var(--bg-opacity));
+  }
+
   .md\:hover\:bg-gray-300:hover {
     --bg-opacity: 1;
     background-color: #E2E8F0;
@@ -51628,6 +51922,12 @@ table tbody tr:last-child td:last-child {
     --bg-opacity: 1;
     background-color: #EDF2F7;
     background-color: rgba(237, 242, 247, var(--bg-opacity));
+  }
+
+  .md\:focus\:bg-gray-250:focus {
+    --bg-opacity: 1;
+    background-color: #E5EBEF;
+    background-color: rgba(229, 235, 239, var(--bg-opacity));
   }
 
   .md\:focus\:bg-gray-300:focus {
@@ -52247,6 +52547,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .md\:from-gray-250 {
+    --gradient-from-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .md\:from-gray-300 {
     --gradient-from-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -52737,6 +53042,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .md\:via-gray-250 {
+    --gradient-via-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .md\:via-gray-300 {
     --gradient-via-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -53220,6 +53530,10 @@ table tbody tr:last-child td:last-child {
     --gradient-to-color: #EDF2F7;
   }
 
+  .md\:to-gray-250 {
+    --gradient-to-color: #E5EBEF;
+  }
+
   .md\:to-gray-300 {
     --gradient-to-color: #E2E8F0;
   }
@@ -53617,6 +53931,11 @@ table tbody tr:last-child td:last-child {
   .md\:hover\:from-gray-200:hover {
     --gradient-from-color: #EDF2F7;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
+  }
+
+  .md\:hover\:from-gray-250:hover {
+    --gradient-from-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
   }
 
   .md\:hover\:from-gray-300:hover {
@@ -54109,6 +54428,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .md\:hover\:via-gray-250:hover {
+    --gradient-via-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .md\:hover\:via-gray-300:hover {
     --gradient-via-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -54592,6 +54916,10 @@ table tbody tr:last-child td:last-child {
     --gradient-to-color: #EDF2F7;
   }
 
+  .md\:hover\:to-gray-250:hover {
+    --gradient-to-color: #E5EBEF;
+  }
+
   .md\:hover\:to-gray-300:hover {
     --gradient-to-color: #E2E8F0;
   }
@@ -54989,6 +55317,11 @@ table tbody tr:last-child td:last-child {
   .md\:focus\:from-gray-200:focus {
     --gradient-from-color: #EDF2F7;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
+  }
+
+  .md\:focus\:from-gray-250:focus {
+    --gradient-from-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
   }
 
   .md\:focus\:from-gray-300:focus {
@@ -55481,6 +55814,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .md\:focus\:via-gray-250:focus {
+    --gradient-via-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .md\:focus\:via-gray-300:focus {
     --gradient-via-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -55962,6 +56300,10 @@ table tbody tr:last-child td:last-child {
 
   .md\:focus\:to-gray-200:focus {
     --gradient-to-color: #EDF2F7;
+  }
+
+  .md\:focus\:to-gray-250:focus {
+    --gradient-to-color: #E5EBEF;
   }
 
   .md\:focus\:to-gray-300:focus {
@@ -56528,6 +56870,12 @@ table tbody tr:last-child td:last-child {
     --border-opacity: 1;
     border-color: #EDF2F7;
     border-color: rgba(237, 242, 247, var(--border-opacity));
+  }
+
+  .md\:border-gray-250 {
+    --border-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--border-opacity));
   }
 
   .md\:border-gray-300 {
@@ -57114,6 +57462,12 @@ table tbody tr:last-child td:last-child {
     border-color: rgba(237, 242, 247, var(--border-opacity));
   }
 
+  .md\:hover\:border-gray-250:hover {
+    --border-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--border-opacity));
+  }
+
   .md\:hover\:border-gray-300:hover {
     --border-opacity: 1;
     border-color: #E2E8F0;
@@ -57696,6 +58050,12 @@ table tbody tr:last-child td:last-child {
     --border-opacity: 1;
     border-color: #EDF2F7;
     border-color: rgba(237, 242, 247, var(--border-opacity));
+  }
+
+  .md\:focus\:border-gray-250:focus {
+    --border-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--border-opacity));
   }
 
   .md\:focus\:border-gray-300:focus {
@@ -62819,6 +63179,24 @@ table tbody tr:last-child td:last-child {
     color: rgba(237, 242, 247, var(--placeholder-opacity));
   }
 
+  .md\:placeholder-gray-250::-moz-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-gray-250:-ms-input-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-gray-250::placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
   .md\:placeholder-gray-300::-moz-placeholder {
     --placeholder-opacity: 1;
     color: #E2E8F0;
@@ -64569,6 +64947,24 @@ table tbody tr:last-child td:last-child {
     --placeholder-opacity: 1;
     color: #EDF2F7;
     color: rgba(237, 242, 247, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-gray-250:focus::-moz-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-gray-250:focus:-ms-input-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-gray-250:focus::placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
   }
 
   .md\:focus\:placeholder-gray-300:focus::-moz-placeholder {
@@ -66780,6 +67176,12 @@ table tbody tr:last-child td:last-child {
     color: rgba(237, 242, 247, var(--text-opacity));
   }
 
+  .md\:text-gray-250 {
+    --text-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--text-opacity));
+  }
+
   .md\:text-gray-300 {
     --text-opacity: 1;
     color: #E2E8F0;
@@ -67364,6 +67766,12 @@ table tbody tr:last-child td:last-child {
     color: rgba(237, 242, 247, var(--text-opacity));
   }
 
+  .md\:hover\:text-gray-250:hover {
+    --text-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--text-opacity));
+  }
+
   .md\:hover\:text-gray-300:hover {
     --text-opacity: 1;
     color: #E2E8F0;
@@ -67946,6 +68354,12 @@ table tbody tr:last-child td:last-child {
     --text-opacity: 1;
     color: #EDF2F7;
     color: rgba(237, 242, 247, var(--text-opacity));
+  }
+
+  .md\:focus\:text-gray-250:focus {
+    --text-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--text-opacity));
   }
 
   .md\:focus\:text-gray-300:focus {
@@ -73671,6 +74085,12 @@ table tbody tr:last-child td:last-child {
     border-color: rgba(237, 242, 247, var(--divide-opacity));
   }
 
+  .lg\:divide-gray-250 > :not(template) ~ :not(template) {
+    --divide-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--divide-opacity));
+  }
+
   .lg\:divide-gray-300 > :not(template) ~ :not(template) {
     --divide-opacity: 1;
     border-color: #E2E8F0;
@@ -74384,6 +74804,12 @@ table tbody tr:last-child td:last-child {
     background-color: rgba(237, 242, 247, var(--bg-opacity));
   }
 
+  .lg\:bg-gray-250 {
+    --bg-opacity: 1;
+    background-color: #E5EBEF;
+    background-color: rgba(229, 235, 239, var(--bg-opacity));
+  }
+
   .lg\:bg-gray-300 {
     --bg-opacity: 1;
     background-color: #E2E8F0;
@@ -74968,6 +75394,12 @@ table tbody tr:last-child td:last-child {
     background-color: rgba(237, 242, 247, var(--bg-opacity));
   }
 
+  .lg\:hover\:bg-gray-250:hover {
+    --bg-opacity: 1;
+    background-color: #E5EBEF;
+    background-color: rgba(229, 235, 239, var(--bg-opacity));
+  }
+
   .lg\:hover\:bg-gray-300:hover {
     --bg-opacity: 1;
     background-color: #E2E8F0;
@@ -75550,6 +75982,12 @@ table tbody tr:last-child td:last-child {
     --bg-opacity: 1;
     background-color: #EDF2F7;
     background-color: rgba(237, 242, 247, var(--bg-opacity));
+  }
+
+  .lg\:focus\:bg-gray-250:focus {
+    --bg-opacity: 1;
+    background-color: #E5EBEF;
+    background-color: rgba(229, 235, 239, var(--bg-opacity));
   }
 
   .lg\:focus\:bg-gray-300:focus {
@@ -76169,6 +76607,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .lg\:from-gray-250 {
+    --gradient-from-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .lg\:from-gray-300 {
     --gradient-from-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -76659,6 +77102,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .lg\:via-gray-250 {
+    --gradient-via-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .lg\:via-gray-300 {
     --gradient-via-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -77142,6 +77590,10 @@ table tbody tr:last-child td:last-child {
     --gradient-to-color: #EDF2F7;
   }
 
+  .lg\:to-gray-250 {
+    --gradient-to-color: #E5EBEF;
+  }
+
   .lg\:to-gray-300 {
     --gradient-to-color: #E2E8F0;
   }
@@ -77539,6 +77991,11 @@ table tbody tr:last-child td:last-child {
   .lg\:hover\:from-gray-200:hover {
     --gradient-from-color: #EDF2F7;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
+  }
+
+  .lg\:hover\:from-gray-250:hover {
+    --gradient-from-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
   }
 
   .lg\:hover\:from-gray-300:hover {
@@ -78031,6 +78488,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .lg\:hover\:via-gray-250:hover {
+    --gradient-via-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .lg\:hover\:via-gray-300:hover {
     --gradient-via-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -78514,6 +78976,10 @@ table tbody tr:last-child td:last-child {
     --gradient-to-color: #EDF2F7;
   }
 
+  .lg\:hover\:to-gray-250:hover {
+    --gradient-to-color: #E5EBEF;
+  }
+
   .lg\:hover\:to-gray-300:hover {
     --gradient-to-color: #E2E8F0;
   }
@@ -78911,6 +79377,11 @@ table tbody tr:last-child td:last-child {
   .lg\:focus\:from-gray-200:focus {
     --gradient-from-color: #EDF2F7;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
+  }
+
+  .lg\:focus\:from-gray-250:focus {
+    --gradient-from-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
   }
 
   .lg\:focus\:from-gray-300:focus {
@@ -79403,6 +79874,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .lg\:focus\:via-gray-250:focus {
+    --gradient-via-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .lg\:focus\:via-gray-300:focus {
     --gradient-via-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -79884,6 +80360,10 @@ table tbody tr:last-child td:last-child {
 
   .lg\:focus\:to-gray-200:focus {
     --gradient-to-color: #EDF2F7;
+  }
+
+  .lg\:focus\:to-gray-250:focus {
+    --gradient-to-color: #E5EBEF;
   }
 
   .lg\:focus\:to-gray-300:focus {
@@ -80450,6 +80930,12 @@ table tbody tr:last-child td:last-child {
     --border-opacity: 1;
     border-color: #EDF2F7;
     border-color: rgba(237, 242, 247, var(--border-opacity));
+  }
+
+  .lg\:border-gray-250 {
+    --border-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--border-opacity));
   }
 
   .lg\:border-gray-300 {
@@ -81036,6 +81522,12 @@ table tbody tr:last-child td:last-child {
     border-color: rgba(237, 242, 247, var(--border-opacity));
   }
 
+  .lg\:hover\:border-gray-250:hover {
+    --border-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--border-opacity));
+  }
+
   .lg\:hover\:border-gray-300:hover {
     --border-opacity: 1;
     border-color: #E2E8F0;
@@ -81618,6 +82110,12 @@ table tbody tr:last-child td:last-child {
     --border-opacity: 1;
     border-color: #EDF2F7;
     border-color: rgba(237, 242, 247, var(--border-opacity));
+  }
+
+  .lg\:focus\:border-gray-250:focus {
+    --border-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--border-opacity));
   }
 
   .lg\:focus\:border-gray-300:focus {
@@ -86741,6 +87239,24 @@ table tbody tr:last-child td:last-child {
     color: rgba(237, 242, 247, var(--placeholder-opacity));
   }
 
+  .lg\:placeholder-gray-250::-moz-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-gray-250:-ms-input-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-gray-250::placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
   .lg\:placeholder-gray-300::-moz-placeholder {
     --placeholder-opacity: 1;
     color: #E2E8F0;
@@ -88491,6 +89007,24 @@ table tbody tr:last-child td:last-child {
     --placeholder-opacity: 1;
     color: #EDF2F7;
     color: rgba(237, 242, 247, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-gray-250:focus::-moz-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-gray-250:focus:-ms-input-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-gray-250:focus::placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
   }
 
   .lg\:focus\:placeholder-gray-300:focus::-moz-placeholder {
@@ -90702,6 +91236,12 @@ table tbody tr:last-child td:last-child {
     color: rgba(237, 242, 247, var(--text-opacity));
   }
 
+  .lg\:text-gray-250 {
+    --text-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--text-opacity));
+  }
+
   .lg\:text-gray-300 {
     --text-opacity: 1;
     color: #E2E8F0;
@@ -91286,6 +91826,12 @@ table tbody tr:last-child td:last-child {
     color: rgba(237, 242, 247, var(--text-opacity));
   }
 
+  .lg\:hover\:text-gray-250:hover {
+    --text-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--text-opacity));
+  }
+
   .lg\:hover\:text-gray-300:hover {
     --text-opacity: 1;
     color: #E2E8F0;
@@ -91868,6 +92414,12 @@ table tbody tr:last-child td:last-child {
     --text-opacity: 1;
     color: #EDF2F7;
     color: rgba(237, 242, 247, var(--text-opacity));
+  }
+
+  .lg\:focus\:text-gray-250:focus {
+    --text-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--text-opacity));
   }
 
   .lg\:focus\:text-gray-300:focus {
@@ -97593,6 +98145,12 @@ table tbody tr:last-child td:last-child {
     border-color: rgba(237, 242, 247, var(--divide-opacity));
   }
 
+  .xl\:divide-gray-250 > :not(template) ~ :not(template) {
+    --divide-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--divide-opacity));
+  }
+
   .xl\:divide-gray-300 > :not(template) ~ :not(template) {
     --divide-opacity: 1;
     border-color: #E2E8F0;
@@ -98306,6 +98864,12 @@ table tbody tr:last-child td:last-child {
     background-color: rgba(237, 242, 247, var(--bg-opacity));
   }
 
+  .xl\:bg-gray-250 {
+    --bg-opacity: 1;
+    background-color: #E5EBEF;
+    background-color: rgba(229, 235, 239, var(--bg-opacity));
+  }
+
   .xl\:bg-gray-300 {
     --bg-opacity: 1;
     background-color: #E2E8F0;
@@ -98890,6 +99454,12 @@ table tbody tr:last-child td:last-child {
     background-color: rgba(237, 242, 247, var(--bg-opacity));
   }
 
+  .xl\:hover\:bg-gray-250:hover {
+    --bg-opacity: 1;
+    background-color: #E5EBEF;
+    background-color: rgba(229, 235, 239, var(--bg-opacity));
+  }
+
   .xl\:hover\:bg-gray-300:hover {
     --bg-opacity: 1;
     background-color: #E2E8F0;
@@ -99472,6 +100042,12 @@ table tbody tr:last-child td:last-child {
     --bg-opacity: 1;
     background-color: #EDF2F7;
     background-color: rgba(237, 242, 247, var(--bg-opacity));
+  }
+
+  .xl\:focus\:bg-gray-250:focus {
+    --bg-opacity: 1;
+    background-color: #E5EBEF;
+    background-color: rgba(229, 235, 239, var(--bg-opacity));
   }
 
   .xl\:focus\:bg-gray-300:focus {
@@ -100091,6 +100667,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .xl\:from-gray-250 {
+    --gradient-from-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .xl\:from-gray-300 {
     --gradient-from-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -100581,6 +101162,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .xl\:via-gray-250 {
+    --gradient-via-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .xl\:via-gray-300 {
     --gradient-via-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -101064,6 +101650,10 @@ table tbody tr:last-child td:last-child {
     --gradient-to-color: #EDF2F7;
   }
 
+  .xl\:to-gray-250 {
+    --gradient-to-color: #E5EBEF;
+  }
+
   .xl\:to-gray-300 {
     --gradient-to-color: #E2E8F0;
   }
@@ -101461,6 +102051,11 @@ table tbody tr:last-child td:last-child {
   .xl\:hover\:from-gray-200:hover {
     --gradient-from-color: #EDF2F7;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
+  }
+
+  .xl\:hover\:from-gray-250:hover {
+    --gradient-from-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
   }
 
   .xl\:hover\:from-gray-300:hover {
@@ -101953,6 +102548,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .xl\:hover\:via-gray-250:hover {
+    --gradient-via-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .xl\:hover\:via-gray-300:hover {
     --gradient-via-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -102436,6 +103036,10 @@ table tbody tr:last-child td:last-child {
     --gradient-to-color: #EDF2F7;
   }
 
+  .xl\:hover\:to-gray-250:hover {
+    --gradient-to-color: #E5EBEF;
+  }
+
   .xl\:hover\:to-gray-300:hover {
     --gradient-to-color: #E2E8F0;
   }
@@ -102833,6 +103437,11 @@ table tbody tr:last-child td:last-child {
   .xl\:focus\:from-gray-200:focus {
     --gradient-from-color: #EDF2F7;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
+  }
+
+  .xl\:focus\:from-gray-250:focus {
+    --gradient-from-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
   }
 
   .xl\:focus\:from-gray-300:focus {
@@ -103325,6 +103934,11 @@ table tbody tr:last-child td:last-child {
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(237, 242, 247, 0));
   }
 
+  .xl\:focus\:via-gray-250:focus {
+    --gradient-via-color: #E5EBEF;
+    --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(229, 235, 239, 0));
+  }
+
   .xl\:focus\:via-gray-300:focus {
     --gradient-via-color: #E2E8F0;
     --gradient-color-stops: var(--gradient-from-color), var(--gradient-via-color), var(--gradient-to-color, rgba(226, 232, 240, 0));
@@ -103806,6 +104420,10 @@ table tbody tr:last-child td:last-child {
 
   .xl\:focus\:to-gray-200:focus {
     --gradient-to-color: #EDF2F7;
+  }
+
+  .xl\:focus\:to-gray-250:focus {
+    --gradient-to-color: #E5EBEF;
   }
 
   .xl\:focus\:to-gray-300:focus {
@@ -104372,6 +104990,12 @@ table tbody tr:last-child td:last-child {
     --border-opacity: 1;
     border-color: #EDF2F7;
     border-color: rgba(237, 242, 247, var(--border-opacity));
+  }
+
+  .xl\:border-gray-250 {
+    --border-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--border-opacity));
   }
 
   .xl\:border-gray-300 {
@@ -104958,6 +105582,12 @@ table tbody tr:last-child td:last-child {
     border-color: rgba(237, 242, 247, var(--border-opacity));
   }
 
+  .xl\:hover\:border-gray-250:hover {
+    --border-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--border-opacity));
+  }
+
   .xl\:hover\:border-gray-300:hover {
     --border-opacity: 1;
     border-color: #E2E8F0;
@@ -105540,6 +106170,12 @@ table tbody tr:last-child td:last-child {
     --border-opacity: 1;
     border-color: #EDF2F7;
     border-color: rgba(237, 242, 247, var(--border-opacity));
+  }
+
+  .xl\:focus\:border-gray-250:focus {
+    --border-opacity: 1;
+    border-color: #E5EBEF;
+    border-color: rgba(229, 235, 239, var(--border-opacity));
   }
 
   .xl\:focus\:border-gray-300:focus {
@@ -110663,6 +111299,24 @@ table tbody tr:last-child td:last-child {
     color: rgba(237, 242, 247, var(--placeholder-opacity));
   }
 
+  .xl\:placeholder-gray-250::-moz-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-gray-250:-ms-input-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-gray-250::placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
   .xl\:placeholder-gray-300::-moz-placeholder {
     --placeholder-opacity: 1;
     color: #E2E8F0;
@@ -112413,6 +113067,24 @@ table tbody tr:last-child td:last-child {
     --placeholder-opacity: 1;
     color: #EDF2F7;
     color: rgba(237, 242, 247, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-gray-250:focus::-moz-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-gray-250:focus:-ms-input-placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-gray-250:focus::placeholder {
+    --placeholder-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--placeholder-opacity));
   }
 
   .xl\:focus\:placeholder-gray-300:focus::-moz-placeholder {
@@ -114624,6 +115296,12 @@ table tbody tr:last-child td:last-child {
     color: rgba(237, 242, 247, var(--text-opacity));
   }
 
+  .xl\:text-gray-250 {
+    --text-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--text-opacity));
+  }
+
   .xl\:text-gray-300 {
     --text-opacity: 1;
     color: #E2E8F0;
@@ -115208,6 +115886,12 @@ table tbody tr:last-child td:last-child {
     color: rgba(237, 242, 247, var(--text-opacity));
   }
 
+  .xl\:hover\:text-gray-250:hover {
+    --text-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--text-opacity));
+  }
+
   .xl\:hover\:text-gray-300:hover {
     --text-opacity: 1;
     color: #E2E8F0;
@@ -115790,6 +116474,12 @@ table tbody tr:last-child td:last-child {
     --text-opacity: 1;
     color: #EDF2F7;
     color: rgba(237, 242, 247, var(--text-opacity));
+  }
+
+  .xl\:focus\:text-gray-250:focus {
+    --text-opacity: 1;
+    color: #E5EBEF;
+    color: rgba(229, 235, 239, var(--text-opacity));
   }
 
   .xl\:focus\:text-gray-300:focus {

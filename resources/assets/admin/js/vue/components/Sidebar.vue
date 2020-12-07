@@ -83,7 +83,7 @@ export default {
           ]
         },
         {
-          title: "Forms",
+          title: "Contact",
           icon: "envelope-solid",
           children: [
             {
@@ -136,10 +136,6 @@ export default {
           title: "Tools",
           icon: "cube-solid",
           children: [
-            {
-              title: "Slugs",
-              route: "slugs",
-            },
             {
               title: "Translations",
               route: "translations",

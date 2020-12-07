@@ -15,7 +15,7 @@
              class="form-input block w-full py-3 px-4 text-sm border border-gray-300 bg-gray-100 rounded-md shadow-sm focus:bg-white focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out">
       <label for="header-search-input" class="flex items-center absolute right-0 top-0 bottom-0 mr-4">
         <svg class="w-5 h-5 text-gray-400 mt-px">
-          <use xlink:href="#icon-search"></use>
+          <use xlink:href="#icon-search-solid"></use>
         </svg>
       </label>
     </div>

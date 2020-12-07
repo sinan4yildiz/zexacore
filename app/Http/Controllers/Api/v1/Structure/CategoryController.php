@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\Api\v1\Structure;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Structure\CategoryAutocompleteResource;
 use App\Models\Activity;
-use App\Models\ContentTypeTranslation;
+use App\Models\CategoryTranslation;
 use App\Models\Slug;
 use Illuminate\Support\Facades\Auth;
-use App\Models\ContentType;
-use App\Http\Requests\Structure\ContentTypeRequest;
-use App\Http\Resources\Structure\ContentTypeResource;
+use App\Models\Category;
+use App\Http\Requests\Structure\CategoryRequest;
+use App\Http\Resources\Structure\CategoryResource;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 
-class ContentTypeController extends Controller
+class CategoryController extends Controller
 {
     protected $sortable = [];
 
@@ -25,7 +27,22 @@ class ContentTypeController extends Controller
      */
     public function index()
     {
-        $items = ContentType::with('translation');
+        $items = Category::with('translations');
+
+
+        /**
+         * Parent filter
+         */
+        $items->where('parent_id', (int) Request::input('pid') ?? 0);
+
+
+        /**
+         * Content type filter
+         */
+        if (!Request::filled('pid')) {
+            $items->where('content_type_id', (int) Request::input('cid'));
+        }
+
 
         /**
          * Query
@@ -36,7 +53,7 @@ class ContentTypeController extends Controller
         /**
          * Response structure
          */
-        return ContentTypeResource::collection($items)->additional([
+        return CategoryResource::collection($items)->additional([
             'meta' => [
                 'sorting' => [
                     'sorted'   => request('sorted', $this->sorted),
@@ -56,40 +73,60 @@ class ContentTypeController extends Controller
         /**
          * Query
          */
-        $item = ContentType::with('translations')->findOrFail($id);
+        $item = Category::with('translations')->findOrFail($id);
 
 
         /**
          * Response structure
          */
-        return new ContentTypeResource($item);
+        return new CategoryResource($item);
+    }
+
+    /**
+     * Get the parent category with all parents of itself
+     *
+     */
+    public function parent($id)
+    {
+        /**
+         * Query
+         */
+        $item = Category::findOrFail($id);
+
+        $item->with_parents = true;
+
+
+        /**
+         * Response structure
+         */
+        return new CategoryResource($item);
     }
 
     /**
      * Create the new item
      *
-     * @param  \App\Http\Requests\Structure\ContentTypeRequest  $request
+     * @param  \App\Http\Requests\Structure\CategoryRequest  $request
      * @param $id
      *
      */
-    public function create(ContentTypeRequest $request)
+    public function create(CategoryRequest $request)
     {
         /**
          * Store the item
          */
-        $item = new ContentType();
-        $item->has_listing = request('has_listing', false);
-        $item->is_indexable = request('is_indexable', true);
+        $item = new Category();
+        $item->parent_id = request('parent_id', 0);
+        $item->content_type_id = request('content_type_id');
         $item->is_active = request('is_active', true);
-        $item->sort_order = request('sort_order', 1);
+        $item->sort_order = Category::max('sort_order') + 1;
         $item->save();
 
 
         /**
          * Store the translation
          */
-        $translation = new ContentTypeTranslation();
-        $translation->content_type_id = $item->id;
+        $translation = new CategoryTranslation();
+        $translation->category_id = $item->id;
         $translation->language_code = request('language_code');
         $translation->title = request('title');
         $translation->description = request('description');
@@ -102,14 +139,12 @@ class ContentTypeController extends Controller
         /**
          * Store the slug
          */
-        if ($request->has_listing) {
-            $slug = new Slug();
-            $slug->language_code = request('language_code');
-            $slug->query = config('constant.slugs.path.content_type');
-            $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
-            $slug->value = $item->id;
-            $slug->save();
-        }
+        $slug = new Slug();
+        $slug->language_code = request('language_code');
+        $slug->query = config('constant.slugs.path.category');
+        $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
+        $slug->value = $item->id;
+        $slug->save();
 
 
         /**
@@ -117,27 +152,27 @@ class ContentTypeController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.content_type.create', [
+        $activity->description = trans('admin/activitiy.category.create', [
             'title' => request('title')
         ]);
         $activity->save();
 
-        return new ContentTypeResource($item);
+        return new CategoryResource($item);
     }
 
     /**
      * Update the existing item
      *
-     * @param  \App\Http\Requests\Structure\ContentTypeRequest  $request
+     * @param  \App\Http\Requests\Structure\CategoryRequest  $request
      * @param $id
      *
      */
-    public function update(ContentTypeRequest $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
         /**
          * Save the item data
          */
-        $item = ContentType::findOrFail($id);
+        $item = Category::findOrFail($id);
         $item->has_listing = request('has_listing', false);
         $item->is_indexable = request('is_indexable', true);
         $item->is_active = request('is_active', true);
@@ -147,10 +182,10 @@ class ContentTypeController extends Controller
         /**
          * Save or create a new translation
          */
-        $translation = ContentTypeTranslation::updateOrCreate(
+        $translation = CategoryTranslation::updateOrCreate(
             [
                 'content_type_id' => $item->id,
-                'language_code'     => request('language_code')
+                'language_code'   => request('language_code')
             ],
             [
                 'title'            => request('title'),
@@ -180,7 +215,7 @@ class ContentTypeController extends Controller
         if ($request->has_listing) {
             $slug = new Slug();
             $slug->language_code = $translation->language_code;
-            $slug->query = config('constant.slugs.path.content_type');
+            $slug->query = config('constant.slugs.path.category');
             $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
             $slug->value = $item->id;
             $slug->save();
@@ -192,12 +227,49 @@ class ContentTypeController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.content_type.update', [
+        $activity->description = trans('admin/activitiy.category.update', [
             'title' => request('title')
         ]);
         $activity->save();
 
-        return new ContentTypeResource($item);
+        return new CategoryResource($item);
+    }
+
+    /**
+     * Search results for the autocompletes
+     *
+     */
+    public function autocomplete()
+    {
+        $items = Category::orderBy('parent_id', 'ASC');
+
+        $items->whereHas('translation', function ($query) {
+            if (Request::filled('keyword')) {
+                $query->where('title', 'LIKE', '%' . Request::input('keyword') . '%');
+            } else {
+                $query->where('parent_id', 0);
+            }
+        });
+
+
+        /**
+         * Content type filter
+         */
+        if (Request::filled('cid')) {
+            $items->where('content_type_id', (int) Request::input('cid'));
+        }
+
+
+        /**
+         * Query
+         */
+        $items = $items->paginate(5);
+
+
+        /**
+         * Response structure
+         */
+        return CategoryAutocompleteResource::collection($items);
     }
 
     /**
@@ -207,7 +279,7 @@ class ContentTypeController extends Controller
     public function order()
     {
         collect(request('orders'))->each(function ($order) {
-            $item = ContentType::find($order['id']);
+            $item = Category::find($order['id']);
 
             if ($item) {
                 $item->sort_order = $order['order'];
@@ -227,7 +299,7 @@ class ContentTypeController extends Controller
         /**
          * Activate
          */
-        $item = ContentType::findOrFail($id);
+        $item = Category::with('translations')->findOrFail($id);
         $item->is_active = true;
         $item->save();
 
@@ -237,12 +309,12 @@ class ContentTypeController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.content_type.activate', [
+        $activity->description = trans('admin/activitiy.category.activate', [
             'title' => $item->translation->title,
         ]);
         $activity->save();
 
-        return new ContentTypeResource($item);
+        return new CategoryResource($item);
     }
 
     /**
@@ -256,7 +328,7 @@ class ContentTypeController extends Controller
         /**
          * Deactivate
          */
-        $item = ContentType::findOrFail($id);
+        $item = Category::with('translations')->findOrFail($id);
         $item->is_active = false;
         $item->save();
 
@@ -266,12 +338,12 @@ class ContentTypeController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.content_type.deactivate', [
+        $activity->description = trans('admin/activitiy.category.deactivate', [
             'title' => $item->translation->title,
         ]);
         $activity->save();
 
-        return new ContentTypeResource($item);
+        return new CategoryResource($item);
     }
 
     /**
@@ -285,7 +357,7 @@ class ContentTypeController extends Controller
         /**
          * Remove
          */
-        $item = ContentType::with('translation')->findOrFail($id);
+        $item = Category::with('translation')->findOrFail($id);
         $item->delete();
 
 
@@ -294,11 +366,11 @@ class ContentTypeController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.content_type.remove', [
+        $activity->description = trans('admin/activitiy.category.remove', [
             'title' => $item->translation->title,
         ]);
         $activity->save();
 
-        return new ContentTypeResource($item);
+        return new CategoryResource($item);
     }
 }

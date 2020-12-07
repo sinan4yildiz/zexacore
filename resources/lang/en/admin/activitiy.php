@@ -25,6 +25,14 @@ return [
         'remove'     => 'Removed a language named :name',
     ],
 
+    'category' => [
+        'create'     => 'Created a new category named :title',
+        'update'     => 'Updated a category named :title',
+        'activate'   => 'Activated a category named :title',
+        'deactivate' => 'Deactivated a category named :title',
+        'remove'     => 'Removed a category named :title',
+    ],
+
     'content_type' => [
         'create'     => 'Created a new content type named :title',
         'update'     => 'Updated a content type named :title',

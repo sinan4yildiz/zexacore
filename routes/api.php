@@ -9,6 +9,24 @@ Route::group([
     'namespace'  => 'Api\v1',
 ], function () {
 
+    // Categories
+    Route::group([
+        'as'        => 'categories',
+        'prefix'    => 'categories',
+        'namespace' => 'Structure',
+    ], function () {
+        Route::get('/', 'CategoryController@index')->name('index');
+        Route::get('/{id}', 'CategoryController@single')->name('single')->where('id', '[0-9]+');;
+        Route::get('/parent/{id}', 'CategoryController@parent')->name('parent');
+        Route::post('/create', 'CategoryController@create')->name('create');
+        Route::put('/update/{id}', 'CategoryController@update')->name('update');
+        Route::get('/autocomplete', 'CategoryController@autocomplete')->name('autocomplete');
+        Route::patch('/order', 'CategoryController@order')->name('order');
+        Route::patch('/activate/{id}', 'CategoryController@activate')->name('activate');
+        Route::patch('/deactivate/{id}', 'CategoryController@deactivate')->name('deactivate');
+        Route::delete('/remove/{id}', 'CategoryController@remove')->name('remove');
+    });
+
     // Content types
     Route::group([
         'as'        => 'content_types',
@@ -16,7 +34,7 @@ Route::group([
         'namespace' => 'Structure',
     ], function () {
         Route::get('/', 'ContentTypeController@index')->name('index');
-        Route::get('/{id}', 'ContentTypeController@single')->name('single');
+        Route::get('/{id}', 'ContentTypeController@single')->name('single')->where('id', '[0-9]+');
         Route::post('/create', 'ContentTypeController@create')->name('create');
         Route::put('/update/{id}', 'ContentTypeController@update')->name('update');
         Route::patch('/order', 'ContentTypeController@order')->name('order');

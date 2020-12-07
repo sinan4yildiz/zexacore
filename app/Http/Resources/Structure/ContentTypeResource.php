@@ -3,7 +3,6 @@
 namespace App\Http\Resources\Structure;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Str;
 
 class ContentTypeResource extends JsonResource
 {

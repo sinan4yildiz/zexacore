@@ -93,19 +93,21 @@ export default {
     },
 
     handlePagination: function (page) {
+      this.$scrollTo(this.$el.querySelector('table'))
+
       return this.$emit('query', {page: page.label})
     }
   },
 
-  watch: {
-    'meta.current_page'(a, b) {
+  /*watch: {
+    'meta.current_page': function (a, b) {
       if(b === undefined)
         return false
 
-      _.delay(_ => {
+      _.delay(() => {
         this.$scrollTo(this.$el.querySelector('table'))
       }, 150)
     }
-  }
+  }*/
 }
 </script>

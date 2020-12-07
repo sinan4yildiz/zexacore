@@ -41,7 +41,6 @@ export default {
       if(e.meta.title) {
         this.breadcrumbs.push({
           title: e.meta.breadcrumb || e.meta.title,
-          path: e.path
         })
       }
     })

@@ -8,7 +8,6 @@ class UsersTable extends Migration
 {
     static $table = 'users';
 
-
     /**
      * Run the migrations.
      *

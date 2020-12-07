@@ -8,7 +8,6 @@ class SettingsTable extends Migration
 {
     static $table = 'settings';
 
-
     /**
      * Run the migrations.
      *

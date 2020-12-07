@@ -4,9 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ContentTypesTable extends Migration
+class CategoriesTable extends Migration
 {
-    static $table = 'content_types';
+    static $table = 'categories';
 
     /**
      * Run the migrations.
@@ -17,10 +17,12 @@ class ContentTypesTable extends Migration
     {
         Schema::create(static::$table, function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('has_listing')->default(false);
-            $table->boolean('is_indexable')->default(true);
+            $table->integer('parent_id')->default(0)->unsigned();
+            $table->integer('content_type_id')->index()->unsigned();
             $table->boolean('is_active')->default(true);
             $table->integer('sort_order')->default(1)->unsigned();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 
