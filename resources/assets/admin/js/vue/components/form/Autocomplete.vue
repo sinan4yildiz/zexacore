@@ -7,16 +7,17 @@
     <div class="relative">
       <input v-model="inputKeyword"
              type="text"
-             :name="name"
              :id="name"
              :placeholder="placeholder"
-             @keydown.enter.prevent="search"
+             @keydown.enter.prevent=""
+             @keyup="search"
              @focusin="isOpen = true"
              v-bind="attr"
              v-bind:class="{'has-error': error}"
              class="form-input block w-full px-4 py-3 text-sm border border-gray-400 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out"
              autocomplete="off"
       >
+      <input v-model="inputValue" type="hidden" :name="name">
       <label :for="name" class="flex items-center absolute top-0 right-0 bottom-0 px-4 py-3 text-gray-400">
         <svg class="w-5 h-5 transition duration-300 ease-out">
           <use xlink:href="#icon-search-solid"></use>
@@ -45,7 +46,7 @@
             </button>
           </li>
         </ul>
-        <div v-else class="px-4 py-3 text-sm text-red-400 leading-5 text-left rounded-md bg-white py-2 shadow-xs">Nothing found</div>
+        <div v-else class="px-4 py-3 text-sm text-gray-600 leading-5 text-left rounded-md bg-white py-2 shadow-xs">Nothing found</div>
       </div>
     </transition>
     <p v-if="error" class="mt-1 ml-1 text-red-600 text-xs" v-text="error"></p>
@@ -53,8 +54,8 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import {} from 'vuex'
-import _ from "lodash";
 import {mixin as clickaway} from "vue-clickaway";
 
 export default {
@@ -84,13 +85,21 @@ export default {
   },
 
   watch: {
-    inputKeyword: function () {
-      this.search()
+    keyword: function () {
+      this.inputKeyword = this.keyword
     },
 
-    params: function (o) {
-      this.results      = {}
-      this.inputKeyword = null
+    value: function (n, o) {
+      this.inputValue = this.value
+    },
+
+    params: function (n, o) {
+      if(!_.isEqual(o, n)) {
+        this.results      = false
+        this.inputKeyword = null
+        this.inputValue   = null
+        this.emit()
+      }
     }
   },
 
@@ -107,7 +116,9 @@ export default {
     }, 250),
 
     select: function (result) {
-      console.log(result)
+      this.inputKeyword = result.text
+      this.inputValue   = result.value
+      this.emit()
       this.close()
     },
 
@@ -116,10 +127,7 @@ export default {
     },
 
     emit: function () {
-      this.$emit('input', {
-        value: this.inputValue,
-        keyword: this.inputKeyword,
-      })
+      this.$emit('input', this.inputValue)
     }
   },
 

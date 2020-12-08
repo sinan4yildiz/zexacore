@@ -3091,11 +3091,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var vue_clickaway__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-clickaway */ "./node_modules/vue-clickaway/dist/vue-clickaway.common.js");
 /* harmony import */ var vue_clickaway__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_clickaway__WEBPACK_IMPORTED_MODULE_2__);
+//
 //
 //
 //
@@ -3175,23 +3176,30 @@ __webpack_require__.r(__webpack_exports__);
     this.emit();
   },
   watch: {
-    inputKeyword: function inputKeyword() {
-      this.search();
+    keyword: function keyword() {
+      this.inputKeyword = this.keyword;
     },
-    params: function params(o) {
-      this.results = {};
-      this.inputKeyword = null;
+    value: function value(n, o) {
+      this.inputValue = this.value;
+    },
+    params: function params(n, o) {
+      if (!lodash__WEBPACK_IMPORTED_MODULE_0___default.a.isEqual(o, n)) {
+        this.results = false;
+        this.inputKeyword = null;
+        this.inputValue = null;
+        this.emit();
+      }
     }
   },
   methods: {
-    search: lodash__WEBPACK_IMPORTED_MODULE_1___default.a.debounce(function () {
+    search: lodash__WEBPACK_IMPORTED_MODULE_0___default.a.debounce(function () {
       var _this = this;
 
       if (!this.inputKeyword) {
         return this.close();
       }
 
-      this.$store.dispatch(this.action, lodash__WEBPACK_IMPORTED_MODULE_1___default.a.merge({
+      this.$store.dispatch(this.action, lodash__WEBPACK_IMPORTED_MODULE_0___default.a.merge({
         keyword: this.inputKeyword
       }, this.params)).then(function (results) {
         _this.results = results;
@@ -3199,17 +3207,16 @@ __webpack_require__.r(__webpack_exports__);
       });
     }, 250),
     select: function select(result) {
-      console.log(result);
+      this.inputKeyword = result.text;
+      this.inputValue = result.value;
+      this.emit();
       this.close();
     },
     close: function close() {
       this.isOpen = false;
     },
     emit: function emit() {
-      this.$emit('input', {
-        value: this.inputValue,
-        keyword: this.inputKeyword
-      });
+      this.$emit('input', this.inputValue);
     }
   },
   mixins: [vue_clickaway__WEBPACK_IMPORTED_MODULE_2__["mixin"]]
@@ -3905,9 +3912,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3965,7 +3970,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ActivitiesIndex',
   data: function data() {
@@ -3982,13 +3986,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       keyword: null
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('Activities', ['activities'])),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('Activities', ['fetchActivities', 'setActivitiesQuery'])), {}, {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('Activities', ['activities'])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Activities', ['fetchActivities', 'setActivitiesQuery'])), {}, {
     setQuery: function setQuery(args) {
       this.setActivitiesQuery(args);
       this.fetchActivities();
     },
-    applyFilters: lodash__WEBPACK_IMPORTED_MODULE_0___default.a.debounce(function (filters) {
+    applyFilters: _.debounce(function (filters) {
       this.setQuery(filters);
     }, 250)
   }),
@@ -4263,9 +4267,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -4370,7 +4372,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'UsersIndex',
   props: ['editCurrentUser'],
@@ -4401,13 +4402,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       editData: false
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('Users', ['users'])),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('Users', ['fetchUsers', 'activateUser', 'deactivateUser', 'removeUser', 'setUsersQuery'])), {}, {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('Users', ['users'])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Users', ['fetchUsers', 'activateUser', 'deactivateUser', 'removeUser', 'setUsersQuery'])), {}, {
     setQuery: function setQuery(args) {
       this.setUsersQuery(args);
       this.fetchUsers();
     },
-    applyFilters: lodash__WEBPACK_IMPORTED_MODULE_0___default.a.debounce(function (filters) {
+    applyFilters: _.debounce(function (filters) {
       this.setQuery(filters);
     }, 250),
     confirmRemove: function confirmRemove(user) {
@@ -4429,7 +4430,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchUsers();
 
     if (this.editCurrentUser) {
-      lodash__WEBPACK_IMPORTED_MODULE_0___default.a.delay(function () {
+      _.delay(function () {
         _this.editData = _this.editCurrentUser;
       }, 300);
     }
@@ -4591,7 +4592,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       processing: false
     };
   },
-  computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('Categories', ['contentType'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('ContentTypes', ['contentTypes'])), {}, {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('Categories', ['contentType', 'parent'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('ContentTypes', ['contentTypes'])), {}, {
     contentTypeOptions: function contentTypeOptions() {
       return _.map(this.contentTypes.data, function (item) {
         return {
@@ -4599,9 +4600,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           value: item.id
         };
       });
-    },
-    parentCategoryOptions: function parentCategoryOptions() {
-      return {};
     }
   }),
   methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Categories', ['createCategory'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('ContentTypes', ['fetchContentTypes'])), {}, {
@@ -4613,7 +4611,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.$snackbar('The new category has been created successfuly!');
 
         _this.$router.push({
-          name: 'categories'
+          name: 'categories',
+          query: {
+            cid: _this.form.content_type_id
+          }
         });
       })["catch"](function (error) {
         _this.errors = error.errors;
@@ -4773,44 +4774,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "ContentTypeEdit",
+  name: "CategoryEdit",
   data: function data() {
     return {
       form: {
-        // Add the fields here when you want to use them as v-model
         language_code: null,
-        slug: null,
-        has_listing: null
+        slug: null
       },
       errors: {},
       processing: false
     };
   },
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('ContentTypes', ['contentType'])), {}, {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('Categories', ['category', 'parent', 'contentType'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('ContentTypes', ['contentTypes'])), {}, {
     translationIndex: function translationIndex() {
       var _this = this;
 
-      return _.findIndex(this.contentType.data.translations, function (c) {
+      return _.findIndex(this.category.data.translations, function (c) {
         var _this$form$language_c;
 
         return c.language_code == ((_this$form$language_c = _this.form.language_code) !== null && _this$form$language_c !== void 0 ? _this$form$language_c : _this.config.default_language_code);
       });
+    },
+    contentTypeOptions: function contentTypeOptions() {
+      return _.map(this.contentTypes.data, function (item) {
+        return {
+          label: item.translation.title,
+          value: item.id
+        };
+      });
     }
   }),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('ContentTypes', ['getContentType', 'updateContentType', 'clearContentType'])), {}, {
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Categories', ['updateCategory', 'getCategory', 'clearCategory'])), {}, {
     translation: function translation(field) {
-      var translations = this.contentType.data.translations;
+      var translations = this.category.data.translations;
 
       if (translations[this.translationIndex]) {
         return translations[this.translationIndex][field];
@@ -4820,11 +4818,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this2 = this;
 
       this.processing = true;
-      this.updateContentType(this.form).then(function (response) {
-        _this2.$snackbar('The content type has been updated successfuly!');
+      this.updateCategory(this.form).then(function (response) {
+        _this2.$snackbar('The category has been updated successfuly!');
 
         _this2.$router.push({
-          name: 'content_types'
+          name: 'categories'
         });
       })["catch"](function (error) {
         _this2.errors = error.errors;
@@ -4836,18 +4834,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   created: function created() {
-    this.getContentType(this.$route.params.id);
+    this.getCategory(this.$route.params.id);
   },
   destroyed: function destroyed() {
-    this.clearContentType();
+    this.clearCategory();
   },
   components: {
     Dropdown: __webpack_require__(/*! ../../../components/elements/Dropdown */ "./resources/assets/admin/js/vue/components/elements/Dropdown.vue")["default"],
     Breadcrumb: __webpack_require__(/*! ../../../components/elements/Breadcrumb */ "./resources/assets/admin/js/vue/components/elements/Breadcrumb.vue")["default"],
     Input: __webpack_require__(/*! ../../../components/form/Input */ "./resources/assets/admin/js/vue/components/form/Input.vue")["default"],
     InputHidden: __webpack_require__(/*! ../../../components/form/InputHidden */ "./resources/assets/admin/js/vue/components/form/InputHidden.vue")["default"],
+    Autocomplete: __webpack_require__(/*! ../../../components/form/Autocomplete */ "./resources/assets/admin/js/vue/components/form/Autocomplete.vue")["default"],
     Slug: __webpack_require__(/*! ../../../components/form/Slug */ "./resources/assets/admin/js/vue/components/form/Slug.vue")["default"],
     Textarea: __webpack_require__(/*! ../../../components/form/Textarea */ "./resources/assets/admin/js/vue/components/form/Textarea.vue")["default"],
+    Select: __webpack_require__(/*! ../../../components/form/Select */ "./resources/assets/admin/js/vue/components/form/Select.vue")["default"],
     Button: __webpack_require__(/*! ../../../components/form/Button */ "./resources/assets/admin/js/vue/components/form/Button.vue")["default"],
     Switcher: __webpack_require__(/*! ../../../components/form/Switcher */ "./resources/assets/admin/js/vue/components/form/Switcher.vue")["default"],
     LanguageBar: __webpack_require__(/*! ../../../components/form/LanguageBar */ "./resources/assets/admin/js/vue/components/form/LanguageBar.vue")["default"]
@@ -4865,9 +4865,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -4989,7 +4987,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'CategoriesIndex',
   data: function data() {
@@ -5015,10 +5012,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       confirmData: false
     };
   },
-  computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('Categories', ['categories', 'contentType', 'parent'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('ContentTypes', ['contentTypes'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('Languages', ['languages'])),
-  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('Categories', ['fetchCategories', 'getParent', 'activateCategory', 'deactivateCategory', 'removeCategory', 'orderCategories', 'setCategoriesQuery', 'setContentType', 'clearCategories', 'clearParent'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('ContentTypes', ['fetchContentTypes'])), {}, {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('Categories', ['categories', 'contentType', 'parent'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('ContentTypes', ['contentTypes'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('Languages', ['languages'])),
+  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Categories', ['fetchCategories', 'getParent', 'activateCategory', 'deactivateCategory', 'removeCategory', 'orderCategories', 'setCategoriesQuery', 'setContentType', 'clearCategories', 'clearParent'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('ContentTypes', ['fetchContentTypes'])), {}, {
     hasTranslation: function hasTranslation(item, code) {
-      return lodash__WEBPACK_IMPORTED_MODULE_0___default.a.map(item.translations, 'language_code').includes(code);
+      return _.map(item.translations, 'language_code').includes(code);
     },
     changeContentType: function changeContentType(contentType) {
       if (this.contentType.id != contentType.id) {
@@ -5065,7 +5062,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         params['cid'] = String(args.cid);
       }
 
-      if (!lodash__WEBPACK_IMPORTED_MODULE_0___default.a.isEqual(this.$route.query, params)) this.$router.replace({
+      if (!_.isEqual(this.$route.query, params)) this.$router.replace({
         query: params
       });
     },
@@ -5078,7 +5075,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     contentTypes: function contentTypes() {
       var _this2 = this;
 
-      var i = lodash__WEBPACK_IMPORTED_MODULE_0___default.a.findIndex(this.contentTypes.data, function (c) {
+      var i = _.findIndex(this.contentTypes.data, function (c) {
         return c.id == _this2.$route.query.cid;
       });
 
@@ -5507,9 +5504,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -5600,7 +5595,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ContentTypesIndex',
   data: function data() {
@@ -5625,16 +5619,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       confirmData: false
     };
   },
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('ContentTypes', ['contentTypes'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('Languages', ['languages'])),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('ContentTypes', ['fetchContentTypes', 'activateContentType', 'deactivateContentType', 'removeContentType', 'orderContentTypes', 'setContentTypesQuery'])), {}, {
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('ContentTypes', ['contentTypes'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('Languages', ['languages'])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('ContentTypes', ['fetchContentTypes', 'activateContentType', 'deactivateContentType', 'removeContentType', 'orderContentTypes', 'setContentTypesQuery'])), {}, {
     hasTranslation: function hasTranslation(item, code) {
-      return lodash__WEBPACK_IMPORTED_MODULE_0___default.a.map(item.translations, 'language_code').includes(code);
+      return _.map(item.translations, 'language_code').includes(code);
     },
     setQuery: function setQuery(args) {
       this.setContentTypesQuery(args);
       this.fetchContentTypes();
     },
-    applyFilters: lodash__WEBPACK_IMPORTED_MODULE_0___default.a.debounce(function (filters) {
+    applyFilters: _.debounce(function (filters) {
       this.setQuery(filters);
     }, 250),
     confirmRemove: function confirmRemove(contentType) {
@@ -5963,9 +5957,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -6053,7 +6045,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LanguagesIndex',
   data: function data() {
@@ -6081,13 +6072,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       editData: false
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('Languages', ['languages'])),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('Languages', ['fetchLanguages', 'activateLanguage', 'deactivateLanguage', 'removeLanguage', 'orderLanguages', 'setLanguagesQuery'])), {}, {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('Languages', ['languages'])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Languages', ['fetchLanguages', 'activateLanguage', 'deactivateLanguage', 'removeLanguage', 'orderLanguages', 'setLanguagesQuery'])), {}, {
     setQuery: function setQuery(args) {
       this.setLanguagesQuery(args);
       this.fetchLanguages();
     },
-    applyFilters: lodash__WEBPACK_IMPORTED_MODULE_0___default.a.debounce(function (filters) {
+    applyFilters: _.debounce(function (filters) {
       this.setQuery(filters);
     }, 250),
     confirmRemove: function confirmRemove(language) {
@@ -27711,7 +27702,6 @@ var render = function() {
               class: { "has-error": _vm.error },
               attrs: {
                 type: "text",
-                name: _vm.name,
                 id: _vm.name,
                 placeholder: _vm.placeholder,
                 autocomplete: "off"
@@ -27726,8 +27716,8 @@ var render = function() {
                     return null
                   }
                   $event.preventDefault()
-                  return _vm.search($event)
                 },
+                keyup: _vm.search,
                 focusin: function($event) {
                   _vm.isOpen = true
                 },
@@ -27744,6 +27734,27 @@ var render = function() {
             false
           )
         ),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.inputValue,
+              expression: "inputValue"
+            }
+          ],
+          attrs: { type: "hidden", name: _vm.name },
+          domProps: { value: _vm.inputValue },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.inputValue = $event.target.value
+            }
+          }
+        }),
         _vm._v(" "),
         _c(
           "label",
@@ -27845,7 +27856,7 @@ var render = function() {
                         "div",
                         {
                           staticClass:
-                            "px-4 py-3 text-sm text-red-400 leading-5 text-left rounded-md bg-white py-2 shadow-xs"
+                            "px-4 py-3 text-sm text-gray-600 leading-5 text-left rounded-md bg-white py-2 shadow-xs"
                         },
                         [_vm._v("Nothing found")]
                       )
@@ -30209,10 +30220,15 @@ var render = function() {
                         [
                           _c("Autocomplete", {
                             attrs: {
+                              keyword:
+                                _vm.parent && _vm.parent.translation
+                                  ? _vm.parent.translation.title
+                                  : null,
+                              value: _vm.parent ? _vm.parent.id : null,
+                              params: { cid: _vm.form.content_type_id },
                               name: "parent_id",
                               placeholder: "Search categories",
                               action: "Categories/categoryAutocomplete",
-                              params: { cid: _vm.form.content_type_id },
                               errors: _vm.errors
                             },
                             on: {
@@ -30675,7 +30691,7 @@ var render = function() {
               staticClass:
                 "mb-2 text-2xl font-lighter leading-7 text-gray-800 sm:text-3xl sm:leading-9 sm:truncate"
             },
-            [_vm._v("Edit content type")]
+            [_vm._v("Edit category")]
           ),
           _vm._v(" "),
           _c("Breadcrumb")
@@ -30689,7 +30705,7 @@ var render = function() {
         [
           _c(
             "RouterLink",
-            { staticClass: "mr-3", attrs: { to: { name: "content_types" } } },
+            { staticClass: "mr-3", attrs: { to: { name: "categories" } } },
             [
               _c("Button", {
                 attrs: { theme: "link", label: "Back", icon: "arrow-left" }
@@ -30730,8 +30746,8 @@ var render = function() {
           [
             _c("LanguageBar", {
               attrs: {
-                translations: _vm.contentType.data
-                  ? _vm.contentType.data.translations
+                translations: _vm.category.data
+                  ? _vm.category.data.translations
                   : {},
                 current: this.$route.params.language
               },
@@ -30742,12 +30758,12 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _vm.contentType.data
+            _vm.category.data
               ? _c(
                   "ul",
                   [
                     _c("InputHidden", {
-                      attrs: { name: "id", value: _vm.contentType.data.id },
+                      attrs: { name: "id", value: _vm.category.data.id },
                       on: {
                         input: function($event) {
                           _vm.form.id = $event
@@ -30763,6 +30779,47 @@ var render = function() {
                       },
                       [
                         _vm._m(0),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "mt-1 sm:mt-0 sm:col-span-2" },
+                          [
+                            _c("Autocomplete", {
+                              attrs: {
+                                keyword:
+                                  _vm.category.data.parent &&
+                                  _vm.category.data.parent.translation
+                                    ? _vm.category.data.parent.translation.title
+                                    : null,
+                                value: _vm.category.data.parent
+                                  ? _vm.category.data.parent.id
+                                  : null,
+                                params: { cid: _vm.form.content_type_id },
+                                name: "parent_id",
+                                placeholder: "Search categories",
+                                action: "Categories/categoryAutocomplete",
+                                errors: _vm.errors
+                              },
+                              on: {
+                                input: function($event) {
+                                  _vm.form.parent_id = $event
+                                }
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      {
+                        staticClass:
+                          "bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+                      },
+                      [
+                        _vm._m(1),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -30820,7 +30877,7 @@ var render = function() {
                           "bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
                       },
                       [
-                        _vm._m(1),
+                        _vm._m(2),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -30852,7 +30909,7 @@ var render = function() {
                           "bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
                       },
                       [
-                        _vm._m(2),
+                        _vm._m(3),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -30885,7 +30942,7 @@ var render = function() {
                               "bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
                           },
                           [
-                            _vm._m(3),
+                            _vm._m(4),
                             _vm._v(" "),
                             _c(
                               "div",
@@ -30918,22 +30975,41 @@ var render = function() {
                           "bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
                       },
                       [
-                        _vm._m(4),
+                        _c("div", [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "text-sm font-medium text-gray-800",
+                              attrs: { for: "slug" }
+                            },
+                            [_vm._v("URL alias")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-gray-550 text-xs" }, [
+                            _vm._v(
+                              "\n              Define an alias for the page like https://domain.com"
+                            ),
+                            _c("strong", { staticClass: "text-gray-800" }, [
+                              _vm._v("/" + _vm._s(_vm.form.slug || "url-alias"))
+                            ])
+                          ])
+                        ]),
                         _vm._v(" "),
                         _c(
                           "div",
                           { staticClass: "mt-1 sm:mt-0 sm:col-span-2" },
                           [
-                            _c("Switcher", {
+                            _c("Slug", {
                               attrs: {
-                                name: "has_listing",
-                                label: ["Yes", "No"],
-                                checked: _vm.contentType.data.has_listing,
+                                name: "slug",
+                                placeholder: "URL alias",
+                                source: "#title",
+                                value: _vm.translation("slug"),
                                 errors: _vm.errors
                               },
                               on: {
                                 input: function($event) {
-                                  _vm.form.has_listing = $event
+                                  _vm.form.slug = $event
                                 }
                               }
                             })
@@ -30942,73 +31018,6 @@ var render = function() {
                         )
                       ]
                     ),
-                    _vm._v(" "),
-                    (_vm.form.has_listing !== undefined
-                    ? _vm.form.has_listing
-                    : _vm.contentType.data.has_listing)
-                      ? _c(
-                          "li",
-                          {
-                            staticClass:
-                              "bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
-                          },
-                          [
-                            _c("div", [
-                              _c(
-                                "label",
-                                {
-                                  staticClass:
-                                    "text-sm font-medium text-gray-800",
-                                  attrs: { for: "slug" }
-                                },
-                                [_vm._v("URL alias")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "p",
-                                { staticClass: "text-gray-550 text-xs" },
-                                [
-                                  _vm._v(
-                                    "\n              Define an alias for the page like https://domain.com"
-                                  ),
-                                  _c(
-                                    "strong",
-                                    { staticClass: "text-gray-800" },
-                                    [
-                                      _vm._v(
-                                        "/" +
-                                          _vm._s(_vm.form.slug || "url-alias")
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "mt-1 sm:mt-0 sm:col-span-2" },
-                              [
-                                _c("Slug", {
-                                  attrs: {
-                                    name: "slug",
-                                    placeholder: "URL alias",
-                                    source: "#title",
-                                    value: _vm.translation("slug"),
-                                    errors: _vm.errors
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      _vm.form.slug = $event
-                                    }
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ]
-                        )
-                      : _vm._e(),
                     _vm._v(" "),
                     _c(
                       "li",
@@ -31027,44 +31036,12 @@ var render = function() {
                               attrs: {
                                 name: "is_active",
                                 label: ["Active", "Inactive"],
-                                checked: _vm.contentType.data.is_active,
+                                checked: _vm.category.data.is_active,
                                 errors: _vm.errors
                               },
                               on: {
                                 input: function($event) {
                                   _vm.form.is_active = $event
-                                }
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      {
-                        staticClass:
-                          "bg-gray-50 px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
-                      },
-                      [
-                        _vm._m(6),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "mt-1 sm:mt-0 sm:col-span-2" },
-                          [
-                            _c("Switcher", {
-                              attrs: {
-                                name: "is_indexable",
-                                label: ["Allowed", "Prevent"],
-                                checked: _vm.contentType.data.is_indexable,
-                                errors: _vm.errors
-                              },
-                              on: {
-                                input: function($event) {
-                                  _vm.form.is_indexable = $event
                                 }
                               }
                             })
@@ -31096,7 +31073,7 @@ var render = function() {
           [
             _c(
               "RouterLink",
-              { staticClass: "mr-3", attrs: { to: { name: "content_types" } } },
+              { staticClass: "mr-3", attrs: { to: { name: "categories" } } },
               [
                 _c("Button", {
                   attrs: { theme: "link", label: "Back", icon: "arrow-left" }
@@ -31123,6 +31100,27 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c(
+        "label",
+        {
+          staticClass: "text-sm font-medium text-gray-800",
+          attrs: { for: "parent_id" }
+        },
+        [_vm._v("Parent category")]
+      ),
+      _vm._v(" "),
+      _c("p", { staticClass: "text-gray-550 text-xs" }, [
+        _vm._v(
+          "Select a parent category or leave empty to set it as root category."
+        )
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -31176,7 +31174,7 @@ var staticRenderFns = [
       ),
       _vm._v(" "),
       _c("p", { staticClass: "text-gray-550 text-xs" }, [
-        _vm._v("Write a short description that summarizes the content.")
+        _vm._v("Write a description that summarizes the content.")
       ])
     ])
   },
@@ -31210,25 +31208,6 @@ var staticRenderFns = [
         "label",
         {
           staticClass: "text-sm font-medium text-gray-800",
-          attrs: { for: "has_listing" }
-        },
-        [_vm._v("Listing page")]
-      ),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-gray-550 text-xs" }, [
-        _vm._v("Should the content type have a listing page?")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "label",
-        {
-          staticClass: "text-sm font-medium text-gray-800",
           attrs: { for: "is_active" }
         },
         [_vm._v("Status")]
@@ -31236,27 +31215,6 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("p", { staticClass: "text-gray-550 text-xs" }, [
         _vm._v("If you want to preview before publishing, leave this inactive.")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "label",
-        {
-          staticClass: "text-sm font-medium text-gray-800",
-          attrs: { for: "is_indexable" }
-        },
-        [_vm._v("Indexing")]
-      ),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-gray-550 text-xs" }, [
-        _vm._v(
-          "Allow search engines to index the listing page or try to prevent."
-        )
       ])
     ])
   }
@@ -53768,7 +53726,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _modules_app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/app */ "./resources/assets/admin/js/vue/store/modules/app.js");
-/* harmony import */ var _modules_Structure_categories__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/Structure/categories */ "./resources/assets/admin/js/vue/store/modules/Structure/categories.js");
+/* harmony import */ var _modules_Structure_categories__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/Structure/categories */ "./resources/assets/admin/js/vue/store/modules/Structure/categories.js");
 /* harmony import */ var _modules_Structure_contentTypes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/Structure/contentTypes */ "./resources/assets/admin/js/vue/store/modules/Structure/contentTypes.js");
 /* harmony import */ var _modules_People_users__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/People/users */ "./resources/assets/admin/js/vue/store/modules/People/users.js");
 /* harmony import */ var _modules_People_activities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/People/activities */ "./resources/assets/admin/js/vue/store/modules/People/activities.js");
@@ -53788,7 +53746,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
     App: _modules_app__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Categories: _modules_Structure_categories__WEBPACK_IMPORTED_MODULE_9__["default"],
+    Categories: _modules_Structure_categories__WEBPACK_IMPORTED_MODULE_3__["default"],
     ContentTypes: _modules_Structure_contentTypes__WEBPACK_IMPORTED_MODULE_4__["default"],
     Users: _modules_People_users__WEBPACK_IMPORTED_MODULE_5__["default"],
     Activities: _modules_People_activities__WEBPACK_IMPORTED_MODULE_6__["default"],
@@ -54090,25 +54048,14 @@ var getters = {
 };
 var actions = {
   getCategory: function getCategory(_ref, id) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var commit, state;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              commit = _ref.commit, state = _ref.state;
-              _context.next = 3;
-              return axios.get('categories/' + id).then(function (response) {
-                commit('mutateSingle', response.data);
-              });
-
-            case 3:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }))();
+    var commit = _ref.commit,
+        state = _ref.state;
+    return new Promise(function (resolve) {
+      axios.get('categories/' + id).then(function (response) {
+        commit('mutateSingle', response.data);
+        resolve(response.data.data);
+      });
+    });
   },
   getParent: function getParent(_ref2, id) {
     var commit = _ref2.commit,
@@ -54121,14 +54068,14 @@ var actions = {
     });
   },
   fetchCategories: function fetchCategories(_ref3) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       var commit, state;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context.prev = _context.next) {
             case 0:
               commit = _ref3.commit, state = _ref3.state;
-              _context2.next = 3;
+              _context.next = 3;
               return axios.get('categories', {
                 params: state.query
               }).then(function (response) {
@@ -54137,16 +54084,17 @@ var actions = {
 
             case 3:
             case "end":
-              return _context2.stop();
+              return _context.stop();
           }
         }
-      }, _callee2);
+      }, _callee);
     }))();
   },
   createCategory: function createCategory(_ref4, category) {
     var commit = _ref4.commit;
     return new Promise(function (resolve, reject) {
       axios.post('categories/create', category).then(function (response) {
+        commit('mutateCreated', response.data);
         resolve(response.data.data);
       })["catch"](function (error) {
         reject(error.response.data);
@@ -54157,6 +54105,7 @@ var actions = {
     var commit = _ref5.commit;
     return new Promise(function (resolve, reject) {
       axios.put('categories/update/' + category.id, category).then(function (response) {
+        commit('mutateUpdated', response.data);
         resolve(response.data.data);
       })["catch"](function (error) {
         reject(error.response.data);
@@ -54175,15 +54124,36 @@ var actions = {
     });
   },
   activateCategory: function activateCategory(_ref7, category) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref7.commit;
+              _context2.next = 3;
+              return axios.patch('categories/activate/' + category.id).then(function (response) {
+                commit('mutateUpdated', response.data);
+              });
+
+            case 3:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  deactivateCategory: function deactivateCategory(_ref8, category) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              commit = _ref7.commit;
+              commit = _ref8.commit;
               _context3.next = 3;
-              return axios.patch('categories/activate/' + category.id).then(function (response) {
+              return axios.patch('categories/deactivate/' + category.id).then(function (response) {
                 commit('mutateUpdated', response.data);
               });
 
@@ -54195,33 +54165,12 @@ var actions = {
       }, _callee3);
     }))();
   },
-  deactivateCategory: function deactivateCategory(_ref8, category) {
+  orderCategories: function orderCategories(_ref9, ordered) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-      var commit;
+      var commit, orderData;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
-            case 0:
-              commit = _ref8.commit;
-              _context4.next = 3;
-              return axios.patch('categories/deactivate/' + category.id).then(function (response) {
-                commit('mutateUpdated', response.data);
-              });
-
-            case 3:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4);
-    }))();
-  },
-  orderCategories: function orderCategories(_ref9, ordered) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-      var commit, orderData;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
             case 0:
               commit = _ref9.commit;
               orderData = _.map(ordered.to.rows, function (e, i) {
@@ -54230,7 +54179,7 @@ var actions = {
                   order: i + 1
                 };
               });
-              _context5.next = 4;
+              _context4.next = 4;
               return axios.patch('categories/order', {
                 orders: orderData
               }).then(function (response) {
@@ -54239,31 +54188,31 @@ var actions = {
 
             case 4:
             case "end":
-              return _context5.stop();
+              return _context4.stop();
           }
         }
-      }, _callee5);
+      }, _callee4);
     }))();
   },
   removeCategory: function removeCategory(_ref10, category) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
       var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context6.prev = _context6.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
               commit = _ref10.commit;
-              _context6.next = 3;
+              _context5.next = 3;
               return axios["delete"]('categories/remove/' + category.id).then(function (response) {
                 commit('mutateRemoved', category.id);
               });
 
             case 3:
             case "end":
-              return _context6.stop();
+              return _context5.stop();
           }
         }
-      }, _callee6);
+      }, _callee5);
     }))();
   },
   clearCategories: function clearCategories(_ref11) {
@@ -54294,13 +54243,31 @@ var mutations = {
   mutateSingle: function mutateSingle(state, category) {
     return state.category = category;
   },
+  mutateCreated: function mutateCreated(state, created) {
+    if (state.categories.data) {
+      state.categories.data.push(created.data);
+    }
+  },
   mutateUpdated: function mutateUpdated(state, updated) {
-    var index = state.categories.data.findIndex(function (category) {
-      return category.id === updated.data.id;
-    });
+    if (state.categories.data) {
+      var p = state.categories.data.findIndex(function (category) {
+        return category.parent_id === updated.data.parent_id;
+      });
+      console.log(p);
 
-    if (index !== -1) {
-      state.categories.data.splice(index, 1, updated.data);
+      if (p === -1) {
+        state.categories.data = state.categories.data.filter(function (category) {
+          return category.id !== updated.data.id;
+        });
+      }
+
+      var i = state.categories.data.findIndex(function (category) {
+        return category.id === updated.data.id;
+      });
+
+      if (i !== -1) {
+        state.categories.data.splice(i, 1, updated.data);
+      }
     }
   },
   mutateOrdered: function mutateOrdered(state, ordered) {
@@ -54410,6 +54377,7 @@ var actions = {
     var commit = _ref3.commit;
     return new Promise(function (resolve, reject) {
       axios.post('content-types/create', contentType).then(function (response) {
+        commit('mutateCreated', response.data);
         resolve(response.data.data);
       })["catch"](function (error) {
         reject(error.response.data);
@@ -54420,6 +54388,7 @@ var actions = {
     var commit = _ref4.commit;
     return new Promise(function (resolve, reject) {
       axios.put('content-types/update/' + contentType.id, contentType).then(function (response) {
+        commit('mutateUpdated', response.data);
         resolve(response.data.data);
       })["catch"](function (error) {
         reject(error.response.data);
@@ -54534,13 +54503,20 @@ var mutations = {
   mutateSingle: function mutateSingle(state, contentType) {
     return state.contentType = contentType;
   },
+  mutateCreated: function mutateCreated(state, created) {
+    if (state.contentTypes.data) {
+      state.contentTypes.data.push(created.data);
+    }
+  },
   mutateUpdated: function mutateUpdated(state, updated) {
-    var index = state.contentTypes.data.findIndex(function (contentType) {
-      return contentType.id === updated.data.id;
-    });
+    if (state.contentTypes.data) {
+      var index = state.contentTypes.data.findIndex(function (contentType) {
+        return contentType.id === updated.data.id;
+      });
 
-    if (index !== -1) {
-      state.contentTypes.data.splice(index, 1, updated.data);
+      if (index !== -1) {
+        state.contentTypes.data.splice(index, 1, updated.data);
+      }
     }
   },
   mutateOrdered: function mutateOrdered(state, ordered) {

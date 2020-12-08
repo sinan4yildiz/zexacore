@@ -81,7 +81,7 @@ class ContentTypeController extends Controller
         $item->has_listing = request('has_listing', false);
         $item->is_indexable = request('is_indexable', true);
         $item->is_active = request('is_active', true);
-        $item->sort_order = request('sort_order', 1);
+        $item->sort_order = ContentType::max('sort_order') + 1;
         $item->save();
 
 

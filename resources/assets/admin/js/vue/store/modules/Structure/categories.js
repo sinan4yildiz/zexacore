@@ -14,11 +14,14 @@ const getters = {
 }
 
 const actions = {
-    async getCategory({commit, state}, id) {
-        await axios.get('categories/' + id)
-                   .then(response => {
-                       commit('mutateSingle', response.data);
-                   });
+    getCategory({commit, state}, id) {
+        return new Promise((resolve) => {
+            axios.get('categories/' + id)
+                 .then(response => {
+                     commit('mutateSingle', response.data);
+                     resolve(response.data.data)
+                 });
+        })
     },
     getParent({commit, state}, id) {
         return new Promise((resolve) => {
@@ -41,6 +44,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.post('categories/create', category)
                  .then(response => {
+                     commit('mutateCreated', response.data);
                      resolve(response.data.data)
                  })
                  .catch(error => {
@@ -52,6 +56,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.put('categories/update/' + category.id, category)
                  .then(response => {
+                     commit('mutateUpdated', response.data);
                      resolve(response.data.data)
                  })
                  .catch(error => {
@@ -117,11 +122,26 @@ const actions = {
 const mutations = {
     mutateAll: (state, categories) => (state.categories = categories),
     mutateSingle: (state, category) => (state.category = category),
+    mutateCreated: (state, created) => {
+        if(state.categories.data) {
+            state.categories.data.push(created.data)
+        }
+    },
     mutateUpdated: (state, updated) => {
-        const index = state.categories.data.findIndex(category => category.id === updated.data.id);
+        if(state.categories.data) {
+            const p = state.categories.data.findIndex(category => category.parent_id === updated.data.parent_id)
 
-        if(index !== -1) {
-            state.categories.data.splice(index, 1, updated.data);
+            console.log(p)
+
+            if(p === -1) {
+                state.categories.data = state.categories.data.filter(category => category.id !== updated.data.id)
+            }
+
+            const i = state.categories.data.findIndex(category => category.id === updated.data.id)
+
+            if(i !== -1) {
+                state.categories.data.splice(i, 1, updated.data)
+            }
         }
     },
     mutateOrdered: (state, ordered) => {

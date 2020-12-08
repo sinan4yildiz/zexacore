@@ -28,6 +28,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.post('content-types/create', contentType)
                  .then(response => {
+                     commit('mutateCreated', response.data);
                      resolve(response.data.data)
                  })
                  .catch(error => {
@@ -39,6 +40,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.put('content-types/update/' + contentType.id, contentType)
                  .then(response => {
+                     commit('mutateUpdated', response.data)
                      resolve(response.data.data)
                  })
                  .catch(error => {
@@ -85,11 +87,18 @@ const actions = {
 const mutations = {
     mutateAll: (state, contentTypes) => (state.contentTypes = contentTypes),
     mutateSingle: (state, contentType) => (state.contentType = contentType),
+    mutateCreated: (state, created) => {
+        if(state.contentTypes.data) {
+            state.contentTypes.data.push(created.data)
+        }
+    },
     mutateUpdated: (state, updated) => {
-        const index = state.contentTypes.data.findIndex(contentType => contentType.id === updated.data.id);
+        if(state.contentTypes.data) {
+            const index = state.contentTypes.data.findIndex(contentType => contentType.id === updated.data.id);
 
-        if(index !== -1) {
-            state.contentTypes.data.splice(index, 1, updated.data);
+            if(index !== -1) {
+                state.contentTypes.data.splice(index, 1, updated.data);
+            }
         }
     },
     mutateOrdered: (state, ordered) => {

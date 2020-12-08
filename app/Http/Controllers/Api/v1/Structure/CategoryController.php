@@ -73,7 +73,7 @@ class CategoryController extends Controller
         /**
          * Query
          */
-        $item = Category::with('translations')->findOrFail($id);
+        $item = Category::with(['translations', 'parent'])->findOrFail($id);
 
 
         /**
@@ -93,6 +93,10 @@ class CategoryController extends Controller
          */
         $item = Category::findOrFail($id);
 
+
+        /**
+         * With all parents of itself
+         */
         $item->with_parents = true;
 
 
@@ -137,6 +141,12 @@ class CategoryController extends Controller
 
 
         /**
+         * Load translations relationship
+         */
+        $item->load('translations');
+
+
+        /**
          * Store the slug
          */
         $slug = new Slug();
@@ -172,9 +182,12 @@ class CategoryController extends Controller
         /**
          * Save the item data
          */
-        $item = Category::findOrFail($id);
-        $item->has_listing = request('has_listing', false);
-        $item->is_indexable = request('is_indexable', true);
+        $item = Category::with('translations')->findOrFail($id);
+
+        if (Request::filled('parent_id')) {
+            $item->parent_id = (int) request('parent_id');
+        }
+
         $item->is_active = request('is_active', true);
         $item->save();
 
@@ -184,8 +197,8 @@ class CategoryController extends Controller
          */
         $translation = CategoryTranslation::updateOrCreate(
             [
-                'content_type_id' => $item->id,
-                'language_code'   => request('language_code')
+                'category_id'   => $item->id,
+                'language_code' => request('language_code')
             ],
             [
                 'title'            => request('title'),
@@ -198,28 +211,18 @@ class CategoryController extends Controller
 
 
         /**
-         * Remove the existing slug
-         */
-        $_slug = Slug::where([
-            ['value', $item->id],
-            ['query', config('constant.slugs.path.content_type')],
-        ]);
-        if ($item->has_listing) {
-            $_slug->where('language_code', $translation->language_code);
-        }
-        $_slug->delete();
-
-        /**
          * Save the slug
          */
-        if ($request->has_listing) {
-            $slug = new Slug();
-            $slug->language_code = $translation->language_code;
-            $slug->query = config('constant.slugs.path.category');
-            $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
-            $slug->value = $item->id;
-            $slug->save();
-        }
+        $slug = Slug::updateOrCreate(
+            [
+                'value'         => $item->id,
+                'query'         => config('constant.slugs.path.category'),
+                'language_code' => $translation->language_code
+            ],
+            [
+                'keyword' => request('slug', Str::slug($translation->title) . $item->id),
+            ]
+        );
 
 
         /**
@@ -232,7 +235,7 @@ class CategoryController extends Controller
         ]);
         $activity->save();
 
-        return new CategoryResource($item);
+        return new CategoryResource($item->refresh());
     }
 
     /**

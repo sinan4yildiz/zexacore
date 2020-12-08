@@ -19,6 +19,9 @@ class CategoryResource extends JsonResource
             $this->mergeWhen($this->with_parents, [
                 'parents' => CategoryTranslationResource::collection($this->parents()),
             ]),
+            $this->mergeWhen($this->relationLoaded('parent'), [
+                'parent' => new CategoryResource($this->parent),
+            ]),
             $this->mergeWhen($this->relationLoaded('translations'), [
                 'translations' => CategoryTranslationResource::collection($this->translations),
             ]),

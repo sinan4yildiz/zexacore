@@ -36,7 +36,7 @@
               <p class="text-gray-550 text-xs">Select a parent category or leave empty to set it as root category.</p>
             </div>
             <div class="mt-1 sm:mt-0 sm:col-span-2">
-              <Autocomplete name="parent_id" placeholder="Search categories" action="Categories/categoryAutocomplete" :params="{cid: form.content_type_id}" @input="form.parent_id = $event" :errors="errors"/>
+              <Autocomplete :keyword="parent && parent.translation ? parent.translation.title : null" :value="parent ? parent.id : null" :params="{cid: form.content_type_id}" name="parent_id" placeholder="Search categories" action="Categories/categoryAutocomplete" @input="form.parent_id = $event" :errors="errors"/>
             </div>
           </li>
           <li class="bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -130,7 +130,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('Categories', ['contentType']),
+    ...mapGetters('Categories', ['contentType', 'parent']),
     ...mapGetters('ContentTypes', ['contentTypes']),
 
     contentTypeOptions: function () {
@@ -140,10 +140,6 @@ export default {
           value: item.id,
         }
       })
-    },
-
-    parentCategoryOptions: function () {
-      return {}
     },
   },
 
@@ -157,7 +153,7 @@ export default {
       this.createCategory(this.form)
           .then((response) => {
             this.$snackbar('The new category has been created successfuly!')
-            this.$router.push({name: 'categories'})
+            this.$router.push({name: 'categories', query: {cid: this.form.content_type_id}})
           })
           .catch(error => {
             this.errors = error.errors

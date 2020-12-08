@@ -49,7 +49,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
 import {mapGetters, mapActions} from 'vuex'
 
 export default {
