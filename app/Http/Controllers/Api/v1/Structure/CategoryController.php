@@ -22,7 +22,7 @@ class CategoryController extends Controller
     protected $ordered = 'asc';
 
     /**
-     * Data for listing
+     * Listing data
      *
      */
     public function index()
@@ -110,7 +110,6 @@ class CategoryController extends Controller
      * Create the new item
      *
      * @param  \App\Http\Requests\Structure\CategoryRequest  $request
-     * @param $id
      *
      */
     public function create(CategoryRequest $request)
@@ -151,7 +150,7 @@ class CategoryController extends Controller
          */
         $slug = new Slug();
         $slug->language_code = request('language_code');
-        $slug->query = config('constant.slugs.path.category');
+        $slug->module = config('constant.slugs.module.category');
         $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
         $slug->value = $item->id;
         $slug->save();
@@ -216,7 +215,7 @@ class CategoryController extends Controller
         $slug = Slug::updateOrCreate(
             [
                 'value'         => $item->id,
-                'query'         => config('constant.slugs.path.category'),
+                'module'        => config('constant.slugs.module.category'),
                 'language_code' => $translation->language_code
             ],
             [

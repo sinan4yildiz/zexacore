@@ -41,7 +41,10 @@ return [
     'distinct'             => 'This field has a duplicate value.',
     'email'                => 'This field must be a valid email address.',
     'ends_with'            => 'This field must end with one of the following: :values.',
-    'exists'               => 'This is does not look valid.',
+    'exists'               => 'This field does not look valid.',
+    'folder'               => [
+        'exists' => 'This already exists.',
+    ],
     'file'                 => 'This field must be a file.',
     'filled'               => 'This field must have a value.',
     'gt'                   => [
@@ -114,7 +117,7 @@ return [
     'starts_with'          => 'This field must start with one of the following: :values.',
     'string'               => 'This field must be a string.',
     'timezone'             => 'This field must be a valid zone.',
-    'unique'               => 'This has already been taken.',
+    'unique'               => 'This is already in use.',
     'uploaded'             => 'This field failed to upload.',
     'url'                  => 'This field format is invalid.',
     'uuid'                 => 'This field must be a valid UUID.',

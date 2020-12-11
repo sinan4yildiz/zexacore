@@ -11,8 +11,8 @@
         leave-class="opacity-100 scale-100"
         leave-to-class="opacity-0 scale-95"
     >
-      <div v-if="isOpen" v-bind:class="width || 'w-56'" class="origin-top-right absolute right-0 mt-2 shadow-lg rounded-md z-10" @click="close">
-        <div class="rounded-md bg-white py-2 shadow-xs text-left">
+      <div v-if="isOpen" v-bind:class="width || 'w-56'" class="origin-top-right absolute right-0 mt-2 shadow-lg rounded-md z-10" @click="keepOpen === true ? null : close()">
+        <div v-bind:class="paddingY" class="rounded-md bg-white shadow-xs text-left">
           <slot name="content"></slot>
         </div>
       </div>
@@ -28,7 +28,19 @@ export default {
   mixins: [
     clickaway
   ],
-  props: ['width'],
+  props: {
+    width: {
+      type: String
+    },
+    paddingY: {
+      type: String,
+      default: 'py-2',
+    },
+    keepOpen: {
+      type: Boolean,
+      default: false,
+    }
+  },
   data() {
     return {
       isOpen: false
@@ -39,7 +51,5 @@ export default {
       this.isOpen = false;
     }
   },
-  mounted() {
-  }
 }
 </script>

@@ -20,7 +20,7 @@
     >
       <template #tbody>
         <tbody v-if="languages.data && languages.data.length" v-sortable="{handle: 'td:first-child', onUpdate: orderLanguages}" class="bg-white divide-y divide-gray-300">
-        <tr v-for="(language, index) in languages.data" v-bind:data-id="language.code">
+        <tr v-for="(language, index) in languages.data" v-bind:data-id="language.id">
           <td class="bg-gray-50 text-gray-500 hover:text-gray-700 text-center cursor-move transition duration-150 ease-in-out">
             <svg class="w-4 h-4">
               <use xlink:href="#icon-6dots-solid"></use>
@@ -128,25 +128,16 @@ export default {
       this.fetchLanguages()
     },
 
-    applyFilters: _.debounce(function (filters) {
-      this.setQuery(filters)
-    }, 250),
-
     confirmRemove: function (language) {
       this.removeLanguage(language)
       this.confirmData = false
     }
   },
 
-  watch: {
-    keyword() {
-      this.applyFilters({keyword: this.keyword})
-    }
-  },
-
   created() {
-    this.setLanguagesQuery({page: false})
-    this.fetchLanguages()
+    if(!this.languages.data) {
+      this.fetchLanguages()
+    }
   },
 
   components: {

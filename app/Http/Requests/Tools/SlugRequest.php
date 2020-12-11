@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\System;
+namespace App\Http\Requests\Tools;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SettingRequest extends FormRequest
+class SlugRequest extends FormRequest
 {
     /**
      * Define validation rules to update method for resource update
@@ -15,10 +15,7 @@ class SettingRequest extends FormRequest
     public function updateRules(): array
     {
         return [
-            'brand_name'            => 'sometimes|required',
-            'company_name'          => 'sometimes|required',
-            'email_address'         => 'sometimes|required|string|email|max:191',
-            'default_language_code' => 'sometimes|required|exists:languages,code'
+            'keyword' => 'required|unique:slugs,keyword,' . $this->id . ',id,language_code,' . $this->language_code,
         ];
     }
 

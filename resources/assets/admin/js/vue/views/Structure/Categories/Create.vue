@@ -153,7 +153,7 @@ export default {
       this.createCategory(this.form)
           .then((response) => {
             this.$snackbar('The new category has been created successfuly!')
-            this.$router.push({name: 'categories', query: {cid: this.form.content_type_id}})
+            this.$router.push({name: 'categories'})
           })
           .catch(error => {
             this.errors = error.errors

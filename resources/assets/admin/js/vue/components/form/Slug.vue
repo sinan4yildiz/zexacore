@@ -15,7 +15,7 @@
              v-bind:class="{'has-error': error}"
              class="form-input block w-full px-4 py-3 text-sm border border-gray-400 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out"
       >
-      <button @click="generate"
+      <button v-if="source" @click="generate"
               type="button"
               class="absolute leading-3 top-0 right-0 bottom-0 px-4 py-3 text-gray-600 hover:text-gray-900 focus:outline-none"
       >

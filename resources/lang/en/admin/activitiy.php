@@ -8,6 +8,33 @@ return [
     |
     */
 
+    'upload' => [
+        'create' => [
+            'file'   => 'Uploaded a new file named :name',
+            'folder' => 'Created a new folder named :name',
+        ],
+        'remove' => [
+            'file'   => 'Removed a file named :name',
+            'folder' => 'Removed a folder named :name',
+        ],
+    ],
+
+    'category' => [
+        'create'     => 'Created a new category named :title',
+        'update'     => 'Updated a category named :title',
+        'activate'   => 'Activated a category named :title',
+        'deactivate' => 'Deactivated a category named :title',
+        'remove'     => 'Removed a category named :title',
+    ],
+
+    'content_type' => [
+        'create'     => 'Created a new content type named :title',
+        'update'     => 'Updated a content type named :title',
+        'activate'   => 'Activated a content type named :title',
+        'deactivate' => 'Deactivated a content type named :title',
+        'remove'     => 'Removed a content type named :title',
+    ],
+
     'user' => [
         'create'     => 'Created a new user named :firstname :lastname',
         'update'     => 'Updated a user named :firstname :lastname',
@@ -25,20 +52,8 @@ return [
         'remove'     => 'Removed a language named :name',
     ],
 
-    'category' => [
-        'create'     => 'Created a new category named :title',
-        'update'     => 'Updated a category named :title',
-        'activate'   => 'Activated a category named :title',
-        'deactivate' => 'Deactivated a category named :title',
-        'remove'     => 'Removed a category named :title',
-    ],
-
-    'content_type' => [
-        'create'     => 'Created a new content type named :title',
-        'update'     => 'Updated a content type named :title',
-        'activate'   => 'Activated a content type named :title',
-        'deactivate' => 'Deactivated a content type named :title',
-        'remove'     => 'Removed a content type named :title',
+    'slug' => [
+        'update' => "Updated the URL alias ':keyword'",
     ],
 
     'setting' => [

@@ -8,13 +8,13 @@
       leave-to-class="opacity-0 -translate-y-2"
   >
     <div v-if="getSnackbar.text"
-         class="fixed top-0 left-1/2 mt-28 w-96 shadow-xl transform -translate-x-1/2 rounded-md bg-white z-20">
+         class="fixed top-0 left-1/2 mt-28 w-108 shadow-xl transform -translate-x-1/2 rounded-md bg-white z-20">
       <div
           class="flex p-4 rounded-md shadow-xs">
         <svg v-bind:class="types[getSnackbar.type]['class']" class="flex-none w-6 h-6 mr-3">
           <use v-bind:xlink:href="'#icon-' + types[getSnackbar.type]['icon']"></use>
         </svg>
-        <p class="text-sm text-gray-700 leading-6" v-html="getSnackbar.text"></p>
+        <p class="text-sm text-gray-700 leading-6 mr-2" v-html="getSnackbar.text"></p>
         <svg @click="closeSnackbar"
              class="flex-none w-6 h-6 ml-auto cursor-pointer transform rotate-45 text-gray-400 hover:text-gray-600">
           <use xlink:href="#icon-plus"></use>

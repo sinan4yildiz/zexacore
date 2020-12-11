@@ -9,6 +9,18 @@ Route::group([
     'namespace'  => 'Api\v1',
 ], function () {
 
+    // Uploads
+    Route::group([
+        'as'        => 'uploads',
+        'prefix'    => 'uploads',
+        'namespace' => 'Content',
+    ], function () {
+        Route::get('/', 'UploadController@index')->name('index');
+        Route::post('/upload-file', 'UploadController@uploadFile')->name('upload_file');
+        Route::post('/create-folder', 'UploadController@createFolder')->name('create_folder');
+        Route::delete('/remove/{id}', 'UploadController@remove')->name('remove');
+    });
+
     // Categories
     Route::group([
         'as'        => 'categories',
@@ -64,6 +76,16 @@ Route::group([
         'namespace' => 'People',
     ], function () {
         Route::get('/', 'ActivityController@index')->name('index');
+    });
+
+    // Slugs
+    Route::group([
+        'as'        => 'slugs',
+        'prefix'    => 'slugs',
+        'namespace' => 'Tools',
+    ], function () {
+        Route::get('/', 'SlugController@index')->name('index');
+        Route::put('/update/{id}', 'SlugController@update')->name('update');
     });
 
     // Languages

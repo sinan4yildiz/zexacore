@@ -8,7 +8,7 @@
       <div class="flex items-center ml-auto">
 
         <!-- Search -->
-        <div class="search w-69 relative mr-3">
+        <div class="search w-69 relative">
           <input v-model="keyword" type="text" id="filter-search" placeholder="Search"
                  class="form-input block w-full px-4 py-2 text-sm border border-gray-300 shadow-sm rounded-md focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out">
           <label for="filter-search" class="flex items-center absolute right-0 top-0 bottom-0 mr-4">
@@ -19,7 +19,7 @@
         </div>
 
         <!-- Filters -->
-        <Filters :filters="['date-start', 'date-end']" @filtered="applyFilters($event)"/>
+        <Filters :filters="['date-start', 'date-end']" @filtered="applyFilters($event)" class="ml-3"/>
       </div>
     </header>
 

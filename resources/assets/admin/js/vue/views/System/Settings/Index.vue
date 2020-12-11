@@ -270,6 +270,8 @@ export default {
 
       this.updateSettings(this.form)
           .then((response) => {
+            this.errors = {}
+
             window.data.config = response
             this.$snackbar('Settings have been saved successfuly!')
           })
@@ -285,7 +287,9 @@ export default {
   },
 
   created() {
-    this.fetchLanguages()
+    if(!this.languages.data) {
+      this.fetchLanguages()
+    }
   },
 
   components: {

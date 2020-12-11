@@ -84,6 +84,7 @@ module.exports = {
                 '84': '21rem',
                 '96': '24rem',
                 '97': '24.25rem',
+                '108': '27rem',
             },
             inset: {
                 'half': '.125rem',

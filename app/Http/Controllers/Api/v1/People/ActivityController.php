@@ -18,7 +18,7 @@ class ActivityController extends Controller
     protected $ordered = 'desc';
 
     /**
-     * List of activities
+     * Listing data
      *
      */
     public function index()
@@ -29,16 +29,16 @@ class ActivityController extends Controller
         /**
          * Filters
          */
-        if (Request::has('keyword')) {
+        if (Request::filled('keyword')) {
             $activities->where(function ($query) {
                 $query->orWhere('user', 'LIKE', '%' . Request::input('keyword') . '%')
                     ->orWhere('description', 'LIKE', '%' . Request::input('keyword') . '%');
             });
         }
-        if (Request::has('date-start')) {
+        if (Request::filled('date-start')) {
             $activities->whereDate('created_at', '>=', Request::input('date-start'));
         }
-        if (Request::has('date-end')) {
+        if (Request::filled('date-end')) {
             $activities->whereDate('created_at', '<=', Request::input('date-end'));
         }
 

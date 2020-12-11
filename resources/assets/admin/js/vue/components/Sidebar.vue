@@ -144,6 +144,10 @@ export default {
               title: "Redirections",
               route: "redirections",
             },
+            {
+              title: "URL aliases",
+              route: "slugs",
+            },
           ]
         },
         {

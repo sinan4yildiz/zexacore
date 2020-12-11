@@ -25,7 +25,7 @@ class UserController extends Controller
     protected $ordered = 'desc';
 
     /**
-     * List of users
+     * Listing data
      *
      */
     public function index()
@@ -36,20 +36,20 @@ class UserController extends Controller
         /**
          * Filters
          */
-        if (Request::has('keyword')) {
+        if (Request::filled('keyword')) {
             $users->where(function ($query) {
                 $query->orWhere('firstname', 'LIKE', '%' . Request::input('keyword') . '%')
                     ->orWhere('lastname', 'LIKE', '%' . Request::input('keyword') . '%')
                     ->orWhere('email', 'LIKE', '%' . Request::input('keyword') . '%');
             });
         }
-        if (Request::has('status')) {
+        if (Request::filled('status')) {
             $users->where('is_active', (int) Request::input('status'));
         }
-        if (Request::has('date-start')) {
+        if (Request::filled('date-start')) {
             $users->whereDate('created_at', '>=', Request::input('date-start'));
         }
-        if (Request::has('date-end')) {
+        if (Request::filled('date-end')) {
             $users->whereDate('created_at', '<=', Request::input('date-end'));
         }
 
@@ -75,10 +75,9 @@ class UserController extends Controller
     }
 
     /**
-     * Create the new user
+     * Create the new item
      *
      * @param  \App\Http\Requests\People\UserRequest  $request
-     * @param $id
      *
      */
     public function create(UserRequest $request)
@@ -112,7 +111,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the existing user
+     * Update the existing item
      *
      * @param  \App\Http\Requests\People\UserRequest  $request
      * @param $id
@@ -121,7 +120,7 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
         /**
-         * Save the user data
+         * Save the item data
          */
         $item = User::findOrFail($id);
         if (Request::filled('password')) {
@@ -154,7 +153,7 @@ class UserController extends Controller
     }
 
     /**
-     * Activate the user
+     * Activate the item
      *
      * @param $id
      *
@@ -184,7 +183,7 @@ class UserController extends Controller
     }
 
     /**
-     * Deactivate the user
+     * Deactivate the item
      *
      * @param $id
      *

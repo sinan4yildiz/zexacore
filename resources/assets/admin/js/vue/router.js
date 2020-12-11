@@ -37,10 +37,15 @@ export default new VueRouter({
             name: 'pages',
             component: require('./views/Content/Pages/Index.vue').default,
         },
+
+        // Uploads
         {
             path: '/uploads',
             name: 'uploads',
             component: require('./views/Content/Uploads/Index.vue').default,
+            meta: {
+                title: 'Uploads',
+            },
         },
 
 
@@ -165,6 +170,15 @@ export default new VueRouter({
         * Tools
         *
         * */
+        {
+            path: '/url-aliases',
+            name: 'slugs',
+            component: require('./views/Tools/Slugs/Index.vue').default,
+            props: true,
+            meta: {
+                title: 'URL aliases'
+            }
+        },
         {
             path: '/redirections',
             name: 'redirections',

@@ -20,7 +20,7 @@ class ContentTypeController extends Controller
     protected $ordered = 'asc';
 
     /**
-     * Data for listing
+     * Listing data
      *
      */
     public function index()
@@ -69,7 +69,6 @@ class ContentTypeController extends Controller
      * Create the new item
      *
      * @param  \App\Http\Requests\Structure\ContentTypeRequest  $request
-     * @param $id
      *
      */
     public function create(ContentTypeRequest $request)
@@ -105,7 +104,7 @@ class ContentTypeController extends Controller
         if ($request->has_listing) {
             $slug = new Slug();
             $slug->language_code = request('language_code');
-            $slug->query = config('constant.slugs.path.content_type');
+            $slug->module = config('constant.slugs.module.content_type');
             $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
             $slug->value = $item->id;
             $slug->save();
@@ -150,7 +149,7 @@ class ContentTypeController extends Controller
         $translation = ContentTypeTranslation::updateOrCreate(
             [
                 'content_type_id' => $item->id,
-                'language_code'     => request('language_code')
+                'language_code'   => request('language_code')
             ],
             [
                 'title'            => request('title'),
@@ -167,7 +166,7 @@ class ContentTypeController extends Controller
          */
         $_slug = Slug::where([
             ['value', $item->id],
-            ['query', config('constant.slugs.path.content_type')],
+            ['module', config('constant.slugs.module.content_type')],
         ]);
         if ($item->has_listing) {
             $_slug->where('language_code', $translation->language_code);
@@ -180,7 +179,7 @@ class ContentTypeController extends Controller
         if ($request->has_listing) {
             $slug = new Slug();
             $slug->language_code = $translation->language_code;
-            $slug->query = config('constant.slugs.path.content_type');
+            $slug->module = config('constant.slugs.module.content_type');
             $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
             $slug->value = $item->id;
             $slug->save();

@@ -14,7 +14,7 @@ class ContentTypeTranslation extends Model
     {
         return $this->hasOne(Slug::class, 'value', 'content_type_id')->where([
             ['language_code', $language_code],
-            ['query', config('constant.slugs.path.content_type')],
+            ['module', config('constant.slugs.module.content_type')],
         ])->first();
     }
 }

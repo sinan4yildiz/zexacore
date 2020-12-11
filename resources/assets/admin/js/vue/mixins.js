@@ -5,6 +5,7 @@ const mixins = {
                 return {
                     currentUser: window.data.currentUser,
                     config: window.data.config,
+                    url: window.data.url,
                 }
             },
             methods: {

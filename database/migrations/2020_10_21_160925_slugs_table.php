@@ -19,7 +19,7 @@ class SlugsTable extends Migration
             $table->id();
             $table->char('language_code', 2)->index();
             $table->string('keyword');
-            $table->string('query');
+            $table->string('module');
             $table->integer('value')->index()->unsigned();
         });
     }

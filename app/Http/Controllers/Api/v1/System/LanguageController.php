@@ -17,7 +17,7 @@ class LanguageController extends Controller
     protected $ordered = 'asc';
 
     /**
-     * List of languages
+     * Listing data
      *
      */
     public function index()
@@ -46,16 +46,15 @@ class LanguageController extends Controller
     }
 
     /**
-     * Create the new language
+     * Create the new item
      *
      * @param  \App\Http\Requests\System\LanguageRequest  $request
-     * @param $id
      *
      */
     public function create(LanguageRequest $request)
     {
         /**
-         * Store the language
+         * Store the item
          */
         $item = new Language;
         $item->name = request('name');
@@ -81,7 +80,7 @@ class LanguageController extends Controller
     }
 
     /**
-     * Update the existing language
+     * Update the existing item
      *
      * @param  \App\Http\Requests\System\LanguageRequest  $request
      * @param $id
@@ -90,7 +89,7 @@ class LanguageController extends Controller
     public function update(LanguageRequest $request, $id)
     {
         /**
-         * Save the language data
+         * Save the item data
          */
         $item = Language::findOrFail($id);
         $item->name = request('name');
@@ -130,7 +129,7 @@ class LanguageController extends Controller
     }
 
     /**
-     * Activate the language
+     * Activate the item
      *
      * @param $id
      *
@@ -159,7 +158,7 @@ class LanguageController extends Controller
     }
 
     /**
-     * Deactivate the language
+     * Deactivate the item
      *
      * @param $id
      *
@@ -188,7 +187,7 @@ class LanguageController extends Controller
     }
 
     /**
-     * Remove the language
+     * Remove the item
      *
      * @param $id
      *

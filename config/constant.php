@@ -26,7 +26,7 @@ return [
     ],
 
     'slugs' => [
-        'path' => [
+        'module' => [
             'category'     => 'Web/Structure/Category',
             'content_type' => 'Web/Structure/ContentType',
         ]

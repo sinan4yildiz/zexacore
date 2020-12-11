@@ -14,7 +14,7 @@ class CategoryTranslation extends Model
     {
         return $this->hasOne(Slug::class, 'value', 'category_id')->where([
             ['language_code', $language_code],
-            ['query', config('constant.slugs.path.category')],
+            ['module', config('constant.slugs.module.category')],
         ])->first();
     }
 }
