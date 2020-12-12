@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Content\UploadFolderRequest;
 use App\Http\Resources\Content\UploadResource;
 use App\Models\Activity;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Finder\Finder;
 
 class UploadController extends Controller
 {
@@ -18,17 +19,41 @@ class UploadController extends Controller
      */
     public function index()
     {
-        $uploads = new Collection();
+        $finder = new Finder();
 
-        $uploads->push((object) [
-            'name' => 'abc.jpg',
-            'type' => 'jpg',
-        ]);
+
+        /**
+         * Current directory
+         */
+        $directory = storage_path('app/public/') . request('dir');
+
+
+        /**
+         * Folders
+         */
+        $folders = collect($finder->directories()->in($directory)->sortByModifiedTime());
+
+
+        /**
+         * Files
+         */
+        $files = collect($finder->files()->ignoreDotFiles(true)->ignoreVCS(true)->in($directory)->depth(0)->sortByModifiedTime());
+
+
+        /**
+         * All items
+         */
+        $items = $folders->merge($files);
+
+        /*foreach ($finder->files()->ignoreDotFiles(true)->ignoreVCS(true)->in($directory)->depth(0) as $item){
+            dd($item->getRealPath());
+        }*/
+
 
         /**
          * Response structure
          */
-        return UploadResource::collection($uploads);
+        return UploadResource::collection($items->values()->paginate(10));
     }
 
     /**

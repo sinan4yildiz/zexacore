@@ -2,7 +2,6 @@
 
 namespace App\Helpers;
 
-
 class Breadcrumb
 {
     static $items = [];

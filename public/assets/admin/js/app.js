@@ -2269,6 +2269,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SVGLibrary"
 });
@@ -3927,6 +3930,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3964,7 +3979,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   },
-  created: function created() {},
+  created: function created() {
+    if (!this.items.data) {
+      this.fetchItems();
+    }
+  },
   components: {
     Dropdown: __webpack_require__(/*! ../../../components/elements/Dropdown */ "./resources/assets/admin/js/vue/components/elements/Dropdown.vue")["default"],
     Filters: __webpack_require__(/*! ../../../components/elements/Filters */ "./resources/assets/admin/js/vue/components/elements/Filters.vue")["default"],
@@ -26513,6 +26532,25 @@ var render = function() {
         "symbol",
         {
           attrs: {
+            id: "icon-folder-solid",
+            viewBox: "0 0 20 20",
+            fill: "currentColor"
+          }
+        },
+        [
+          _c("path", {
+            attrs: {
+              d:
+                "M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+            }
+          })
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "symbol",
+        {
+          attrs: {
             id: "flag-en",
             viewBox: "0 0 512 512",
             fill: "none",
@@ -29377,7 +29415,7 @@ var render = function() {
                           "div",
                           {
                             staticClass:
-                              "bg-gray-50 rounded-tl-md rounded-tr-md px-4 py-3"
+                              "bg-gray-50 rounded-tl-md rounded-tr-md p-4"
                           },
                           [
                             _c("Input", {
@@ -29442,7 +29480,34 @@ var render = function() {
         ],
         1
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "bg-white shadow overflow-hidden sm:rounded-lg mb-12" },
+      [
+        _vm.items.data
+          ? _c(
+              "ul",
+              { staticClass: "sm:grid sm:grid-cols-6 sm:gap-4" },
+              _vm._l(_vm.items.data, function(item, index) {
+                return _c("li", [
+                  item.type == "dir"
+                    ? _c("div", [
+                        _c("svg", { staticClass: "w-full  text-blue-400" }, [
+                          _c("use", {
+                            attrs: { "xlink:href": "#icon-folder-solid" }
+                          })
+                        ])
+                      ])
+                    : _vm._e()
+                ])
+              }),
+              0
+            )
+          : _vm._e()
+      ]
+    )
   ])
 }
 var staticRenderFns = []
