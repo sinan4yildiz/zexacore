@@ -45,13 +45,17 @@
     </header>
 
     <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-12">
-      <ul v-if="items.data" class="sm:grid sm:grid-cols-6 sm:gap-4">
+      <ul v-if="items.data" class="p-4 grid grid-cols-9 gap-2">
         <li v-for="(item, index) in items.data">
-          <div v-if="item.type == 'dir'">
-            <svg class="w-full  text-blue-400">
+          <button type="button" v-bind:title="item.name" class="block w-full rounded-lg text-center pb-2 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none transition duration-150 ease-in-out">
+            <svg v-if="item.type == 'dir'" class="w-26 h-26 text-blue-400">
               <use xlink:href="#icon-folder-solid"></use>
             </svg>
-          </div>
+            <svg v-else class="w-26 h-26">
+              <use v-bind:xlink:href="'#file-' + item.extension"></use>
+            </svg>
+            <h3 class="text-gray-800 text-xs whitespace-no-wrap truncate px-3">{{ item.name }}</h3>
+          </button>
         </li>
       </ul>
     </div>

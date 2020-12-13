@@ -53,7 +53,7 @@ class UploadController extends Controller
         /**
          * Response structure
          */
-        return UploadResource::collection($items->values()->paginate(10));
+        return UploadResource::collection($items->values()->paginate(50));
     }
 
     /**
