@@ -11,13 +11,13 @@ const directives = {
             }
         })
 
-        Vue.directive('slugify', {
+        /*Vue.directive('slugify', {
             bind: function (el, binding, vnode) {
                 el.addEventListener('keyup', function () {
                     this.value = window.slugify(this.value)
                 })
             }
-        })
+        })*/
     }
 }
 

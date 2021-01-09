@@ -6,7 +6,7 @@
            class="block text-sm font-medium leading-5 text-gray-700 mb-1 ml-1 select-none">{{ label }}</label>
     <div class="relative">
       <input v-model="inputValue"
-             v-slugify
+             @keyup="convert"
              type="text"
              :name="name"
              :id="name"
@@ -57,6 +57,10 @@ export default {
         e.target.querySelector('svg').style.transform = 'rotate(' + this.rotate + 'deg)'
         this.rotate += 180
       }
+    },
+
+    convert() {
+      this.inputValue = window.slugify(this.inputValue)
     }
   },
 
@@ -65,7 +69,7 @@ export default {
   },
 
   mounted() {
-    if(!this.inputValue) {
+    if(!this.inputValue && this.source) {
       this.generate()
     }
   },

@@ -28,9 +28,9 @@ const actions = {
                  });
         })
     },
-    createFolder({commit}, folder) {
+    createFolder({commit}, path) {
         return new Promise((resolve, reject) => {
-            axios.post('uploads/create-folder', folder)
+            axios.post('uploads/create-folder', path)
                  .then(response => {
                      commit('mutateCreated', response.data);
                      resolve(response.data.data)

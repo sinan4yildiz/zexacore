@@ -15,10 +15,16 @@ class UploadFolderRequest extends FormRequest
      */
     public function createRules(): array
     {
+        $directory = public_path('uploads/');
+
+        if ($this->dir) {
+            $directory .= $this->dir . '/';
+        }
+
         return [
             'name' => [
                 'required',
-                new FolderExists(),
+                new FolderExists($directory),
             ]
         ];
     }

@@ -3733,13 +3733,16 @@ __webpack_require__.r(__webpack_exports__);
         e.target.querySelector('svg').style.transform = 'rotate(' + this.rotate + 'deg)';
         this.rotate += 180;
       }
+    },
+    convert: function convert() {
+      this.inputValue = window.slugify(this.inputValue);
     }
   },
   created: function created() {
     this.$emit('input', this.inputValue);
   },
   mounted: function mounted() {
-    if (!this.inputValue) {
+    if (!this.inputValue && this.source) {
       this.generate();
     }
   },
@@ -3987,6 +3990,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3994,8 +4030,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       folderForm: {},
-      folderErrors: {},
-      keyword: null
+      folderFormErrors: {},
+      keyword: null,
+      currentDir: []
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('Uploads', ['items'])),
@@ -4003,15 +4040,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     createFolderSubmit: function createFolderSubmit() {
       var _this = this;
 
+      this.folderForm.dir = this.currentDir.join('/');
       this.createFolder(this.folderForm).then(function (response) {
         _this.$refs.createFolderDropdown.close();
       })["catch"](function (error) {
-        _this.folderErrors = error.errors;
+        _this.folderFormErrors = error.errors;
+      });
+    },
+    itemAction: function itemAction(item) {
+      if (item.type == 'dir') {
+        this.currentDir.push(item.name);
+        this.setQuery({
+          dir: this.currentDir.join('/')
+        });
+      }
+    },
+    jumpTo: function jumpTo() {
+      var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      if (index === null) {
+        this.currentDir = [];
+      } else {
+        this.currentDir = this.currentDir.slice(0, index + 1);
+      }
+
+      this.setQuery({
+        dir: this.currentDir.join('/')
+      });
+    },
+    handlePagination: function handlePagination(page) {
+      /*this.$scrollTo(this.$el.querySelector('table'))*/
+      console.log(page);
+      this.setQuery({
+        page: page.label
       });
     },
     setQuery: function setQuery(args) {
-      this.setUploadsQuery(args);
-      this.fetchUploads();
+      this.setItemsQuery(args);
+      this.fetchItems();
     },
     applyFilters: lodash__WEBPACK_IMPORTED_MODULE_0___default.a.debounce(function (filters) {
       this.setQuery(filters);
@@ -4031,10 +4097,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   components: {
     Dropdown: __webpack_require__(/*! ../../../components/elements/Dropdown */ "./resources/assets/admin/js/vue/components/elements/Dropdown.vue")["default"],
-    Filters: __webpack_require__(/*! ../../../components/elements/Filters */ "./resources/assets/admin/js/vue/components/elements/Filters.vue")["default"],
     Breadcrumb: __webpack_require__(/*! ../../../components/elements/Breadcrumb */ "./resources/assets/admin/js/vue/components/elements/Breadcrumb.vue")["default"],
     Button: __webpack_require__(/*! ../../../components/form/Button */ "./resources/assets/admin/js/vue/components/form/Button.vue")["default"],
-    Input: __webpack_require__(/*! ../../../components/form/Input */ "./resources/assets/admin/js/vue/components/form/Input.vue")["default"]
+    Input: __webpack_require__(/*! ../../../components/form/Input */ "./resources/assets/admin/js/vue/components/form/Input.vue")["default"],
+    Slug: __webpack_require__(/*! ../../../components/form/Slug */ "./resources/assets/admin/js/vue/components/form/Slug.vue")["default"]
   }
 });
 
@@ -29827,8 +29893,7 @@ var render = function() {
                 rawName: "v-model",
                 value: _vm.inputValue,
                 expression: "inputValue"
-              },
-              { name: "slugify", rawName: "v-slugify" }
+              }
             ],
             staticClass:
               "form-input block w-full px-4 py-3 text-sm border border-gray-400 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out",
@@ -29841,6 +29906,7 @@ var render = function() {
             },
             domProps: { value: _vm.inputValue },
             on: {
+              keyup: _vm.convert,
               input: function($event) {
                 if ($event.target.composing) {
                   return
@@ -30239,16 +30305,6 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("Filters", {
-            staticClass: "ml-3",
-            attrs: { filters: ["date-start", "date-end"] },
-            on: {
-              filtered: function($event) {
-                return _vm.applyFilters($event)
-              }
-            }
-          }),
-          _vm._v(" "),
           _c("Dropdown", {
             ref: "createFolderDropdown",
             staticClass: "ml-3",
@@ -30293,12 +30349,11 @@ var render = function() {
                               "bg-gray-50 rounded-tl-md rounded-tr-md p-4"
                           },
                           [
-                            _c("Input", {
+                            _c("Slug", {
                               attrs: {
                                 name: "name",
                                 placeholder: "Folder name",
-                                required: true,
-                                errors: _vm.folderErrors
+                                errors: _vm.folderFormErrors
                               },
                               on: {
                                 input: function($event) {
@@ -30359,12 +30414,76 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "bg-white shadow overflow-hidden sm:rounded-lg mb-12" },
+      { staticClass: "bg-white shadow overflow-hidden sm:rounded-lg mb-4" },
       [
+        _c(
+          "ul",
+          {
+            staticClass:
+              "flex items-center bg-gray-50 px-4 py-3 border-b border-gray-300"
+          },
+          [
+            _c("li", [
+              _c(
+                "button",
+                {
+                  staticClass: "text-sm text-gray-700 focus:outline-none",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.jumpTo()
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "svg",
+                    { staticClass: "w-4 h-4 fill-current text-gray-700" },
+                    [_c("use", { attrs: { "xlink:href": "#icon-home-solid" } })]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.currentDir, function(dir, index) {
+              return _c("li", [
+                _c(
+                  "svg",
+                  {
+                    staticClass:
+                      "w-4 h-4 fill-current text-gray-700 transform translate-x-2 -rotate-90"
+                  },
+                  [
+                    _c("use", {
+                      attrs: { "xlink:href": "#icon-chevron-solid" }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "text-sm text-gray-700 pl-3 focus:outline-none",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.jumpTo(index)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(dir))]
+                )
+              ])
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
         _vm.items.data
           ? _c(
               "ul",
-              { staticClass: "p-4 grid grid-cols-9 gap-2" },
+              { staticClass: "p-4 grid grid-cols-10 gap-2" },
               _vm._l(_vm.items.data, function(item, index) {
                 return _c("li", [
                   _c(
@@ -30372,20 +30491,25 @@ var render = function() {
                     {
                       staticClass:
                         "block w-full rounded-lg text-center pb-2 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none transition duration-150 ease-in-out",
-                      attrs: { type: "button", title: item.name }
+                      attrs: { type: "button", title: item.name },
+                      on: {
+                        click: function($event) {
+                          return _vm.itemAction(item)
+                        }
+                      }
                     },
                     [
                       item.type == "dir"
                         ? _c(
                             "svg",
-                            { staticClass: "w-26 h-26 text-blue-400" },
+                            { staticClass: "w-20 h-20 text-blue-400" },
                             [
                               _c("use", {
                                 attrs: { "xlink:href": "#icon-folder-solid" }
                               })
                             ]
                           )
-                        : _c("svg", { staticClass: "w-26 h-26" }, [
+                        : _c("svg", { staticClass: "w-20 h-20" }, [
                             _c("use", {
                               attrs: { "xlink:href": "#file-" + item.extension }
                             })
@@ -30395,7 +30519,7 @@ var render = function() {
                         "h3",
                         {
                           staticClass:
-                            "text-gray-800 text-xs whitespace-no-wrap truncate px-3"
+                            "text-gray-800 text-xs whitespace-no-wrap truncate px-4"
                         },
                         [_vm._v(_vm._s(item.name))]
                       )
@@ -30407,7 +30531,65 @@ var render = function() {
             )
           : _vm._e()
       ]
-    )
+    ),
+    _vm._v(" "),
+    _vm.items.meta && _vm.items.meta.total
+      ? _c("div", { staticClass: "grid grid-cols-2 gap-4 mt-5 px-2" }, [
+          _c(
+            "div",
+            { staticClass: "col-span-1 text-sm text-gray-600 font-light" },
+            [
+              _vm._v("\n      Showing "),
+              _c("strong", [_vm._v(_vm._s(_vm.items.meta.from))]),
+              _vm._v(" to "),
+              _c("strong", [_vm._v(_vm._s(_vm.items.meta.to))]),
+              _vm._v(" of\n      "),
+              _c("strong", [_vm._v(_vm._s(_vm.items.meta.total))]),
+              _vm._v(" results\n    ")
+            ]
+          ),
+          _vm._v(" "),
+          _vm.items.meta.last_page > 1
+            ? _c("div", { staticClass: "col-span-1 text-right" }, [
+                _c(
+                  "nav",
+                  { staticClass: "relative z-0 inline-flex shadow-sm" },
+                  _vm._l(_vm.items.meta.links, function(page, index) {
+                    return page.label > 0
+                      ? _c(
+                          "button",
+                          {
+                            staticClass:
+                              "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-600 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 transition ease-in-out duration-150",
+                            class: {
+                              "rounded-l-md": index == 1,
+                              "rounded-r-md":
+                                index == _vm.items.meta.links.length - 2,
+                              "bg-gray-50 text-blue-600 hover:text-blue-600":
+                                page.active,
+                              "cursor-default": !page.url
+                            },
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.handlePagination(page)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n          " + _vm._s(page.label) + "\n        "
+                            )
+                          ]
+                        )
+                      : _vm._e()
+                  }),
+                  0
+                )
+              ])
+            : _vm._e()
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -55407,13 +55589,13 @@ var directives = {
         window.sortable = new window.sortablejs.Sortable(el, window._.merge(binding.value, options));
       }
     });
-    Vue.directive('slugify', {
-      bind: function bind(el, binding, vnode) {
-        el.addEventListener('keyup', function () {
-          this.value = window.slugify(this.value);
-        });
-      }
-    });
+    /*Vue.directive('slugify', {
+        bind: function (el, binding, vnode) {
+            el.addEventListener('keyup', function () {
+                this.value = window.slugify(this.value)
+            })
+        }
+    })*/
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (directives);
@@ -55795,10 +55977,10 @@ var actions = {
       });
     });
   },
-  createFolder: function createFolder(_ref3, folder) {
+  createFolder: function createFolder(_ref3, path) {
     var commit = _ref3.commit;
     return new Promise(function (resolve, reject) {
-      axios.post('uploads/create-folder', folder).then(function (response) {
+      axios.post('uploads/create-folder', path).then(function (response) {
         commit('mutateCreated', response.data);
         resolve(response.data.data);
       })["catch"](function (error) {

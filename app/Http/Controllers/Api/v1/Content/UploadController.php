@@ -8,11 +8,24 @@ use App\Http\Resources\Content\UploadResource;
 use App\Models\Activity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Finder\Finder;
 
 class UploadController extends Controller
 {
+    protected $directory = null;
+
+    public function __construct()
+    {
+        /**
+         * Current directory
+         */
+        $this->directory = public_path('uploads/');
+
+        if (request('dir')) {
+            $this->directory .= request('dir') . '/';
+        }
+    }
+
     /**
      * Listing data
      *
@@ -23,31 +36,21 @@ class UploadController extends Controller
 
 
         /**
-         * Current directory
-         */
-        $directory = storage_path('app/public/') . request('dir');
-
-
-        /**
          * Folders
          */
-        $folders = collect($finder->directories()->in($directory)->sortByModifiedTime());
+        $folders = collect($finder->directories()->name('*' . request('keyword') . '*')->in($this->directory)->depth(0)->sortByModifiedTime());
 
 
         /**
          * Files
          */
-        $files = collect($finder->files()->ignoreDotFiles(true)->ignoreVCS(true)->in($directory)->depth(0)->sortByModifiedTime());
+        $files = collect($finder->files()->name('*' . request('keyword') . '*')->ignoreDotFiles(true)->ignoreVCS(true)->in($this->directory)->depth(0)->sortByModifiedTime());
 
 
         /**
          * All items
          */
         $items = $folders->merge($files);
-
-        /*foreach ($finder->files()->ignoreDotFiles(true)->ignoreVCS(true)->in($directory)->depth(0) as $item){
-            dd($item->getRealPath());
-        }*/
 
 
         /**
@@ -92,19 +95,13 @@ class UploadController extends Controller
      */
     public function createFolder(UploadFolderRequest $request)
     {
-        /**
-         * Item
-         */
-        $item = (object) [
-            'name' => request('name'),
-            'type' => 'folder',
-        ];
+        $finder = new Finder();
 
 
         /**
          * Create the folder
          */
-        Storage::makeDirectory('public/' . request('name'), 0777, true, true);
+        File::makeDirectory($this->directory . request('name'), 0777, true, true);
 
 
         /**
@@ -117,7 +114,7 @@ class UploadController extends Controller
         ]);
         $activity->save();
 
-        return new UploadResource($item);
+        return new UploadResource(collect($finder->name(request('name'))->in($this->directory))->first());
     }
 
     /**
