@@ -5,7 +5,7 @@
         {{ breadcrumb.title }}
       </RouterLink>
       <svg v-if="index < breadcrumbs.length - 1"
-           class="w-3 h-3 fill-current text-gray-500 transform translate-x-2 -rotate-90">
+           class="w-4 h-4 fill-current text-gray-500 transform translate-x-2 -rotate-90">
         <use xlink:href="#icon-chevron-solid"></use>
       </svg>
     </li>

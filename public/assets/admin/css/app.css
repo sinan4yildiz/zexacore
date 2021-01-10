@@ -25261,6 +25261,55 @@ label.required:after {
   margin-left: 0.25rem;
 }
 
+button[disabled] {
+  opacity: 0.75;
+  cursor: default;
+}
+
+.dropdown-item-default {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-duration: 100ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  display: block;
+  width: 100%;
+  text-align: left;
+  --text-opacity: 1;
+  color: #4A5568;
+  color: rgba(74, 85, 104, var(--text-opacity));
+}
+
+.dropdown-item-default:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --bg-opacity: 1;
+  background-color: #EDF2F7;
+  background-color: rgba(237, 242, 247, var(--bg-opacity));
+}
+
+.dropdown-item-default:hover {
+  --bg-opacity: 1;
+  background-color: #F5F8FC;
+  background-color: rgba(245, 248, 252, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #000;
+  color: rgba(0, 0, 0, var(--text-opacity));
+}
+
+.uploaded-item-thumbnail {
+  max-height: 4rem;
+  max-width: 4rem;
+  width: auto;
+}
+
 .form-select {
   background-position: right 0.625rem center;
   background-size: 1.625em 1.625em;

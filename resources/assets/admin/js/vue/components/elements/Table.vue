@@ -27,7 +27,7 @@
           </tr>
           <tr v-else-if="!$slots.body">
             <td v-bind:colspan="columns.length"
-                class="px-6 py-5 text-sm text-center bg-white text-gray-600 font-light leading-6 whitespace-no-wrap">
+                class="px-6 py-5 text-sm text-center bg-white text-gray-700 font-light leading-6 whitespace-no-wrap">
               No results found here.
             </td>
           </tr>

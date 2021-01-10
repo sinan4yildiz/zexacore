@@ -14,8 +14,8 @@ return [
             'folder' => 'Created a new folder named :name',
         ],
         'remove' => [
-            'file'   => 'Removed a file named :name',
-            'folder' => 'Removed a folder named :name',
+            'file' => 'Removed a file named :name',
+            'dir'  => 'Removed a folder named :name',
         ],
     ],
 

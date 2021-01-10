@@ -9,7 +9,6 @@ class FolderExists implements Rule
 {
     protected $dir = null;
 
-
     /**
      * Create a new rule instance.
      *

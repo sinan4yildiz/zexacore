@@ -15,7 +15,7 @@ class UploadFolderRequest extends FormRequest
      */
     public function createRules(): array
     {
-        $directory = public_path('uploads/');
+        $directory = config('filesystems.disks.public.root') . '/';
 
         if ($this->dir) {
             $directory .= $this->dir . '/';

@@ -16,6 +16,14 @@ class UploadResource extends JsonResource
             'type'        => $this->getType(),
             'size'        => Helper::sizeForHuman($this->getSize()),
             'modified_at' => Carbon::createFromTimestamp($this->getMTime())->diffForHumans(),
+
+            $this->mergeWhen($this->thumbnail ?? false, [
+                'thumbnail' => $this->thumbnail ?? null,
+            ]),
+
+            $this->mergeWhen($this->preview ?? false, [
+                'preview' => $this->preview ?? null,
+            ]),
         ];
     }
 }

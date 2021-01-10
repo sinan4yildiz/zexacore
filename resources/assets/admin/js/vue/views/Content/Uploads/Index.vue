@@ -37,43 +37,70 @@
         </Dropdown>
 
         <!-- Upload -->
-        <Button theme="blue" label="Upload" icon="upload" class="ml-3"/>
+        <Button @click="openFileDialog" theme="blue" label="Upload" icon="upload" class="ml-3" :loading="uploadProcessing"/>
+        <input @change="uploadFiles" type="file" id="file-browser" class="hidden" multiple>
       </div>
     </header>
 
-    <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-4">
+    <div class="bg-white shadow rounded-lg mb-4">
 
       <!-- Breadcrumb -->
-      <ul class="flex items-center bg-gray-50 px-4 py-3 border-b border-gray-300">
-        <li>
-          <button @click="jumpTo()" type="button" class="text-sm text-gray-700 focus:outline-none">
-            <svg class="w-4 h-4 fill-current text-gray-700">
+      <ul class="flex items-center bg-gray-50 px-4 py-3 border-b border-gray-300 text-sm text-gray-600 rounded-tl-lg rounded-tr-lg">
+        <li class="flex items-center">
+          <button @click="jumpToFolder()" type="button" class="hover:text-gray-900 focus:outline-none transition duration-150 ease-in-out">
+            <svg class="w-4 h-4 fill-current mr-1">
               <use xlink:href="#icon-home-solid"></use>
             </svg>
+            root
           </button>
         </li>
-        <li v-for="(dir, index) in currentDir">
-          <svg class="w-4 h-4 fill-current text-gray-700 transform translate-x-2 -rotate-90">
+        <li v-for="(dir, index) in directory.split('/').filter(i => i)" class="flex items-center">
+          <svg class="w-4 h-4 fill-current transform translate-x-2 -rotate-90">
             <use xlink:href="#icon-chevron-solid"></use>
           </svg>
-          <button @click="jumpTo(index)" type="button" class="text-sm text-gray-700 pl-3 focus:outline-none">{{ dir }}</button>
+          <button @click="jumpToFolder(index)" type="button" class="hover:text-gray-900 pl-3 focus:outline-none transition duration-150 ease-in-out">{{ dir }}</button>
         </li>
       </ul>
 
       <!-- Items -->
-      <ul v-if="items.data" class="p-4 grid grid-cols-10 gap-2">
+      <ul v-if="items.data && items.data.length" class="p-4 grid grid-cols-10 gap-2">
         <li v-for="(item, index) in items.data">
-          <button @click="itemAction(item)" type="button" v-bind:title="item.name" class="block w-full rounded-lg text-center pb-2 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none transition duration-150 ease-in-out">
-            <svg v-if="item.type == 'dir'" class="w-20 h-20 text-blue-400">
-              <use xlink:href="#icon-folder-solid"></use>
-            </svg>
-            <svg v-else class="w-20 h-20">
-              <use v-bind:xlink:href="'#file-' + item.extension"></use>
-            </svg>
-            <h3 class="text-gray-800 text-xs whitespace-no-wrap truncate px-4">{{ item.name }}</h3>
-          </button>
+          <Dropdown width="w-full" orientation="left">
+            <template #toggler>
+              <button @dblclick="itemSelect(item)" type="button" v-bind:title="item.name" class="block w-full rounded-lg text-center pb-2 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none transition duration-150 ease-in-out">
+                <svg v-if="item.type == 'dir'" class="w-20 h-20 text-blue-400">
+                  <use xlink:href="#icon-folder-solid"></use>
+                </svg>
+                <div v-else-if="item.thumbnail" class="h-20 flex items-center justify-center">
+                  <img v-bind:src="item.thumbnail" class="uploaded-item-thumbnail">
+                </div>
+                <svg v-else class="w-20 h-20">
+                  <use v-bind:xlink:href="'#file-' + item.extension"></use>
+                </svg>
+                <h3 class="block w-full text-gray-800 text-xs whitespace-no-wrap truncate px-4">{{ item.name }}</h3>
+              </button>
+            </template>
+            <template #content>
+              <Button @click="itemSelect(item)" theme="text-default" :label="item.type == 'dir' ? 'Open' : 'Select'"/>
+              <a v-if="item.preview" v-bind:href="item.preview" target="_blank" class="dropdown-item-default">Preview</a>
+              <div class="my-2 border-t border-gray-200"></div>
+              <Button @click="confirmData = item" theme="text-red" label="Remove"/>
+            </template>
+          </Dropdown>
         </li>
       </ul>
+
+      <!-- No result -->
+      <div v-else-if="items.data && !items.data.length" class="p-6 text-sm text-center text-gray-700 font-light rounded-bl-lg rounded-br-lg">
+        No item here.
+      </div>
+
+      <!-- Loading -->
+      <div v-else class="p-5 text-center">
+        <svg class="w-5 h-5 animate-spin animate-spin-fast text-blue-600">
+          <use xlink:href="#icon-loading"></use>
+        </svg>
+      </div>
     </div>
 
     <!-- Pagination -->
@@ -93,6 +120,8 @@
       </div>
     </div>
 
+    <!-- Confirm remove -->
+    <Confirm :confirmData="confirmData" @confirm="confirmRemove($event)" @cancel="confirmData = false"/>
   </section>
 </template>
 <script>
@@ -107,19 +136,20 @@ export default {
       folderForm: {},
       folderFormErrors: {},
       keyword: null,
-      currentDir: [],
+      confirmData: false,
+      uploadProcessing: false,
     }
   },
 
   computed: {
-    ...mapGetters('Uploads', ['items'])
+    ...mapGetters('Uploads', ['items', 'directory'])
   },
 
   methods: {
-    ...mapActions('Uploads', ['fetchItems', 'createFolder', 'uploadFile', 'setItemsQuery']),
+    ...mapActions('Uploads', ['fetchItems', 'createFolder', 'uploadFile', 'setItemsQuery', 'setDirectory', 'removeItem']),
 
     createFolderSubmit: function () {
-      this.folderForm.dir = this.currentDir.join('/')
+      this.folderForm.dir = this.directory
 
       this.createFolder(this.folderForm)
           .then((response) => {
@@ -130,27 +160,29 @@ export default {
           })
     },
 
-    itemAction: function (item) {
+    itemSelect: function (item) {
       if(item.type == 'dir') {
-        this.currentDir.push(item.name)
-        this.setQuery({dir: this.currentDir.join('/')})
+        this.setDirectory(item.name)
+        this.setQuery({dir: this.directory})
       }
     },
 
-    jumpTo: function (index = null) {
+    itemActions: function (item) {
+      console.log(item)
+    },
+
+    jumpToFolder: function (index = null) {
       if(index === null) {
-        this.currentDir = []
+        this.setDirectory([])
       } else {
-        this.currentDir = this.currentDir.slice(0, index + 1);
+        this.setDirectory(this.directory.split('/').filter(i => i).slice(0, index + 1))
       }
 
-      this.setQuery({dir: this.currentDir.join('/')})
+      this.setQuery({dir: this.directory})
     },
 
     handlePagination: function (page) {
-      /*this.$scrollTo(this.$el.querySelector('table'))*/
-
-      console.log(page)
+      this.$scrollTo(document.querySelector('#wrapper'), 25)
 
       this.setQuery({page: page.label})
     },
@@ -163,6 +195,33 @@ export default {
     applyFilters: _.debounce(function (filters) {
       this.setQuery(filters)
     }, 250),
+
+    openFileDialog: function (filters) {
+      this.$el.querySelector('#file-browser').click()
+    },
+
+    uploadFiles: function (e) {
+      this.uploadProcessing = true
+
+      const formData = new FormData()
+
+      _.each(e.target.files, function (e, i) {
+        formData.append('files[]', e)
+      })
+
+      this.uploadFile(formData).then((response) => {
+      }).catch((error) => {
+        this.$snackbar(error.errors['files.0'][0], 'error', 5000)
+      }).finally(() => {
+        this.$el.querySelector('#file-browser').value = null
+        this.uploadProcessing = false
+      })
+    },
+
+    confirmRemove: function (item) {
+      this.removeItem(item)
+      this.confirmData = false
+    }
   },
 
   watch: {
@@ -180,6 +239,7 @@ export default {
   components: {
     Dropdown: require('../../../components/elements/Dropdown').default,
     Breadcrumb: require('../../../components/elements/Breadcrumb').default,
+    Confirm: require('../../../components/elements/Confirm').default,
     Button: require('../../../components/form/Button').default,
     Input: require('../../../components/form/Input').default,
     Slug: require('../../../components/form/Slug').default,

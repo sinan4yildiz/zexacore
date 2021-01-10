@@ -39,6 +39,31 @@ label {
   }
 }
 
+button {
+  &[disabled] {
+    opacity: .75;
+    cursor: default;
+  }
+}
+
+.dropdown-item-default {
+  @apply flex items-center text-sm leading-5 font-medium transition duration-100 ease-in-out px-5 py-2 block w-full text-left text-gray-700;
+
+  &:focus {
+    @apply outline-none bg-gray-200;
+  }
+
+  &:hover {
+    @apply bg-gray-100 text-black;
+  }
+}
+
+.uploaded-item-thumbnail {
+  max-height: 4rem;
+  max-width: 4rem;
+  width: auto;
+}
+
 .form-select {
   background-position: right 0.625rem center;
   background-size: 1.625em 1.625em;

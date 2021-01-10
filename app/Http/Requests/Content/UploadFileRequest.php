@@ -15,10 +15,7 @@ class UploadFileRequest extends FormRequest
     public function createRules(): array
     {
         return [
-            'firstname' => 'required',
-            'lastname'  => 'required',
-            'password'  => 'required|min:6',
-            'email'     => 'required|string|email|max:191|unique:users,email'
+            'files.*' => 'mimes:jpg,jpeg,png,svg,pdf,doc,docx,xls,xlsx,rtf,csv,txt,rar,zip,ppt,pptx,xml'
         ];
     }
 

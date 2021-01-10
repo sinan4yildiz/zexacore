@@ -8,7 +8,7 @@
     <Header/>
 
     <!-- Wrapper -->
-    <div class="flex">
+    <div id="wrapper" class="flex">
 
       <!-- Sidebar -->
       <Sidebar/>

@@ -2693,6 +2693,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Dropdown",
@@ -2700,6 +2704,10 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     width: {
       type: String
+    },
+    orientation: {
+      type: String,
+      "default": 'right'
     },
     paddingY: {
       type: String,
@@ -4023,6 +4031,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4032,45 +4069,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       folderForm: {},
       folderFormErrors: {},
       keyword: null,
-      currentDir: []
+      confirmData: false,
+      uploadProcessing: false
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('Uploads', ['items'])),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('Uploads', ['fetchItems', 'createFolder', 'uploadFile', 'setItemsQuery'])), {}, {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('Uploads', ['items', 'directory'])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('Uploads', ['fetchItems', 'createFolder', 'uploadFile', 'setItemsQuery', 'setDirectory', 'removeItem'])), {}, {
     createFolderSubmit: function createFolderSubmit() {
       var _this = this;
 
-      this.folderForm.dir = this.currentDir.join('/');
+      this.folderForm.dir = this.directory;
       this.createFolder(this.folderForm).then(function (response) {
         _this.$refs.createFolderDropdown.close();
       })["catch"](function (error) {
         _this.folderFormErrors = error.errors;
       });
     },
-    itemAction: function itemAction(item) {
+    itemSelect: function itemSelect(item) {
       if (item.type == 'dir') {
-        this.currentDir.push(item.name);
+        this.setDirectory(item.name);
         this.setQuery({
-          dir: this.currentDir.join('/')
+          dir: this.directory
         });
       }
     },
-    jumpTo: function jumpTo() {
+    itemActions: function itemActions(item) {
+      console.log(item);
+    },
+    jumpToFolder: function jumpToFolder() {
       var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
       if (index === null) {
-        this.currentDir = [];
+        this.setDirectory([]);
       } else {
-        this.currentDir = this.currentDir.slice(0, index + 1);
+        this.setDirectory(this.directory.split('/').filter(function (i) {
+          return i;
+        }).slice(0, index + 1));
       }
 
       this.setQuery({
-        dir: this.currentDir.join('/')
+        dir: this.directory
       });
     },
     handlePagination: function handlePagination(page) {
-      /*this.$scrollTo(this.$el.querySelector('table'))*/
-      console.log(page);
+      this.$scrollTo(document.querySelector('#wrapper'), 25);
       this.setQuery({
         page: page.label
       });
@@ -4081,7 +4123,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     applyFilters: lodash__WEBPACK_IMPORTED_MODULE_0___default.a.debounce(function (filters) {
       this.setQuery(filters);
-    }, 250)
+    }, 250),
+    openFileDialog: function openFileDialog(filters) {
+      this.$el.querySelector('#file-browser').click();
+    },
+    uploadFiles: function uploadFiles(e) {
+      var _this2 = this;
+
+      this.uploadProcessing = true;
+      var formData = new FormData();
+
+      lodash__WEBPACK_IMPORTED_MODULE_0___default.a.each(e.target.files, function (e, i) {
+        formData.append('files[]', e);
+      });
+
+      this.uploadFile(formData).then(function (response) {})["catch"](function (error) {
+        _this2.$snackbar(error.errors['files.0'][0], 'error', 5000);
+      })["finally"](function () {
+        _this2.$el.querySelector('#file-browser').value = null;
+        _this2.uploadProcessing = false;
+      });
+    },
+    confirmRemove: function confirmRemove(item) {
+      this.removeItem(item);
+      this.confirmData = false;
+    }
   }),
   watch: {
     keyword: function keyword() {
@@ -4098,6 +4164,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     Dropdown: __webpack_require__(/*! ../../../components/elements/Dropdown */ "./resources/assets/admin/js/vue/components/elements/Dropdown.vue")["default"],
     Breadcrumb: __webpack_require__(/*! ../../../components/elements/Breadcrumb */ "./resources/assets/admin/js/vue/components/elements/Breadcrumb.vue")["default"],
+    Confirm: __webpack_require__(/*! ../../../components/elements/Confirm */ "./resources/assets/admin/js/vue/components/elements/Confirm.vue")["default"],
     Button: __webpack_require__(/*! ../../../components/form/Button */ "./resources/assets/admin/js/vue/components/form/Button.vue")["default"],
     Input: __webpack_require__(/*! ../../../components/form/Input */ "./resources/assets/admin/js/vue/components/form/Input.vue")["default"],
     Slug: __webpack_require__(/*! ../../../components/form/Slug */ "./resources/assets/admin/js/vue/components/form/Slug.vue")["default"]
@@ -25580,7 +25647,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "flex" },
+        { staticClass: "flex", attrs: { id: "wrapper" } },
         [
           _c("Sidebar"),
           _vm._v(" "),
@@ -28152,7 +28219,7 @@ var render = function() {
                 "svg",
                 {
                   staticClass:
-                    "w-3 h-3 fill-current text-gray-500 transform translate-x-2 -rotate-90"
+                    "w-4 h-4 fill-current text-gray-500 transform translate-x-2 -rotate-90"
                 },
                 [_c("use", { attrs: { "xlink:href": "#icon-chevron-solid" } })]
               )
@@ -28399,7 +28466,7 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "inline-block",
+          staticClass: "block",
           on: {
             click: function($event) {
               _vm.isOpen = !_vm.isOpen
@@ -28427,9 +28494,14 @@ var render = function() {
             ? _c(
                 "div",
                 {
-                  staticClass:
-                    "origin-top-right absolute right-0 mt-2 shadow-lg rounded-md z-10",
-                  class: _vm.width || "w-56",
+                  staticClass: "absolute mt-2 shadow-lg rounded-md z-10",
+                  class: [
+                    _vm.width || "w-56",
+                    {
+                      "origin-top-left left-0": _vm.orientation == "left",
+                      "origin-top-right right-0": _vm.orientation == "right"
+                    }
+                  ],
                   on: {
                     click: function($event) {
                       _vm.keepOpen === true ? null : _vm.close()
@@ -28953,7 +29025,7 @@ var render = function() {
                       "td",
                       {
                         staticClass:
-                          "px-6 py-5 text-sm text-center bg-white text-gray-600 font-light leading-6 whitespace-no-wrap",
+                          "px-6 py-5 text-sm text-center bg-white text-gray-700 font-light leading-6 whitespace-no-wrap",
                         attrs: { colspan: _vm.columns.length }
                       },
                       [
@@ -30239,358 +30311,503 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("section", [
-    _c("header", { staticClass: "flex items-center mb-5" }, [
-      _c(
-        "div",
-        [
-          _c(
-            "h1",
-            {
-              staticClass:
-                "mb-2 text-2xl font-lighter leading-7 text-gray-800 sm:text-3xl sm:leading-9 sm:truncate"
-            },
-            [_vm._v("Uploads")]
-          ),
-          _vm._v(" "),
-          _c("Breadcrumb")
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "flex items-center ml-auto" },
-        [
-          _c("div", { staticClass: "search w-69 relative" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.keyword,
-                  expression: "keyword"
-                }
-              ],
-              staticClass:
-                "form-input block w-full px-4 py-2 text-sm border border-gray-300 shadow-sm rounded-md focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out",
-              attrs: {
-                type: "text",
-                id: "filter-search",
-                placeholder: "Search"
-              },
-              domProps: { value: _vm.keyword },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.keyword = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
+  return _c(
+    "section",
+    [
+      _c("header", { staticClass: "flex items-center mb-5" }, [
+        _c(
+          "div",
+          [
             _c(
-              "label",
+              "h1",
               {
                 staticClass:
-                  "flex items-center absolute right-0 top-0 bottom-0 mr-4",
-                attrs: { for: "filter-search" }
+                  "mb-2 text-2xl font-lighter leading-7 text-gray-800 sm:text-3xl sm:leading-9 sm:truncate"
               },
-              [
-                _c("svg", { staticClass: "w-4 h-4 text-gray-400 mt-px" }, [
-                  _c("use", { attrs: { "xlink:href": "#icon-search" } })
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("Dropdown", {
-            ref: "createFolderDropdown",
-            staticClass: "ml-3",
-            attrs: { keepOpen: true, width: "w-72", paddingY: "py-0" },
-            scopedSlots: _vm._u([
-              {
-                key: "toggler",
-                fn: function() {
-                  return [
-                    _c("Button", {
-                      attrs: {
-                        theme: "default",
-                        label: "Folder",
-                        icon: "folder-new"
-                      }
-                    })
-                  ]
-                },
-                proxy: true
-              },
-              {
-                key: "content",
-                fn: function() {
-                  return [
-                    _c(
-                      "form",
-                      {
-                        staticClass: "mt-1",
-                        attrs: { autocomplete: "off" },
-                        on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            return _vm.createFolderSubmit($event)
-                          }
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "bg-gray-50 rounded-tl-md rounded-tr-md p-4"
-                          },
-                          [
-                            _c("Slug", {
-                              attrs: {
-                                name: "name",
-                                placeholder: "Folder name",
-                                errors: _vm.folderFormErrors
-                              },
-                              on: {
-                                input: function($event) {
-                                  _vm.folderForm.name = $event
-                                }
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex px-4 py-3 bg-white border-t border-gray-200 rounded-bl-md rounded-br-md"
-                          },
-                          [
-                            _c("Button", {
-                              attrs: {
-                                type: "submit",
-                                theme: "blue",
-                                label: "Create",
-                                size: "small"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("Button", {
-                              attrs: {
-                                type: "reset",
-                                label: "Cancel",
-                                size: "small"
-                              },
-                              on: {
-                                click: _vm.$refs.createFolderDropdown.close
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ]
-                },
-                proxy: true
-              }
-            ])
-          }),
-          _vm._v(" "),
-          _c("Button", {
-            staticClass: "ml-3",
-            attrs: { theme: "blue", label: "Upload", icon: "upload" }
-          })
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "bg-white shadow overflow-hidden sm:rounded-lg mb-4" },
-      [
+              [_vm._v("Uploads")]
+            ),
+            _vm._v(" "),
+            _c("Breadcrumb")
+          ],
+          1
+        ),
+        _vm._v(" "),
         _c(
-          "ul",
-          {
-            staticClass:
-              "flex items-center bg-gray-50 px-4 py-3 border-b border-gray-300"
-          },
+          "div",
+          { staticClass: "flex items-center ml-auto" },
           [
-            _c("li", [
-              _c(
-                "button",
-                {
-                  staticClass: "text-sm text-gray-700 focus:outline-none",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      return _vm.jumpTo()
-                    }
+            _c("div", { staticClass: "search w-69 relative" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.keyword,
+                    expression: "keyword"
                   }
+                ],
+                staticClass:
+                  "form-input block w-full px-4 py-2 text-sm border border-gray-300 shadow-sm rounded-md focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out",
+                attrs: {
+                  type: "text",
+                  id: "filter-search",
+                  placeholder: "Search"
+                },
+                domProps: { value: _vm.keyword },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.keyword = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass:
+                    "flex items-center absolute right-0 top-0 bottom-0 mr-4",
+                  attrs: { for: "filter-search" }
                 },
                 [
-                  _c(
-                    "svg",
-                    { staticClass: "w-4 h-4 fill-current text-gray-700" },
-                    [_c("use", { attrs: { "xlink:href": "#icon-home-solid" } })]
-                  )
+                  _c("svg", { staticClass: "w-4 h-4 text-gray-400 mt-px" }, [
+                    _c("use", { attrs: { "xlink:href": "#icon-search" } })
+                  ])
                 ]
               )
             ]),
             _vm._v(" "),
-            _vm._l(_vm.currentDir, function(dir, index) {
-              return _c("li", [
-                _c(
-                  "svg",
-                  {
-                    staticClass:
-                      "w-4 h-4 fill-current text-gray-700 transform translate-x-2 -rotate-90"
+            _c("Dropdown", {
+              ref: "createFolderDropdown",
+              staticClass: "ml-3",
+              attrs: { keepOpen: true, width: "w-72", paddingY: "py-0" },
+              scopedSlots: _vm._u([
+                {
+                  key: "toggler",
+                  fn: function() {
+                    return [
+                      _c("Button", {
+                        attrs: {
+                          theme: "default",
+                          label: "Folder",
+                          icon: "folder-new"
+                        }
+                      })
+                    ]
                   },
-                  [
-                    _c("use", {
-                      attrs: { "xlink:href": "#icon-chevron-solid" }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass:
-                      "text-sm text-gray-700 pl-3 focus:outline-none",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.jumpTo(index)
-                      }
-                    }
+                  proxy: true
+                },
+                {
+                  key: "content",
+                  fn: function() {
+                    return [
+                      _c(
+                        "form",
+                        {
+                          staticClass: "mt-1",
+                          attrs: { autocomplete: "off" },
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.createFolderSubmit($event)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "bg-gray-50 rounded-tl-md rounded-tr-md p-4"
+                            },
+                            [
+                              _c("Slug", {
+                                attrs: {
+                                  name: "name",
+                                  placeholder: "Folder name",
+                                  errors: _vm.folderFormErrors
+                                },
+                                on: {
+                                  input: function($event) {
+                                    _vm.folderForm.name = $event
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "flex px-4 py-3 bg-white border-t border-gray-200 rounded-bl-md rounded-br-md"
+                            },
+                            [
+                              _c("Button", {
+                                attrs: {
+                                  type: "submit",
+                                  theme: "blue",
+                                  label: "Create",
+                                  size: "small"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("Button", {
+                                attrs: {
+                                  type: "reset",
+                                  label: "Cancel",
+                                  size: "small"
+                                },
+                                on: {
+                                  click: _vm.$refs.createFolderDropdown.close
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ]
+                      )
+                    ]
                   },
-                  [_vm._v(_vm._s(dir))]
-                )
+                  proxy: true
+                }
               ])
+            }),
+            _vm._v(" "),
+            _c("Button", {
+              staticClass: "ml-3",
+              attrs: {
+                theme: "blue",
+                label: "Upload",
+                icon: "upload",
+                loading: _vm.uploadProcessing
+              },
+              on: { click: _vm.openFileDialog }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "hidden",
+              attrs: { type: "file", id: "file-browser", multiple: "" },
+              on: { change: _vm.uploadFiles }
             })
           ],
-          2
-        ),
-        _vm._v(" "),
-        _vm.items.data
-          ? _c(
-              "ul",
-              { staticClass: "p-4 grid grid-cols-10 gap-2" },
-              _vm._l(_vm.items.data, function(item, index) {
-                return _c("li", [
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "bg-white shadow rounded-lg mb-4" }, [
+        _c(
+          "ul",
+          {
+            staticClass:
+              "flex items-center bg-gray-50 px-4 py-3 border-b border-gray-300 text-sm text-gray-600 rounded-tl-lg rounded-tr-lg"
+          },
+          [
+            _c("li", { staticClass: "flex items-center" }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "hover:text-gray-900 focus:outline-none transition duration-150 ease-in-out",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.jumpToFolder()
+                    }
+                  }
+                },
+                [
+                  _c("svg", { staticClass: "w-4 h-4 fill-current mr-1" }, [
+                    _c("use", { attrs: { "xlink:href": "#icon-home-solid" } })
+                  ]),
+                  _vm._v("\n          root\n        ")
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._l(
+              _vm.directory.split("/").filter(function(i) {
+                return i
+              }),
+              function(dir, index) {
+                return _c("li", { staticClass: "flex items-center" }, [
+                  _c(
+                    "svg",
+                    {
+                      staticClass:
+                        "w-4 h-4 fill-current transform translate-x-2 -rotate-90"
+                    },
+                    [
+                      _c("use", {
+                        attrs: { "xlink:href": "#icon-chevron-solid" }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
                   _c(
                     "button",
                     {
                       staticClass:
-                        "block w-full rounded-lg text-center pb-2 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none transition duration-150 ease-in-out",
-                      attrs: { type: "button", title: item.name },
+                        "hover:text-gray-900 pl-3 focus:outline-none transition duration-150 ease-in-out",
+                      attrs: { type: "button" },
                       on: {
                         click: function($event) {
-                          return _vm.itemAction(item)
+                          return _vm.jumpToFolder(index)
                         }
                       }
                     },
-                    [
-                      item.type == "dir"
-                        ? _c(
-                            "svg",
-                            { staticClass: "w-20 h-20 text-blue-400" },
-                            [
-                              _c("use", {
-                                attrs: { "xlink:href": "#icon-folder-solid" }
-                              })
-                            ]
-                          )
-                        : _c("svg", { staticClass: "w-20 h-20" }, [
-                            _c("use", {
-                              attrs: { "xlink:href": "#file-" + item.extension }
-                            })
-                          ]),
-                      _vm._v(" "),
-                      _c(
-                        "h3",
-                        {
-                          staticClass:
-                            "text-gray-800 text-xs whitespace-no-wrap truncate px-4"
-                        },
-                        [_vm._v(_vm._s(item.name))]
-                      )
-                    ]
+                    [_vm._v(_vm._s(dir))]
                   )
                 ])
+              }
+            )
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _vm.items.data && _vm.items.data.length
+          ? _c(
+              "ul",
+              { staticClass: "p-4 grid grid-cols-10 gap-2" },
+              _vm._l(_vm.items.data, function(item, index) {
+                return _c(
+                  "li",
+                  [
+                    _c("Dropdown", {
+                      attrs: { width: "w-full", orientation: "left" },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "toggler",
+                            fn: function() {
+                              return [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "block w-full rounded-lg text-center pb-2 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none transition duration-150 ease-in-out",
+                                    attrs: { type: "button", title: item.name },
+                                    on: {
+                                      dblclick: function($event) {
+                                        return _vm.itemSelect(item)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    item.type == "dir"
+                                      ? _c(
+                                          "svg",
+                                          {
+                                            staticClass:
+                                              "w-20 h-20 text-blue-400"
+                                          },
+                                          [
+                                            _c("use", {
+                                              attrs: {
+                                                "xlink:href":
+                                                  "#icon-folder-solid"
+                                              }
+                                            })
+                                          ]
+                                        )
+                                      : item.thumbnail
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "h-20 flex items-center justify-center"
+                                          },
+                                          [
+                                            _c("img", {
+                                              staticClass:
+                                                "uploaded-item-thumbnail",
+                                              attrs: { src: item.thumbnail }
+                                            })
+                                          ]
+                                        )
+                                      : _c(
+                                          "svg",
+                                          { staticClass: "w-20 h-20" },
+                                          [
+                                            _c("use", {
+                                              attrs: {
+                                                "xlink:href":
+                                                  "#file-" + item.extension
+                                              }
+                                            })
+                                          ]
+                                        ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "h3",
+                                      {
+                                        staticClass:
+                                          "block w-full text-gray-800 text-xs whitespace-no-wrap truncate px-4"
+                                      },
+                                      [_vm._v(_vm._s(item.name))]
+                                    )
+                                  ]
+                                )
+                              ]
+                            },
+                            proxy: true
+                          },
+                          {
+                            key: "content",
+                            fn: function() {
+                              return [
+                                _c("Button", {
+                                  attrs: {
+                                    theme: "text-default",
+                                    label:
+                                      item.type == "dir" ? "Open" : "Select"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.itemSelect(item)
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                item.preview
+                                  ? _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item-default",
+                                        attrs: {
+                                          href: item.preview,
+                                          target: "_blank"
+                                        }
+                                      },
+                                      [_vm._v("Preview")]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c("div", {
+                                  staticClass: "my-2 border-t border-gray-200"
+                                }),
+                                _vm._v(" "),
+                                _c("Button", {
+                                  attrs: { theme: "text-red", label: "Remove" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.confirmData = item
+                                    }
+                                  }
+                                })
+                              ]
+                            },
+                            proxy: true
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    })
+                  ],
+                  1
+                )
               }),
               0
             )
-          : _vm._e()
-      ]
-    ),
-    _vm._v(" "),
-    _vm.items.meta && _vm.items.meta.total
-      ? _c("div", { staticClass: "grid grid-cols-2 gap-4 mt-5 px-2" }, [
-          _c(
-            "div",
-            { staticClass: "col-span-1 text-sm text-gray-600 font-light" },
-            [
-              _vm._v("\n      Showing "),
-              _c("strong", [_vm._v(_vm._s(_vm.items.meta.from))]),
-              _vm._v(" to "),
-              _c("strong", [_vm._v(_vm._s(_vm.items.meta.to))]),
-              _vm._v(" of\n      "),
-              _c("strong", [_vm._v(_vm._s(_vm.items.meta.total))]),
-              _vm._v(" results\n    ")
-            ]
-          ),
-          _vm._v(" "),
-          _vm.items.meta.last_page > 1
-            ? _c("div", { staticClass: "col-span-1 text-right" }, [
-                _c(
-                  "nav",
-                  { staticClass: "relative z-0 inline-flex shadow-sm" },
-                  _vm._l(_vm.items.meta.links, function(page, index) {
-                    return page.label > 0
-                      ? _c(
-                          "button",
-                          {
-                            staticClass:
-                              "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-600 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 transition ease-in-out duration-150",
-                            class: {
-                              "rounded-l-md": index == 1,
-                              "rounded-r-md":
-                                index == _vm.items.meta.links.length - 2,
-                              "bg-gray-50 text-blue-600 hover:text-blue-600":
-                                page.active,
-                              "cursor-default": !page.url
-                            },
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                return _vm.handlePagination(page)
+          : _vm.items.data && !_vm.items.data.length
+          ? _c(
+              "div",
+              {
+                staticClass:
+                  "p-6 text-sm text-center text-gray-700 font-light rounded-bl-lg rounded-br-lg"
+              },
+              [_vm._v("\n      No item here.\n    ")]
+            )
+          : _c("div", { staticClass: "p-5 text-center" }, [
+              _c(
+                "svg",
+                {
+                  staticClass:
+                    "w-5 h-5 animate-spin animate-spin-fast text-blue-600"
+                },
+                [_c("use", { attrs: { "xlink:href": "#icon-loading" } })]
+              )
+            ])
+      ]),
+      _vm._v(" "),
+      _vm.items.meta && _vm.items.meta.total
+        ? _c("div", { staticClass: "grid grid-cols-2 gap-4 mt-5 px-2" }, [
+            _c(
+              "div",
+              { staticClass: "col-span-1 text-sm text-gray-600 font-light" },
+              [
+                _vm._v("\n      Showing "),
+                _c("strong", [_vm._v(_vm._s(_vm.items.meta.from))]),
+                _vm._v(" to "),
+                _c("strong", [_vm._v(_vm._s(_vm.items.meta.to))]),
+                _vm._v(" of\n      "),
+                _c("strong", [_vm._v(_vm._s(_vm.items.meta.total))]),
+                _vm._v(" results\n    ")
+              ]
+            ),
+            _vm._v(" "),
+            _vm.items.meta.last_page > 1
+              ? _c("div", { staticClass: "col-span-1 text-right" }, [
+                  _c(
+                    "nav",
+                    { staticClass: "relative z-0 inline-flex shadow-sm" },
+                    _vm._l(_vm.items.meta.links, function(page, index) {
+                      return page.label > 0
+                        ? _c(
+                            "button",
+                            {
+                              staticClass:
+                                "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-600 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 transition ease-in-out duration-150",
+                              class: {
+                                "rounded-l-md": index == 1,
+                                "rounded-r-md":
+                                  index == _vm.items.meta.links.length - 2,
+                                "bg-gray-50 text-blue-600 hover:text-blue-600":
+                                  page.active,
+                                "cursor-default": !page.url
+                              },
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.handlePagination(page)
+                                }
                               }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n          " + _vm._s(page.label) + "\n        "
-                            )
-                          ]
-                        )
-                      : _vm._e()
-                  }),
-                  0
-                )
-              ])
-            : _vm._e()
-        ])
-      : _vm._e()
-  ])
+                            },
+                            [
+                              _vm._v(
+                                "\n          " +
+                                  _vm._s(page.label) +
+                                  "\n        "
+                              )
+                            ]
+                          )
+                        : _vm._e()
+                    }),
+                    0
+                  )
+                ])
+              : _vm._e()
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("Confirm", {
+        attrs: { confirmData: _vm.confirmData },
+        on: {
+          confirm: function($event) {
+            return _vm.confirmRemove($event)
+          },
+          cancel: function($event) {
+            _vm.confirmData = false
+          }
+        }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -55935,11 +56152,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var state = {
   items: {},
-  query: {}
+  query: {},
+  directory: []
 };
 var getters = {
   items: function items(state) {
     return state.items;
+  },
+  directory: function directory(state) {
+    return state.directory.join('/');
   }
 };
 var actions = {
@@ -55966,22 +56187,30 @@ var actions = {
       }, _callee);
     }))();
   },
-  uploadFile: function uploadFile(_ref2, file) {
-    var commit = _ref2.commit;
+  uploadFile: function uploadFile(_ref2, form) {
+    var commit = _ref2.commit,
+        getters = _ref2.getters,
+        dispatch = _ref2.dispatch;
     return new Promise(function (resolve, reject) {
-      axios.post('uploads/create', file).then(function (response) {
-        commit('mutateCreated', response.data);
+      form.append('dir', getters.directory);
+      axios.post('uploads/upload-file', form, {
+        headers: {
+          'Content-Type': 'multipart/form-data;boundary=' + Math.random().toString().substr(2)
+        }
+      }).then(function (response) {
+        dispatch('fetchItems');
         resolve(response.data.data);
       })["catch"](function (error) {
         reject(error.response.data);
       });
     });
   },
-  createFolder: function createFolder(_ref3, path) {
-    var commit = _ref3.commit;
+  createFolder: function createFolder(_ref3, folder) {
+    var commit = _ref3.commit,
+        dispatch = _ref3.dispatch;
     return new Promise(function (resolve, reject) {
-      axios.post('uploads/create-folder', path).then(function (response) {
-        commit('mutateCreated', response.data);
+      axios.post('uploads/create-folder', folder).then(function (response) {
+        dispatch('fetchItems');
         resolve(response.data.data);
       })["catch"](function (error) {
         reject(error.response.data);
@@ -55990,15 +56219,20 @@ var actions = {
   },
   removeItem: function removeItem(_ref4, item) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var commit;
+      var commit, getters, dispatch;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              commit = _ref4.commit;
+              commit = _ref4.commit, getters = _ref4.getters, dispatch = _ref4.dispatch;
               _context2.next = 3;
-              return axios["delete"]('uploads/remove/' + item.id).then(function (response) {
-                commit('mutateRemoved', item.id);
+              return axios["delete"]('uploads/remove', {
+                data: {
+                  item: JSON.stringify(item),
+                  dir: getters.directory
+                }
+              }).then(function (response) {
+                dispatch('fetchItems');
               });
 
             case 3:
@@ -56012,22 +56246,25 @@ var actions = {
   setItemsQuery: function setItemsQuery(_ref5, query) {
     var commit = _ref5.commit;
     commit('mutateQuery', _.cloneDeep(query));
+  },
+  setDirectory: function setDirectory(_ref6, dir) {
+    var commit = _ref6.commit;
+    commit('mutateDirectory', dir);
   }
 };
 var mutations = {
   mutateAll: function mutateAll(state, items) {
     return state.items = items;
   },
-  mutateCreated: function mutateCreated(state, created) {
-    state.items.data.unshift(created.data);
-  },
-  mutateRemoved: function mutateRemoved(state, id) {
-    return state.items.data = state.items.data.filter(function (item) {
-      return item.id !== id;
-    });
-  },
   mutateQuery: function mutateQuery(state, query) {
     state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity);
+  },
+  mutateDirectory: function mutateDirectory(state, dir) {
+    if (dir instanceof Array) {
+      state.directory = dir;
+    } else {
+      state.directory.push(dir);
+    }
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

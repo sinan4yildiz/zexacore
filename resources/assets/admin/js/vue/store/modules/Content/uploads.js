@@ -1,10 +1,12 @@
 const state = {
     items: {},
     query: {},
+    directory: [],
 }
 
 const getters = {
     items: (state) => state.items,
+    directory: (state) => state.directory.join('/'),
 }
 
 const actions = {
@@ -16,11 +18,17 @@ const actions = {
                        commit('mutateAll', response.data);
                    });
     },
-    uploadFile({commit}, file) {
+    uploadFile({commit, getters, dispatch}, form) {
         return new Promise((resolve, reject) => {
-            axios.post('uploads/create', file)
+            form.append('dir', getters.directory)
+
+            axios.post('uploads/upload-file', form, {
+                     headers: {
+                         'Content-Type': 'multipart/form-data;boundary=' + Math.random().toString().substr(2),
+                     }
+                 })
                  .then(response => {
-                     commit('mutateCreated', response.data);
+                     dispatch('fetchItems')
                      resolve(response.data.data)
                  })
                  .catch(error => {
@@ -28,11 +36,11 @@ const actions = {
                  });
         })
     },
-    createFolder({commit}, path) {
+    createFolder({commit, dispatch}, folder) {
         return new Promise((resolve, reject) => {
-            axios.post('uploads/create-folder', path)
+            axios.post('uploads/create-folder', folder)
                  .then(response => {
-                     commit('mutateCreated', response.data);
+                     dispatch('fetchItems')
                      resolve(response.data.data)
                  })
                  .catch(error => {
@@ -40,25 +48,36 @@ const actions = {
                  });
         })
     },
-    async removeItem({commit}, item) {
-        await axios.delete('uploads/remove/' + item.id)
+    async removeItem({commit, getters, dispatch}, item) {
+        await axios.delete('uploads/remove', {
+                       data: {
+                           item: JSON.stringify(item),
+                           dir: getters.directory
+                       }
+                   })
                    .then((response) => {
-                       commit('mutateRemoved', item.id);
+                       dispatch('fetchItems')
                    });
     },
     setItemsQuery({commit}, query) {
         commit('mutateQuery', _.cloneDeep(query))
     },
+    setDirectory({commit}, dir) {
+        commit('mutateDirectory', dir)
+    },
 }
 
 const mutations = {
     mutateAll: (state, items) => (state.items = items),
-    mutateCreated: (state, created) => {
-        state.items.data.unshift(created.data)
-    },
-    mutateRemoved: (state, id) => (state.items.data = state.items.data.filter(item => item.id !== id)),
     mutateQuery: (state, query) => {
         state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
+    },
+    mutateDirectory: (state, dir) => {
+        if(dir instanceof Array) {
+            state.directory = dir
+        } else {
+            state.directory.push(dir)
+        }
     },
 }
 
