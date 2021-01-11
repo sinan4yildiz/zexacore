@@ -30720,7 +30720,7 @@ var render = function() {
                 staticClass:
                   "p-6 text-sm text-center text-gray-700 font-light rounded-bl-lg rounded-br-lg"
               },
-              [_vm._v("\n      No item here.\n    ")]
+              [_vm._v("\n      This folder is empty.\n    ")]
             )
           : _c("div", { staticClass: "p-5 text-center" }, [
               _c(

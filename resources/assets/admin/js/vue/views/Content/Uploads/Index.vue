@@ -92,7 +92,7 @@
 
       <!-- No result -->
       <div v-else-if="items.data && !items.data.length" class="p-6 text-sm text-center text-gray-700 font-light rounded-bl-lg rounded-br-lg">
-        No item here.
+        This folder is empty.
       </div>
 
       <!-- Loading -->

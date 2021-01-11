@@ -175,6 +175,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -240,6 +241,8 @@ return [
         'Helper'       => App\Helpers\Helper::class,
         'SVG'          => App\Helpers\SVG::class,
         'Breadcrumb'   => App\Helpers\Breadcrumb::class,
+        'Thumbnail'    => App\Helpers\Thumbnail::class,
+        'Image'        => Intervention\Image\Facades\Image::class,
 
     ],
 

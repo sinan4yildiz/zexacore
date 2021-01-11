@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Content;
 
+use App\Helpers\Thumbnail;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Content\UploadFileRequest;
 use App\Http\Requests\Content\UploadFolderRequest;
@@ -23,7 +24,7 @@ class UploadController extends Controller
         /**
          * Root directory
          */
-        $this->absolute_path = Str::finish(config('filesystems.disks.public.root'), '/');
+        $this->absolute_path = Str::finish(config('filesystems.disks.uploads.root'), '/');
 
         /**
          * Current directory
@@ -63,14 +64,14 @@ class UploadController extends Controller
              * Generate thumbnail
              * */
             if (in_array($item->getExtension(), ['svg', 'jpg', 'jpeg', 'png'])) {
-                $item->thumbnail = Storage::disk('public')->url($this->relative_path . $item->getBasename());
+                $item->thumbnail = Thumbnail::make($item->getPathname())->resize(320)->url();
             }
 
             /*
              * Preview link
              * */
             if (in_array($item->getExtension(), ['pdf', 'txt', 'svg', 'jpg', 'jpeg', 'png'])) {
-                $item->preview = Storage::disk('public')->url($this->relative_path . $item->getBasename());
+                $item->preview = Storage::disk('uploads')->url($this->relative_path . $item->getBasename());
             }
         });
 
@@ -115,7 +116,7 @@ class UploadController extends Controller
             /**
              * Check the file if exists
              */
-            if (Storage::disk('public')->exists($this->relative_path . $filename)) {
+            if (Storage::disk('uploads')->exists($this->relative_path . $filename)) {
                 $filename = Str::of($filename)->replaceLast('.', '-' . Str::random(3) . '.')->lower();
             }
 
@@ -123,7 +124,7 @@ class UploadController extends Controller
             /**
              * Put the file on disk
              */
-            Storage::disk('public')->put($this->relative_path . $filename, File::get($file));
+            Storage::disk('uploads')->put($this->relative_path . $filename, File::get($file));
 
 
             /**
@@ -155,7 +156,7 @@ class UploadController extends Controller
         /**
          * Create the folder
          */
-        Storage::disk('public')->makeDirectory($this->relative_path . request('name'), 0777, true, true);
+        Storage::disk('uploads')->makeDirectory($this->relative_path . request('name'), 0777, true, true);
 
 
         /**
@@ -178,9 +179,6 @@ class UploadController extends Controller
      */
     public function remove()
     {
-        $finder = new Finder();
-
-
         /**
          * Item
          */
@@ -191,9 +189,28 @@ class UploadController extends Controller
          * Remove
          */
         if ($item->type == 'dir') {
-            Storage::disk('public')->deleteDirectory($this->relative_path . $item->name);
+
+            // Remove the original folder
+            Storage::disk('uploads')->deleteDirectory($this->relative_path . $item->name);
+
+            // Remove the folder containing resized items
+            Storage::disk('images')->deleteDirectory($this->relative_path . $item->name);
         } else {
-            Storage::disk('public')->delete($this->relative_path . $item->name);
+
+            /**
+             * Get the resized images of the item
+             */
+            $resizeds = File::glob(Str::finish(config('filesystems.disks.images.root'), '/') . $this->relative_path . pathinfo($item->name, PATHINFO_FILENAME) . '-*');
+
+            /**
+             * Remove resized ones
+             */
+            File::delete($resizeds);
+
+            /**
+             * Remove original one
+             */
+            Storage::disk('uploads')->delete($this->relative_path . $item->name);
         }
 
 
