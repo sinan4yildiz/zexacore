@@ -40,11 +40,12 @@ const actions = {
                        commit('mutateAll', response.data);
                    });
     },
-    createCategory({commit}, category) {
+    createCategory({commit, dispatch}, category) {
         return new Promise((resolve, reject) => {
             axios.post('categories/create', category)
                  .then(response => {
-                     commit('mutateCreated', response.data);
+                     /*commit('mutateCreated', response.data);*/
+                     dispatch('fetchCategories')
                      resolve(response.data.data)
                  })
                  .catch(error => {
@@ -96,10 +97,11 @@ const actions = {
                        commit('mutateOrdered', ordered)
                    });
     },
-    async removeCategory({commit}, category) {
+    async removeCategory({commit, dispatch}, category) {
         await axios.delete('categories/remove/' + category.id)
                    .then((response) => {
-                       commit('mutateRemoved', category.id);
+                       /*commit('mutateRemoved', category.id);*/
+                       dispatch('fetchCategories')
                    });
     },
     clearCategories({commit}) {

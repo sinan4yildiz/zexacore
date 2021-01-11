@@ -4,25 +4,19 @@
            :for="name"
            v-bind:class="{'required': required}"
            class="block text-sm font-medium leading-5 text-gray-700 mb-1 ml-1 select-none">{{ label }}</label>
-    <div class="relative">
+    <div class="relative flex">
+      <label :for="name" class="text-gray-600 px-4 py-3 text-sm bg-gray-100 border border-r-0 border-gray-400 whitespace-no-wrap rounded-l-lg shadow-sm">
+        <slot name="prepend"></slot>
+      </label>
       <input v-model="inputValue"
              :type="inputType"
              :name="name"
              :id="name"
              :placeholder="inputPlaceholder"
              v-bind="attr"
-             v-bind:class="{'has-error': error}"
-             class="form-input block w-full px-4 py-3 text-sm border border-gray-400 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out"
+             v-bind:class="{'has-error': error, 'rounded-r-lg rounded-l-none': $slots.prepend}"
+             class="form-input block w-full px-4 py-3 text-sm border border-gray-400 focus:border-blue-400 focus:shadow-outline-blue shadow-sm transition duration-150 ease-in-out"
       >
-      <button v-if="type == 'password'"
-              @click="togglePassword"
-              type="button"
-              class="absolute leading-3 top-0 right-0 bottom-0 px-4 py-3 text-gray-600 hover:text-gray-900 focus:outline-none"
-      >
-        <svg class="w-5 h-5 transition duration-300 ease-out pointer-events-none">
-          <use v-bind:xlink:href="'#icon-' + (inputType == 'password' ? 'eye' : 'eye-off')"></use>
-        </svg>
-      </button>
     </div>
     <p v-if="error" class="mt-1 ml-1 text-red-600 text-xs" v-text="error"></p>
   </div>
@@ -30,7 +24,7 @@
 
 <script>
 export default {
-  name: "Input",
+  name: "InputGroup",
 
   props: ['type', 'name', 'label', 'placeholder', 'value', 'attr', 'required', 'classes', 'errors'],
 
@@ -63,18 +57,6 @@ export default {
       this.errors[this.name] = false
       this.$emit('input', this.inputValue)
     }
-  },
-
-  methods: {
-    togglePassword: function () {
-      if(this.inputType == 'text') {
-        this.inputType = 'password'
-        this.inputPlaceholder = '●●●●●'
-      } else {
-        this.inputType = 'text'
-        this.inputPlaceholder = 'Enter password'
-      }
-    },
   },
 }
 </script>

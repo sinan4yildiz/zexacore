@@ -50,18 +50,13 @@ export default new VueRouter({
 
 
         /*
-        * Contact
+        * Messages
         *
         * */
         {
             path: '/messages',
             name: 'messages',
-            component: require('./views/Forms/Messages/Index.vue').default,
-        },
-        {
-            path: '/forms',
-            name: 'forms',
-            component: require('./views/Forms/Forms/Index.vue').default,
+            component: require('./views/Messages/Index.vue').default,
         },
 
 
@@ -69,11 +64,6 @@ export default new VueRouter({
         * Structure
         *
         * */
-        {
-            path: '/menus',
-            name: 'menus',
-            component: require('./views/Structure/Menus/Index.vue').default,
-        },
         {
             path: '/fields',
             name: 'fields',
@@ -183,11 +173,9 @@ export default new VueRouter({
             path: '/redirections',
             name: 'redirections',
             component: require('./views/Tools/Redirections/Index.vue').default,
-        },
-        {
-            path: '/translations',
-            name: 'translations',
-            component: require('./views/Tools/Translations/Index.vue').default,
+            meta: {
+                title: 'Redirections'
+            },
         },
 
 

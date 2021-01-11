@@ -83,27 +83,14 @@ export default {
           ]
         },
         {
-          title: "Contact",
+          title: "Messages",
           icon: "envelope-solid",
-          children: [
-            {
-              title: "Messages",
-              route: "messages",
-            },
-            {
-              title: "Forms",
-              route: "forms",
-            },
-          ]
+          route: "messages",
         },
         {
           title: "Structure",
           icon: "grid-solid",
           children: [
-            {
-              title: "Menus",
-              route: "menus",
-            },
             {
               title: "Fields",
               route: "fields",
@@ -136,10 +123,6 @@ export default {
           title: "Tools",
           icon: "cube-solid",
           children: [
-            {
-              title: "Translations",
-              route: "translations",
-            },
             {
               title: "Redirections",
               route: "redirections",

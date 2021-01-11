@@ -16,11 +16,12 @@ const actions = {
                        commit('mutateAll', response.data);
                    });
     },
-    createLanguage({commit}, language) {
+    createLanguage({commit, dispatch}, language) {
         return new Promise((resolve, reject) => {
             axios.post('languages/create', language)
                  .then(response => {
-                     commit('mutateCreated', response.data);
+                     /*commit('mutateCreated', response.data);*/
+                     dispatch('fetchLanguages')
                      resolve(response.data.data)
                  })
                  .catch(error => {
@@ -62,10 +63,11 @@ const actions = {
                        commit('mutateOrdered', ordered)
                    });
     },
-    async removeLanguage({commit}, language) {
+    async removeLanguage({commit, dispatch}, language) {
         await axios.delete('languages/remove/' + language.id)
                    .then((response) => {
-                       commit('mutateRemoved', language.id);
+                       /*commit('mutateRemoved', language.id);*/
+                       dispatch('fetchLanguages')
                    });
     },
     setLanguagesQuery({commit}, query) {

@@ -63,7 +63,7 @@ class SlugController extends Controller
     /**
      * Update the existing item
      *
-     * @param  \App\Http\Requests\People\SlugRequest  $request
+     * @param  \App\Http\Requests\Tools\SlugRequest  $request
      * @param $id
      *
      */
@@ -82,7 +82,7 @@ class SlugController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.slug.remove', [
+        $activity->description = trans('admin/activitiy.slug.update', [
             'keyword' => $item->keyword,
         ]);
         $activity->save();

@@ -100,7 +100,7 @@ export default {
     },
 
     applyFilters: _.debounce(function (filters) {
-      this.setQuery(filters)
+      this.setQuery(_.merge(filters, {page: null}))
     }, 250),
   },
 

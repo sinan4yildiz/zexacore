@@ -52,12 +52,18 @@ return [
         'remove'     => 'Removed a language named :name',
     ],
 
+    'redirection' => [
+        'create' => "Created a new redirection for ':url'",
+        'update' => "Updated the redirection ':url'",
+        'remove' => "Removed the redirection ':url'",
+    ],
+
     'slug' => [
         'update' => "Updated the URL alias ':keyword'",
     ],
 
     'setting' => [
-        'update' => 'Updated settings',
+        'update' => 'Updated system settings',
     ],
 
     'auth' => [

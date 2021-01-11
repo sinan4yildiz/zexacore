@@ -78,6 +78,18 @@ Route::group([
         Route::get('/', 'ActivityController@index')->name('index');
     });
 
+    // Redirections
+    Route::group([
+        'as'        => 'redirections',
+        'prefix'    => 'redirections',
+        'namespace' => 'Tools',
+    ], function () {
+        Route::get('/', 'RedirectionController@index')->name('index');
+        Route::post('/create', 'RedirectionController@create')->name('create');
+        Route::put('/update/{id}', 'RedirectionController@update')->name('update');
+        Route::delete('/remove/{id}', 'RedirectionController@remove')->name('remove');
+    });
+
     // Slugs
     Route::group([
         'as'        => 'slugs',

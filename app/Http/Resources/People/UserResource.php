@@ -18,7 +18,7 @@ class UserResource extends JsonResource
             'created_at'     => $this->created_at->diffForHumans(),
             'created_at_raw' => $this->created_at->format('d/m/Y H:i:s'),
             'updated_at'     => $this->updated_at->diffForHumans(),
-            'updated_at_raw' => $this->updated_at,
+            'updated_at_raw' => $this->updated_at->format('d/m/Y H:i:s'),
         ];
     }
 }

@@ -1,27 +1,27 @@
 const state = {
-    users: {},
+    redirections: {},
     query: {},
 }
 
 const getters = {
-    users: (state) => state.users,
+    redirections: (state) => state.redirections,
 }
 
 const actions = {
-    async fetchUsers({commit, state}) {
-        await axios.get('users', {
+    async fetchRedirections({commit, state}) {
+        await axios.get('redirections', {
                        params: state.query
                    })
                    .then(response => {
                        commit('mutateAll', response.data);
                    });
     },
-    createUser({commit, dispatch}, user) {
+    createRedirection({commit, dispatch}, redirection) {
         return new Promise((resolve, reject) => {
-            axios.post('users/create', user)
+            axios.post('redirections/create', redirection)
                  .then(response => {
                      /*commit('mutateCreated', response.data);*/
-                     dispatch('fetchUsers')
+                     dispatch('fetchRedirections')
                      resolve(response.data.data)
                  })
                  .catch(error => {
@@ -29,9 +29,9 @@ const actions = {
                  });
         })
     },
-    updateUser({commit}, user) {
+    updateRedirection({commit}, redirection) {
         return new Promise((resolve, reject) => {
-            axios.put('users/update/' + user.id, user)
+            axios.put('redirections/update/' + redirection.id, redirection)
                  .then(response => {
                      commit('mutateUpdated', response.data);
                      resolve(response.data.data)
@@ -41,43 +41,30 @@ const actions = {
                  });
         })
     },
-    async activateUser({commit}, user) {
-        await axios.patch('users/activate/' + user.id)
-                   .then(response => {
-                       commit('mutateUpdated', response.data);
-                   });
-    },
-    async deactivateUser({commit}, user) {
-        await axios.patch('users/deactivate/' + user.id)
-                   .then(response => {
-                       commit('mutateUpdated', response.data);
-                   });
-    },
-    async removeUser({commit, dispatch}, user) {
-        await axios.delete('users/remove/' + user.id)
+    async removeRedirection({commit}, redirection) {
+        await axios.delete('redirections/remove/' + redirection.id)
                    .then((response) => {
-                       /*commit('mutateRemoved', user.id);*/
-                       dispatch('fetchUsers')
+                       commit('mutateRemoved', redirection.id);
                    });
     },
-    setUsersQuery({commit}, query) {
+    setRedirectionsQuery({commit}, query) {
         commit('mutateQuery', _.cloneDeep(query))
     },
 }
 
 const mutations = {
-    mutateAll: (state, users) => (state.users = users),
+    mutateAll: (state, redirections) => (state.redirections = redirections),
     mutateCreated: (state, created) => {
-        state.users.data.unshift(created.data)
+        state.redirections.data.unshift(created.data)
     },
     mutateUpdated: (state, updated) => {
-        const index = state.users.data.findIndex(user => user.id === updated.data.id);
+        const index = state.redirections.data.findIndex(redirection => redirection.id === updated.data.id);
 
         if(index !== -1) {
-            state.users.data.splice(index, 1, updated.data);
+            state.redirections.data.splice(index, 1, updated.data);
         }
     },
-    mutateRemoved: (state, id) => (state.users.data = state.users.data.filter(user => user.id !== id)),
+    mutateRemoved: (state, id) => (state.redirections.data = state.redirections.data.filter(redirection => redirection.id !== id)),
     mutateQuery: (state, query) => {
         state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
     },

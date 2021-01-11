@@ -8,6 +8,7 @@ import Categories from './modules/Structure/categories'
 import ContentTypes from './modules/Structure/contentTypes'
 import Users from './modules/People/users'
 import Activities from './modules/People/activities'
+import Redirections from './modules/Tools/redirections'
 import Slugs from './modules/Tools/slugs'
 import Languages from './modules/System/languages'
 import Settings from './modules/System/settings'
@@ -22,6 +23,7 @@ export default new Vuex.Store({
         ContentTypes,
         Users,
         Activities,
+        Redirections,
         Slugs,
         Languages,
         Settings,

@@ -128,7 +128,7 @@ export default {
   data() {
     return {
       form: {
-        // Add the fields here when you want to use them as v-model
+        // Add the fields here when you need to use them as v-model
         language_code: null,
         slug: null,
         has_listing: null

@@ -24,11 +24,12 @@ const actions = {
                        commit('mutateAll', response.data);
                    });
     },
-    createContentType({commit}, contentType) {
+    createContentType({commit, dispatch}, contentType) {
         return new Promise((resolve, reject) => {
             axios.post('content-types/create', contentType)
                  .then(response => {
-                     commit('mutateCreated', response.data);
+                     /*commit('mutateCreated', response.data);*/
+                     dispatch('fetchContentTypes')
                      resolve(response.data.data)
                  })
                  .catch(error => {
@@ -70,10 +71,11 @@ const actions = {
                        commit('mutateOrdered', ordered)
                    });
     },
-    async removeContentType({commit}, contentType) {
+    async removeContentType({commit, dispatch}, contentType) {
         await axios.delete('content-types/remove/' + contentType.id)
                    .then((response) => {
-                       commit('mutateRemoved', contentType.id);
+                       /*commit('mutateRemoved', contentType.id);*/
+                       dispatch('fetchContentTypes')
                    });
     },
     clearContentType({commit}) {
