@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 // Modules
 import App from './modules/app'
+import Pages from './modules/Content/pages'
 import Uploads from './modules/Content/uploads'
 import Categories from './modules/Structure/categories'
 import ContentTypes from './modules/Structure/contentTypes'
@@ -18,6 +19,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     modules: {
         App,
+        Pages,
         Uploads,
         Categories,
         ContentTypes,

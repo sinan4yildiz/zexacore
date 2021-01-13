@@ -119,7 +119,7 @@ return [
     'timezone'             => 'This field must be a valid zone.',
     'unique'               => 'This is already in use.',
     'uploaded'             => 'This field failed to upload.',
-    'url'                  => 'This field format is invalid.',
+    'url'                  => 'This field must be an URL.',
     'uuid'                 => 'This field must be a valid UUID.',
 
     /*

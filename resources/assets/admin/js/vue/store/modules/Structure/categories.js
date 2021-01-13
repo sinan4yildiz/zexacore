@@ -44,7 +44,6 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.post('categories/create', category)
                  .then(response => {
-                     /*commit('mutateCreated', response.data);*/
                      dispatch('fetchCategories')
                      resolve(response.data.data)
                  })
@@ -100,7 +99,6 @@ const actions = {
     async removeCategory({commit, dispatch}, category) {
         await axios.delete('categories/remove/' + category.id)
                    .then((response) => {
-                       /*commit('mutateRemoved', category.id);*/
                        dispatch('fetchCategories')
                    });
     },
@@ -124,16 +122,9 @@ const actions = {
 const mutations = {
     mutateAll: (state, categories) => (state.categories = categories),
     mutateSingle: (state, category) => (state.category = category),
-    mutateCreated: (state, created) => {
-        if(state.categories.data) {
-            state.categories.data.push(created.data)
-        }
-    },
     mutateUpdated: (state, updated) => {
         if(state.categories.data) {
             const p = state.categories.data.findIndex(category => category.parent_id === updated.data.parent_id)
-
-            console.log(p)
 
             if(p === -1) {
                 state.categories.data = state.categories.data.filter(category => category.id !== updated.data.id)
@@ -149,7 +140,6 @@ const mutations = {
     mutateOrdered: (state, ordered) => {
         /*_.move(state.categories.data, ordered.oldIndex, ordered.newIndex)*/
     },
-    mutateRemoved: (state, id) => (state.categories.data = state.categories.data.filter(category => category.id !== id)),
     mutateQuery: (state, query) => {
         state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
     },

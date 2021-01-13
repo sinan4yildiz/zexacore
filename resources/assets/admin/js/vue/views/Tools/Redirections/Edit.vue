@@ -14,26 +14,21 @@
             <div class="absolute inset-0 bg-gray-800 opacity-50"></div>
           </div>
           <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-          <form v-on:submit.prevent="update" v-on-clickaway="close" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-xl w-full">
+          <form v-on:submit.prevent="update" v-on-clickaway="close" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-3xl w-full">
             <InputHidden name="id" :value="editData.id" @input="form.id = $event"/>
             <div class="bg-gray-50 px-5 py-4 flex border-b border-gray-300">
-              {{ editData.firstname }} {{ editData.lastname }}
+              Edit the redirection
             </div>
             <ul class="bg-white px-5 py-6">
               <li class="mb-4">
-                <Input name="firstname" label="First name" placeholder="First name" :required="true" :value="editData.firstname" @input="form.firstname = $event" :errors="errors"/>
-              </li>
-              <li class="mb-4">
-                <Input name="lastname" label="Last name" placeholder="Last name" :required="true" :value="editData.lastname" @input="form.lastname = $event" :errors="errors"/>
-              </li>
-              <li class="mb-4">
-                <Input name="title" label="Title" placeholder="e.g. Content Editor" :value="editData.title" @input="form.title = $event" :errors="errors"/>
-              </li>
-              <li class="mb-4">
-                <Input name="email" type="email" label="E-mail address" placeholder="user@email.com" :required="true" :value="editData.email" @input="form.email = $event" :errors="errors"/>
+                <InputGroup label="From" :value="editData.from" :required="true" :disabled="true">
+                  <template #prepend>
+                    {{ url.base.slice(0, -1) }}
+                  </template>
+                </InputGroup>
               </li>
               <li class="mb-1">
-                <Input name="password" type="password" label="Password" placeholder="●●●●●" @input="form.password = $event" :errors="errors"/>
+                <Input name="to" label="To" placeholder="Enter target URL" :required="true" :value="editData.to" @input="form.to = $event" :errors="errors"/>
               </li>
             </ul>
             <div class="bg-gray-50 px-5 py-4 flex border-t border-gray-300">
@@ -56,7 +51,7 @@ import {mapActions} from 'vuex'
 import {mixin as clickaway} from "vue-clickaway";
 
 export default {
-  name: "UserEdit",
+  name: "RedirectionEdit",
   props: ['editData'],
 
   data() {
@@ -74,14 +69,14 @@ export default {
   },
 
   methods: {
-    ...mapActions('Users', ['updateUser']),
+    ...mapActions('Redirections', ['updateRedirection']),
 
     update: function () {
       this.processing = true
 
-      this.updateUser(this.form)
+      this.updateRedirection(this.form)
           .then((response) => {
-            this.$snackbar('The user has been updated successfuly!')
+            this.$snackbar('The redirection has been updated successfuly!')
             this.close()
           })
           .catch(error => {
@@ -94,8 +89,14 @@ export default {
           })
     },
 
+    handleFrom: function (url) {
+      if(url) {
+        this.form.from = url.replace(this.url.base, '/')
+      }
+    },
+
     close: function () {
-      this.form   = {}
+      this.form = {}
       this.errors = {}
       this.$emit('cancel')
     }
@@ -103,6 +104,7 @@ export default {
 
   components: {
     Input: require('../../../components/form/Input').default,
+    InputGroup: require('../../../components/form/InputGroup').default,
     InputHidden: require('../../../components/form/InputHidden').default,
     Button: require('../../../components/form/Button').default,
   },

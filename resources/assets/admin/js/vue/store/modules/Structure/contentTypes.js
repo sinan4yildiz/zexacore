@@ -28,7 +28,6 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.post('content-types/create', contentType)
                  .then(response => {
-                     /*commit('mutateCreated', response.data);*/
                      dispatch('fetchContentTypes')
                      resolve(response.data.data)
                  })
@@ -74,7 +73,6 @@ const actions = {
     async removeContentType({commit, dispatch}, contentType) {
         await axios.delete('content-types/remove/' + contentType.id)
                    .then((response) => {
-                       /*commit('mutateRemoved', contentType.id);*/
                        dispatch('fetchContentTypes')
                    });
     },
@@ -89,11 +87,6 @@ const actions = {
 const mutations = {
     mutateAll: (state, contentTypes) => (state.contentTypes = contentTypes),
     mutateSingle: (state, contentType) => (state.contentType = contentType),
-    mutateCreated: (state, created) => {
-        if(state.contentTypes.data) {
-            state.contentTypes.data.push(created.data)
-        }
-    },
     mutateUpdated: (state, updated) => {
         if(state.contentTypes.data) {
             const index = state.contentTypes.data.findIndex(contentType => contentType.id === updated.data.id);
@@ -106,7 +99,6 @@ const mutations = {
     mutateOrdered: (state, ordered) => {
         /*_.move(state.contentTypes.data, ordered.oldIndex, ordered.newIndex)*/
     },
-    mutateRemoved: (state, id) => (state.contentTypes.data = state.contentTypes.data.filter(contentType => contentType.id !== id)),
     mutateQuery: (state, query) => {
         state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
     },

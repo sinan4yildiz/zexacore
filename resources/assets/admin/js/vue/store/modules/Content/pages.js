@@ -1,26 +1,26 @@
 const state = {
-    languages: {},
+    pages: {},
     query: {},
 }
 
 const getters = {
-    languages: (state) => state.languages,
+    pages: (state) => state.pages,
 }
 
 const actions = {
-    async fetchLanguages({commit, state}) {
-        await axios.get('languages', {
+    async fetchPages({commit, state}) {
+        await axios.get('pages', {
                        params: state.query
                    })
                    .then(response => {
                        commit('mutateAll', response.data);
                    });
     },
-    createLanguage({commit, dispatch}, language) {
+    createPage({commit, dispatch}, page) {
         return new Promise((resolve, reject) => {
-            axios.post('languages/create', language)
+            axios.post('pages/create', page)
                  .then(response => {
-                     dispatch('fetchLanguages')
+                     dispatch('fetchPages')
                      resolve(response.data.data)
                  })
                  .catch(error => {
@@ -28,9 +28,9 @@ const actions = {
                  });
         })
     },
-    updateLanguage({commit}, language) {
+    updatePage({commit}, page) {
         return new Promise((resolve, reject) => {
-            axios.put('languages/update/' + language.id, language)
+            axios.put('pages/update/' + page.id, page)
                  .then(response => {
                      commit('mutateUpdated', response.data);
                      resolve(response.data.data)
@@ -40,50 +40,37 @@ const actions = {
                  });
         })
     },
-    async activateLanguage({commit}, language) {
-        await axios.patch('languages/activate/' + language.id)
+    async activatePage({commit}, page) {
+        await axios.patch('pages/activate/' + page.id)
                    .then(response => {
                        commit('mutateUpdated', response.data);
                    });
     },
-    async deactivateLanguage({commit}, language) {
-        await axios.patch('languages/deactivate/' + language.id)
+    async deactivatePage({commit}, page) {
+        await axios.patch('pages/deactivate/' + page.id)
                    .then(response => {
                        commit('mutateUpdated', response.data);
                    });
     },
-    async orderLanguages({commit}, ordered) {
-        var orderData = _.map(ordered.to.rows, (e, i) => {
-            return {id: e.getAttribute('data-id'), order: i + 1}
-        })
-
-        await axios.patch('languages/order', {orders: orderData})
+    async removePage({commit, dispatch}, page) {
+        await axios.delete('pages/remove/' + page.id)
                    .then((response) => {
-                       commit('mutateOrdered', ordered)
+                       dispatch('fetchPages')
                    });
     },
-    async removeLanguage({commit, dispatch}, language) {
-        await axios.delete('languages/remove/' + language.id)
-                   .then((response) => {
-                       dispatch('fetchLanguages')
-                   });
-    },
-    setLanguagesQuery({commit}, query) {
+    setPagesQuery({commit}, query) {
         commit('mutateQuery', _.cloneDeep(query))
     },
 }
 
 const mutations = {
-    mutateAll: (state, languages) => (state.languages = languages),
+    mutateAll: (state, pages) => (state.pages = pages),
     mutateUpdated: (state, updated) => {
-        const index = state.languages.data.findIndex(language => language.id === updated.data.id);
+        const index = state.pages.data.findIndex(page => page.id === updated.data.id);
 
         if(index !== -1) {
-            state.languages.data.splice(index, 1, updated.data);
+            state.pages.data.splice(index, 1, updated.data);
         }
-    },
-    mutateOrdered: (state, ordered) => {
-        /*_.move(state.languages.data, ordered.oldIndex, ordered.newIndex)*/
     },
     mutateQuery: (state, query) => {
         state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)

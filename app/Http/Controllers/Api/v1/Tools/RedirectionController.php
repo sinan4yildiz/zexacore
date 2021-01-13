@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\Request;
 class RedirectionController extends Controller
 {
     protected $sortable = [
-        'from'  => 'from',
-        'count' => 'count',
-        'date'  => 'updated_at',
+        'from'       => 'from',
+        'count'      => 'count',
+        'updated_at' => 'updated_at',
     ];
 
-    protected $sorted = 'date';
+    protected $sorted = 'updated_at';
     protected $ordered = 'desc';
 
     /**
@@ -28,7 +28,7 @@ class RedirectionController extends Controller
      */
     public function index()
     {
-        $redirections = Redirection::orderBy($this->sortable[request('sorted')] ?? $this->sortable[$this->sorted], request('ordered', $this->ordered));
+        $redirections = Redirection::orderBy($this->sortable[request('sorted')] ?? $this->sorted, request('ordered', $this->ordered));
 
 
         /**

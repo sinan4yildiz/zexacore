@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Tools;
+namespace App\Http\Requests\Content;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RedirectionRequest extends FormRequest
+class PageRequest extends FormRequest
 {
     /**
      * Define validation rules to create method for resource creation
@@ -14,10 +14,11 @@ class RedirectionRequest extends FormRequest
      */
     public function createRules(): array
     {
-        dd($this->to);
         return [
-            'from' => 'required|string|unique:redirections,from',
-            'to'   => 'required|url',
+            'firstname' => 'required',
+            'lastname'  => 'required',
+            'password'  => 'required|min:6',
+            'email'     => 'required|string|email|max:191|unique:users,email'
         ];
     }
 
@@ -30,7 +31,10 @@ class RedirectionRequest extends FormRequest
     public function updateRules(): array
     {
         return [
-            'to' => 'required|url',
+            'firstname' => 'required',
+            'lastname'  => 'required',
+            'password'  => 'nullable|min:6',
+            'email'     => 'required|email|max:191|unique:users,email,' . $this->id
         ];
     }
 

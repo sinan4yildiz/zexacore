@@ -92,10 +92,6 @@ export default {
           icon: "grid-solid",
           children: [
             {
-              title: "Fields",
-              route: "fields",
-            },
-            {
               title: "Categories",
               route: "categories",
             },

@@ -20,7 +20,6 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.post('redirections/create', redirection)
                  .then(response => {
-                     /*commit('mutateCreated', response.data);*/
                      dispatch('fetchRedirections')
                      resolve(response.data.data)
                  })
@@ -41,10 +40,10 @@ const actions = {
                  });
         })
     },
-    async removeRedirection({commit}, redirection) {
+    async removeRedirection({commit, dispatch}, redirection) {
         await axios.delete('redirections/remove/' + redirection.id)
                    .then((response) => {
-                       commit('mutateRemoved', redirection.id);
+                       dispatch('fetchRedirections')
                    });
     },
     setRedirectionsQuery({commit}, query) {
@@ -54,9 +53,6 @@ const actions = {
 
 const mutations = {
     mutateAll: (state, redirections) => (state.redirections = redirections),
-    mutateCreated: (state, created) => {
-        state.redirections.data.unshift(created.data)
-    },
     mutateUpdated: (state, updated) => {
         const index = state.redirections.data.findIndex(redirection => redirection.id === updated.data.id);
 
@@ -64,7 +60,6 @@ const mutations = {
             state.redirections.data.splice(index, 1, updated.data);
         }
     },
-    mutateRemoved: (state, id) => (state.redirections.data = state.redirections.data.filter(redirection => redirection.id !== id)),
     mutateQuery: (state, query) => {
         state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
     },

@@ -97,6 +97,7 @@ export default {
 
     close: function () {
       this.errors = {}
+      this.form = {}
       this.$emit('cancel')
     }
   },

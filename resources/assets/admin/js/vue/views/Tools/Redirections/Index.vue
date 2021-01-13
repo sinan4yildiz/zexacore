@@ -94,7 +94,7 @@ export default {
         },
         {
           title: 'Last redirection',
-          field: 'date',
+          field: 'updated_at',
           classes: 'w-56',
         },
         {

@@ -274,6 +274,7 @@ export default {
 
             window.data.config = response
             this.$snackbar('Settings have been saved successfuly!')
+            this.$scrollTo(document.querySelector('#wrapper'))
           })
           .catch(error => {
             this.errors = error.errors

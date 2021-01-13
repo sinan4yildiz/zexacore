@@ -13,8 +13,9 @@
              :name="name"
              :id="name"
              :placeholder="inputPlaceholder"
+             :disabled="disabled"
              v-bind="attr"
-             v-bind:class="{'has-error': error, 'rounded-r-lg rounded-l-none': $slots.prepend}"
+             v-bind:class="{'has-error': error, 'bg-gray-100': disabled, 'rounded-r-lg rounded-l-none': $slots.prepend}"
              class="form-input block w-full px-4 py-3 text-sm border border-gray-400 focus:border-blue-400 focus:shadow-outline-blue shadow-sm transition duration-150 ease-in-out"
       >
     </div>
@@ -26,7 +27,7 @@
 export default {
   name: "InputGroup",
 
-  props: ['type', 'name', 'label', 'placeholder', 'value', 'attr', 'required', 'classes', 'errors'],
+  props: ['type', 'name', 'label', 'placeholder', 'value', 'attr', 'required', 'disabled', 'classes', 'errors'],
 
   data: function () {
     return {
@@ -38,7 +39,7 @@ export default {
 
   computed: {
     error: function () {
-      if(this.errors[this.name]) {
+      if(this.errors && this.errors[this.name]) {
         return this.errors[this.name][0];
       }
     },

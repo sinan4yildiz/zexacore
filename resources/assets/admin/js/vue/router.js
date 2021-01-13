@@ -31,11 +31,38 @@ export default new VueRouter({
             path: '/articles',
             name: 'articles',
             component: require('./views/Content/Articles/Index.vue').default,
+            meta: {
+                title: 'Articles',
+            },
         },
         {
             path: '/pages',
             name: 'pages',
             component: require('./views/Content/Pages/Index.vue').default,
+            meta: {
+                title: 'Pages',
+                translatable: true
+            },
+        },
+        {
+            path: '/pages/create',
+            name: 'pages.create',
+            component: require('./views/Content/Pages/Create.vue').default,
+            meta: {
+                title: 'Create page',
+                breadcrumb: 'Create',
+                translatable: true
+            },
+        },
+        {
+            path: '/pages/edit/:id/:language?',
+            name: 'pages.edit',
+            component: require('./views/Content/Pages/Edit.vue').default,
+            meta: {
+                title: 'Edit page',
+                breadcrumb: 'Edit',
+                translatable: true
+            },
         },
 
         // Uploads
@@ -57,6 +84,9 @@ export default new VueRouter({
             path: '/messages',
             name: 'messages',
             component: require('./views/Messages/Index.vue').default,
+            meta: {
+                title: 'Messages',
+            },
         },
 
 
@@ -64,11 +94,6 @@ export default new VueRouter({
         * Structure
         *
         * */
-        {
-            path: '/fields',
-            name: 'fields',
-            component: require('./views/Structure/Fields/Index.vue').default,
-        },
 
         // Categories
         {

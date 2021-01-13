@@ -20,7 +20,6 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.post('users/create', user)
                  .then(response => {
-                     /*commit('mutateCreated', response.data);*/
                      dispatch('fetchUsers')
                      resolve(response.data.data)
                  })
@@ -56,7 +55,6 @@ const actions = {
     async removeUser({commit, dispatch}, user) {
         await axios.delete('users/remove/' + user.id)
                    .then((response) => {
-                       /*commit('mutateRemoved', user.id);*/
                        dispatch('fetchUsers')
                    });
     },
@@ -67,9 +65,6 @@ const actions = {
 
 const mutations = {
     mutateAll: (state, users) => (state.users = users),
-    mutateCreated: (state, created) => {
-        state.users.data.unshift(created.data)
-    },
     mutateUpdated: (state, updated) => {
         const index = state.users.data.findIndex(user => user.id === updated.data.id);
 
@@ -77,7 +72,6 @@ const mutations = {
             state.users.data.splice(index, 1, updated.data);
         }
     },
-    mutateRemoved: (state, id) => (state.users.data = state.users.data.filter(user => user.id !== id)),
     mutateQuery: (state, query) => {
         state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
     },

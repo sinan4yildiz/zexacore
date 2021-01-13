@@ -9,6 +9,20 @@ Route::group([
     'namespace'  => 'Api\v1',
 ], function () {
 
+    // Pages
+    Route::group([
+        'as'        => 'pages',
+        'prefix'    => 'pages',
+        'namespace' => 'Content',
+    ], function () {
+        Route::get('/', 'PageController@index')->name('index');
+        Route::post('/create', 'PageController@create')->name('create');
+        Route::put('/update/{id}', 'PageController@update')->name('update');
+        Route::patch('/activate/{id}', 'PageController@activate')->name('activate');
+        Route::patch('/deactivate/{id}', 'PageController@deactivate')->name('deactivate');
+        Route::delete('/remove/{id}', 'PageController@remove')->name('remove');
+    });
+
     // Uploads
     Route::group([
         'as'        => 'uploads',
