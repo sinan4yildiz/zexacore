@@ -150,7 +150,7 @@ class CategoryController extends Controller
          */
         $slug = new Slug();
         $slug->language_code = request('language_code');
-        $slug->module = config('constant.slugs.module.category');
+        $slug->module = config('constants.slugs.module.category');
         $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
         $slug->value = $item->id;
         $slug->save();
@@ -215,7 +215,7 @@ class CategoryController extends Controller
         $slug = Slug::updateOrCreate(
             [
                 'value'         => $item->id,
-                'module'        => config('constant.slugs.module.category'),
+                'module'        => config('constants.slugs.module.category'),
                 'language_code' => $translation->language_code
             ],
             [

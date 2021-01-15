@@ -106,6 +106,7 @@ export default {
     InputHidden: require('../../../components/form/InputHidden').default,
     Button: require('../../../components/form/Button').default,
   },
+
   mixins: [
     clickaway
   ],

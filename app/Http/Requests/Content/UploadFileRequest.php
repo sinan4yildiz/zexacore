@@ -15,7 +15,7 @@ class UploadFileRequest extends FormRequest
     public function createRules(): array
     {
         return [
-            'files.*' => 'mimes:jpg,jpeg,png,svg,pdf,doc,docx,xls,xlsx,rtf,csv,txt,rar,zip,ppt,pptx,xml'
+            'files.*' => 'mimes:' . implode(',', config('constants.uploads.mimes'))
         ];
     }
 

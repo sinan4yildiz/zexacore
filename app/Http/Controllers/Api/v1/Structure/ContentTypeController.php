@@ -104,7 +104,7 @@ class ContentTypeController extends Controller
         if ($request->has_listing) {
             $slug = new Slug();
             $slug->language_code = request('language_code');
-            $slug->module = config('constant.slugs.module.content_type');
+            $slug->module = config('constants.slugs.module.content_type');
             $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
             $slug->value = $item->id;
             $slug->save();
@@ -166,7 +166,7 @@ class ContentTypeController extends Controller
          */
         $_slug = Slug::where([
             ['value', $item->id],
-            ['module', config('constant.slugs.module.content_type')],
+            ['module', config('constants.slugs.module.content_type')],
         ]);
         if ($item->has_listing) {
             $_slug->where('language_code', $translation->language_code);
@@ -179,7 +179,7 @@ class ContentTypeController extends Controller
         if ($request->has_listing) {
             $slug = new Slug();
             $slug->language_code = $translation->language_code;
-            $slug->module = config('constant.slugs.module.content_type');
+            $slug->module = config('constants.slugs.module.content_type');
             $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
             $slug->value = $item->id;
             $slug->save();

@@ -19,7 +19,7 @@
 
     <form v-on:submit.prevent="update">
       <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-8">
-        <LanguageBar :translations="category.data ? category.data.translations : {}" :current="this.$route.params.language" @input="form.language_code = $event"/>
+        <LanguageBar :translations="category.data ? category.data.translations : {}" :changeable="true" :current="this.$route.params.language" @input="form.language_code = $event"/>
         <ul v-if="category.data">
           <InputHidden name="id" :value="category.data.id" @input="form.id = $event"/>
           <li class="bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

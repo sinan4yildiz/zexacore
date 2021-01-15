@@ -13606,6 +13606,10 @@ video {
   min-height: 0;
 }
 
+.min-h-180 {
+  min-height: 45rem;
+}
+
 .min-h-full {
   min-height: 100%;
 }
@@ -38144,6 +38148,10 @@ table tbody tr:last-child td:last-child {
     min-height: 0;
   }
 
+  .sm\:min-h-180 {
+    min-height: 45rem;
+  }
+
   .sm\:min-h-full {
     min-height: 100%;
   }
@@ -62399,6 +62407,10 @@ table tbody tr:last-child td:last-child {
 
   .md\:min-h-0 {
     min-height: 0;
+  }
+
+  .md\:min-h-180 {
+    min-height: 45rem;
   }
 
   .md\:min-h-full {
@@ -86658,6 +86670,10 @@ table tbody tr:last-child td:last-child {
     min-height: 0;
   }
 
+  .lg\:min-h-180 {
+    min-height: 45rem;
+  }
+
   .lg\:min-h-full {
     min-height: 100%;
   }
@@ -110913,6 +110929,10 @@ table tbody tr:last-child td:last-child {
 
   .xl\:min-h-0 {
     min-height: 0;
+  }
+
+  .xl\:min-h-180 {
+    min-height: 45rem;
   }
 
   .xl\:min-h-full {

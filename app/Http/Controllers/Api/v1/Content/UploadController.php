@@ -42,35 +42,47 @@ class UploadController extends Controller
     public function index()
     {
         $finder = new Finder();
+        $finder->name('*' . request('keyword') . '*');
+        $finder->in($this->absolute_path)->depth(0);
 
 
         /**
          * Folders
          */
-        $folders = collect($finder->directories()->name('*' . request('keyword') . '*')->in($this->absolute_path)->depth(0)->sortByChangedTime()->reverseSorting());
+        $folders = collect($finder->directories()->sortByChangedTime()->reverseSorting());
 
 
         /**
          * Files
          */
-        $files = collect($finder->files()->name('*' . request('keyword') . '*')->ignoreDotFiles(true)->ignoreVCS(true)->in($this->absolute_path)->depth(0)->sortByModifiedTime()->reverseSorting());
+        $files = collect($finder->files()->ignoreDotFiles(true)->ignoreVCS(true));
 
 
         /**
          * Operations for files
          */
-        $files->each(function ($item) {
+        $files->each(function ($item, $key) use ($files) {
+            /*
+             * Filter files by kind
+             * */
+            if (
+                array_key_exists(request('kind'), config('constants.uploads.kinds')) and
+                !in_array($item->getExtension(), config('constants.uploads.kinds.' . request('kind')))
+            ) {
+                $files->pull($key);
+            }
+
             /*
              * Generate thumbnail
              * */
-            if (in_array($item->getExtension(), ['svg', 'jpg', 'jpeg', 'png'])) {
+            if (in_array($item->getExtension(), config('constants.uploads.kinds.images'))) {
                 $item->thumbnail = Thumbnail::make($item->getPathname())->resize(320)->url();
             }
 
             /*
              * Preview link
              * */
-            if (in_array($item->getExtension(), ['pdf', 'txt', 'svg', 'jpg', 'jpeg', 'png'])) {
+            if (in_array($item->getExtension(), config('constants.uploads.kinds.previewable'))) {
                 $item->preview = Storage::disk('uploads')->url($this->relative_path . $item->getBasename());
             }
         });
@@ -85,7 +97,7 @@ class UploadController extends Controller
         /**
          * Response structure
          */
-        return UploadResource::collection($items->values()->paginate(50));
+        return UploadResource::collection($items->values()->paginate(40));
     }
 
     /**

@@ -1,11 +1,11 @@
 <template>
   <section>
     <header class="flex items-center mb-5">
-      <div>
+      <div v-if="!browse">
         <h1 class="mb-2 text-2xl font-lighter leading-7 text-gray-800 sm:text-3xl sm:leading-9 sm:truncate">Uploads</h1>
         <Breadcrumb/>
       </div>
-      <div class="flex items-center ml-auto">
+      <div v-bind:class="{'w-full': browse, 'ml-auto': !browse}" class="flex items-center">
 
         <!-- Search -->
         <div class="search w-69 relative">
@@ -39,6 +39,9 @@
         <!-- Upload -->
         <Button @click="openFileDialog" theme="blue" label="Upload" icon="upload" class="ml-3" :loading="uploadProcessing"/>
         <input @change="uploadFiles" type="file" id="file-browser" class="hidden" multiple>
+
+        <!-- Cancel -->
+        <Button v-if="browse" @click="$parent.close" theme="link" icon="cross" class="ml-auto"/>
       </div>
     </header>
 
@@ -81,9 +84,9 @@
               </button>
             </template>
             <template #content>
-              <Button @click="itemSelect(item)" theme="text-default" :label="item.type == 'dir' ? 'Open' : 'Select'"/>
+              <Button v-if="item.type == 'dir' || browse" @click="itemSelect(item)" theme="text-default" :label="item.type == 'dir' ? 'Open' : 'Select'"/>
               <a v-if="item.preview" v-bind:href="item.preview" target="_blank" class="dropdown-item-default">Preview</a>
-              <div class="my-2 border-t border-gray-200"></div>
+              <div v-if="item.type == 'dir' || browse || item.preview" class="my-2 border-t border-gray-200"></div>
               <Button @click="confirmData = item" theme="text-red" label="Remove"/>
             </template>
           </Dropdown>
@@ -131,6 +134,14 @@ import {mapGetters, mapActions} from 'vuex'
 export default {
   name: 'UploadsIndex',
 
+  props: {
+    browse: {
+      type: Boolean,
+      default: false
+    },
+    kind: String,
+  },
+
   data() {
     return {
       folderForm: {},
@@ -164,11 +175,10 @@ export default {
       if(item.type == 'dir') {
         this.setDirectory(item.name)
         this.setQuery({dir: this.directory})
+      } else if(this.browse) {
+        item.dir = this.directory
+        this.$emit('select', item)
       }
-    },
-
-    itemActions: function (item) {
-      console.log(item)
     },
 
     jumpToFolder: function (index = null) {
@@ -182,7 +192,9 @@ export default {
     },
 
     handlePagination: function (page) {
-      this.$scrollTo(document.querySelector('#wrapper'), 25)
+      if(!this.browse) {
+        this.$scrollTo(document.querySelector('#wrapper'), 25)
+      }
 
       this.setQuery({page: page.label})
     },
@@ -232,6 +244,9 @@ export default {
 
   created() {
     if(!this.items.data) {
+      if(this.kind) {
+        this.setItemsQuery({kind: this.kind})
+      }
       this.fetchItems()
     }
   },

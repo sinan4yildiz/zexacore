@@ -14,7 +14,7 @@
       <Sidebar/>
 
       <!-- Right hand side -->
-      <div class="flex-grow px-32">
+      <div class="flex-grow px-28">
 
         <!-- Page content -->
         <main>

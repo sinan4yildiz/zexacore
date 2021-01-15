@@ -90,6 +90,9 @@ module.exports = {
                 'half': '.125rem',
                 '1/2': '50%',
             },
+            minHeight: {
+                '180': '45rem',
+            },
             fontSize: {
                 'md': '1.125rem',
             },

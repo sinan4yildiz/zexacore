@@ -20,7 +20,11 @@ export default {
 
   computed: {
     iconClasses: function () {
-      let i = ['-ml-2 mr-2 w-5 h-5']
+      let i = ['w-5 h-5']
+
+      if(this.label) {
+        i.push('-ml-2 mr-2')
+      }
 
       if(this.icon.includes('-solid')) {
         i.push('fill-current')
@@ -30,7 +34,7 @@ export default {
     },
 
     buttonClasses: function () {
-      let b = ['flex align-items-center text-sm leading-5 font-medium focus:outline-none transition duration-100 ease-in-out']
+      let b = ['flex align-items-center text-sm leading-5 font-medium focus:outline-none transition duration-150 ease-in-out']
 
       switch (this.size) {
         case 'small':
@@ -42,7 +46,13 @@ export default {
           break
 
         default:
-          b.push('px-5 py-2')
+          b.push('py-2')
+
+          if(this.label) {
+            b.push('px-5')
+          } else if(this.icon) {
+            b.push('px-3')
+          }
       }
 
       switch (this.theme) {
@@ -59,7 +69,7 @@ export default {
           break
 
         case 'link':
-          b.push('text-gray-600 bg-transparent hover:text-black hover:bg-gray-50 rounded-md')
+          b.push('text-gray-600 bg-transparent border border-transparent hover:text-black focus:border-gray-400 rounded-md')
           break
 
         case 'text-green':

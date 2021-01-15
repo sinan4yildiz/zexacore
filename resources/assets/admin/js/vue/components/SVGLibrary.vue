@@ -28,6 +28,9 @@
     <!-- Exclamation cricle -->
     <symbol id="icon-exclamation-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></symbol>
 
+    <!-- Cross -->
+    <symbol id="icon-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></symbol>
+
     <!-- Refresh -->
     <symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 4v5h-.582M4.062 11a8.001 8.001 0 0115.356-2m0 0H15M4 20v-5h.581m0 0a8.003 8.003 0 0015.357-2M4.581 15H9"/></symbol>
 
@@ -54,6 +57,9 @@
 
     <!-- New folder -->
     <symbol id="icon-folder-new" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></symbol>
+
+    <!-- Folder open -->
+    <symbol id="icon-folder-open" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"/></symbol>
 
 
     <!--
@@ -171,6 +177,9 @@
 
     <!-- PPT -->
     <symbol id="file-ppt" viewBox="0 0 4000 4000" fill="none" stroke="none"><g fill-rule="nonzero"> <path fill="#d1d8de" d="M1206 3333h-134V667h134z"/> <path fill="#eff2f4" d="M2660 3333H1170V667h1886v2271z"/> <path fill="#f05609" d="M944 1731V952l128 126v780z"/> <path fill="#d1d8de" d="M2660 2938h396l-396 395z"/> <path fill="#ff671b" d="M944 1731V952h1405v779z"/> <path fill="#fff" d="M1289 1328h70c19 0 32-4 41-12s13-21 13-39c0-17-4-29-13-38-8-9-21-13-38-13h-73v101zm0 63v124h-72v-350h155c37 0 64 10 83 29s28 47 28 84c0 36-9 64-28 83-18 20-45 29-79 29h-88zm325-63h70c19 0 32-4 41-12s13-21 13-39c0-17-4-29-13-38-8-9-21-13-38-13h-73v101zm0 63v124h-72v-350h155c37 0 64 10 83 29s28 47 28 84c0 36-9 64-28 83-18 20-45 29-79 29h-88zm325 124v-287h-104v-62h279v62h-103v287z"/> </g> <path fill="#ff671b" d="M1722 2141h795v778h-795z"/> <path fill="#fff" d="M1791 2208h657v643h-657z"/> <path fill="#ff671b" d="M1886 2338h467v383h-467z"/> <g fill="#fff"> <path d="M1921 2378h397v50h-397zM2020 2470c-55 0-99 43-99 97s44 97 99 97 99-43 99-97h-99zM2166 2477h152v29h-152zM2166 2538h152v29h-152zM2166 2600h152v28h-152z"/></g></symbol>
+
+    <!-- PPTX -->
+    <symbol id="file-pptx" viewBox="0 0 4000 4000" fill="none" stroke="none"><g fill-rule="nonzero"> <path fill="#d1d8de" d="M1206 3333h-134V667h134z"/> <path fill="#eff2f4" d="M2660 3333H1170V667h1886v2271z"/> <path fill="#f05609" d="M944 1731V952l128 126v780z"/> <path fill="#d1d8de" d="M2660 2938h396l-396 395z"/> <path fill="#ff671b" d="M944 1731V952h1405v779z"/> <path fill="#fff" d="M1289 1328h70c19 0 32-4 41-12s13-21 13-39c0-17-4-29-13-38-8-9-21-13-38-13h-73v101zm0 63v124h-72v-350h155c37 0 64 10 83 29s28 47 28 84c0 36-9 64-28 83-18 20-45 29-79 29h-88zm325-63h70c19 0 32-4 41-12s13-21 13-39c0-17-4-29-13-38-8-9-21-13-38-13h-73v101zm0 63v124h-72v-350h155c37 0 64 10 83 29s28 47 28 84c0 36-9 64-28 83-18 20-45 29-79 29h-88zm325 124v-287h-104v-62h279v62h-103v287z"/> </g> <path fill="#ff671b" d="M1722 2141h795v778h-795z"/> <path fill="#fff" d="M1791 2208h657v643h-657z"/> <path fill="#ff671b" d="M1886 2338h467v383h-467z"/> <g fill="#fff"> <path d="M1921 2378h397v50h-397zM2020 2470c-55 0-99 43-99 97s44 97 99 97 99-43 99-97h-99zM2166 2477h152v29h-152zM2166 2538h152v29h-152zM2166 2600h152v28h-152z"/></g></symbol>
 
     <!-- PDF -->
     <symbol id="file-pdf" viewBox="0 0 4000 4000" fill="none" stroke="none"><g fill-rule="nonzero"> <path fill="#d1d8de" d="M1206 3333h-134V667h134z"/> <path fill="#eff2f4" d="M2660 3333H1170V667h1886v2271z"/> <path fill="#b73737" d="M944 1731V952l128 126v780z"/> <path fill="#cfd8df" d="M2660 2938h396l-396 395z"/> <path fill="#ee4937" d="M944 1731V952h1405v779zM1979 2596c24-48 52-101 74-155l9-21c-29-110-46-198-31-254 4-15 21-24 40-24h13c25 0 37 32 38 44 2 21-7 56-7 56 0-14 1-37-8-57-10-23-20-36-29-39-4 3-9 9-10 21-3 17-4 38-4 49 0 39 8 89 22 142 3-8 5-16 7-23l22-88s-5 102-12 132c-1 6-3 13-5 20 25 69 64 130 111 174 19 17 42 31 64 44 49-7 93-10 131-10 50 1 86 8 101 23 7 7 10 16 11 25 0 4-2 12-2 15 1-3 1-16-39-28-31-10-90-10-160-2 81 40 161 60 186 48 6-3 14-13 14-13s-4 20-8 25-12 11-20 13c-40 11-143-14-233-65-101 15-211 42-300 71-87 153-152 223-206 196l-20-10c-8-5-9-16-7-25 6-30 44-76 121-122 8-5 45-24 45-24s-27 26-34 31c-61 50-106 113-105 137v2c52-7 130-113 230-309zm32 16c-17 31-33 61-48 87 83-35 173-57 258-73-11-8-23-16-33-25-47-40-83-90-109-142-16 44-36 92-68 153z"/> <g fill="#f1f2f2"> <path d="M1207 1159h131c34 0 61 10 82 31s31 47 31 80-10 60-31 80-48 30-82 30h-78v127h-52v-348zm52 45v132h49c15 0 27-1 38-3 10-2 19-5 28-10 8-5 14-12 18-20 4-9 6-20 6-33 0-21-6-37-17-49s-28-17-49-17h-72zM1503 1159h116c22 0 42 3 59 8 17 6 32 13 44 23s21 22 29 37 13 31 17 48c3 17 5 36 5 57s-2 39-5 57c-3 17-9 33-16 48-8 15-17 27-29 37s-26 18-44 24c-17 6-37 9-60 9h-116zm52 45v258h59c35 0 61-11 78-32s26-53 26-97c0-20-2-38-6-53s-10-29-18-41-19-20-32-26c-14-6-30-9-49-9h-59zM1888 1507h-53v-348h211v45h-158v112h145v45h-145z"/> </g> </g></symbol>
