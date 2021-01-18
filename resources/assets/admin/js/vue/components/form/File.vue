@@ -5,7 +5,7 @@
       <svg class="w-5 h-5 mr-2">
         <use xlink:href="#icon-folder-open"></use>
       </svg>
-      <span v-if="selected">Change</span>
+      <span v-if="selected">Change the file</span>
       <span v-else>Browse uploads</span>
     </button>
 

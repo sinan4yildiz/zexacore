@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api\v1\Content;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Content\PageRequest;
+use App\Http\Resources\Content\PageAutocompleteResource;
 use App\Http\Resources\Content\PageResource;
 use App\Models\Activity;
 use App\Models\Page;
+use App\Models\Relationship;
 use App\Models\Slug;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
@@ -16,6 +19,7 @@ class PageController extends Controller
     protected $sortable = [
         'title'      => 'title',
         'views'      => 'views',
+        'language'   => 'language_code',
         'status'     => 'is_active',
         'created_at' => 'created_at'
     ];
@@ -37,6 +41,9 @@ class PageController extends Controller
          */
         if (Request::filled('keyword')) {
             $pages->where('title', 'LIKE', '%' . Request::input('keyword') . '%');
+        }
+        if (Request::filled('language_code')) {
+            $pages->where('language_code', Request::input('language_code'));
         }
         if (Request::filled('status')) {
             $pages->where('is_active', (int) Request::input('status'));
@@ -99,38 +106,41 @@ class PageController extends Controller
          * Store the item
          */
         $item = new Page();
-        $item->has_listing = request('has_listing', false);
-        $item->is_indexable = request('is_indexable', true);
+        $item->title = request('title');
+        $item->content = request('content');
+        $item->image = request('image');
+        $item->meta_title = request('meta_title');
+        $item->meta_description = request('meta_description');
+        $item->meta_keywords = request('meta_keywords');
         $item->is_active = request('is_active', true);
-        $item->sort_order = Page::max('sort_order') + 1;
+        $item->is_indexable = request('is_indexable', true);
+        $item->user_id = Auth::user()->id;
+        $item->language_code = request('language_code');
         $item->save();
 
 
         /**
-         * Store the translation
+         * Attach the translation
          */
-        $translation = new PageTranslation();
-        $translation->content_type_id = $item->id;
-        $translation->language_code = request('language_code');
-        $translation->title = request('title');
-        $translation->description = request('description');
-        $translation->meta_title = request('meta_title');
-        $translation->meta_description = request('meta_description');
-        $translation->meta_keywords = request('meta_keywords');
-        $translation->save();
+        if (Request::filled('translation_id')) {
+            $relationship = new Relationship();
+            $relationship->sid = $item->id;
+            $relationship->gid = request('translation_id');
+            $relationship->key = config('constants.relationships.translation.page');
+            $relationship->value = $item->language_code;
+            $relationship->save();
+        }
 
 
         /**
          * Store the slug
          */
-        if ($request->has_listing) {
-            $slug = new Slug();
-            $slug->language_code = request('language_code');
-            $slug->module = config('constants.slugs.module.content_type');
-            $slug->keyword = request('slug', Str::slug($translation->title) . $item->id);
-            $slug->value = $item->id;
-            $slug->save();
-        }
+        $slug = new Slug();
+        $slug->language_code = request('language_code');
+        $slug->module = config('constants.slugs.module.page');
+        $slug->keyword = request('slug', Str::slug($item->title) . $item->id);
+        $slug->value = $item->id;
+        $slug->save();
 
 
         /**
@@ -138,8 +148,8 @@ class PageController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.content_type.create', [
-            'title' => request('title')
+        $activity->description = trans('admin/activitiy.page.create', [
+            'title' => $item->title
         ]);
         $activity->save();
 
@@ -222,19 +232,32 @@ class PageController extends Controller
     }
 
     /**
-     * Order the items
+     * Search results for the autocompletes
      *
      */
-    public function order()
+    public function autocomplete()
     {
-        collect(request('orders'))->each(function ($order) {
-            $item = Page::find($order['id']);
+        $items = Page::where('title', 'LIKE', '%' . request('keyword') . '%');
 
-            if ($item) {
-                $item->sort_order = $order['order'];
-                $item->save();
-            }
-        });
+
+        /**
+         * Filters
+         */
+        if (Request::filled('language_code')) {
+            $items->where('language_code', request('language_code'));
+        }
+
+
+        /**
+         * Query
+         */
+        $items = $items->paginate(5);
+
+
+        /**
+         * Response structure
+         */
+        return PageAutocompleteResource::collection($items);
     }
 
     /**
@@ -258,8 +281,8 @@ class PageController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.content_type.activate', [
-            'title' => $item->translation->title,
+        $activity->description = trans('admin/activitiy.page.activate', [
+            'title' => $item->title,
         ]);
         $activity->save();
 
@@ -287,8 +310,8 @@ class PageController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.content_type.deactivate', [
-            'title' => $item->translation->title,
+        $activity->description = trans('admin/activitiy.page.deactivate', [
+            'title' => $item->title,
         ]);
         $activity->save();
 
@@ -306,7 +329,7 @@ class PageController extends Controller
         /**
          * Remove
          */
-        $item = Page::with('translation')->findOrFail($id);
+        $item = Page::findOrFail($id);
         $item->delete();
 
 
@@ -315,8 +338,8 @@ class PageController extends Controller
          */
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
-        $activity->description = trans('admin/activitiy.content_type.remove', [
-            'title' => $item->translation->title,
+        $activity->description = trans('admin/activitiy.page.remove', [
+            'title' => $item->title,
         ]);
         $activity->save();
 

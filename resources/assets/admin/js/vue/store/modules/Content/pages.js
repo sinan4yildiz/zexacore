@@ -40,6 +40,16 @@ const actions = {
                  });
         })
     },
+    pageAutocomplete({}, params) {
+        return new Promise((resolve) => {
+            axios.get('pages/autocomplete', {
+                     params: params
+                 })
+                 .then(response => {
+                     resolve(response.data.data)
+                 });
+        })
+    },
     async activatePage({commit}, page) {
         await axios.patch('pages/activate/' + page.id)
                    .then(response => {

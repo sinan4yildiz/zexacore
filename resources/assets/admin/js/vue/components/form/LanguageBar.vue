@@ -84,7 +84,11 @@ export default {
     change: function (code) {
       this.defaultLanguageCode = code
       this.$emit('input', this.defaultLanguageCode)
-      this.$router.replace({params: {language: code}})
+
+      if(_.has(this.$route.params, 'language')) {
+        this.$router.replace({params: {language: code}})
+      }
+
       this.isOpen = false
     }
   },

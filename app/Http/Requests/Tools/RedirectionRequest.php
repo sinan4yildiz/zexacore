@@ -14,7 +14,6 @@ class RedirectionRequest extends FormRequest
      */
     public function createRules(): array
     {
-        dd($this->to);
         return [
             'from' => 'required|string|unique:redirections,from',
             'to'   => 'required|url',

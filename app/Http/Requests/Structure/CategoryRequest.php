@@ -30,9 +30,8 @@ class CategoryRequest extends FormRequest
     public function updateRules(): array
     {
         return [
-            'title'           => 'required',
-            'content_type_id' => 'content_type_id',
-            'slug'            => 'required_if:has_listing,1|unique:slugs,keyword,' . $this->id . ',value,language_code,' . $this->language_code,
+            'title' => 'required',
+            'slug'  => 'required|unique:slugs,keyword,' . $this->id . ',value,language_code,' . $this->language_code,
         ];
     }
 

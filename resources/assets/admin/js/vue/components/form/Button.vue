@@ -8,7 +8,7 @@
     <svg v-else-if="icon" v-bind:class="iconClasses">
       <use v-bind:xlink:href="'#icon-' + icon"></use>
     </svg>
-    {{ label }}
+    <slot>{{ label }}</slot>
   </button>
 </template>
 
@@ -48,7 +48,7 @@ export default {
         default:
           b.push('py-2')
 
-          if(this.label) {
+          if(this.label || this.$slots.default) {
             b.push('px-5')
           } else if(this.icon) {
             b.push('px-3')

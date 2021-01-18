@@ -15,10 +15,9 @@ class PageRequest extends FormRequest
     public function createRules(): array
     {
         return [
-            'firstname' => 'required',
-            'lastname'  => 'required',
-            'password'  => 'required|min:6',
-            'email'     => 'required|string|email|max:191|unique:users,email'
+            'title'         => 'required',
+            'slug'          => 'required|unique:slugs,keyword,' . $this->slug . ',id,language_code,' . $this->language_code,
+            'language_code' => 'required',
         ];
     }
 
@@ -31,10 +30,8 @@ class PageRequest extends FormRequest
     public function updateRules(): array
     {
         return [
-            'firstname' => 'required',
-            'lastname'  => 'required',
-            'password'  => 'nullable|min:6',
-            'email'     => 'required|email|max:191|unique:users,email,' . $this->id
+            'title' => 'required',
+            'slug'  => 'required|unique:slugs,keyword,' . $this->id . ',value,language_code,' . $this->language_code,
         ];
     }
 

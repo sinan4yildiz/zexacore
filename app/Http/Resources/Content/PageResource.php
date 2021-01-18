@@ -20,6 +20,7 @@ class PageResource extends JsonResource
             'language_code'    => $this->language_code,
             'views'            => $this->views,
             'status'           => $this->status,
+            'is_active'        => $this->is_active,
             'is_indexable'     => $this->is_indexable,
             'created_at'       => $this->created_at->diffForHumans(),
             'created_at_raw'   => $this->created_at->format('d/m/Y H:i:s'),

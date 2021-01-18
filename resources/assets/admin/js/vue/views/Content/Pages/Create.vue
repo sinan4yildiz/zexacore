@@ -20,7 +20,7 @@
     <form v-on:submit.prevent="create">
       <div class="grid grid-cols-4 gap-6">
         <div class="col-span-3 bg-white shadow overflow-hidden sm:rounded-lg mb-8">
-          <LanguageBar :changeable="true" @input="form.language_code = $event"/>
+          <LanguageBar :changeable="true" v-model="form.language_code"/>
           <ul>
             <li class="bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <div>
@@ -32,7 +32,7 @@
               </div>
             </li>
             <li class="bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-1 sm:gap-4 sm:px-6">
-              <Textarea name="description" label="Description" placeholder="Description" :attr="{rows: 10}" @input="form.description = $event" :errors="errors"/>
+              <Textarea name="content" label="Content" placeholder="Enter a content" :attr="{rows: 10}" @input="form.content = $event" :errors="errors"/>
             </li>
             <li class="bg-gray-50 border-b px-4 py-4 items-center sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <div>
@@ -85,13 +85,13 @@
                 <File name="image" kind="images" @select="form.image = $event"/>
               </div>
             </li>
-            <li class="border-b border-b px-4 py-4 items-center sm:px-6">
+            <li v-if="form.language_code != config.default_language_code" class="border-b border-b px-4 py-4 items-center sm:px-6">
               <div>
                 <label for="translation_id" class="text-sm font-medium text-gray-800">Translation</label>
                 <p class="text-gray-550 text-xs">Which page is this the translation of?</p>
               </div>
               <div class="mt-2">
-                <Autocomplete name="translation_id" placeholder="Search pages" action="Pages/translationAutocomplete" @input="form.translation_id = $event" :errors="errors"/>
+                <Autocomplete name="translation_id" placeholder="Search pages" action="Pages/pageAutocomplete" :params="{language_code: config.default_language_code}" @input="form.translation_id = $event" :errors="errors"/>
               </div>
             </li>
             <li class="border-b border-b px-4 py-4 items-center sm:px-6">

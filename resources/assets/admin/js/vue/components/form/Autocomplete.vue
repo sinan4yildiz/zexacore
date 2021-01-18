@@ -34,15 +34,15 @@
     >
       <div v-if="isOpen && results !== false" class="origin-top-left absolute left-0 right-0 mt-2 shadow-lg rounded-md z-10">
         <ul v-if="results.length" class="rounded-md bg-white py-2 shadow-xs">
-          <li v-for="(result, index) in results">
-            <button @click="select(result)" type="button" class="flex items-center w-full px-4 py-2 text-sm leading-5 text-left hover:bg-gray-100 focus:bg-gray-200 focus:outline-none transition duration-150 ease-in-out">
-            <span v-for="(parent) in result.parents" class="text-gray-600">
-              {{ parent.text }}
-              <svg class="w-3-half h-3-half fill-current ml-3 transform -translate-x-2 -rotate-90">
-                <use xlink:href="#icon-chevron-solid"></use>
-              </svg>
-            </span>
-              <span class="text-black">{{ result.text }}</span>
+          <li v-for="(item, index) in results">
+            <button @click="select(item)" type="button" class="flex items-center w-full px-4 py-2 text-sm leading-5 text-left hover:bg-gray-100 focus:bg-gray-200 focus:outline-none transition duration-150 ease-in-out">
+              <span v-for="(parent) in item.parents" class="text-gray-600">
+                {{ parent.text }}
+                <svg class="w-3-half h-3-half fill-current ml-3 transform -translate-x-2 -rotate-90">
+                  <use xlink:href="#icon-chevron-solid"></use>
+                </svg>
+              </span>
+              <span class="text-black">{{ item.text }}</span>
             </button>
           </li>
         </ul>
@@ -95,9 +95,9 @@ export default {
 
     params: function (n, o) {
       if(!_.isEqual(o, n)) {
-        this.results      = false
+        this.results = false
         this.inputKeyword = null
-        this.inputValue   = null
+        this.inputValue = null
         this.emit()
       }
     }
@@ -109,15 +109,16 @@ export default {
         return this.close()
       }
 
-      this.$store.dispatch(this.action, _.merge({keyword: this.inputKeyword}, this.params)).then((results) => {
-        this.results = results
-        this.isOpen  = true
-      })
+      this.$store.dispatch(this.action, _.merge({keyword: this.inputKeyword}, this.params))
+          .then((results) => {
+            this.results = results
+            this.isOpen = true
+          })
     }, 250),
 
-    select: function (result) {
-      this.inputKeyword = result.text
-      this.inputValue   = result.value
+    select: function (item) {
+      this.inputKeyword = item.text
+      this.inputValue = item.value
       this.emit()
       this.close()
     },

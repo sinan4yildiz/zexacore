@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown relative" v-bind:class="{'open': isOpen}" v-on-clickaway="close">
-    <div @click="isOpen = !isOpen" class="block">
+    <div @click="isOpen = !isOpen" class="block select-none cursor-pointer">
       <slot name="toggler"></slot>
     </div>
     <transition

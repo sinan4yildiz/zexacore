@@ -2322,6 +2322,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SVGLibrary"
 });
@@ -3272,9 +3275,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.isOpen = true;
       });
     }, 250),
-    select: function select(result) {
-      this.inputKeyword = result.text;
-      this.inputValue = result.value;
+    select: function select(item) {
+      this.inputKeyword = item.text;
+      this.inputValue = item.value;
       this.emit();
       this.close();
     },
@@ -3345,7 +3348,7 @@ __webpack_require__.r(__webpack_exports__);
         default:
           b.push('py-2');
 
-          if (this.label) {
+          if (this.label || this.$slots["default"]) {
             b.push('px-5');
           } else if (this.icon) {
             b.push('px-3');
@@ -3776,11 +3779,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     change: function change(code) {
       this.defaultLanguageCode = code;
       this.$emit('input', this.defaultLanguageCode);
-      this.$router.replace({
-        params: {
-          language: code
-        }
-      });
+
+      if (_.has(this.$route.params, 'language')) {
+        this.$router.replace({
+          params: {
+            language: code
+          }
+        });
+      }
+
       this.isOpen = false;
     }
   },
@@ -4369,6 +4376,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4394,11 +4427,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         field: 'actions',
         classes: 'w-32'
       }],
+      language_code: null,
       confirmData: false
     };
   },
   computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('Pages', ['pages'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('Languages', ['languages'])),
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('Pages', ['fetchPages', 'activatePage', 'deactivatePage', 'removePage', 'setPagesQuery'])), {}, {
+    changeLanguage: function changeLanguage(language) {
+      this.language_code = language.code;
+      this.setQuery({
+        language_code: this.language_code
+      });
+    },
     setQuery: function setQuery(args) {
       this.setPagesQuery(args);
       this.fetchPages();
@@ -27029,6 +27069,29 @@ var render = function() {
         "symbol",
         {
           attrs: {
+            id: "icon-3dots",
+            viewBox: "0 0 24 24",
+            fill: "none",
+            stroke: "currentColor"
+          }
+        },
+        [
+          _c("path", {
+            attrs: {
+              "stroke-linecap": "round",
+              "stroke-linejoin": "round",
+              "stroke-width": "2",
+              d:
+                "M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+            }
+          })
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "symbol",
+        {
+          attrs: {
             id: "icon-refresh",
             viewBox: "0 0 24 24",
             fill: "none",
@@ -27407,7 +27470,13 @@ var render = function() {
       _vm._v(" "),
       _c(
         "symbol",
-        { attrs: { id: "icon-chevron-solid", viewBox: "0 0 20 20" } },
+        {
+          attrs: {
+            id: "icon-chevron-solid",
+            viewBox: "0 0 20 20",
+            fill: "currentColor"
+          }
+        },
         [
           _c("path", {
             attrs: {
@@ -29418,7 +29487,7 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "block",
+          staticClass: "block select-none cursor-pointer",
           on: {
             click: function($event) {
               _vm.isOpen = !_vm.isOpen
@@ -29923,12 +29992,15 @@ var render = function() {
                     }
                   },
                   [
-                    _vm._v(
-                      "\n          " + _vm._s(column.title) + "\n          "
-                    ),
+                    column.title
+                      ? _c("span", { staticClass: "mr-2" }, [
+                          _vm._v(_vm._s(column.title))
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
                     column.field &&
                     column.field == (_vm.meta.total && _vm.meta.sorting.sorted)
-                      ? _c("svg", { staticClass: "w-4 h-4 ml-2" }, [
+                      ? _c("svg", { staticClass: "w-4 h-4" }, [
                           _c("use", {
                             attrs: {
                               "xlink:href":
@@ -30218,7 +30290,7 @@ var render = function() {
                     ? _c(
                         "ul",
                         { staticClass: "rounded-md bg-white py-2 shadow-xs" },
-                        _vm._l(_vm.results, function(result, index) {
+                        _vm._l(_vm.results, function(item, index) {
                           return _c("li", [
                             _c(
                               "button",
@@ -30228,20 +30300,20 @@ var render = function() {
                                 attrs: { type: "button" },
                                 on: {
                                   click: function($event) {
-                                    return _vm.select(result)
+                                    return _vm.select(item)
                                   }
                                 }
                               },
                               [
-                                _vm._l(result.parents, function(parent) {
+                                _vm._l(item.parents, function(parent) {
                                   return _c(
                                     "span",
                                     { staticClass: "text-gray-600" },
                                     [
                                       _vm._v(
-                                        "\n            " +
+                                        "\n              " +
                                           _vm._s(parent.text) +
-                                          "\n            "
+                                          "\n              "
                                       ),
                                       _c(
                                         "svg",
@@ -30263,7 +30335,7 @@ var render = function() {
                                 }),
                                 _vm._v(" "),
                                 _c("span", { staticClass: "text-black" }, [
-                                  _vm._v(_vm._s(result.text))
+                                  _vm._v(_vm._s(item.text))
                                 ])
                               ],
                               2
@@ -30350,8 +30422,10 @@ var render = function() {
             _c("use", { attrs: { "xlink:href": "#icon-" + _vm.icon } })
           ])
         : _vm._e(),
-      _vm._v("\n  " + _vm._s(_vm.label) + "\n")
-    ]
+      _vm._v(" "),
+      _vm._t("default", [_vm._v(_vm._s(_vm.label))])
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -30397,7 +30471,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _vm.selected
-            ? _c("span", [_vm._v("Change")])
+            ? _c("span", [_vm._v("Change the file")])
             : _c("span", [_vm._v("Browse uploads")])
         ]
       ),
@@ -31663,10 +31737,12 @@ var render = function() {
             [
               _c("LanguageBar", {
                 attrs: { changeable: true },
-                on: {
-                  input: function($event) {
-                    _vm.form.language_code = $event
-                  }
+                model: {
+                  value: _vm.form.language_code,
+                  callback: function($$v) {
+                    _vm.$set(_vm.form, "language_code", $$v)
+                  },
+                  expression: "form.language_code"
                 }
               }),
               _vm._v(" "),
@@ -31711,15 +31787,15 @@ var render = function() {
                   [
                     _c("Textarea", {
                       attrs: {
-                        name: "description",
-                        label: "Description",
-                        placeholder: "Description",
+                        name: "content",
+                        label: "Content",
+                        placeholder: "Enter a content",
                         attr: { rows: 10 },
                         errors: _vm.errors
                       },
                       on: {
                         input: function($event) {
-                          _vm.form.description = $event
+                          _vm.form.content = $event
                         }
                       }
                     })
@@ -31917,37 +31993,43 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass:
-                      "border-b border-b px-4 py-4 items-center sm:px-6"
-                  },
-                  [
-                    _vm._m(5),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "mt-2" },
+                _vm.form.language_code != _vm.config.default_language_code
+                  ? _c(
+                      "li",
+                      {
+                        staticClass:
+                          "border-b border-b px-4 py-4 items-center sm:px-6"
+                      },
                       [
-                        _c("Autocomplete", {
-                          attrs: {
-                            name: "translation_id",
-                            placeholder: "Search pages",
-                            action: "Pages/translationAutocomplete",
-                            errors: _vm.errors
-                          },
-                          on: {
-                            input: function($event) {
-                              _vm.form.translation_id = $event
-                            }
-                          }
-                        })
-                      ],
-                      1
+                        _vm._m(5),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "mt-2" },
+                          [
+                            _c("Autocomplete", {
+                              attrs: {
+                                name: "translation_id",
+                                placeholder: "Search pages",
+                                action: "Pages/pageAutocomplete",
+                                params: {
+                                  language_code:
+                                    _vm.config.default_language_code
+                                },
+                                errors: _vm.errors
+                              },
+                              on: {
+                                input: function($event) {
+                                  _vm.form.translation_id = $event
+                                }
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ]
                     )
-                  ]
-                ),
+                  : _vm._e(),
                 _vm._v(" "),
                 _c(
                   "li",
@@ -32263,9 +32345,104 @@ var render = function() {
               "h1",
               {
                 staticClass:
-                  "mb-2 text-2xl font-lighter leading-7 text-gray-800 sm:text-3xl sm:leading-9 sm:truncate"
+                  "mb-2 text-2xl font-lighter leading-7 text-gray-800 sm:text-3xl sm:leading-9"
               },
-              [_vm._v("Pages")]
+              [
+                _c("Dropdown", {
+                  attrs: { width: "w-48", orientation: "left" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "toggler",
+                      fn: function() {
+                        return [
+                          _vm._v("\n            Pages\n            "),
+                          _c("svg", { staticClass: "w-4 h-4" }, [
+                            _c("use", {
+                              attrs: { "xlink:href": "#icon-chevron" }
+                            })
+                          ])
+                        ]
+                      },
+                      proxy: true
+                    },
+                    {
+                      key: "content",
+                      fn: function() {
+                        return [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "mb-2 px-4 pt-2 pb-3 text-sm text-gray-600 font-thin leading-4 border-b border-gray-200"
+                            },
+                            [_vm._v("Languages")]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(_vm.languages.data, function(language) {
+                            return _c(
+                              "span",
+                              [
+                                _c(
+                                  "Button",
+                                  {
+                                    attrs: { theme: "text-default" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.changeLanguage(language)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "svg",
+                                      {
+                                        staticClass:
+                                          "flex self-center w-5 h-4 mr-2"
+                                      },
+                                      [
+                                        _c("use", {
+                                          attrs: {
+                                            "xlink:href":
+                                              "#flag-" + language.code
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(
+                                      "\n                " +
+                                        _vm._s(language.name) +
+                                        "\n                "
+                                    ),
+                                    _vm.language_code == language.code
+                                      ? _c(
+                                          "svg",
+                                          {
+                                            staticClass:
+                                              "flex self-center ml-2 w-4 h-4 text-gray-500"
+                                          },
+                                          [
+                                            _c("use", {
+                                              attrs: {
+                                                "xlink:href": "#icon-check"
+                                              }
+                                            })
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          })
+                        ]
+                      },
+                      proxy: true
+                    }
+                  ])
+                })
+              ],
+              1
             ),
             _vm._v(" "),
             _c("Breadcrumb")
@@ -32316,34 +32493,30 @@ var render = function() {
                         return _c("tr", [
                           _c(
                             "td",
-                            { staticClass: "px-6 py-4 whitespace-no-wrap" },
+                            {
+                              staticClass:
+                                "px-6 py-4 text-sm font-bold text-gray-900 whitespace-no-wrap"
+                            },
                             [
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "flex items-center text-sm mb-1 leading-5 font-bold text-gray-900"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n            " +
-                                      _vm._s(page.translation.title) +
-                                      "\n          "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "text-xs leading-5 font-light text-gray-600"
-                                },
-                                [
-                                  _vm._v(
-                                    _vm._s(page.translation.description_plain)
-                                  )
-                                ]
+                              _vm._v(
+                                "\n          " +
+                                  _vm._s(page.title) +
+                                  "\n        "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass:
+                                "px-6 py-4 text-sm leading-5 text-gray-600 whitespace-no-wrap text-center"
+                            },
+                            [
+                              _vm._v(
+                                "\n          " +
+                                  _vm._s(page.views) +
+                                  "\n        "
                               )
                             ]
                           ),
@@ -32369,6 +32542,21 @@ var render = function() {
                                     },
                                     [_vm._v("Inactive")]
                                   )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass:
+                                "px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"
+                            },
+                            [
+                              _c(
+                                "time",
+                                { attrs: { title: page.created_at_raw } },
+                                [_vm._v(_vm._s(page.created_at))]
+                              )
                             ]
                           ),
                           _vm._v(" "),
@@ -59153,6 +59341,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -59213,14 +59403,25 @@ var actions = {
       });
     });
   },
-  activatePage: function activatePage(_ref4, page) {
+  pageAutocomplete: function pageAutocomplete(_ref4, params) {
+    _objectDestructuringEmpty(_ref4);
+
+    return new Promise(function (resolve) {
+      axios.get('pages/autocomplete', {
+        params: params
+      }).then(function (response) {
+        resolve(response.data.data);
+      });
+    });
+  },
+  activatePage: function activatePage(_ref5, page) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              commit = _ref4.commit;
+              commit = _ref5.commit;
               _context2.next = 3;
               return axios.patch('pages/activate/' + page.id).then(function (response) {
                 commit('mutateUpdated', response.data);
@@ -59234,14 +59435,14 @@ var actions = {
       }, _callee2);
     }))();
   },
-  deactivatePage: function deactivatePage(_ref5, page) {
+  deactivatePage: function deactivatePage(_ref6, page) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              commit = _ref5.commit;
+              commit = _ref6.commit;
               _context3.next = 3;
               return axios.patch('pages/deactivate/' + page.id).then(function (response) {
                 commit('mutateUpdated', response.data);
@@ -59255,14 +59456,14 @@ var actions = {
       }, _callee3);
     }))();
   },
-  removePage: function removePage(_ref6, page) {
+  removePage: function removePage(_ref7, page) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
       var commit, dispatch;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              commit = _ref6.commit, dispatch = _ref6.dispatch;
+              commit = _ref7.commit, dispatch = _ref7.dispatch;
               _context4.next = 3;
               return axios["delete"]('pages/remove/' + page.id).then(function (response) {
                 dispatch('fetchPages');
@@ -59276,8 +59477,8 @@ var actions = {
       }, _callee4);
     }))();
   },
-  setPagesQuery: function setPagesQuery(_ref7, query) {
-    var commit = _ref7.commit;
+  setPagesQuery: function setPagesQuery(_ref8, query) {
+    var commit = _ref8.commit;
     commit('mutateQuery', _.cloneDeep(query));
   }
 };

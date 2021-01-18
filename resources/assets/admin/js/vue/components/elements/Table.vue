@@ -8,8 +8,8 @@
               @click="handleSorting(column)"
               v-bind:class="columnClasses(column, index)"
               class="px-6 pt-3-half pb-3 bg-gray-50 text-left text-xs leading-5 font-medium text-gray-600 uppercase tracking-wider">
-            {{ column.title }}
-            <svg v-if="column.field && column.field == (meta.total && meta.sorting.sorted)" class="w-4 h-4 ml-2">
+            <span v-if="column.title" class="mr-2">{{ column.title }}</span>
+            <svg v-if="column.field && column.field == (meta.total && meta.sorting.sorted)" class="w-4 h-4">
               <use v-bind:xlink:href="'#icon-sort-' + meta.sorting.ordered"></use>
             </svg>
           </th>

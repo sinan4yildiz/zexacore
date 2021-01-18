@@ -18,6 +18,7 @@ Route::group([
         Route::get('/', 'PageController@index')->name('index');
         Route::post('/create', 'PageController@create')->name('create');
         Route::put('/update/{id}', 'PageController@update')->name('update');
+        Route::get('/autocomplete', 'PageController@autocomplete')->name('autocomplete');
         Route::patch('/activate/{id}', 'PageController@activate')->name('activate');
         Route::patch('/deactivate/{id}', 'PageController@deactivate')->name('deactivate');
         Route::delete('/remove/{id}', 'PageController@remove')->name('remove');

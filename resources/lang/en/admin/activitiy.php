@@ -8,6 +8,14 @@ return [
     |
     */
 
+    'page' => [
+        'create'     => 'Created a new page named :title',
+        'update'     => 'Updated a page named :title',
+        'activate'   => 'Activated a page named :title',
+        'deactivate' => 'Deactivated a page named :title',
+        'remove'     => 'Removed a page named :title',
+    ],
+
     'upload' => [
         'create' => [
             'file'   => 'Uploaded a new file named :name',

@@ -18,8 +18,15 @@ return [
         ]
     ],
 
+    'relationships' => [
+        'translation' => [
+            'page' => 'page_translation'
+        ],
+    ],
+
     'slugs' => [
         'module' => [
+            'page'         => 'Web/Content/Page',
             'category'     => 'Web/Structure/Category',
             'content_type' => 'Web/Structure/ContentType',
         ]
