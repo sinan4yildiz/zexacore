@@ -62769,8 +62769,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/zexa-vue/resources/assets/admin/js/app.js */"./resources/assets/admin/js/app.js");
-module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/zexa-vue/resources/assets/admin/sass/app.scss */"./resources/assets/admin/sass/app.scss");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/zexacore/resources/assets/admin/js/app.js */"./resources/assets/admin/js/app.js");
+module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/zexacore/resources/assets/admin/sass/app.scss */"./resources/assets/admin/sass/app.scss");
 
 
 /***/ })

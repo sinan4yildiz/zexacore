@@ -17,7 +17,7 @@ class RedirectionsTable extends Migration
     {
         Schema::create(static::$table, function (Blueprint $table) {
             $table->id();
-            $table->text('from')->unique();
+            $table->text('from');
             $table->text('to');
             $table->integer('count')->default(0);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

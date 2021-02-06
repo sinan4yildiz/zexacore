@@ -17,12 +17,12 @@ class UsersTable extends Migration
     {
         Schema::create(static::$table, function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
+            $table->char('email', 128)->index();
             $table->string('password');
             $table->string('firstname');
             $table->string('lastname');
             $table->string('title')->nullable();
-            $table->string('api_token')->unique()->nullable()->default(null);
+            $table->char('api_token', 128)->unique()->nullable()->default(null);
             $table->rememberToken();
             $table->boolean('is_active')->default(true);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

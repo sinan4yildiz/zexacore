@@ -5,8 +5,10 @@ namespace App\Providers;
 use App\Models\Setting;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,8 +28,26 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(UrlGenerator $url)
     {
+        /**
+         * Production operations
+         */
+        if (env('APP_ENV') !== 'local') {
+            /*
+             * Force SSL
+             * */
+            $url->forceScheme('https');
+
+            /*
+             * Change public folder
+             * */
+            App::bind('path.public', function () {
+                return realpath('../public_html');
+            });
+        }
+
+
         /**
          * System settings
          */
