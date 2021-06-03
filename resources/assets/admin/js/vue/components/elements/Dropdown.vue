@@ -1,0 +1,83 @@
+<template>
+  <div class="dropdown relative" v-bind:class="{'open': isOpen}" v-on-clickaway="close">
+    <div @click="toggle" class="block select-none cursor-pointer">
+      <slot name="toggler"></slot>
+    </div>
+    <transition
+        enter-active-class="transition ease-out duration-100 transform"
+        enter-class="opacity-0 scale-95"
+        enter-to-class="opacity-100 scale-100"
+        leave-active-class="transition ease-in duration-75 transform"
+        leave-class="opacity-100 scale-100"
+        leave-to-class="opacity-0 scale-95">
+      <div v-if="isOpen"
+           v-bind:class="classes()"
+           @click="keepOpen === false ? close() : null">
+        <div class="rounded-md bg-white shadow-xs text-left">
+          <slot name="content"></slot>
+        </div>
+      </div>
+    </transition>
+  </div>
+</template>
+
+<script>
+import {mixin as clickaway} from "vue-clickaway"
+
+export default {
+  name: "Dropdown",
+
+  props: {
+    width: {
+      type: String,
+      default: 'w-56',
+    },
+    orientation: {
+      type: String,
+      default: 'right',
+    },
+    keepOpen: {
+      type: Boolean,
+      default: false,
+    },
+    responsive: {
+      type: Boolean,
+      default: false,
+    }
+  },
+
+  data() {
+    return {
+      isOpen: false
+    }
+  },
+
+  methods: {
+    toggle: function () {
+      this.isOpen = !this.isOpen
+    },
+
+    classes: function () {
+      let c = ['absolute mt-2 shadow-lg rounded-md z-30']
+
+      c.push(this.width)
+
+      if(this.orientation == 'left') {
+        c.push('origin-top-left left-0')
+      } else {
+        c.push('origin-top-right right-0')
+      }
+
+      return c
+    },
+
+    close: function () {
+      this.isOpen = false
+    }
+  },
+
+  mixins: [
+    clickaway
+  ],
+}
+</script>

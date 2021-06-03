@@ -1,0 +1,356 @@
+{
+  "common": {
+    "home": "Anasayfa",
+    "brand": "Zexacore",
+    "confirm": "Onayla",
+    "cancel": "İptal",
+    "filters": "Filtrele",
+    "status": "Durum",
+    "allow": "İzin ver",
+    "prevent": "Önle",
+    "yes": "Evet",
+    "no": "Hayır",
+    "all": "Tümü",
+    "active": "Aktif",
+    "inactive": "Pasif",
+    "date_start": "Başlangıç tarihi",
+    "date_end": "Bitiş tarihi",
+    "apply": "Uygula",
+    "clear": "Temizle",
+    "close": "Kapat",
+    "reply": "Yanıtla",
+    "search": "Ara",
+    "back": "Geri",
+    "eg": "ör:",
+    "create": "Oluştur",
+    "create_new": "Yeni oluştur",
+    "save": "Kaydet",
+    "update": "Güncelle",
+    "edit": "Düzenle",
+    "folder": "Klasör",
+    "upload": "Yükle",
+    "redirect": "Yönlendir",
+    "restore": "Geri yükle",
+    "select": "Seç",
+    "open": "Aç",
+    "preview": "Ön izle",
+    "activate": "Aktifleştir",
+    "deactivate": "Pasifleştir",
+    "enabled": "Açık",
+    "disabled": "Kapalı",
+    "remove": "Kaldır",
+    "continue_dashboard": "Ana sayfaya dön",
+    "showing_meta": "Gösterilen <strong>{from}</strong> ile <strong>{to}</strong> arası, toplam <strong>{total}</strong> sonuç"
+  },
+  "sidebar": {
+    "content": "İçerik",
+    "structure": "Yapı",
+    "people": "Kişiler",
+    "tools": "Araçlar",
+    "system": "Sistem"
+  },
+  "header": {
+    "search": "Herhangi bir şey arayın..."
+  },
+  "account": {
+    "heading": "Hesap",
+    "profile": "Profiliniz",
+    "change_password": "Şifrenizi değiştirin",
+    "logout": "Çıkış yapın"
+  },
+  "language": {
+    "select": "Dil seçin",
+    "change": "Diğer dillerde düzenlemek için değiştirin"
+  },
+  "label": {
+    "title": "Başlık",
+    "content": "İçerik",
+    "categories": "Kategoriler",
+    "keyword": "Anahtar kelime",
+    "meta_title": "Meta başlık",
+    "meta_description": "Meta açıklama",
+    "meta_keywords": "Meta anahtar kelimeler",
+    "slug": "SEO bağlantısı",
+    "image": "Resim",
+    "filename": "Dosya adı",
+    "description": "Açıklama",
+    "listing_page": "Listeleme sayfası",
+    "content_type": "İçerik türü",
+    "translation": "Çeviri",
+    "parent_category": "Üst kategori",
+    "status": "Durum",
+    "indexing": "İndekslenme",
+    "source": "Kaynak",
+    "target": "Hedef",
+    "name": "Ad",
+    "native_name": "Yerel ad",
+    "code": "Kod",
+    "locale": "Yerel ayar",
+    "firstname": "Ad",
+    "lastname": "Soyad",
+    "email": "E-posta adresi",
+    "password": "Şifre",
+    "user_title": "Ünvan",
+    "brand_name": "Marka adı",
+    "company_name": "Şirket adı",
+    "address": "Adres",
+    "telephone_postcode": "Telefon, posta kodu",
+    "country_city": "Ülke, şehir",
+    "default_language": "Varsayılan dil"
+  },
+  "tip": {
+    "title": "İçeriği en iyi açıklayan başlığı girin",
+    "categories": "İlk kategori birincil kategori olur.<br>Kaldırmak için kategori adına tıklayın.",
+    "meta_title": "Eğer boşsa başlık meta başlık olarak kullanılır.",
+    "meta_description": "İçeriği en iyi özetleyen kısa bir açıklama girin.",
+    "meta_keywords": "İçeriğin muhtemel aranma kelimelerini girin.",
+    "parent_category": "Bir üst kategori seçin ya da ana kategori olarak eklemek için boş bırakın.",
+    "slug": "Gönderi için bir SEO bağlantısı tanımlayın",
+    "listing_page": "Bu içerik türünün listeleme sayfası olsun mu?",
+    "image": "Gönderiye bir resim ekleyin.",
+    "content_type": "Gönderinin dahil olacağı içerik türünü seçin.",
+    "translation": "Bu hangi gönderinin çevirisi?",
+    "status": "Yayınlamadan önce ön izlemek isterseniz pasif bırakın.",
+    "indexing": "Arama motorlarının sayfayı indekslemesine izin ver ya da engellemeye çalış",
+    "indexing_website": "Arama motorlarının siteyi indekslemesine izin ver ya da engellemeye çalış"
+  },
+  "placeholder": {
+    "email": "eposta@adresi.com",
+    "user_title": "ör: İçerik Editörü",
+    "folder": "Klasör adı",
+    "content": "Bir içerik yazın",
+    "password": "Şifre girin",
+    "search_categories": "Kategori ara",
+    "search_articles": "Makale ara",
+    "search_pages": "Sayfa ara",
+    "content_type": "İçerik türü seçin",
+    "select_language": "Dil seçin",
+    "language_name": "ör: İngilizce",
+    "language_native": "ör: English",
+    "language_code": "ör: en-gb",
+    "language_locale": "ör: en_GB.UTF-8, en_GB@GBP, en_GB, english",
+    "uri": "URL son ekini girin",
+    "url": "Bir bağlantı girin",
+    "unique_keyword": "Benzersiz bir anahtar kelime girin"
+  },
+  "column": {
+    "name": "Adı",
+    "fullname": "Ad soyad",
+    "email": "E-posta",
+    "title": "Başlık",
+    "code": "Kod",
+    "translations": "Çeviriler",
+    "views": "Görülmeler",
+    "created": "Tarih",
+    "status": "Durum",
+    "subject_sender": "Konu / Gönderen",
+    "sent": "Gönderildi",
+    "activity": "Aktivite",
+    "recorded": "Kaydedildi",
+    "keyword": "Anahtar kelime",
+    "module": "Modül",
+    "from_to": "Nereden / Nereye",
+    "url": "Bağlantı",
+    "times": "Kez",
+    "last_request": "Son istek",
+    "last_redirection": "Son yönlendirme",
+    "language": "Dil"
+  },
+  "files": {
+    "change": "Dosyayı değiştir",
+    "browse": "Dosyalara göz at",
+    "root": "Ana klasör"
+  },
+  "message": {
+    "created": "Başarıyla oluşturuldu.",
+    "updated": "Başarıyla güncellendi.",
+    "saved": "Başarıyla kaydedildi.",
+    "completed": "İşlem tamamlandı.",
+    "no_results": "Burada hiçbir şey bulunmuyor.",
+    "not_found": "Bu bağlantıya ulaşılamadı. Lütfen isteği kontrol edin.",
+    "error_generic": "Bir hata oluştu. Lütfen hata kayıtlarını veya istek cevabını kontrol edin.",
+    "offline": "Bağlantı koptu. Lütfen internet bağlantınızı kontrol edin.",
+    "nothing_found": "Hiçbir şey bulunamadı",
+    "are_you_sure": "Emin misiniz?",
+    "confirm_action": "Lütfen işlemi onaylayın."
+  },
+  "dashboard": {
+    "heading": "Panel",
+    "widgets": {
+      "today": "BUGÜN",
+      "yesterday": "DÜN",
+      "this_month": "BU AY",
+      "this_year": "BU YIL",
+      "statistics": "İSTATİSTİKLER",
+      "counts": "SAYIMLAR",
+      "messages": "MESAJLAR",
+      "activities": "AKTİVİTELER"
+    },
+    "sessions": "Oturumlar",
+    "page_views": "Sayfa görüntülenme"
+  },
+  "articles": {
+    "heading": {
+      "index": "Makaleler",
+      "create": "Makale oluşturun",
+      "edit": "Makaleyi düzenleyin"
+    }
+  },
+  "pages": {
+    "heading": {
+      "index": "Sayfalar",
+      "create": "Sayfa oluşturun",
+      "edit": "Sayfayı düzenleyin"
+    }
+  },
+  "uploads": {
+    "heading": {
+      "index": "Dosyalar"
+    }
+  },
+  "messages": {
+    "heading": {
+      "index": "Mesajlar"
+    },
+    "details": {
+      "name": "Adı soyadı",
+      "email": "E-posta adresi",
+      "telephone": "Telefon",
+      "sent_at": "Tarih",
+      "message": "Mesaj"
+    },
+    "mark_read": "Okundu",
+    "mark_unread": "Okunmadı"
+  },
+  "categories": {
+    "heading": {
+      "index": "Kategoriler",
+      "create": "Kategori oluşturun",
+      "edit": "Kategoriyi düzenleyin"
+    }
+  },
+  "content_types": {
+    "heading": {
+      "index": "İçerik türleri",
+      "create": "İçerik türü oluşturun",
+      "edit": "İçerik türünü düzenleyin"
+    }
+  },
+  "users": {
+    "heading": {
+      "index": "Kullanıcılar",
+      "create": "Yeni kullanıcı oluşturun",
+      "edit": "Kullanıcıyı düzenleyin"
+    }
+  },
+  "activities": {
+    "heading": {
+      "index": "Aktiviteler"
+    }
+  },
+  "slugs": {
+    "heading": {
+      "index": "SEO bağlantıları",
+      "edit": "SEO bağlantısını düzenleyin"
+    }
+  },
+  "redirections": {
+    "heading": {
+      "index": "Yönlendirmeler",
+      "create": "Yeni yönlendirme oluşturun",
+      "edit": "Yönlendirmeyi düzenleyin"
+    }
+  },
+  "not_founds": {
+    "heading": {
+      "index": "404 sayfalar"
+    }
+  },
+  "settings": {
+    "heading": {
+      "index": "Ayarlar"
+    },
+    "business": {
+      "heading": "İşletme",
+      "tip": "İşletmenizin genel bilgileri"
+    },
+    "localisation": {
+      "heading": "Yerelleştirme",
+      "tip": "Yerelleştirme seçenekleri"
+    },
+    "social_media": {
+      "heading": "Sosyal medya",
+      "tip": "Markanızın sosyal medya bağlantıları"
+    },
+    "seo": {
+      "heading": "Arama motorları",
+      "tip": "Arama motoru optimizasyonu için ayarlamalar"
+    },
+    "tip": {
+      "brand_name": "Bu, meta başlıkların sonuna gelir.",
+      "company_name": "Şirketinizin adı iletişim sayfasında görüntülenir.",
+      "email": "İletişime geçilecek birincil e-posta adresiniz.",
+      "address": "Şirketinizin genel merkez adresi.",
+      "telephone_postcode": "Kurumsal telefon numaranız ve posta kodu",
+      "country_city": "Şirketinizin bulunduğu ülke ve şehir.",
+      "default_language": "Sitenin varsayılan dilini seçin.",
+      "check_translations": "Tüm içeriklerin hedef dil için çevirileri olduğundan emin olun.",
+      "meta_keywords": "Meta anahtar kelimeler Google tarafından artık kullanılmamaktadır.",
+      "username": "kullanici-adiniz"
+    },
+    "placeholder": {
+      "brand_name": "Marka Adı",
+      "company_name": "Şirketiniz L.T.D",
+      "email": "sirket-epostasi@alanadiniz.com",
+      "address": "Şirket adresinizi girin",
+      "telephone": "Telefon numarası",
+      "postcode": "Posta kodu",
+      "country": "ör: Türkiye",
+      "city": "ör: İstanbul"
+    },
+    "save": "Ayarları kaydet"
+  },
+  "languages": {
+    "heading": {
+      "index": "Diller",
+      "create": "Yeni dil oluşturun",
+      "edit": "Dili düzenleyin"
+    }
+  },
+  "maintenance": {
+    "heading": {
+      "index": "Bakım"
+    },
+    "tabs": {
+      "logs": "Loglar",
+      "backup": "Yedekleme"
+    },
+    "label": {
+      "mode": "Bakım modu",
+      "cache": "Önbellek"
+    },
+    "tip": {
+      "mode": "Siteyi bakım moduna alır.",
+      "cache": "Tüm önbelleği temizler."
+    },
+    "backup": {
+      "list": {
+        "heading": "Yedekler",
+        "description": "Daha önceden oluşturulmuş tüm yedekler."
+      },
+      "new": {
+        "heading": "Yeni yedek",
+        "description": "Yeni bir veri tabanı yedeği oluşturun.",
+        "info": "Eğer dosya adı boşsa şu anki tarih ile kaydedilir."
+      },
+      "failed": "Komut başarısız oldu. Lütfen shell access izinlerini kontrol edin.",
+      "restore": {
+        "success": "Yedek başarıyla geri yüklendi."
+      }
+    }
+  },
+  "not_found": {
+    "heading": "Sayfa bulunamadı",
+    "text": "Ulaşmaya çalıştığınız sayfa bulunamadı. Lütfen buraya doğru yerden geldiğinize emin olun."
+  }
+}
