@@ -15,7 +15,7 @@
                 {{-- Email --}}
                 <div class="mb-4">
                     <label for="input-email" class="block text-sm font-medium leading-5 text-gray-700 mb-1 ml-1">@lang('auth.text_email')</label>
-                    <input type="text" name="email" id="input-email" value="{{ old('email') }}" placeholder="@lang('auth.placeholder_email')" class="form-input block w-full py-3 px-4 text-sm border border-gray-300 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out" autocomplete="email" autofocus required>
+                    <input type="email" name="email" id="input-email" value="{{ old('email') }}" placeholder="@lang('auth.placeholder_email')" class="form-input block w-full py-3 px-4 text-sm border border-gray-300 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out" autocomplete="email" autofocus required>
                     @error('email')
                     <div class="text-sm text-red-500 mt-1 ml-1" role="alert">{{ $message }}</div>
                     @enderror
