@@ -3,6 +3,7 @@ module.exports = {
     purge: {
         content: [
             './resources/views/**/*.blade.php',
+            './resources/assets/**/*.vue',
         ]
     },
     theme: {
