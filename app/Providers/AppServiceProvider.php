@@ -8,6 +8,7 @@ use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -32,11 +33,23 @@ class AppServiceProvider extends ServiceProvider
         /**
          * Production operations
          */
-        if (env('APP_ENV') !== 'local') {
-            /*
-             * Force SSL
-             * */
+        if (env('APP_ENV') == 'production') {
+            // Force SSL
             $url->forceScheme('https');
+        }
+
+
+        /**
+         * If the database has been migrated
+         */
+        if (Schema::hasTable('migrations')) {
+            // Get system settings
+            $settings = Cache::rememberForever('settings', function () {
+                return Setting::all()->pluck('value', 'key');
+            });
+
+            // Create an abstract config stack
+            Config::set('settings', $settings);
         }
 
 
