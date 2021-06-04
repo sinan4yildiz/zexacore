@@ -13,7 +13,7 @@
 
     <Table :meta="messages.meta" :columns="columns" @query="setQuery($event)">
       <tr v-for="message in messages.data" has-action="true">
-        <td @click="readMessage(message)" v-bind:class="{'text-blue-600': message.unread, 'text-gray-900': !message.unread}" class="px-6 py-4 from-transparent to-transparent bg-gradient-to-r hover:from-gray-100 hover:text-blue-600 cursor-pointer transition duration-150 ease-in-out">
+        <td @click="readMessage(message)" v-bind:class="{'text-blue-600': message.unread, 'text-gray-900': !message.unread}" class="px-6 py-4 hover:text-blue-600 cursor-pointer transition duration-150 ease-in-out bg-gradient-to-r hover:from-blue-50 via-white hover:to-white">
           <div class="text-sm font-bold">
             {{ message.subject }}
           </div>
