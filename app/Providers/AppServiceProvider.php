@@ -4,11 +4,11 @@ namespace App\Providers;
 
 use App\Models\Setting;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,14 +28,13 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(UrlGenerator $url)
+    public function boot()
     {
         /**
-         * Production operations
+         * Handle SSL
          */
-        if (env('APP_ENV') == 'production') {
-            // Force SSL
-            $url->forceScheme('https');
+        if (env('APP_SSL')) {
+            URL::forceScheme('https');
         }
 
 
