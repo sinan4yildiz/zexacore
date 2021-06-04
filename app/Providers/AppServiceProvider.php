@@ -54,20 +54,6 @@ class AppServiceProvider extends ServiceProvider
 
 
         /**
-         * System settings
-         */
-        $settings = Cache::rememberForever('settings', function () {
-            return Setting::all()->pluck('value', 'key');
-        });
-
-
-        /**
-         * Create an abstract config stack
-         */
-        Config::set('settings', $settings);
-
-
-        /**
          * Paginate a standard Laravel Collection.
          *
          * @param  int  $perPage
