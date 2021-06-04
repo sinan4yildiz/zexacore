@@ -4,7 +4,13 @@ const mixins = {
             data: function () {
                 return {
                     currentUser: window.data.currentUser,
-                    config: window.data.config,
+                    config: _.mapValues(window.data.config, (item) => {
+                        if(item === '0' || item === '1') {
+                            return Boolean(Number(item))
+                        }
+
+                        return item
+                    }),
                     url: window.data.url,
                     app: window.data.app,
                 }

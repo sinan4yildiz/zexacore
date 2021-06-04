@@ -82,6 +82,7 @@
     "indexing": "İndekslenme",
     "source": "Kaynak",
     "target": "Hedef",
+    "analytics": "Analytics",
     "name": "Ad",
     "native_name": "Yerel ad",
     "code": "Kod",
@@ -282,6 +283,10 @@
       "heading": "Sosyal medya",
       "tip": "Markanızın sosyal medya bağlantıları"
     },
+    "analytics": {
+      "heading": "Analytics",
+      "tip": "Google Analytics'i panele bağlayın"
+    },
     "seo": {
       "heading": "Arama motorları",
       "tip": "Arama motoru optimizasyonu için ayarlamalar"
@@ -296,6 +301,7 @@
       "default_language": "Sitenin varsayılan dilini seçin.",
       "check_translations": "Tüm içeriklerin hedef dil için çevirileri olduğundan emin olun.",
       "meta_keywords": "Meta anahtar kelimeler Google tarafından artık kullanılmamaktadır.",
+      "analytics": "Google Analytics'te bir API kullanıcısı oluşturun, JSON dosyasını saklama dizinine koyun ve .env dosyasını düzenleyin.",
       "username": "kullanici-adiniz"
     },
     "placeholder": {

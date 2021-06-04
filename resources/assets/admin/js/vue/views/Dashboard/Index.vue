@@ -1,12 +1,12 @@
 <template>
   <section>
     <!-- Top -->
-    <div class="mb-4">
+    <div v-if="config.analytics" class="mb-4">
       <Reports/>
     </div>
 
     <!-- Middle -->
-    <div class="mb-4">
+    <div v-if="config.analytics" class="mb-4">
       <Statistics/>
     </div>
 
@@ -31,11 +31,6 @@ export default {
 
   data() {
     return {}
-  },
-
-  methods: {},
-
-  created() {
   },
 
   components: {

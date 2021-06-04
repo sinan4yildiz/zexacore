@@ -82,6 +82,7 @@
     "indexing": "Indexing",
     "source": "Soruce",
     "target": "Target",
+    "analytics": "Analytics",
     "name": "Name",
     "native_name": "Native name",
     "code": "Code",
@@ -283,6 +284,10 @@
       "heading": "Social media",
       "tip": "Social media links of your brand"
     },
+    "analytics": {
+      "heading": "Analytics",
+      "tip": "Connect Google Analytics to admin panel"
+    },
     "seo": {
       "heading": "Search engines",
       "tip": "Configurations for search engine optimization"
@@ -297,6 +302,7 @@
       "default_language": "Select the default language of the website.",
       "check_translations": "Make sure all contents have translations for the target language.",
       "meta_keywords": "Meta keywords are no longer used by Google for web ranking.",
+      "analytics": "Create an API user on Analytics, place the JSON file in storage folder and configure .env file.",
       "username": "your-username"
     },
     "placeholder": {

@@ -13,7 +13,7 @@
 
     <form v-on:submit.prevent="save">
       <!-- General -->
-      <div class="bg-white shadow overflow-hidden rounded-lg mb-6 xl:mb-12">
+      <div class="bg-white shadow overflow-hidden rounded-lg mb-6 xl:mb-8">
         <div class="flex items-center px-4 py-4 xl:px-6">
           <h2 class="text-lg leading-6 font-medium text-gray-900">{{ $t('settings.business.heading') }}</h2>
           <span class="bg-gray-100 px-3 py-1 rounded-sm ml-4 max-w-2xl text-xs text-gray-700 hidden sm:block">{{ $t('settings.business.tip') }}</span>
@@ -79,7 +79,7 @@
       </div>
 
       <!-- Localisation -->
-      <div class="bg-white shadow overflow-hidden rounded-lg mb-6 xl:mb-12">
+      <div class="bg-white shadow overflow-hidden rounded-lg mb-6 xl:mb-8">
         <div class="flex items-center px-4 py-4 xl:px-6">
           <h2 class="text-lg leading-6 font-medium text-gray-900">{{ $t('settings.localisation.heading') }}</h2>
           <span class="bg-gray-100 px-3 py-1 rounded-sm ml-4 max-w-2xl text-xs text-gray-700 hidden sm:block">{{ $t('settings.localisation.tip') }}</span>
@@ -100,7 +100,7 @@
       </div>
 
       <!-- Social Media -->
-      <div class="bg-white shadow overflow-hidden rounded-lg mb-6 xl:mb-12">
+      <div class="bg-white shadow overflow-hidden rounded-lg mb-6 xl:mb-8">
         <div class="flex items-center px-4 py-4 xl:px-6">
           <h3 class="text-lg leading-6 font-medium text-gray-900">{{ $t('settings.social_media.heading') }}</h3>
           <span class="bg-gray-100 px-3 py-1 rounded-sm ml-4 max-w-2xl text-xs text-gray-700 hidden sm:block">{{ $t('settings.social_media.tip') }}</span>
@@ -154,8 +154,27 @@
         </ul>
       </div>
 
+      <!-- Analytics -->
+      <div class="bg-white shadow overflow-hidden rounded-lg mb-6 xl:mb-8">
+        <div class="flex items-center px-4 py-4 xl:px-6">
+          <h3 class="text-lg leading-6 font-medium text-gray-900">{{ $t('settings.analytics.heading') }}</h3>
+          <span class="bg-gray-100 px-3 py-1 rounded-sm ml-4 max-w-2xl text-xs text-gray-700 hidden sm:block">{{ $t('settings.analytics.tip') }}</span>
+        </div>
+        <ul class="border-t border-gray-300">
+          <li class="bg-gray-50 px-4 py-4 items-center xl:grid xl:grid-cols-3 xl:gap-4 xl:px-6">
+            <div>
+              <label for="analytics" class="text-sm font-medium text-gray-800">{{ $t('label.analytics') }}</label>
+              <p class="text-gray-550 text-xs">{{ $t('settings.tip.analytics') }}</p>
+            </div>
+            <div class="mt-2 xl:mt-0 mb-1 xl:mb-0 xl:col-span-2">
+              <Switcher name="analytics" :label="[$t('common.enabled'), $t('common.disabled')]" :checked="config.analytics" @input="form.analytics = $event" :errors="errors"/>
+            </div>
+          </li>
+        </ul>
+      </div>
+
       <!-- SEO -->
-      <div class="bg-white shadow overflow-hidden rounded-lg mb-6 xl:mb-12">
+      <div class="bg-white shadow overflow-hidden rounded-lg mb-6 xl:mb-8">
         <div class="flex items-center px-4 py-4 xl:px-6">
           <h3 class="text-lg leading-6 font-medium text-gray-900">{{ $t('settings.seo.heading') }}</h3>
           <span class="bg-gray-100 px-3 py-1 rounded-sm ml-4 max-w-2xl text-xs text-gray-700 hidden sm:block">{{ $t('settings.seo.tip') }}</span>

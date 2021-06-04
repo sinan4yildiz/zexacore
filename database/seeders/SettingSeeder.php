@@ -26,6 +26,10 @@ class SettingSeeder extends Seeder
                 'key'   => 'maintenance_mode',
                 'value' => false,
             ],
+            [
+                'key'   => 'analytics',
+                'value' => false,
+            ],
 
             // Brand
             [
