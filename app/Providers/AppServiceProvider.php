@@ -40,20 +40,6 @@ class AppServiceProvider extends ServiceProvider
 
 
         /**
-         * If the database has been migrated
-         */
-        if (Schema::hasTable('migrations')) {
-            // Get system settings
-            $settings = Cache::rememberForever('settings', function () {
-                return Setting::all()->pluck('value', 'key');
-            });
-
-            // Create an abstract config stack
-            Config::set('settings', $settings);
-        }
-
-
-        /**
          * Paginate a standard Laravel Collection.
          *
          * @param  int  $perPage
@@ -79,8 +65,22 @@ class AppServiceProvider extends ServiceProvider
 
 
         /**
-         * Share the frequently used variables with views
+         * If the database has been migrated
          */
-        view()->share(compact('settings'));
+        if (Schema::hasTable('migrations')) {
+            // Get system settings
+            $settings = Cache::rememberForever('settings', function () {
+                return Setting::all()->pluck('value', 'key');
+            });
+
+            // Create an abstract config stack
+            Config::set('settings', $settings);
+
+
+            /**
+             * Share the frequently used variables with views
+             */
+            view()->share(compact('settings'));
+        }
     }
 }
