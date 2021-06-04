@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0, minimum-scale=1.0 shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@lang('web/common.site_name')</title>
+    <meta name="description" content="Zexacore is a headless content management system written in Laravel and Vue.js for building corporate websites.">
     <link href="https://fonts.googleapis.com/css2?family=Muli:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="{{ asset('assets/web/images/favicon.png') }}"/>
 </head>
