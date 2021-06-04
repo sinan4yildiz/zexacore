@@ -7,9 +7,9 @@
         <div class="max-w-md w-full">
 
             {{-- Logo --}}
-            <a href="{{ route('admin.login') }}" class="block w-40 mx-auto mb-12">@svg('logo')</a>
+            <a href="{{ route('admin.login') }}" class="block w-28 sm:w-40 mx-auto mb-8 sm:mb-12">@svg('logo')</a>
 
-            <form class="bg-white shadow-sm rounded mt-8 py-16 px-12" action="{{ route('admin.login') }}" method="post">
+            <form class="bg-white shadow-sm rounded py-10 px-6 sm:py-16 sm:px-12" action="{{ route('admin.login') }}" method="post">
                 @csrf
 
                 {{-- Email --}}
@@ -52,8 +52,8 @@
 
             {{-- Go to the front --}}
             <div class="mt-5 ml-2">
-                <a href="#" class="inline-flex items-center text-gray-500 hover:text-blue-600 transition duration-150 ease-in-out">
-                    @svg('icons/solid/arrow-narrow-left, fill-current text-gray-500 w-5 mr-2') @lang('auth.text_view_the_website')
+                <a href="#" class="inline-flex items-center text-sm text-gray-500 hover:text-blue-600 transition duration-150 ease-in-out">
+                    @svg('icons/solid/arrow-narrow-left, fill-current text-gray-500 w-4 mr-2') @lang('auth.text_view_the_website')
                 </a>
             </div>
         </div>
