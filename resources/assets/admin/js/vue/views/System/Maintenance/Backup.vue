@@ -121,7 +121,7 @@ export default {
 
             _.delay(function (){
               window.location.reload()
-            }, 300)
+            }, 1000)
           })
           .catch(error => {
             this.$snackbar(this.$t('maintenance.backup.failed'), 'error')
