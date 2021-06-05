@@ -119,7 +119,9 @@ export default {
           .then((response) => {
             this.$snackbar(this.$t('maintenance.backup.restore.success'))
 
-            window.location.reload()
+            _.delay(function (){
+              window.location.reload()
+            }, 300)
           })
           .catch(error => {
             this.$snackbar(this.$t('maintenance.backup.failed'), 'error')
