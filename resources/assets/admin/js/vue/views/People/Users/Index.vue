@@ -14,7 +14,7 @@
 
       <div class="flex items-center flex-grow md:flex-grow-0 md:ml-auto mt-3 md:mt-0">
         <!-- Filters -->
-        <Filters :search="true" :filters="['status', 'date-start', 'date-end']" @filtered="setQuery($event)"/>
+        <Filters :search="true" :filters="['status', 'date-start', 'date-end']" @apply="setQuery($event)"/>
       </div>
     </header>
 

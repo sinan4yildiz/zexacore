@@ -7,7 +7,7 @@
       <div class="pr-2 py-3 db-height-m">
         <div v-if="!_.isEmpty(messages)" class="h-full">
           <ul v-if="messages.data.length" class="overflow-y-auto max-h-full scrollbar">
-            <li v-for="(message, index) in messages.data" @click="readMessage(message)" class="flex py-2 pl-4 text-gray-700 from-transparent to-transparent bg-gradient-to-r hover:from-gray-100 cursor-pointer transition duration-150 ease-in-out">
+            <li v-for="(message, index) in messages.data" @click="readMessage(message)" class="flex py-2 pl-4 text-gray-700 cursor-pointer transition duration-150 ease-in-out bg-gradient-to-r hover:from-gray-100 via-white hover:to-white">
               <div class="flex items-center w-full pr-4">
                 <div class="flex flex-none text-sm items-center justify-center w-10 h-10 rounded-3xl text-gray-500 bg-white border border-gray-200 tracking-widest">
                   {{ initials(message.name) }}

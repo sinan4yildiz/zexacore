@@ -81,7 +81,7 @@
 
       <!-- Right -->
       <div class="col-span-full lg:col-span-4 xl:col-span-3">
-        <ul class="bg-gray-50 shadow overflow-hidden sm:rounded-lg">
+        <ul class="bg-gray-50 shadow overflow-hidden rounded-lg xl:py-2">
           <li class="border-b px-6 py-4 items-center">
             <div>
               <label for="image" class="text-sm font-medium text-gray-800 block">{{ $t('label.image') }}</label>

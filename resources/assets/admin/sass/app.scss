@@ -357,6 +357,10 @@ table {
           &.nothing {
             td {
               @apply text-center p-4;
+
+              &:before {
+                content: none;
+              }
             }
           }
         }
@@ -386,5 +390,12 @@ table {
         }
       }
     }
+  }
+}
+
+// Safari
+input {
+  &[type="password"]::-webkit-credentials-auto-fill-button {
+    @apply invisible hidden pointer-events-none;
   }
 }

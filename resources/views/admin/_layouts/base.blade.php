@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Muli:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link href="{{ asset(mix('/assets/'. env('APP_ADMIN_DIR') .'/css/app.css')) }}" rel="stylesheet"/>
     <link rel="shortcut icon" href="{{ asset('assets/'. env('APP_ADMIN_DIR') .'/images/favicon.png') }}"/>
+    <link rel="apple-touch-icon" href="{{ asset('assets/'. env('APP_ADMIN_DIR') .'/images/apple-touch-icon.png') }}">
 </head>
 <body class="font-body bg-gray-200">
 

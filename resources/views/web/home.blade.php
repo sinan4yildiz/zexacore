@@ -9,6 +9,7 @@
     <meta name="description" content="Zexacore is a headless content management system written in Laravel and Vue.js for building corporate websites.">
     <link href="https://fonts.googleapis.com/css2?family=Muli:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="{{ asset('assets/web/images/favicon.png') }}"/>
+    <link rel="apple-touch-icon" href="{{ asset('assets/web/images/apple-touch-icon.png') }}">
 </head>
 <body style="display: flex; align-items: center; justify-content: center; min-height: 90vh; overflow: hidden">
 <svg style="width: 14rem; height: 7rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.231 304.868">
