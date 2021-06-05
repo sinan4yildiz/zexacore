@@ -63,12 +63,13 @@ class Restore extends Command
             ' --host=' . env('DB_HOST') .
             ' --port=' . env('DB_PORT') .
             ' --user=' . env('DB_USERNAME') .
-            ' --password=' . env('DB_PASSWORD') . ' ' . env('DB_DATABASE') . ' < ' . $backup;
+            ' --password="' . env('DB_PASSWORD') . '" ' . env('DB_DATABASE') . ' < ' . $backup;
 
 
         /**
          * Progress bar start
          */
+        $this->output->newLine();
         $bar = $this->output->createProgressBar(1);
         $bar->start();
 
@@ -84,17 +85,20 @@ class Restore extends Command
          * Progress bar finish
          */
         $bar->finish();
-
-
-        /**
-         * Output
-         */
-        $this->output->success('The database has been restored.');
+        $this->output->newLine(2);
 
 
         /**
          * Status
          */
-        return $process->isSuccessful();
+        if ($process->isSuccessful()) {
+            $this->output->success('The database has been restored.');
+
+            return true;
+        } else {
+            $this->output->error('Command failed. Please make sure shell access is enabled.');
+
+            return false;
+        }
     }
 }

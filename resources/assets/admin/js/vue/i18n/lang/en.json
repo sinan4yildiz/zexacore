@@ -350,7 +350,7 @@
         "description": "Create a new database backup.",
         "info": "If the backup file name is empty, it will be the current date."
       },
-      "failed": "Command failed. Please be sure shell access is enabled.",
+      "failed": "Command failed. Please make sure shell access is enabled.",
       "restore": {
         "success": "The backup has been restored successfully."
       }

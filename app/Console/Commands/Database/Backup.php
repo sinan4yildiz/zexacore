@@ -51,16 +51,17 @@ class Backup extends Command
         /**
          * SQL command
          */
-        $command = 'mysqldump --skip-comments' .
+        $command = 'mysqldump --skip-comments --no-tablespaces' .
             ' --host=' . env('DB_HOST') .
             ' --port=' . env('DB_PORT') .
             ' --user=' . env('DB_USERNAME') .
-            ' --password=' . env('DB_PASSWORD') . ' ' . env('DB_DATABASE') . ' > ' . $path;
+            ' --password="' . env('DB_PASSWORD') . '" ' . env('DB_DATABASE') . ' > ' . $path;
 
 
         /**
          * Progress bar start
          */
+        $this->output->newLine();
         $bar = $this->output->createProgressBar(1);
         $bar->start();
 
@@ -73,28 +74,28 @@ class Backup extends Command
 
 
         /**
-         * Delete the empty backup if failed
-         */
-        if (!$process->isSuccessful()) {
-            File::delete($path);
-        }
-
-
-        /**
          * Progress bar finish
          */
         $bar->finish();
-
-
-        /**
-         * Output
-         */
-        $this->output->success('The backup file has been saved.');
+        $this->output->newLine(2);
 
 
         /**
          * Status
          */
-        return $process->isSuccessful();
+        if ($process->isSuccessful()) {
+            $this->output->success('The backup file has been saved.');
+
+            return true;
+        } else {
+            $this->output->error('Command failed. Please make sure shell access is enabled.');
+
+            // Delete the empty backup if failed
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+
+            return false;
+        }
     }
 }
