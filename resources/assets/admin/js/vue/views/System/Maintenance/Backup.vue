@@ -118,6 +118,8 @@ export default {
       this.restoreBackup(backup)
           .then((response) => {
             this.$snackbar(this.$t('maintenance.backup.restore.success'))
+
+            window.location.reload()
           })
           .catch(error => {
             this.$snackbar(this.$t('maintenance.backup.failed'), 'error')
