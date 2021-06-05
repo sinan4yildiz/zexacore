@@ -168,8 +168,9 @@ export default {
       if(item) {
         this.clearArticles()
         this.setContentType(item)
-        this.setQuery()
       }
+
+      this.setQuery()
     },
 
     changeLanguage: function (code) {
