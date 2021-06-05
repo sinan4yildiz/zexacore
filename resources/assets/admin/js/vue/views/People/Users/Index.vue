@@ -34,7 +34,7 @@
           </div>
         </td>
         <td class="px-6 py-4">
-          <div class="text-sm leading-5 text-gray-600 break-all">{{ user.email }}</div>
+          <div class="text-sm text-gray-600 break-all">{{ user.email }}</div>
         </td>
         <td class="px-6 py-4">
           <span v-if="user.is_active" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-md bg-green-100 text-green-900">{{ $t('common.active') }}</span>

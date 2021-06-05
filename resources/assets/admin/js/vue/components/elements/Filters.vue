@@ -23,7 +23,7 @@
           <div v-if="filters.includes('status')" class="px-4 mb-3">
             <label for="filter-status"
                    class="block text-xs leading-5 text-gray-700 mb-1 ml-1">{{ $t('common.status') }}</label>
-            <select name="status" id="filter-status" class="form-select mt-1 block w-full py-2 px-3 text-sm border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out">
+            <select name="status" id="filter-status" class="form-select block w-full py-2 px-3 text-sm border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out">
               <option value="">{{ $t('common.all') }}</option>
               <option value="1">{{ $t('common.active') }}</option>
               <option value="0">{{ $t('common.inactive') }}</option>
@@ -32,16 +32,14 @@
 
           <!-- Date start -->
           <div v-if="filters.includes('date-start')" class="px-4 mb-3">
-            <label for="filter-date-start"
-                   class="block text-xs leading-5 text-gray-700 mb-1 ml-1">{{ $t('common.date_start') }}</label>
-            <input type="date" name="date-start" id="filter-date-start" placeholder="dd/mm/yyyy" class="form-input mt-1 block w-full py-2 px-3 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out">
+            <label for="filter-date-start" class="block text-xs leading-5 text-gray-700 mb-1 ml-1">{{ $t('common.date_start') }}</label>
+            <input type="date" name="date-start" id="filter-date-start" placeholder="dd/mm/yyyy" class="form-input block w-full py-2 px-3 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out">
           </div>
 
           <!-- Date end -->
           <div v-if="filters.includes('date-end')" class="px-4">
-            <label for="filter-date-end"
-                   class="block text-xs leading-5 text-gray-700 mb-1 ml-1">{{ $t('common.date_end') }}</label>
-            <input type="date" name="date-end" id="filter-date-end" placeholder="dd/mm/yyyy" class="form-input mt-1 block w-full py-2 px-3 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out">
+            <label for="filter-date-end" class="block text-xs leading-5 text-gray-700 mb-1 ml-1">{{ $t('common.date_end') }}</label>
+            <input type="date" name="date-end" id="filter-date-end" placeholder="dd/mm/yyyy" class="form-input block w-full py-2 px-3 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out">
           </div>
 
           <div class="flex px-4 py-3 mt-5 bg-white border-t border-gray-200 rounded-bl-md rounded-br-md">

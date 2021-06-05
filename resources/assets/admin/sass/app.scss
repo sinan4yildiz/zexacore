@@ -73,6 +73,8 @@ button {
 }
 
 .form-select {
+  @apply leading-relaxed;
+
   background-position: right 0.625rem center;
   background-size: 1.625em 1.625em;
 }
@@ -397,5 +399,9 @@ table {
 input {
   &[type="password"]::-webkit-credentials-auto-fill-button {
     @apply invisible hidden pointer-events-none;
+  }
+
+  &[type="date"] {
+    min-height: calc(1.5rem + theme('padding.2') * 2);
   }
 }
