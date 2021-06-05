@@ -38,23 +38,23 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key'   => 'company_name',
-                'value' => 'Marsus Digital Ltd',
+                'value' => 'Zexacore Ltd',
             ],
             [
                 'key'   => 'email_address',
-                'value' => 'master@marsus.com',
+                'value' => 'hello@zexacore.com',
             ],
             [
                 'key'   => 'telephone',
-                'value' => '+44 7444 647 199',
+                'value' => '+44 7444 444 444',
             ],
             [
                 'key'   => 'address',
-                'value' => '135 Fulham Road',
+                'value' => '144 Fulham Road',
             ],
             [
                 'key'   => 'postcode',
-                'value' => 'SW6 NX5',
+                'value' => 'SW6 SX6',
             ],
             [
                 'key'   => 'city',
