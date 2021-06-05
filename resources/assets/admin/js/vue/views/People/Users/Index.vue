@@ -1,6 +1,6 @@
 <template>
   <section>
-    <header class="flex justify-between flex-wrap items-center mb-5">
+    <header class="flex justify-between flex-wrap items-center mb-4">
       <!-- Page header -->
       <div class="w-3/4 md:w-48 xl:w-84">
         <h1 class="mb-2 text-2xl lg:text-3xl font-lighter leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('users.heading.index') }}</h1>
