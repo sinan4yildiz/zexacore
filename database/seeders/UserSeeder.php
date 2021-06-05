@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
     {
         DB::table(static::$table)->truncate();
 
+        // It's me
         DB::table(static::$table)->insert([
             'firstname'      => 'Sinan',
             'lastname'       => 'Yildiz',
@@ -32,6 +33,17 @@ class UserSeeder extends Seeder
             'api_token'      => Str::random(32),
         ]);
 
-        User::factory()->times(5)->create();
+        // It's John
+        DB::table(static::$table)->insert([
+            'firstname'      => 'John',
+            'lastname'       => 'Doe',
+            'title'          => 'Testing Engineer',
+            'email'          => 'john@doe.com',
+            'password'       => Hash::make('password'),
+            'remember_token' => Str::random(10),
+            'api_token'      => Str::random(32),
+        ]);
+
+        /*User::factory()->times(5)->create();*/
     }
 }
