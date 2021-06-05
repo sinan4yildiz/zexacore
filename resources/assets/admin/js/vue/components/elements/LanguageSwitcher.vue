@@ -1,5 +1,5 @@
 <template>
-  <Dropdown width="w-40" class="md:order-first md:mr-3 ml-3 md:ml-0">
+  <Dropdown v-if="languages.data && languages.data.length > 1" width="w-40" class="md:order-first md:mr-3 ml-3 md:ml-0">
     <template #toggler>
       <button type="button" class="flex align-items-center text-sm leading-5 font-medium focus:outline-none transition duration-150 ease-in-out py-2 px-2.5 sm:px-3 text-gray-600 bg-white border-gray-300 hover:text-gray-800 focus:border-blue-300 focus:shadow-outline-blue shadow-sm rounded-md border">
         <svg class="w-6 h-5">
