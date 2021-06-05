@@ -165,9 +165,11 @@ export default {
     },
 
     changeContentType: function (item) {
-      this.clearArticles()
-      this.setContentType(item)
-      this.setQuery()
+      if(item) {
+        this.clearArticles()
+        this.setContentType(item)
+        this.setQuery()
+      }
     },
 
     changeLanguage: function (code) {

@@ -126,10 +126,12 @@ export default {
     },
 
     changeContentType: function (item) {
-      this.clearParent()
-      this.clearCategories()
-      this.setContentType(item)
-      this.setQuery()
+      if(item) {
+        this.clearParent()
+        this.clearCategories()
+        this.setContentType(item)
+        this.setQuery()
+      }
     },
 
     changeParent: function (id) {
