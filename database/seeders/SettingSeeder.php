@@ -38,7 +38,7 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key'   => 'company_name',
-                'value' => 'Zexacore Ltd',
+                'value' => 'Zexacore Digital Ltd',
             ],
             [
                 'key'   => 'email_address',
