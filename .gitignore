@@ -22,4 +22,6 @@ yarn-error.log
 Homestead.json
 Homestead.yaml
 
+**/error_log
+
 **/.DS_Store
