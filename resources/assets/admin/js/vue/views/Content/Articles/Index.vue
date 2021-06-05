@@ -23,23 +23,7 @@
       </div>
     </header>
 
-    <div class="mb-4 bg-gray-50 px-4 py-3 rounded-lg shadow">
-      <ul v-if="contentTypes.data" class="flex items-center overflow-x-auto">
-        <li v-for="(item, index) in contentTypes.data">
-          <button v-bind:class="{'bg-gray-250 text-black': item.id == contentType.id, 'text-gray-600': item.id != contentType.id}"
-                  @click="changeContentType(item)"
-                  type="button"
-                  class="block leading-5 px-4 py-2 font-medium text-sm hover:text-black focus:outline-none rounded-lg transition duration-150 ease-in-out">
-            {{ item.translation.title }}
-          </button>
-        </li>
-      </ul>
-      <div v-else class="flex py-1.5">
-        <div v-for="n in 4" class="mr-4 w-24">
-          <div class="bone"></div>
-        </div>
-      </div>
-    </div>
+    <ContentTypeBar :current="contentType" @change="changeContentType($event)"/>
 
     <Table :meta="articles.meta" :columns="columns" @query="setQuery($event)">
       <tr v-for="article in articles.data" has-action="true">
@@ -110,6 +94,7 @@ import Filters from "../../../components/elements/Filters"
 import Dropdown from "../../../components/elements/Dropdown"
 import Confirm from "../../../components/elements/Confirm"
 import Button from "../../../components/form/Button"
+import ContentTypeBar from "../../../components/elements/ContentTypeBar";
 
 export default {
   name: 'ArticlesIndex',
@@ -151,13 +136,11 @@ export default {
 
   computed: {
     ...mapGetters('Articles', ['articles', 'language', 'contentType']),
-    ...mapGetters('ContentTypes', ['contentTypes']),
     ...mapGetters('Languages', ['languages'])
   },
 
   methods: {
     ...mapActions('Articles', ['fetchArticles', 'activateArticle', 'deactivateArticle', 'removeArticle', 'setArticlesQuery', 'setLanguage', 'setContentType', 'clearArticles']),
-    ...mapActions('ContentTypes', ['fetchContentTypes']),
 
     translationLink: function (item, code) {
       let translation = _.find(item.translations, (i) => {
@@ -202,19 +185,8 @@ export default {
     }
   },
 
-  created() {
-    if(this.contentTypes.data) {
-      if(_.isEmpty(this.contentType)) {
-        this.changeContentType(_.first(this.contentTypes.data))
-      }
-    } else {
-      this.fetchContentTypes().then(contentTypes => {
-        this.changeContentType(_.first(contentTypes))
-      })
-    }
-  },
-
   components: {
+    ContentTypeBar,
     Breadcrumb,
     LanguageSwitcher,
     Table,

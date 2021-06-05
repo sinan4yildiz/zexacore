@@ -13,39 +13,7 @@
       </RouterLink>
     </header>
 
-    <div class="mb-4 bg-gray-50 px-4 py-3 rounded-lg shadow">
-      <ul v-if="contentTypes.data" class="flex items-center overflow-x-auto">
-        <li v-for="(item, index) in contentTypes.data">
-          <button v-bind:class="{'bg-gray-250 text-black': item.id == contentType.id, 'text-gray-600': item.id != contentType.id}"
-                  @click="changeContentType(item)"
-                  type="button"
-                  class="block leading-5 px-4 py-2 font-medium text-sm hover:text-black focus:outline-none rounded-lg transition duration-150 ease-in-out">
-            {{ item.translation.title }}
-          </button>
-        </li>
-      </ul>
-      <div v-else class="flex py-1.5">
-        <div v-for="n in 4" class="mr-4 w-24">
-          <div class="bone"></div>
-        </div>
-      </div>
-    </div>
-
-    <ul v-if="!_.isEmpty(contentType) && !_.isEmpty(contentTypes) && !_.isEmpty(parent)" class="flex items-center mb-3 ml-2 overflow-x-auto whitespace-no-wrap">
-      <li class="flex items-center mr-4">
-        <button type="button" @click="changeParent(0)" class="text-sm text-gray-500 hover:text-gray-800 focus:outline-none transition duration-100 ease-in-out">
-          {{ contentType.translation.title }}
-        </button>
-      </li>
-      <li v-for="(item, index) in parent.parents" class="flex items-center mr-4">
-        <svg class="w-3 h-3 fill-current text-gray-500 transform -translate-x-2 -rotate-90">
-          <use xlink:href="#icon-chevron-solid"></use>
-        </svg>
-        <button type="button" @click="changeParent(item.category_id)" class="text-sm text-gray-500 hover:text-gray-800 focus:outline-none transition duration-100 ease-in-out">
-          {{ item.title }}
-        </button>
-      </li>
-    </ul>
+    <ContentTypeBar :current="contentType" @change="changeContentType($event)"/>
 
     <Table :meta="categories.meta" :columns="columns" @query="setQuery($event)" v-sortable="{handle: 'td:first-child', onUpdate: orderCategories}">
       <tr v-for="category in categories.data" v-bind:data-id="category.id" has-action="true" has-sorting="true">
@@ -110,6 +78,7 @@ import Dropdown from "../../../components/elements/Dropdown";
 import Filters from "../../../components/elements/Filters";
 import Confirm from "../../../components/elements/Confirm";
 import Button from "../../../components/form/Button";
+import ContentTypeBar from "../../../components/elements/ContentTypeBar";
 
 export default {
   name: 'CategoriesIndex',
@@ -146,13 +115,11 @@ export default {
 
   computed: {
     ...mapGetters('Categories', ['categories', 'contentType', 'parent']),
-    ...mapGetters('ContentTypes', ['contentTypes']),
     ...mapGetters('Languages', ['languages']),
   },
 
   methods: {
     ...mapActions('Categories', ['fetchCategories', 'fetchParent', 'activateCategory', 'deactivateCategory', 'removeCategory', 'orderCategories', 'setCategoriesQuery', 'setContentType', 'clearCategories', 'clearParent']),
-    ...mapActions('ContentTypes', ['fetchContentTypes']),
 
     hasTranslation: function (item, code) {
       return _.map(item.translations, 'language_code').includes(code)
@@ -189,19 +156,8 @@ export default {
     }
   },
 
-  created() {
-    if(this.contentTypes.data) {
-      if(_.isEmpty(this.contentType)) {
-        this.changeContentType(_.first(this.contentTypes.data))
-      }
-    } else {
-      this.fetchContentTypes().then(contentTypes => {
-        this.changeContentType(_.first(contentTypes))
-      })
-    }
-  },
-
   components: {
+    ContentTypeBar,
     Breadcrumb,
     Table,
     Dropdown,
