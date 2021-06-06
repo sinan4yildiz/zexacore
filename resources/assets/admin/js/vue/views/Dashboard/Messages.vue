@@ -9,16 +9,16 @@
           <ul v-if="messages.data.length" class="overflow-y-auto max-h-full scrollbar">
             <li v-for="(message, index) in messages.data" @click="readMessage(message)" class="flex py-2 pl-4 text-gray-700 cursor-pointer transition duration-150 ease-in-out bg-gradient-to-r hover:from-gray-100 via-white hover:to-white">
               <div class="flex items-center w-full pr-4">
-                <div class="flex flex-none text-sm items-center justify-center w-10 h-10 rounded-3xl text-gray-500 bg-white border border-gray-200 tracking-widest">
+                <div class="hidden sm:flex flex-none text-sm items-center justify-center w-10 h-10 mr-4 rounded-3xl text-gray-500 bg-white border border-gray-200 tracking-widest">
                   {{ initials(message.name) }}
                 </div>
-                <div class="ml-4 flex-grow">
+                <div class="flex-grow">
                   <div class="text-sm leading-5" v-bind:class="{'text-blue-600 font-medium': message.unread}">
                     {{ message.subject }}
                   </div>
                   <div class="text-xs leading-5 font-light text-gray-600 whitespace-normal">{{ message.name }}</div>
                 </div>
-                <time v-bind:title="message.created_at_raw" class="sm:pl-4 sm:ml-auto sm:justify-self-end sm:w-32 sm:text-right text-xs leading-5 font-light text-gray-500">
+                <time v-bind:title="message.created_at_raw" class="ml-auto self-start w-32 text-right text-xs leading-5 font-light text-gray-500">
                   {{ message.created_at }}
                 </time>
               </div>

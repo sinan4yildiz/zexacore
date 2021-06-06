@@ -11,7 +11,7 @@
     </div>
 
     <!-- Actions -->
-    <div class="col-span-6 md:col-span-10 lg:col-span-7 xl:col-span-8 2xl:col-span-8 flex items-center justify-end text-right lg:order-last pr-1.5 lg:pr-4 2xl:pr-0">
+    <div class="col-span-6 md:col-span-10 lg:col-span-7 xl:col-span-8 2xl:col-span-8 flex items-center justify-end text-right lg:order-last pr-2.5 lg:pr-4 2xl:pr-0">
       <!-- Search toggler -->
       <button @click="searchInput = !searchInput" type="button" class="lg:hidden mr-2 p-2 flex items-center text-gray-600 hover:text-gray-700 focus:outline-none">
         <svg v-if="searchInput" class="w-6 h-6 sm:w-6.5 sm:h-6.5 fill-current text-gray-400">

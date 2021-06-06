@@ -74,7 +74,7 @@ export default {
             grid: {
               borderColor: '#EDF2F7',
               padding: {
-                left: 20,
+                left: 15,
                 right: 0
               }
             },
@@ -139,7 +139,7 @@ export default {
               horizontalAlign: 'right',
               floating: true,
               fontFamily: 'Muli',
-              offsetY: 0,
+              offsetY: -17,
               offsetX: 0,
               labels: {
                 colors: '#718096',

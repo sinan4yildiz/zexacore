@@ -181,6 +181,14 @@ input[type="date" ] {
     }
   }
 
+  > svg {
+    overflow: inherit;
+
+    > foreignObject {
+      overflow: inherit;
+    }
+  }
+
   .apexcharts-legend {
     @apply pr-4;
 
