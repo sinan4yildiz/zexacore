@@ -9,6 +9,8 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: none;
+  touch-action: manipulation;
 }
 
 body {
