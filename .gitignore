@@ -7,12 +7,14 @@
 /storage/*.key
 /storage/app/*.json
 
+.idea
 /vendor
 
 .env
 .env.backup
+package-lock.json
+composer.lock
 
-.idea
 .phpunit.result.cache
 docker-compose.override.yml
 
@@ -23,5 +25,4 @@ Homestead.json
 Homestead.yaml
 
 **/error_log
-
 **/.DS_Store
