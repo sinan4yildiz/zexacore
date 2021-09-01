@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Content;
+namespace App\Http\Resources\Api\Content;
 
 use App\Helpers\Helper;
 use App\Helpers\Thumbnail;

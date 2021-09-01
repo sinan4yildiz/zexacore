@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Content;
+namespace App\Http\Resources\Api\Content;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PageAutocompleteResource extends JsonResource
+class ArticleAutocompleteResource extends JsonResource
 {
     public function toArray($request)
     {

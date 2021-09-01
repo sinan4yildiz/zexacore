@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\v1\Content;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Content\PageRequest;
-use App\Http\Resources\Content\PageAutocompleteResource;
-use App\Http\Resources\Content\PageResource;
+use App\Http\Resources\Api\Content\PageAutocompleteResource;
+use App\Http\Resources\Api\Content\PageResource;
 use App\Models\Activity;
 use App\Models\Page;
 use App\Models\Slug;

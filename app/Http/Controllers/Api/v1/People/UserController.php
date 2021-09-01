@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Requests\Api\People\UserRequest;
-use App\Http\Resources\People\UserResource;
+use App\Http\Resources\Api\People\UserResource;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 

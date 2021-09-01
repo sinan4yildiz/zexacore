@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\MessageResource;
+use App\Http\Resources\Api\MessageResource;
 use App\Models\Activity;
 use App\Models\Message;
 use Illuminate\Support\Facades\Auth;

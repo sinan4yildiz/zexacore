@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Resources\Content;
+namespace App\Http\Resources\Api\Content;
 
-use App\Http\Resources\Structure\CategoryTranslationResource;
+use App\Http\Resources\Api\Structure\CategoryTranslationResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\Finder\Finder;
 

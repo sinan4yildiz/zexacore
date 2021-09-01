@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Content;
+namespace App\Http\Resources\Api\Content;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\Finder\Finder;

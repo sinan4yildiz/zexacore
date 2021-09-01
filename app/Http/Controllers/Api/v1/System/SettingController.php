@@ -7,7 +7,7 @@ use App\Models\Activity;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Setting;
 use App\Http\Requests\Api\System\SettingRequest;
-use App\Http\Resources\System\SettingResource;
+use App\Http\Resources\Api\System\SettingResource;
 use Illuminate\Support\Facades\Cache;
 
 class SettingController extends Controller

@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Resources\Structure;
+namespace App\Http\Resources\Api\Structure;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 
-class ContentTypeTranslationResource extends JsonResource
+class CategoryTranslationResource extends JsonResource
 {
     public function toArray($request)
     {
         return [
             'id'                => $this->id,
+            'category_id'       => $this->category_id,
             'language_code'     => $this->language_code,
             'title'             => $this->title ?? trans('admin/common.no_translation'),
             'description'       => $this->description,

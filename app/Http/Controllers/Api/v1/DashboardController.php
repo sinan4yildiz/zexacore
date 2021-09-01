@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use Analytics;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Dashboard\AnalyticsResource;
+use App\Http\Resources\Api\Dashboard\AnalyticsResource;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\ContentType;

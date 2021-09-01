@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\v1\System\Maintenance;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\System\Maintenance\BackupRequest;
-use App\Http\Resources\System\Maintenance\BackupResource;
+use App\Http\Resources\Api\System\Maintenance\BackupResource;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;

@@ -9,7 +9,7 @@ use App\Models\Slug;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ContentType;
 use App\Http\Requests\Api\Structure\ContentTypeRequest;
-use App\Http\Resources\Structure\ContentTypeResource;
+use App\Http\Resources\Api\Structure\ContentTypeResource;
 use Illuminate\Support\Str;
 
 class ContentTypeController extends Controller

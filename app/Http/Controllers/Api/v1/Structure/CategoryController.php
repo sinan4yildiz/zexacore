@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\v1\Structure;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Structure\CategoryRequest;
-use App\Http\Resources\Structure\CategoryAutocompleteResource;
-use App\Http\Resources\Structure\CategoryResource;
+use App\Http\Resources\Api\Structure\CategoryAutocompleteResource;
+use App\Http\Resources\Api\Structure\CategoryResource;
 use App\Models\Activity;
 use App\Models\Category;
 use App\Models\CategoryTranslation;

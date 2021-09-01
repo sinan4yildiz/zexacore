@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Tools;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Tools\NotFoundResource;
+use App\Http\Resources\Api\Tools\NotFoundResource;
 use App\Models\Activity;
 use App\Models\NotFound;
 use Illuminate\Support\Facades\Auth;

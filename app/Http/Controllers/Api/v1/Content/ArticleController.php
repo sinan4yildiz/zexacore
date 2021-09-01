@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\v1\Content;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Content\ArticleRequest;
-use App\Http\Resources\Content\ArticleAutocompleteResource;
-use App\Http\Resources\Content\ArticleResource;
+use App\Http\Resources\Api\Content\ArticleAutocompleteResource;
+use App\Http\Resources\Api\Content\ArticleResource;
 use App\Models\Activity;
 use App\Models\Article;
 use App\Models\Relationship;

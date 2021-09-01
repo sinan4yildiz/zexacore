@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\v1\People;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
-use App\Http\Resources\People\ActivityResource;
+use App\Http\Resources\Api\People\ActivityResource;
 use Illuminate\Support\Facades\Request;
 
 class ActivityController extends Controller

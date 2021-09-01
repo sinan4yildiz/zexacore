@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Slug;
 use App\Http\Requests\Api\Tools\SlugRequest;
-use App\Http\Resources\Tools\SlugResource;
+use App\Http\Resources\Api\Tools\SlugResource;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 

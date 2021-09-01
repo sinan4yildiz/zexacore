@@ -7,7 +7,7 @@ use App\Models\Activity;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Language;
 use App\Http\Requests\Api\System\LanguageRequest;
-use App\Http\Resources\System\LanguageResource;
+use App\Http\Resources\Api\System\LanguageResource;
 
 class LanguageController extends Controller
 {

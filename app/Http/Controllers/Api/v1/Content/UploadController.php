@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\v1\Content;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Content\UploadFileRequest;
 use App\Http\Requests\Api\Content\UploadFolderRequest;
-use App\Http\Resources\Content\UploadResource;
+use App\Http\Resources\Api\Content\UploadResource;
 use App\Models\Activity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
