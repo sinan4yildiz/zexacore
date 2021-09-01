@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 // Web
 Route::group([
+    'as'        => 'web.',
     'namespace' => 'Web',
 ], function () {
 
@@ -18,16 +19,6 @@ Route::group([
     'namespace' => 'Admin',
 ], function () {
 
-    // Unauthorized
-    Auth::routes(['register' => false]);
+    Route::get('/{any?}', 'AppController@index')->where('any', '.*')->name('dashboard');
 
-    // Authorized
-    Route::group([
-        'middleware' => ['auth']
-    ], function () {
-
-        // Application
-        Route::get('/{any?}', 'AppController@index')->where('any', '.*')->name('dashboard');
-
-    });
 });

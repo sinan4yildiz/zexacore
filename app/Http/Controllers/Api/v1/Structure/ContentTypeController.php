@@ -8,7 +8,7 @@ use App\Models\ContentTypeTranslation;
 use App\Models\Slug;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ContentType;
-use App\Http\Requests\Structure\ContentTypeRequest;
+use App\Http\Requests\Api\Structure\ContentTypeRequest;
 use App\Http\Resources\Structure\ContentTypeResource;
 use Illuminate\Support\Str;
 
@@ -69,7 +69,7 @@ class ContentTypeController extends Controller
     /**
      * Create the new item
      *
-     * @param  \App\Http\Requests\Structure\ContentTypeRequest  $request
+     * @param  \App\Http\Requests\Api\Structure\ContentTypeRequest  $request
      *
      */
     public function create(ContentTypeRequest $request)
@@ -128,7 +128,7 @@ class ContentTypeController extends Controller
     /**
      * Update the existing item
      *
-     * @param  \App\Http\Requests\Structure\ContentTypeRequest  $request
+     * @param  \App\Http\Requests\Api\Structure\ContentTypeRequest  $request
      * @param $id
      *
      */

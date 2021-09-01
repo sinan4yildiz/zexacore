@@ -17,12 +17,12 @@ mix.copyDirectory('resources/assets/web/images', 'public/assets/web/images');
 * */
 
 // Compile scripts
-mix.js('resources/assets/admin/js/app.js', 'assets/' + process.env.APP_ADMIN_DIR + '/js')
+mix.js('resources/assets/admin/vue/application.js', 'assets/' + process.env.APP_ADMIN_DIR + '/js')
    .version();
 
 
 // Compile styles
-mix.sass('resources/assets/admin/sass/app.scss', 'assets/' + process.env.APP_ADMIN_DIR + '/css')
+mix.sass('resources/assets/admin/scss/app.scss', 'assets/' + process.env.APP_ADMIN_DIR + '/css')
    .options({
        processCssUrls: false,
        postCss: [

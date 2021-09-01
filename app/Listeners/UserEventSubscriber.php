@@ -13,10 +13,6 @@ class UserEventSubscriber
      */
     public function handleUserLogin($event)
     {
-        // Regenerate API token
-        $event->user->api_token = Str::random(32);
-        $event->user->save();
-
         // Activity
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;
@@ -29,10 +25,6 @@ class UserEventSubscriber
      */
     public function handleUserLogout($event)
     {
-        // Revoke the API token
-        $event->user->api_token = null;
-        $event->user->save();
-
         // Activity
         $activity = new Activity;
         $activity->user = Auth::user()->firstname . ' ' . Auth::user()->lastname;

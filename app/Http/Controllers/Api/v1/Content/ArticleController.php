@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api\v1\Content;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Content\ArticleRequest;
+use App\Http\Requests\Api\Content\ArticleRequest;
 use App\Http\Resources\Content\ArticleAutocompleteResource;
 use App\Http\Resources\Content\ArticleResource;
 use App\Models\Activity;
 use App\Models\Article;
-use App\Models\ContentType;
 use App\Models\Relationship;
 use App\Models\Slug;
 use Illuminate\Support\Facades\Auth;
@@ -101,7 +100,7 @@ class ArticleController extends Controller
     /**
      * Create the new item
      *
-     * @param  \App\Http\Requests\Content\ArticleRequest  $request
+     * @param  \App\Http\Requests\Api\Content\ArticleRequest  $request
      *
      */
     public function create(ArticleRequest $request)
@@ -186,7 +185,7 @@ class ArticleController extends Controller
     /**
      * Update the existing item
      *
-     * @param  \App\Http\Requests\Content\ArticleRequest  $request
+     * @param  \App\Http\Requests\Api\Content\ArticleRequest  $request
      * @param $id
      *
      */

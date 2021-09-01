@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Http\Requests\People\UserRequest;
+use App\Http\Requests\Api\People\UserRequest;
 use App\Http\Resources\People\UserResource;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
@@ -77,7 +77,7 @@ class UserController extends Controller
     /**
      * Create the new item
      *
-     * @param  \App\Http\Requests\People\UserRequest  $request
+     * @param  \App\Http\Requests\Api\People\UserRequest  $request
      *
      */
     public function create(UserRequest $request)
@@ -91,7 +91,6 @@ class UserController extends Controller
         $item->email = request('email');
         $item->title = request('title');
         $item->password = Hash::make(request('password'));
-        $item->api_token = Str::random(32);
         $item->is_active = true;
         $item->save();
 
@@ -113,7 +112,7 @@ class UserController extends Controller
     /**
      * Update the existing item
      *
-     * @param  \App\Http\Requests\People\UserRequest  $request
+     * @param  \App\Http\Requests\Api\People\UserRequest  $request
      * @param $id
      *
      */

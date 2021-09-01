@@ -1,7 +1,7 @@
 {
   "name": "zexacore",
   "version": "1.0.0",
-  "description": "A headless CMS written in Laravel and Vue.",
+  "description": "A content management system written in Laravel and Vue.",
   "author": "Sinan Yildiz",
   "license": "MIT",
   "scripts": {
@@ -14,13 +14,13 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "dependencies": {
+  },
+  "devDependencies": {
     "@tailwindcss/custom-forms": "^0.2.1",
-    "apexcharts": "^3.26.0",
     "autoprefixer": "^10.2.6",
+    "apexcharts": "^3.26.0",
     "axios": "^0.21.1",
-    "bootstrap": "^4.0.0",
     "cross-env": "^7.0",
-    "jquery": "^3.2",
     "laravel-mix": "^5.0.1",
     "lodash": "^4.17.21",
     "popper.js": "^1.12",
@@ -41,6 +41,5 @@
     "vue-screen": "^1.5.4",
     "vue-template-compiler": "^2.6.10",
     "vuex": "^3.5.1"
-  },
-  "devDependencies": []
+  }
 }

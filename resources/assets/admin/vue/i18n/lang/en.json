@@ -1,0 +1,373 @@
+{
+  "common": {
+    "home": "Home",
+    "brand": "Zexacore",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "filters": "Filters",
+    "status": "Status",
+    "allow": "Allow",
+    "prevent": "Prevent",
+    "yes": "Yes",
+    "no": "No",
+    "all": "All",
+    "active": "Active",
+    "inactive": "Inactive",
+    "date_start": "Date start",
+    "date_end": "Date end",
+    "apply": "Apply",
+    "clear": "Clear",
+    "close": "Close",
+    "reply": "Reply",
+    "search": "Search",
+    "back": "Back",
+    "eg": "e.g.",
+    "create": "Create",
+    "create_new": "Create new",
+    "save": "Save",
+    "update": "Update",
+    "edit": "Edit",
+    "folder": "Folder",
+    "upload": "Upload",
+    "redirect": "Redirect",
+    "restore": "Restore",
+    "select": "Select",
+    "open": "Open",
+    "preview": "Preview",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "remove": "Remove",
+    "please_wait": "Please wait...",
+    "continue_dashboard": "Go to dashboard",
+    "view_website": "View website",
+    "showing_meta": "Showing <strong>{from}</strong> to <strong>{to}</strong> of <strong>{total}</strong> results"
+  },
+  "sidebar": {
+    "content": "Content",
+    "structure": "Structure",
+    "people": "People",
+    "tools": "Tools",
+    "system": "System"
+  },
+  "header": {
+    "search": "Search for anything..."
+  },
+  "account": {
+    "heading": "Account",
+    "profile": "Your profile",
+    "change_password": "Change password",
+    "logout": "Logout"
+  },
+  "language": {
+    "select": "Select language",
+    "change": "Change to edit in another language"
+  },
+  "label": {
+    "title": "Title",
+    "content": "Content",
+    "categories": "Categories",
+    "keyword": "Keyword",
+    "meta_title": "Meta title",
+    "meta_description": "Meta description",
+    "meta_keywords": "Meta keywords",
+    "slug": "URL alias",
+    "image": "Image",
+    "filename": "File name",
+    "description": "Description",
+    "listing_page": "Listing page",
+    "content_type": "Content type",
+    "translation": "Translation",
+    "parent_category": "Parent category",
+    "status": "Status",
+    "indexing": "Indexing",
+    "source": "Soruce",
+    "target": "Target",
+    "analytics": "Analytics",
+    "name": "Name",
+    "native_name": "Native name",
+    "code": "Code",
+    "locale": "Locale",
+    "firstname": "First name",
+    "lastname": "Last name",
+    "title": "Title",
+    "email": "Email address",
+    "password": "Password",
+    "user_title": "Title",
+    "brand_name": "Brand name",
+    "company_name": "Company name",
+    "address": "Address",
+    "telephone_postcode": "Telephone, postcode",
+    "country_city": "Country, city",
+    "default_language": "Default language"
+  },
+  "tip": {
+    "title": "Enter a title that best describes the content.",
+    "categories": "The first category will be the primary.<br>Click the category name to remove.",
+    "meta_title": "If empty then the name will be used as meta title.",
+    "meta_description": "Write a description that summarizes the content.",
+    "meta_keywords": "Keywords to give more information to search engines about the content.",
+    "parent_category": "Select a parent category or leave empty to set it as root category.",
+    "slug": "Define an URL alias for the post.",
+    "listing_page": "Should the content type have a listing page?",
+    "image": "Attach an image to the post.",
+    "content_type": "Select the content type to be attached.",
+    "translation": "Which post is this the translation of?",
+    "status": "If you want to preview before publishing, leave this inactive.",
+    "indexing": "Allow search engines to index the page or try to prevent.",
+    "indexing_website": "Allow search engines to index the website or try to prevent."
+  },
+  "placeholder": {
+    "email": "user@email.com",
+    "user_title": "e.g. Content Editor",
+    "folder": "Folder name",
+    "content": "Enter a content",
+    "password": "Enter password",
+    "search_categories": "Search categories",
+    "search_articles": "Search articles",
+    "search_pages": "Search pages",
+    "content_type": "Select a content type",
+    "select_language": "Select language",
+    "language_name": "e.g. German",
+    "language_native": "e.g. Deutsch",
+    "language_code": "e.g. de-de",
+    "language_locale": "e.g. de_DE.UTF-8, de_DE@EUR, de_DE, german",
+    "uri": "Enter an URL without domain",
+    "url": "Enter an URL",
+    "unique_keyword": "Enter an unique keyword"
+  },
+  "column": {
+    "name": "Name",
+    "fullname": "Fullname",
+    "email": "Email",
+    "title": "Title",
+    "code": "Code",
+    "translations": "Translations",
+    "views": "Views",
+    "created": "Created",
+    "status": "Status",
+    "subject_sender": "Subject / Sender",
+    "sent": "Sent",
+    "activity": "Activity",
+    "recorded": "Recorded",
+    "keyword": "Keyword",
+    "module": "Module",
+    "from_to": "From / To",
+    "url": "URL",
+    "times": "Times",
+    "last_request": "Last request",
+    "last_redirection": "Last redirection",
+    "language": "Language"
+  },
+  "files": {
+    "change": "Change the file",
+    "browse": "Browse uploads",
+    "root": "Root folder"
+  },
+  "message": {
+    "created": "Created successfully.",
+    "updated": "Updated successfully.",
+    "saved": "Saved successfully.",
+    "completed": "Completed successfully.",
+    "no_results": "Nothing found here.",
+    "not_found": "This action URL not found. Please check the request.",
+    "error_generic": "Something went wrong. Please check error logs or the response of the request.",
+    "offline": "Connection is gone. Please check your internet connection.",
+    "nothing_found": "Nothing found",
+    "are_you_sure": "Are you sure?",
+    "confirm_action": "Please confirm the action."
+  },
+  "dashboard": {
+    "heading": "Dashboard",
+    "widgets": {
+      "today": "TODAY",
+      "yesterday": "YESTERDAY",
+      "this_month": "THIS MONTH",
+      "this_year": "THIS YEAR",
+      "statistics": "STATISTICS",
+      "counts": "COUNTS",
+      "messages": "MESSAGES",
+      "activities": "ACTIVITIES"
+    },
+    "sessions": "Sessions",
+    "page_views": "Page views"
+  },
+  "articles": {
+    "heading": {
+      "index": "Articles",
+      "create": "Create article",
+      "edit": "Edit article"
+    }
+  },
+  "pages": {
+    "heading": {
+      "index": "Pages",
+      "create": "Create page",
+      "edit": "Edit page"
+    }
+  },
+  "uploads": {
+    "heading": {
+      "index": "Uploads"
+    }
+  },
+  "messages": {
+    "heading": {
+      "index": "Messages"
+    },
+    "details": {
+      "name": "Full name",
+      "email": "Email address",
+      "telephone": "Telephone",
+      "sent_at": "Sent at",
+      "message": "Message"
+    },
+    "mark_read": "Mark as read",
+    "mark_unread": "Mark as unread"
+  },
+  "categories": {
+    "heading": {
+      "index": "Categories",
+      "create": "Create category",
+      "edit": "Edit category"
+    }
+  },
+  "content_types": {
+    "heading": {
+      "index": "Content types",
+      "create": "Create content type",
+      "edit": "Edit content type"
+    }
+  },
+  "users": {
+    "heading": {
+      "index": "Users",
+      "create": "Create a new user",
+      "edit": "Edit user"
+    }
+  },
+  "activities": {
+    "heading": {
+      "index": "Activities"
+    }
+  },
+  "slugs": {
+    "heading": {
+      "index": "URL aliases",
+      "edit": "Edit URL alias"
+    }
+  },
+  "redirections": {
+    "heading": {
+      "index": "Redirections",
+      "create": "Create a new redirection",
+      "edit": "Edit redirection"
+    }
+  },
+  "not_founds": {
+    "heading": {
+      "index": "404 pages"
+    }
+  },
+  "settings": {
+    "heading": {
+      "index": "Settings"
+    },
+    "business": {
+      "heading": "Business",
+      "tip": "Basic details of your business"
+    },
+    "localisation": {
+      "heading": "Localisation",
+      "tip": "Configure localisation settings"
+    },
+    "social_media": {
+      "heading": "Social media",
+      "tip": "Social media links of your brand"
+    },
+    "analytics": {
+      "heading": "Analytics",
+      "tip": "Connect Google Analytics to admin panel"
+    },
+    "seo": {
+      "heading": "Search engines",
+      "tip": "Configurations for search engine optimization"
+    },
+    "tip": {
+      "brand_name": "This will be shown in the meta title as suffix.",
+      "company_name": "This will be placed on the contact page.",
+      "email": "This is the main email address to contact.",
+      "address": "Primary address of your business.",
+      "telephone_postcode": "Business telephone number and postcode.",
+      "country_city": "The country and city/region/state where your business is located.",
+      "default_language": "Select the default language of the website.",
+      "check_translations": "Make sure all contents have translations for the target language.",
+      "meta_keywords": "Meta keywords are no longer used by Google for web ranking.",
+      "analytics": "Create an API user on Analytics, place the JSON file in storage folder and configure .env file.",
+      "username": "your-username"
+    },
+    "placeholder": {
+      "brand_name": "Your Brand",
+      "company_name": "Your Company Ltd",
+      "email": "your-company@domain.com",
+      "address": "Enter your business address",
+      "telephone": "Telephone number",
+      "postcode": "Postcode",
+      "country": "e.g. United Kingdom",
+      "city": "e.g. London"
+    },
+    "save": "Save settings"
+  },
+  "languages": {
+    "heading": {
+      "index": "Languages",
+      "create": "Create a new language",
+      "edit": "Edit language"
+    }
+  },
+  "maintenance": {
+    "heading": {
+      "index": "Maintenance"
+    },
+    "tabs": {
+      "logs": "Logs",
+      "backup": "Backup"
+    },
+    "label": {
+      "mode": "Maintenance mode",
+      "cache": "Cache"
+    },
+    "tip": {
+      "mode": "Switches to maintenance mode.",
+      "cache": "Clears all the cache files."
+    },
+    "backup": {
+      "list": {
+        "heading": "Backups",
+        "description": "All the backups created before."
+      },
+      "new": {
+        "heading": "New backup",
+        "description": "Create a new database backup.",
+        "info": "If the backup file name is empty, it will be the current date."
+      },
+      "failed": "Command failed. Please make sure shell access is enabled.",
+      "restore": {
+        "success": "The backup has been restored successfully."
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "heading": "Login",
+      "button": "Sign in to your account",
+      "remember_me": "Remember me",
+      "forgotten_password": "Forgotten password"
+    }
+  },
+  "not_found": {
+    "heading": "Page not found",
+    "text": "The page you are trying to reach could not be found. Please check the URL and try again."
+  }
+}

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Tools;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tools\RedirectionRequest;
+use App\Http\Requests\Api\Tools\RedirectionRequest;
 use App\Http\Resources\Tools\RedirectionResource;
 use App\Models\Activity;
 use App\Models\Redirection;
@@ -65,7 +65,7 @@ class RedirectionController extends Controller
     /**
      * Create the new item
      *
-     * @param  \App\Http\Requests\Tools\RedirectionRequest  $request
+     * @param  \App\Http\Requests\Api\Tools\RedirectionRequest  $request
      *
      */
     public function create(RedirectionRequest $request)
@@ -95,7 +95,7 @@ class RedirectionController extends Controller
     /**
      * Update the existing item
      *
-     * @param  \App\Http\Requests\Tools\RedirectionRequest  $request
+     * @param  \App\Http\Requests\Api\Tools\RedirectionRequest  $request
      * @param $id
      *
      */

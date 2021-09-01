@@ -9,7 +9,9 @@ return [
     */
 
     'auth' => [
-        'failed' => 'Authentication failed.',
+        'required' => 'Authentication required.',
+        'failed'   => 'Authentication failed.',
+        'logout'   => 'User successfully signed out.',
     ],
 
     'logs' => [

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Structure;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Structure\CategoryRequest;
+use App\Http\Requests\Api\Structure\CategoryRequest;
 use App\Http\Resources\Structure\CategoryAutocompleteResource;
 use App\Http\Resources\Structure\CategoryResource;
 use App\Models\Activity;
@@ -109,7 +109,7 @@ class CategoryController extends Controller
     /**
      * Create the new item
      *
-     * @param  \App\Http\Requests\Structure\CategoryRequest  $request
+     * @param  \App\Http\Requests\Api\Structure\CategoryRequest  $request
      *
      */
     public function create(CategoryRequest $request)
@@ -172,7 +172,7 @@ class CategoryController extends Controller
     /**
      * Update the existing item
      *
-     * @param  \App\Http\Requests\Structure\CategoryRequest  $request
+     * @param  \App\Http\Requests\Api\Structure\CategoryRequest  $request
      * @param $id
      *
      */

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Language;
-use App\Http\Requests\System\LanguageRequest;
+use App\Http\Requests\Api\System\LanguageRequest;
 use App\Http\Resources\System\LanguageResource;
 
 class LanguageController extends Controller
@@ -48,7 +48,7 @@ class LanguageController extends Controller
     /**
      * Create the new item
      *
-     * @param  \App\Http\Requests\System\LanguageRequest  $request
+     * @param  \App\Http\Requests\Api\System\LanguageRequest  $request
      *
      */
     public function create(LanguageRequest $request)
@@ -82,7 +82,7 @@ class LanguageController extends Controller
     /**
      * Update the existing item
      *
-     * @param  \App\Http\Requests\System\LanguageRequest  $request
+     * @param  \App\Http\Requests\Api\System\LanguageRequest  $request
      * @param $id
      *
      */

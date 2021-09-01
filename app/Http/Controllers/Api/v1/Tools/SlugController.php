@@ -7,7 +7,7 @@ use App\Models\Activity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Slug;
-use App\Http\Requests\Tools\SlugRequest;
+use App\Http\Requests\Api\Tools\SlugRequest;
 use App\Http\Resources\Tools\SlugResource;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
@@ -63,7 +63,7 @@ class SlugController extends Controller
     /**
      * Update the existing item
      *
-     * @param  \App\Http\Requests\Tools\SlugRequest  $request
+     * @param  \App\Http\Requests\Api\Tools\SlugRequest  $request
      * @param $id
      *
      */

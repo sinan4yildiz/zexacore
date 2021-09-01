@@ -22,7 +22,6 @@ class UsersTable extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('title')->nullable();
-            $table->char('api_token', 128)->unique()->nullable()->default(null);
             $table->rememberToken();
             $table->boolean('is_active')->default(true);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

@@ -1,5 +1,5 @@
 ## What is Zexacore?
-Zexacore is a headless content management system developed for building corporate websites.
+Zexacore is a content management system developed for building corporate websites.
 
 ## Demo
 Although it is still under development, you can see the admin panel using the following details.

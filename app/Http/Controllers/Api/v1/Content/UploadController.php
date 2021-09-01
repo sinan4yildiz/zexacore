@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\v1\Content;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Content\UploadFileRequest;
-use App\Http\Requests\Content\UploadFolderRequest;
+use App\Http\Requests\Api\Content\UploadFileRequest;
+use App\Http\Requests\Api\Content\UploadFolderRequest;
 use App\Http\Resources\Content\UploadResource;
 use App\Models\Activity;
 use Illuminate\Support\Facades\Auth;
@@ -88,7 +88,7 @@ class UploadController extends Controller
     /**
      * Save the new files
      *
-     * @param  \App\Http\Requests\Content\UploadFileRequest  $request
+     * @param  \App\Http\Requests\Api\Content\UploadFileRequest  $request
      *
      */
     public function uploadFile(UploadFileRequest $request)
@@ -141,7 +141,7 @@ class UploadController extends Controller
     /**
      * Create the new folder
      *
-     * @param  \App\Http\Requests\Content\UploadFolderRequest  $request
+     * @param  \App\Http\Requests\Api\Content\UploadFolderRequest  $request
      * @param $id
      *
      */

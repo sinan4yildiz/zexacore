@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Content;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Content\PageRequest;
+use App\Http\Requests\Api\Content\PageRequest;
 use App\Http\Resources\Content\PageAutocompleteResource;
 use App\Http\Resources\Content\PageResource;
 use App\Models\Activity;
@@ -96,7 +96,7 @@ class PageController extends Controller
     /**
      * Create the new item
      *
-     * @param  \App\Http\Requests\Content\PageRequest  $request
+     * @param  \App\Http\Requests\Api\Content\PageRequest  $request
      *
      */
     public function create(PageRequest $request)
@@ -167,7 +167,7 @@ class PageController extends Controller
     /**
      * Update the existing item
      *
-     * @param  \App\Http\Requests\Content\PageRequest  $request
+     * @param  \App\Http\Requests\Api\Content\PageRequest  $request
      * @param $id
      *
      */

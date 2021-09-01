@@ -30,7 +30,6 @@ class UserSeeder extends Seeder
             'email'          => 'snn@sinanyildiz.me',
             'password'       => Hash::make('123123'),
             'remember_token' => Str::random(10),
-            'api_token'      => Str::random(32),
         ]);
 
         // It's John
@@ -41,7 +40,6 @@ class UserSeeder extends Seeder
             'email'          => 'john@doe.com',
             'password'       => Hash::make('password'),
             'remember_token' => Str::random(10),
-            'api_token'      => Str::random(32),
         ]);
 
         // Dummy users
