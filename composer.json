@@ -1,9 +1,9 @@
 {
-  "name": "laravel/laravel",
+  "name": "zexacore",
   "type": "project",
-  "description": "The Laravel Framework.",
+  "description": "A content management system written in Laravel and Vue.",
   "keywords": [
-    "framework",
+    "cms",
     "laravel"
   ],
   "license": "MIT",

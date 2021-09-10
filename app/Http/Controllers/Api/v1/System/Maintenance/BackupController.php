@@ -49,7 +49,7 @@ class BackupController extends Controller
         $exec = Artisan::call('database:backup', ['--name' => request('name')]);
 
         if (!$exec) {
-            return Response::json(false, 422);
+            return Response::json(false, 500);
         }
     }
 

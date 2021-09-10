@@ -319,7 +319,7 @@ class ArticleController extends Controller
         /**
          * Activate
          */
-        $item = Article::findOrFail($id);
+        $item = Article::with('category')->findOrFail($id);
         $item->is_active = true;
         $item->save();
 
@@ -348,7 +348,7 @@ class ArticleController extends Controller
         /**
          * Deactivate
          */
-        $item = Article::findOrFail($id);
+        $item = Article::with('category')->findOrFail($id);
         $item->is_active = false;
         $item->save();
 
