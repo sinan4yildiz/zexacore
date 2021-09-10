@@ -1,9 +1,9 @@
 <template>
-  <div class="field w-full" v-bind:class="classes">
+  <div class="w-full" :class="classes">
     <label v-if="label"
            :for="name"
-           v-bind:class="{'required': required}"
-           class="block text-sm font-medium leading-5 text-gray-700 mb-1 ml-1 select-none">{{ label }}</label>
+           :class="{'required': required}"
+           class="block mb-1 ml-1 text-sm font-medium leading-5 text-gray-700 select-none">{{ label }}</label>
     <div class="relative">
       <input v-model="inputValue"
              @keyup="convert"
@@ -12,69 +12,76 @@
              :id="name"
              :placeholder="placeholder"
              v-bind="attr"
-             v-bind:class="{'has-error': error}"
-             class="form-input block w-full pl-4 pr-12 py-3 text-sm border border-gray-400 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out">
+             :class="{'has-error': error}"
+             class="block py-3 pr-12 pl-4 w-full text-sm rounded-md border border-gray-400 focus:border-blue-400 shadow-sm transition duration-150 ease-in-out form-input focus:shadow-outline-blue">
       <button v-if="source" @click="generate"
               type="button"
-              class="absolute leading-3 top-0 right-0 bottom-0 px-4 py-3 text-gray-600 hover:text-gray-900 focus:outline-none">
-        <svg class="w-5 h-5 w-5 h-5 transition duration-300 ease-out transform origin-center rotate-zero transform-box-fill pointer-events-none">
+              class="absolute top-0 right-0 bottom-0 py-3 px-4 leading-3 text-gray-600 hover:text-gray-900 focus:outline-none">
+        <svg class="w-5 h-5 transition duration-300 ease-out transform origin-center pointer-events-none rotate-zero transform-box-fill">
           <use xlink:href="#icon-refresh"></use>
         </svg>
       </button>
     </div>
-    <p v-if="error" v-text="error" class="mt-1 ml-1 text-red-600 text-xs"></p>
+    <p v-if="error" v-text="error" class="mt-1 ml-1 text-xs text-red-600"></p>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Slug",
+  name: 'Slug',
 
   props: ['name', 'label', 'placeholder', 'value', 'attr', 'source', 'required', 'classes', 'errors'],
 
-  data: function () {
+  data() {
     return {
       inputValue: this.value,
-      rotate: 180
-    }
+      inputErrors: this.errors,
+      rotate: 180,
+    };
   },
 
   computed: {
-    error: function () {
-      if(this.errors[this.name]) {
-        return this.errors[this.name][0];
+    error() {
+      if (this.inputErrors[this.name]) {
+        return this.inputErrors[this.name][0];
       }
+
+      return null;
     },
   },
 
   methods: {
     generate(e) {
-      this.inputValue = window.slugify(this.$parent.$el.querySelector(this.source).value)
+      this.inputValue = this.$slugify(this.$parent.$el.querySelector(this.source).value);
 
-      if(e !== undefined) {
-        e.target.querySelector('svg').style.transform = 'rotate(' + this.rotate + 'deg)'
-        this.rotate += 180
+      if (e !== undefined) {
+        e.target.querySelector('svg').style.transform = `rotate(${this.rotate}deg)`;
+        this.rotate += 180;
       }
     },
 
     convert() {
-      this.inputValue = window.slugify(this.inputValue)
-    }
-  },
-
-  created() {
-    this.$emit('input', this.inputValue)
+      this.inputValue = this.$slugify(this.inputValue);
+    },
   },
 
   watch: {
-    value: function () {
-      this.inputValue = this.value
+    value() {
+      this.inputValue = this.value;
     },
 
-    inputValue: function () {
-      this.errors[this.name] = false
-      this.$emit('input', this.inputValue)
-    }
+    errors() {
+      this.inputErrors = this.errors;
+    },
+
+    inputValue() {
+      this.inputErrors[this.name] = false;
+      this.$emit('input', this.inputValue);
+    },
   },
-}
+
+  created() {
+    this.$emit('input', this.inputValue);
+  },
+};
 </script>

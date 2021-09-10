@@ -1,40 +1,38 @@
 <template>
-  <div class="bg-white text-sm text-gray-700 rounded-lg shadow py-4 pl-5 pr-2">
-    <div v-if="logs" class="max-h-screen overflow-y-auto whitespace-no-wrap scrollbar thick leading-6" v-html="highlightDatetime(logs)"></div>
+  <div class="py-4 pr-2 pl-5 text-sm text-gray-700 bg-white rounded-lg shadow">
+    <div v-if="logs" class="overflow-y-auto max-h-screen leading-6 whitespace-no-wrap scrollbar thick" v-html="highlightDatetime(logs)"></div>
     <div v-else class="py-2">
-      <div v-for="n in 8" class="bone thin" v-bind:class="{'mb-4': n < 8}"></div>
+      <div v-for="n in 8" class="bone thin" :key="n" :class="{'mb-4': n < 8}"></div>
     </div>
   </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'MaintenanceLogs',
 
   data() {
-    return {}
+    return {};
   },
 
   computed: {
-    ...mapGetters('Maintenance', ['logs'])
+    ...mapGetters('Maintenance', ['logs']),
   },
 
   methods: {
     ...mapActions('Maintenance', ['fetchLogs']),
 
-    highlightDatetime: function (logs) {
-      return logs.replace(/\[(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2}])/g, function (match) {
-        return '<span class="text-indigo-500 font-bold">' + match.trim() + '</span>'
-      })
-    }
+    highlightDatetime(logs) {
+      return logs.replace(/\[(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2}])/g, (match) => `<span class="text-indigo-500 font-bold">${match.trim()}</span>`);
+    },
   },
 
   created() {
-    this.fetchLogs()
+    this.fetchLogs();
   },
 
-  components: {}
-}
+  components: {},
+};
 </script>

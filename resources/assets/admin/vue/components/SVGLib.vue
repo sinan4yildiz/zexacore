@@ -97,7 +97,6 @@
     <!-- Grid -->
     <symbol id="icon-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></symbol>
 
-
     <!--
       //  Solid icons
     -->
@@ -159,7 +158,6 @@
     <!-- Folder -->
     <symbol id="icon-folder-solid" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></symbol>
 
-
     <!--
       //  Flags
     -->
@@ -187,7 +185,6 @@
 
     <!-- Italy -->
     <symbol id="flag-it-it" viewBox="0 0 512 512" fill="none" stroke="none"><path fill="#73af00" d="M170.667 423.721H8.828A8.829 8.829 0 010 414.893V97.1a8.829 8.829 0 018.828-8.828h161.839v335.449z"/> <path fill="#f5f5f5" d="M170.67 88.277h170.67v335.45H170.67z"/> <path fill="#ff4b55" d="M503.172 423.721H341.333V88.273h161.839A8.829 8.829 0 01512 97.101v317.793a8.827 8.827 0 01-8.828 8.827z"/></symbol>
-
 
     <!--
       //  File types
@@ -237,6 +234,6 @@
 
 <script>
 export default {
-  name: "SVGLibrary"
-}
+  name: 'SVGLib',
+};
 </script>

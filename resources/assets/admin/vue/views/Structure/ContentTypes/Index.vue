@@ -1,9 +1,9 @@
 <template>
   <section>
-    <header class="flex justify-between flex-wrap items-center mb-4">
+    <header class="flex flex-wrap justify-between items-center mb-4">
       <!-- Page header -->
       <div class="w-3/4 md:w-84">
-        <h1 class="mb-2 text-2xl lg:text-3xl font-lighter leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('content_types.heading.index') }}</h1>
+        <h1 class="mb-2 text-2xl lg:text-3xl leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('content_types.heading.index') }}</h1>
         <Breadcrumb></Breadcrumb>
       </div>
 
@@ -14,34 +14,34 @@
     </header>
 
     <Table :meta="contentTypes.meta" :columns="columns" @query="setQuery($event)" v-sortable="{handle: 'td:first-child', onUpdate: orderContentTypes}">
-      <tr v-for="contentType in contentTypes.data" v-bind:data-id="contentType.id" has-action="true" has-sorting="true">
-        <td class="bg-gray-50 text-gray-500 hover:text-gray-700 text-center cursor-move transition duration-150 ease-in-out">
+      <tr v-for="contentType in contentTypes.data" :key="contentType.id" :data-id="contentType.id" has-action="true" has-sorting="true">
+        <td class="text-center text-gray-500 hover:text-gray-700 bg-gray-50 transition duration-150 ease-in-out cursor-move">
           <svg class="w-4 h-4">
             <use xlink:href="#icon-6dots-solid"></use>
           </svg>
         </td>
-        <td class="px-6 py-4">
+        <td class="py-4 px-6">
           <div class="flex items-center text-sm font-bold text-gray-900">
             {{ contentType.translation.title }}
           </div>
-          <div v-if="contentType.translation.description_plain" class="text-xs leading-5 font-light text-gray-600">{{ contentType.translation.description_plain }}</div>
+          <div v-if="contentType.translation.description_plain" class="text-xs font-light leading-5 text-gray-600">{{ contentType.translation.description_plain }}</div>
         </td>
-        <td class="px-6 py-4">
+        <td class="py-4 px-6">
           <ul>
-            <li v-for="(language) in languages.data" class="inline-block mr-1 lg:m-0.5 cursor-pointer">
+            <li v-for="language in languages.data" :key="language.id" class="inline-block lg:m-0.5 mr-1 cursor-pointer">
               <RouterLink :to="{name: 'content_types.edit', params: {id: contentType.id, language: language.code}}" class="block leading-4">
-                <svg class="w-6 h-5 hover:opacity-100 transition duration-150 ease-in-out" v-bind:class="{'opacity-50': !hasTranslation(contentType, language.code)}">
-                  <use v-bind:xlink:href="'#flag-' + language.code"></use>
+                <svg class="w-6 h-5 hover:opacity-100 transition duration-150 ease-in-out" :class="{'opacity-50': !hasTranslation(contentType, language.code)}">
+                  <use :xlink:href="'#flag-' + language.code"></use>
                 </svg>
               </RouterLink>
             </li>
           </ul>
         </td>
-        <td class="px-6 py-4">
-          <span v-if="contentType.is_active" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-md bg-green-100 text-green-900">{{ $t('common.active') }}</span>
-          <span v-else class="px-2 inline-flex text-xs leading-5 font-semibold rounded-md bg-red-100 text-red-600">{{ $t('common.inactive') }}</span>
+        <td class="py-4 px-6">
+          <span v-if="contentType.is_active" class="inline-flex px-2 text-xs font-semibold leading-5 text-green-900 bg-green-100 rounded-md">{{ $t('common.active') }}</span>
+          <span v-else class="inline-flex px-2 text-xs font-semibold leading-5 text-red-600 bg-red-100 rounded-md">{{ $t('common.inactive') }}</span>
         </td>
-        <td class="px-6 py-4 text-right text-sm leading-5 font-medium">
+        <td class="py-4 px-6 text-sm font-medium leading-5 text-right">
           <Dropdown width="w-48" class="inline-block">
             <template #toggler>
               <Button theme="action" size="large" icon="3dots-solid"/>
@@ -66,13 +66,12 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
-import Breadcrumb from "../../../components/elements/Breadcrumb"
-import Table from "../../../components/elements/Table"
-import Dropdown from "../../../components/elements/Dropdown"
-import Filters from "../../../components/elements/Filters"
-import Confirm from "../../../components/elements/Confirm"
-import Button from "../../../components/form/Button"
+import { mapActions, mapGetters } from 'vuex';
+import Breadcrumb from '../../../components/elements/Breadcrumb.vue';
+import Table from '../../../components/elements/Table.vue';
+import Dropdown from '../../../components/elements/Dropdown.vue';
+import Confirm from '../../../components/elements/Confirm.vue';
+import Button from '../../../components/form/Button.vue';
 
 export default {
   name: 'ContentTypesIndex',
@@ -101,36 +100,36 @@ export default {
         {
           field: 'actions',
           classes: 'w-24',
-        }
+        },
       ],
-    }
+    };
   },
 
   computed: {
     ...mapGetters('ContentTypes', ['contentTypes']),
-    ...mapGetters('Languages', ['languages'])
+    ...mapGetters('Languages', ['languages']),
   },
 
   methods: {
     ...mapActions('ContentTypes', ['fetchContentTypes', 'activateContentType', 'deactivateContentType', 'removeContentType', 'orderContentTypes', 'setContentTypesQuery']),
 
-    hasTranslation: function (item, code) {
-      return _.map(item.translations, 'language_code').includes(code)
+    hasTranslation(item, code) {
+      return _.map(item.translations, 'language_code').includes(code);
     },
 
-    setQuery: function (args) {
-      this.setContentTypesQuery(args)
-      this.fetchContentTypes()
+    setQuery(args) {
+      this.setContentTypesQuery(args);
+      this.fetchContentTypes();
     },
 
-    confirmRemove: function (contentType) {
-      this.removeContentType(contentType)
-    }
+    confirmRemove(contentType) {
+      this.removeContentType(contentType);
+    },
   },
 
   created() {
-    if(!this.contentTypes.data) {
-      this.fetchContentTypes()
+    if (!this.contentTypes.data) {
+      this.fetchContentTypes();
     }
   },
 
@@ -138,9 +137,8 @@ export default {
     Breadcrumb,
     Table,
     Dropdown,
-    Filters,
     Confirm,
     Button,
-  }
-}
+  },
+};
 </script>

@@ -1,16 +1,22 @@
-const directives = {
-    install(Vue) {
-        Vue.directive('sortable', {
-            bind(el, binding, vnode) {
-                var options = {
-                    dataIdAttr: 'data-id',
-                    animation: 150,
-                    easing: "cubic-bezier(1, 0, 0, 1)",
-                }
-                window.sortable = new window.sortablejs.Sortable(el.querySelector('tbody'), window._.merge(binding.value, options))
-            }
-        })
-    }
-}
+const sortablejs = require('sortablejs');
 
-export default directives
+const directives = {
+  install(Vue) {
+    /*
+     * Sortable
+     * */
+    Vue.directive('sortable', {
+      bind(el, binding) {
+        const options = {
+          dataIdAttr: 'data-id',
+          animation: 150,
+          easing: 'cubic-bezier(1, 0, 0, 1)',
+        };
+
+        window.sortable = new sortablejs.Sortable(el.querySelector('tbody'), Object.assign(binding.value, options));
+      },
+    });
+  },
+};
+
+export default directives;

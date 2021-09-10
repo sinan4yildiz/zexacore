@@ -1,27 +1,27 @@
 <template>
-  <div v-if="!isConnected" class="py-2 bg-red-100 text-red-600 text-xs text-center font-semibold">
+  <div v-if="!isConnected" class="py-2 text-xs font-semibold text-center text-red-600 bg-red-100">
     {{ $t('message.offline') }}
   </div>
 </template>
 
 <script>
 export default {
-  name: "Offline",
+  name: 'Offline',
 
   data() {
     return {
-      isConnected: true
-    }
+      isConnected: true,
+    };
   },
 
   created() {
     window.addEventListener('online', () => {
-      this.isConnected = true
-    })
+      this.isConnected = true;
+    });
 
     window.addEventListener('offline', () => {
-      this.isConnected = false
-    })
-  }
-}
+      this.isConnected = false;
+    });
+  },
+};
 </script>

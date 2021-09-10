@@ -1,36 +1,36 @@
 <template>
   <section>
-    <header class="flex justify-between flex-wrap items-center mb-4">
+    <header class="flex flex-wrap justify-between items-center mb-4">
       <!-- Page header -->
       <div class="w-3/4 md:w-48 xl:w-84">
-        <h1 class="mb-2 text-2xl lg:text-3xl font-lighter leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('redirections.heading.index') }}</h1>
+        <h1 class="mb-2 text-2xl lg:text-3xl leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('redirections.heading.index') }}</h1>
         <Breadcrumb></Breadcrumb>
       </div>
 
       <!-- Create new -->
-      <div class="md:ml-3 md:order-last">
+      <div class="md:order-last md:ml-3">
         <Button @click="$refs.create.$refs.modal.isOpen = true" theme="blue" :label="$screen.md ? $t('common.create_new') : null" icon="plus"/>
       </div>
 
-      <div class="flex items-center flex-grow md:flex-grow-0 md:ml-auto mt-3 md:mt-0">
+      <div class="flex flex-grow md:flex-grow-0 items-center mt-3 md:mt-0 md:ml-auto">
         <!-- Filters -->
         <Filters :search="true" @apply="setQuery($event)"/>
       </div>
     </header>
 
     <Table :meta="redirections.meta" :columns="columns" @query="setQuery($event)">
-      <tr v-for="redirection in redirections.data" has-action="true">
-        <td class="px-6 py-4">
+      <tr v-for="redirection in redirections.data" :key="redirection.id" has-action="true">
+        <td class="py-4 px-6">
           <div class="text-sm font-bold text-gray-900 break-all">/{{ redirection.from }}</div>
-          <a v-bind:href="redirection.to" target="_blank" class="inline-block text-xs text-gray-600 hover:text-blue-400 leading-5 break-all">{{ redirection.to }}</a>
+          <a :href="redirection.to" target="_blank" class="inline-block text-xs leading-5 text-gray-600 hover:text-blue-400 break-all">{{ redirection.to }}</a>
         </td>
-        <td class="px-6 py-4 text-center">
+        <td class="py-4 px-6 text-center">
           <span class="text-sm text-gray-600">{{ redirection.count }}</span>
         </td>
-        <td class="px-6 py-4 text-sm text-gray-500">
-          <time v-bind:title="redirection.updated_at_raw">{{ redirection.updated_at }}</time>
+        <td class="py-4 px-6 text-sm text-gray-500">
+          <time :title="redirection.updated_at_raw">{{ redirection.updated_at }}</time>
         </td>
-        <td class="px-6 py-4 text-right text-sm font-medium">
+        <td class="py-4 px-6 text-sm font-medium text-right">
           <Dropdown width="w-48" class="inline-block">
             <template #toggler>
               <Button theme="action" size="large" icon="3dots-solid"/>
@@ -57,15 +57,15 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
-import Breadcrumb from "../../../components/elements/Breadcrumb"
-import Create from "./Create"
-import Edit from "./Edit"
-import Table from "../../../components/elements/Table"
-import Dropdown from "../../../components/elements/Dropdown"
-import Filters from "../../../components/elements/Filters"
-import Confirm from "../../../components/elements/Confirm"
-import Button from "../../../components/form/Button"
+import { mapActions, mapGetters } from 'vuex';
+import Breadcrumb from '../../../components/elements/Breadcrumb.vue';
+import Create from './Create.vue';
+import Edit from './Edit.vue';
+import Table from '../../../components/elements/Table.vue';
+import Dropdown from '../../../components/elements/Dropdown.vue';
+import Filters from '../../../components/elements/Filters.vue';
+import Confirm from '../../../components/elements/Confirm.vue';
+import Button from '../../../components/form/Button.vue';
 
 export default {
   name: 'RedirectionsIndex',
@@ -90,31 +90,31 @@ export default {
         {
           field: 'actions',
           classes: 'w-24',
-        }
+        },
       ],
-    }
+    };
   },
 
   computed: {
-    ...mapGetters('Redirections', ['redirections'])
+    ...mapGetters('Redirections', ['redirections']),
   },
 
   methods: {
     ...mapActions('Redirections', ['fetchRedirections', 'removeRedirection', 'setRedirectionsQuery']),
 
-    setQuery: function (args) {
-      this.setRedirectionsQuery(args)
-      this.fetchRedirections()
+    setQuery(args) {
+      this.setRedirectionsQuery(args);
+      this.fetchRedirections();
     },
 
-    confirmRemove: function (redirection) {
-      this.removeRedirection(redirection)
-    }
+    confirmRemove(redirection) {
+      this.removeRedirection(redirection);
+    },
   },
 
   created() {
-    this.setRedirectionsQuery({})
-    this.fetchRedirections()
+    this.setRedirectionsQuery({});
+    this.fetchRedirections();
   },
 
   components: {
@@ -126,6 +126,6 @@ export default {
     Filters,
     Confirm,
     Button,
-  }
-}
+  },
+};
 </script>

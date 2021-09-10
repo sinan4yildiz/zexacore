@@ -5,8 +5,8 @@
     <Offline></Offline>
 
     <!-- Checking for authentication -->
-    <div v-if="verifying" class="w-full min-h-screen flex items-center justify-center flex-col">
-      <svg class="w-5 h-5 sm:w-6 sm:h-6 animate-spin animate-spin-fast text-blue-600">
+    <div v-if="verifying" class="flex flex-col justify-center items-center w-full min-h-screen">
+      <svg class="w-5 sm:w-6 h-5 sm:h-6 text-blue-600 animate-spin-fast">
         <use xlink:href="#icon-loading"></use>
       </svg>
       <div class="mt-4 text-sm font-light text-gray-600">{{ $t('common.please_wait') }}</div>
@@ -22,25 +22,25 @@
     <Snackbar></Snackbar>
 
     <!-- SVG library -->
-    <SVGLibrary></SVGLibrary>
+    <SVGLib></SVGLib>
   </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
-import Authenticated from "./layouts/Authenticated"
-import Unauthenticated from "./layouts/Unauthenticated"
-import Offline from "./components/elements/Offline"
-import SVGLibrary from "./components/SVGLibrary"
-import Snackbar from "./components/elements/Snackbar"
+import { mapActions, mapGetters } from 'vuex';
+import Authenticated from './layouts/Authenticated.vue';
+import Unauthenticated from './layouts/Unauthenticated.vue';
+import Offline from './components/elements/Offline.vue';
+import SVGLib from './components/SVGLib.vue';
+import Snackbar from './components/elements/Snackbar.vue';
 
 export default {
-  name: "App",
+  name: 'App',
 
   data() {
     return {
-      verifying: true
-    }
+      verifying: true,
+    };
   },
 
   computed: {
@@ -51,47 +51,50 @@ export default {
     ...mapActions('App', ['initApp']),
     ...mapActions('Auth', ['verifyAuth']),
 
-    setMetaTitle: function (route) {
-      if(this.$route.matched.length) {
-        this.metaTitle = route.meta.title || this.$route.matched[0].meta.title
+    setMetaTitle(route) {
+      if (this.$route.matched.length) {
+        this.metaTitle = route.meta.title || this.$route.matched[0].meta.title;
 
-        document.title = this.metaTitle
+        document.title = this.metaTitle;
       }
     },
   },
 
   watch: {
     $route(to) {
-      this.setMetaTitle(to)
+      this.setMetaTitle(to);
     },
   },
 
   beforeMount() {
     /*
-    * Init app
-    *
-    * */
-    this.initApp()
+     * Init app
+     *
+     * */
+    this.initApp();
 
     /*
-    * Set settings on login
-    *
-    * */
-    this.$store.subscribe((mutation, state) => {
-      if(mutation.type == 'Auth/SET_AUTH') {
-        this.$store.commit('App/SET_SETTINGS', mutation.payload.settings)
+     * Set settings on login
+     *
+     * */
+    this.$store.subscribe((mutation) => {
+      if (mutation.type === 'Auth/SET_AUTH') {
+        this.$store.commit('App/SET_SETTINGS', mutation.payload.settings);
       }
-    })
+    });
 
     /*
-    * Verify authentication
-    *
-    * */
-    this.verifyAuth().finally(() => this.verifying = false)
+     * Verify authentication
+     *
+     * */
+    this.verifyAuth()
+      .finally(() => {
+        this.verifying = false;
+      });
   },
 
   mounted() {
-    this.setMetaTitle(this.$route)
+    this.setMetaTitle(this.$route);
   },
 
   components: {
@@ -99,7 +102,7 @@ export default {
     Snackbar,
     Authenticated,
     Unauthenticated,
-    SVGLibrary
-  }
-}
+    SVGLib,
+  },
+};
 </script>

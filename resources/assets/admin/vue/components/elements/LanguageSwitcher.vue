@@ -1,18 +1,18 @@
 <template>
   <Dropdown v-if="languages.data && languages.data.length > 1" width="w-40" class="md:order-first md:mr-3 ml-3 md:ml-0">
     <template #toggler>
-      <button type="button" class="flex align-items-center text-sm leading-5 font-medium focus:outline-none transition duration-150 ease-in-out py-2 px-2.5 sm:px-3 text-gray-600 bg-white border-gray-300 hover:text-gray-800 focus:border-blue-300 focus:shadow-outline-blue shadow-sm rounded-md border">
+      <button type="button" class="flex py-2 px-2.5 sm:px-3 text-sm font-medium leading-5 text-gray-600 hover:text-gray-800 bg-white rounded-md border border-gray-300 focus:border-blue-300 shadow-sm transition duration-150 ease-in-out focus:outline-none align-items-center focus:shadow-outline-blue">
         <svg class="w-6 h-5">
-          <use v-bind:xlink:href="'#flag-' + active"></use>
+          <use :xlink:href="'#flag-' + active"></use>
         </svg>
       </button>
     </template>
     <div slot="content" class="p-2">
-      <div class="mb-2 px-3 pt-1 pb-2 text-gray-500 font-light border-b border-gray-200 text-sm">{{ $t('language.select') }}</div>
-      <div v-for="(language) in languages.data" v-if="active != language.code">
+      <div class="px-3 pt-1 pb-2 mb-2 text-sm font-light text-gray-500 border-b border-gray-200">{{ $t('language.select') }}</div>
+      <div v-for="(language) in languages.data.filter(item => active != item.code)" :key="language.id">
         <Button @click="change(language.code)" theme="text-default" size="compact">
           <svg class="w-6 h-5">
-            <use v-bind:xlink:href="'#flag-' + language.code"></use>
+            <use :xlink:href="'#flag-' + language.code"></use>
           </svg>
           <span class="ml-2">{{ language.name }}</span>
         </Button>
@@ -22,21 +22,21 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import Dropdown from "./Dropdown"
-import Button from "../form/Button"
+import { mapGetters } from 'vuex';
+import Dropdown from './Dropdown.vue';
+import Button from '../form/Button.vue';
 
 export default {
-  name: "LanguageSwitcher",
+  name: 'LanguageSwitcher',
 
   props: {
     current: String,
   },
 
-  data: function () {
+  data() {
     return {
-      active: this.current
-    }
+      active: this.current,
+    };
   },
 
   computed: {
@@ -45,22 +45,22 @@ export default {
   },
 
   methods: {
-    change: function (code) {
-      this.active = code
+    change(code) {
+      this.active = code;
 
-      this.$emit('input', this.active)
+      this.$emit('input', this.active);
     },
   },
 
   created() {
-    if(!this.active) {
-      this.active = this.settings.default_language_code
+    if (!this.active) {
+      this.active = this.settings.default_language_code;
     }
   },
 
   components: {
     Dropdown,
-    Button
-  }
-}
+    Button,
+  },
+};
 </script>

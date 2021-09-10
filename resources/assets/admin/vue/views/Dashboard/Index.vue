@@ -20,22 +20,22 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import Statistics from "./Statistics"
-import Reports from "./Reports"
-import Activities from "./Activities"
-import Counts from "./Counts"
-import Messages from "./Messages"
+import { mapGetters } from 'vuex';
+import Statistics from './Statistics.vue';
+import Reports from './Reports.vue';
+import Activities from './Activities.vue';
+import Counts from './Counts.vue';
+import Messages from './Messages.vue';
 
 export default {
   name: 'DashboardIndex',
 
   data() {
-    return {}
+    return {};
   },
 
   computed: {
-    ...mapGetters('App', ['config', 'settings'])
+    ...mapGetters('App', ['config', 'settings']),
   },
 
   components: {
@@ -44,6 +44,6 @@ export default {
     Activities,
     Counts,
     Messages,
-  }
-}
+  },
+};
 </script>

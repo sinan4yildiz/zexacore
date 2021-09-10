@@ -17,14 +17,14 @@
 
 </body>
 <script type="text/javascript">
-    const appConfig = {
-        url: {
-            base: '{{ env('APP_URL') }}',
-            api: '{{ env('APP_URL') . 'api' }}',
-            admin: '{{ env('APP_URL'). env('APP_ADMIN_DIR') }}'
-        },
-        version: '{{ env('APP_VERSION') }}',
-    };
+  window.appConfig = {
+    url: {
+      base: '{{ env('APP_URL') }}',
+      api: '{{ env('APP_URL') . 'api' }}',
+      admin: '{{ env('APP_URL'). env('APP_ADMIN_DIR') }}',
+    },
+    version: '{{ env('APP_VERSION') }}',
+  };
 </script>
 <script src="{{ asset(mix('/assets/'. env('APP_ADMIN_DIR') .'/js/application.js')) }}"></script>
 </html>

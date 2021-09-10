@@ -1,35 +1,35 @@
 <template>
   <Modal @close="close" ref="modal">
-    <div class="bg-white shadow overflow-hidden rounded-lg">
-      <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">{{ details.subject }}</h3>
-        <time v-bind:title="details.created_at_raw" class="mt-1 max-w-2xl text-sm text-gray-500">{{ details.created_at }}</time>
+    <div class="overflow-hidden bg-white rounded-lg shadow">
+      <div class="py-5 px-4 sm:px-6">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">{{ details.subject }}</h3>
+        <time :title="details.created_at_raw" class="mt-1 max-w-2xl text-sm text-gray-500">{{ details.created_at }}</time>
       </div>
       <div class="border-t border-gray-300">
         <dl>
-          <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+          <div class="sm:grid sm:grid-cols-4 sm:gap-4 py-5 px-4 sm:px-6 bg-gray-50">
             <dt class="text-sm font-medium text-gray-600">{{ $t('messages.details.name') }}</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">{{ details.name }}</dd>
+            <dd class="sm:col-span-3 mt-1 sm:mt-0 text-sm text-gray-900">{{ details.name }}</dd>
           </div>
-          <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+          <div class="sm:grid sm:grid-cols-4 sm:gap-4 py-5 px-4 sm:px-6 bg-white">
             <dt class="text-sm font-medium text-gray-600">{{ $t('messages.details.email') }}</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">{{ details.email }}</dd>
+            <dd class="sm:col-span-3 mt-1 sm:mt-0 text-sm text-gray-900">{{ details.email }}</dd>
           </div>
-          <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+          <div class="sm:grid sm:grid-cols-4 sm:gap-4 py-5 px-4 sm:px-6 bg-gray-50">
             <dt class="text-sm font-medium text-gray-600">{{ $t('messages.details.telephone') }}</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">{{ details.telephone }}</dd>
+            <dd class="sm:col-span-3 mt-1 sm:mt-0 text-sm text-gray-900">{{ details.telephone }}</dd>
           </div>
-          <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+          <div class="sm:grid sm:grid-cols-4 sm:gap-4 py-5 px-4 sm:px-6 bg-white">
             <dt class="text-sm font-medium text-gray-600">{{ $t('messages.details.sent_at') }}</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">{{ details.created_at_raw }}</dd>
+            <dd class="sm:col-span-3 mt-1 sm:mt-0 text-sm text-gray-900">{{ details.created_at_raw }}</dd>
           </div>
-          <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+          <div class="sm:grid sm:grid-cols-4 sm:gap-4 py-5 px-4 sm:px-6 bg-gray-50">
             <dt class="text-sm font-medium text-gray-600">{{ $t('messages.details.message') }}</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">{{ details.text }}</dd>
+            <dd class="sm:col-span-3 mt-1 sm:mt-0 text-sm text-gray-900">{{ details.text }}</dd>
           </div>
         </dl>
       </div>
-      <div class="px-5 py-4 flex border-t border-gray-300">
+      <div class="flex py-4 px-5 border-t border-gray-300">
         <Button @click="reply" theme="blue" :label="$t('common.reply')" icon="reply"/>
         <Button @click="close" theme="default" :label="$t('common.close')" class="ml-3"/>
       </div>
@@ -38,33 +38,33 @@
 </template>
 
 <script>
-import {mixin as clickaway} from "vue-clickaway"
-import Button from "../../components/form/Button"
-import Modal from "../../components/elements/Modal"
+import { mixin as clickaway } from 'vue-clickaway';
+import Button from '../../components/form/Button.vue';
+import Modal from '../../components/elements/Modal.vue';
 
 export default {
-  name: "MessageDetails",
+  name: 'MessageDetails',
 
   data() {
     return {
-      details: false
-    }
+      details: false,
+    };
   },
 
   methods: {
-    reply: function () {
-      window.location.href = 'mailto:' + this.details.email + '?subject=RE: ' + this.details.subject
+    reply() {
+      window.location.href = `mailto:${this.details.email}?subject=RE: ${this.details.subject}`;
     },
 
-    close: function () {
-      this.details = false
-    }
+    close() {
+      this.details = false;
+    },
   },
 
   watch: {
-    details: function () {
-      this.$refs.modal.isOpen = Boolean(this.details)
-    }
+    details() {
+      this.$refs.modal.isOpen = Boolean(this.details);
+    },
   },
 
   components: {
@@ -73,7 +73,7 @@ export default {
   },
 
   mixins: [
-    clickaway
+    clickaway,
   ],
-}
+};
 </script>

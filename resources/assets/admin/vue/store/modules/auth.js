@@ -1,66 +1,68 @@
-const state = {
-    me: undefined,
-    token: localStorage.getItem('authToken') || undefined,
-}
+const defState = {
+  me: undefined,
+  token: localStorage.getItem('authToken') || undefined,
+};
 
 const getters = {
-    me: (state) => state.me,
-    token: (state) => state.token,
-    isAuthenticated: (state) => typeof state.token === 'string',
-}
+  me: (state) => state.me,
+  token: (state) => state.token,
+  isAuthenticated: (state) => typeof state.token === 'string',
+};
 
 const actions = {
-    async verifyAuth({commit}) {
-        await axios.post('auth/verify')
-                   .then(response => {
-                       commit('SET_AUTH', response.data)
-                   })
-                   .catch((error) => {
-                       commit('REVOKE_AUTH')
-                   })
-    },
+  async verifyAuth(context) {
+    await axios
+      .post('auth/verify')
+      .then((response) => {
+        context.commit('SET_AUTH', response.data);
+      })
+      .catch(() => {
+        context.commit('REVOKE_AUTH');
+      });
+  },
 
-    async userLogin({commit}, credentials) {
-        await axios.post('auth/login', credentials)
-                   .then(response => {
-                       commit('SET_AUTH', response.data)
-                   })
-    },
+  async userLogin(context, credentials) {
+    await axios
+      .post('auth/login', credentials)
+      .then((response) => {
+        context.commit('SET_AUTH', response.data);
+      });
+  },
 
-    async userLogout({commit}) {
-        await axios.post('auth/logout')
-                   .finally(() => {
-                       commit('REVOKE_AUTH')
-                   })
-    },
-}
+  async userLogout(context) {
+    await axios
+      .post('auth/logout')
+      .finally(() => {
+        context.commit('REVOKE_AUTH');
+      });
+  },
+};
 
 const mutations = {
-    SET_AUTH: (state, data) => {
+  SET_AUTH(state, data) {
+    // Populate states
+    state.me = data.user;
+    state.token = data.token;
 
-        // Populate states
-        state.me = data.user
-        state.token = data.token
+    // Set auth request header
+    window.axios.defaults.headers.common.Authorization = `Bearer ${state.token}`;
 
-        // Set auth request header
-        window.axios.defaults.headers.common['Authorization'] = `Bearer ${state.token}`
+    // Store the token
+    localStorage.setItem('authToken', state.token);
+  },
 
-        // Store the token
-        localStorage.setItem('authToken', state.token)
-    },
+  REVOKE_AUTH(state) {
+    state.me = undefined;
+    state.token = undefined;
 
-    REVOKE_AUTH: (state) => {
-        state.me = undefined
-        state.token = undefined
-
-        localStorage.removeItem('authToken')
-    },
-}
+    localStorage.removeItem('authToken');
+  },
+};
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+  namespaced: true,
+  state: defState,
+  getters,
+  actions,
+  mutations,
+};

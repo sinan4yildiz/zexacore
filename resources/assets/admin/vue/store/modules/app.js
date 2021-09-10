@@ -1,67 +1,54 @@
-const state = {
-    config: undefined,
-    settings: undefined,
-    snackbar: {},
-}
+const defState = {
+  config: undefined,
+  settings: undefined,
+};
 
 const getters = {
-    config: state => state.config,
-    settings: state => state.settings,
-    getSnackbar: (state) => state.snackbar,
-}
+  config: (state) => state.config,
+  settings: (state) => state.settings,
+};
 
 const actions = {
+  /*
+   * Initialize application
+   *
+   * */
+  async initApp(context) {
+
+    // Set config
+    context.commit('SET_CONFIG', window.appConfig);
+
     /*
-    * Initialize application
-    *
-    * */
-    async initApp({commit}) {
-
-        // Set config
-        commit('SET_CONFIG', appConfig)
-
-        /*
-        * and the other things
-        *
-        * */
-
-    },
-
-    setSnackbar({commit}, object) {
-        commit('setSnackbar', object)
-    },
-
-    closeSnackbar({commit}) {
-        commit('setSnackbar', {})
-    },
-}
+     * and the other operations
+     *
+     * */
+  },
+};
 
 const mutations = {
-    SET_CONFIG(state, data) {
-        state.config = data
-    },
+  SET_CONFIG(state, data) {
+    state.config = data;
+  },
 
-    SET_SETTINGS(state, data) {
-        state.settings = _.mapValues(data, (item) => {
-            if(item === '0' || item === '1') {
-                return Boolean(Number(item))
-            }
+  SET_SETTINGS(state, data) {
+    state.settings = _.mapValues(data, (item) => {
+      if (item === '0' || item === '1') {
+        return Boolean(Number(item));
+      }
 
-            return item
-        })
-    },
+      return item;
+    });
+  },
 
-    FLUSH_SETTINGS(state, data) {
-        state.settings = undefined
-    },
-
-    setSnackbar: (state, snackbar) => (state.snackbar = snackbar),
-}
+  FLUSH_SETTINGS(state) {
+    state.settings = undefined;
+  },
+};
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+  namespaced: true,
+  state: defState,
+  getters,
+  actions,
+  mutations,
+};

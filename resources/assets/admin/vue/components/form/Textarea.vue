@@ -1,56 +1,63 @@
 <template>
-  <div class="field w-full" v-bind:class="classes">
+  <div class="w-full" :class="classes">
     <label v-if="label"
            :for="name"
-           v-bind:class="{'required': required}"
-           class="block text-sm font-medium leading-5 text-gray-700 mb-1 ml-1 select-none">{{ label }}</label>
+           :class="{'required': required}"
+           class="block mb-1 ml-1 text-sm font-medium leading-5 text-gray-700 select-none">{{ label }}</label>
     <div class="relative">
-      <textarea v-model="inputValue"
+      <textarea v-model="textareaValue"
                 :name="name"
                 :id="name"
-                :placeholder="inputPlaceholder"
+                :placeholder="textareaPlaceholder"
                 v-bind="attr"
-                class="form-input block w-full px-4 py-3 text-sm border border-gray-400 focus:border-blue-400 focus:shadow-outline-blue rounded-md shadow-sm transition duration-150 ease-in-out"
-                v-bind:class="{'has-error': error}"></textarea>
+                class="block py-3 px-4 w-full text-sm rounded-md border border-gray-400 focus:border-blue-400 shadow-sm transition duration-150 ease-in-out form-input focus:shadow-outline-blue"
+                :class="{'has-error': error}"></textarea>
     </div>
-    <p v-if="error" v-text="error" class="mt-1 ml-1 text-red-600 text-xs"></p>
+    <p v-if="error" v-text="error" class="mt-1 ml-1 text-xs text-red-600"></p>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Textarea",
+  name: 'Textarea',
 
   props: ['name', 'label', 'placeholder', 'value', 'attr', 'required', 'classes', 'errors'],
 
-  data: function () {
+  data() {
     return {
-      inputValue: this.value,
-      inputPlaceholder: this.placeholder
-    }
+      textareaValue: this.value,
+      textareaPlaceholder: this.placeholder,
+      textareaErrors: this.errors,
+    };
   },
 
   computed: {
-    error: function () {
-      if(this.errors[this.name]) {
-        return this.errors[this.name][0];
+    error() {
+      if (this.textareaErrors[this.name]) {
+        return this.textareaErrors[this.name][0];
       }
+
+      return null;
+    },
+  },
+
+  watch: {
+    value() {
+      this.textareaValue = this.value;
+    },
+
+    errors() {
+      this.textareaErrors = this.errors;
+    },
+
+    textareaValue() {
+      this.textareaErrors[this.name] = false;
+      this.$emit('input', this.textareaValue);
     },
   },
 
   created() {
-    this.$emit('input', this.inputValue)
+    this.$emit('input', this.textareaValue);
   },
-
-  watch: {
-    value: function () {
-      this.inputValue = this.value
-    },
-
-    inputValue: function () {
-      this.errors[this.name] = false
-      this.$emit('input', this.inputValue)
-    }
-  },
-}
+};
 </script>

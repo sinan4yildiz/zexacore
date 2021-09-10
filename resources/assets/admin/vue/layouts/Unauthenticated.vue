@@ -8,19 +8,19 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "Unauthenticated",
+  name: 'Unauthenticated',
 
   data() {
     return {
-      display: false
-    }
+      display: false,
+    };
   },
 
   computed: {
-    ...mapGetters('Auth', ['isAuthenticated'])
+    ...mapGetters('Auth', ['isAuthenticated']),
   },
 
   beforeMount() {
@@ -31,13 +31,13 @@ export default {
     * If yes, redirect to the dashboard.
     *
     * */
-    if(this.$route.meta.requiresAuth === true && !this.isAuthenticated) {
-      this.$router.push({name: 'login'})
+    if (this.$route.meta.requiresAuth === true && !this.isAuthenticated) {
+      this.$router.push({ name: 'login' });
     }
   },
 
   mounted() {
-    this.display = true
-  }
-}
+    this.display = true;
+  },
+};
 </script>

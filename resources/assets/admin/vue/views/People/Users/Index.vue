@@ -1,49 +1,49 @@
 <template>
   <section>
-    <header class="flex justify-between flex-wrap items-center mb-4">
+    <header class="flex flex-wrap justify-between items-center mb-4">
       <!-- Page header -->
       <div class="w-3/4 md:w-48 xl:w-84">
-        <h1 class="mb-2 text-2xl lg:text-3xl font-lighter leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('users.heading.index') }}</h1>
+        <h1 class="mb-2 text-2xl lg:text-3xl leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('users.heading.index') }}</h1>
         <Breadcrumb></Breadcrumb>
       </div>
 
       <!-- Create new -->
-      <div class="md:ml-3 md:order-last">
+      <div class="md:order-last md:ml-3">
         <Button @click="$refs.create.$refs.modal.isOpen = true" theme="blue" :label="$screen.md ? $t('common.create_new') : null" icon="plus"/>
       </div>
 
-      <div class="flex items-center flex-grow md:flex-grow-0 md:ml-auto mt-3 md:mt-0">
+      <div class="flex flex-grow md:flex-grow-0 items-center mt-3 md:mt-0 md:ml-auto">
         <!-- Filters -->
         <Filters :search="true" :filters="['status', 'date-start', 'date-end']" @apply="setQuery($event)"/>
       </div>
     </header>
 
     <Table :meta="users.meta" :columns="columns" @query="setQuery($event)">
-      <tr v-for="user in users.data" has-action="true">
-        <td class="px-6 py-4">
+      <tr v-for="user in users.data" :key="user.id" has-action="true">
+        <td class="py-4 px-6">
           <div class="flex items-start">
-            <div class="hidden lg:flex flex-shrink-0 items-center justify-center w-10 h-10 rounded-3xl text-gray-500 bg-gray-200 tracking-widest">
+            <div class="hidden lg:flex flex-shrink-0 justify-center items-center w-10 h-10 tracking-widest text-gray-500 bg-gray-200 rounded-3xl">
               {{ user.firstname.slice(0, 1) + user.lastname.slice(0, 1) }}
             </div>
             <div class="lg:ml-5">
               <div class="text-sm font-bold text-gray-900">
                 {{ user.firstname }} {{ user.lastname }}
               </div>
-              <div class="text-xs leading-5 font-light text-gray-600">{{ user.title }}</div>
+              <div class="text-xs font-light leading-5 text-gray-600">{{ user.title }}</div>
             </div>
           </div>
         </td>
-        <td class="px-6 py-4">
+        <td class="py-4 px-6">
           <div class="text-sm text-gray-600 break-all">{{ user.email }}</div>
         </td>
-        <td class="px-6 py-4">
-          <span v-if="user.is_active" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-md bg-green-100 text-green-900">{{ $t('common.active') }}</span>
-          <span v-else class="px-2 inline-flex text-xs leading-5 font-semibold rounded-md bg-red-100 text-red-600">{{ $t('common.inactive') }}</span>
+        <td class="py-4 px-6">
+          <span v-if="user.is_active" class="inline-flex px-2 text-xs font-semibold leading-5 text-green-900 bg-green-100 rounded-md">{{ $t('common.active') }}</span>
+          <span v-else class="inline-flex px-2 text-xs font-semibold leading-5 text-red-600 bg-red-100 rounded-md">{{ $t('common.inactive') }}</span>
         </td>
-        <td class="px-6 py-4 text-sm leading-5 text-gray-500">
-          <time v-bind:title="user.created_at_raw">{{ user.created_at }}</time>
+        <td class="py-4 px-6 text-sm leading-5 text-gray-500">
+          <time :title="user.created_at_raw">{{ user.created_at }}</time>
         </td>
-        <td class="px-6 py-4 text-right text-sm leading-5 font-medium">
+        <td class="py-4 px-6 text-sm font-medium leading-5 text-right">
           <button v-if="$screen.lg && user.id == me.id" @click="$refs.edit.data = user" type="button" class="text-indigo-600 hover:text-indigo-800 focus:outline-none whitespace-no-wrap">{{ $t('account.profile') }}</button>
           <Dropdown v-else width="w-48" class="inline-block">
             <template #toggler>
@@ -75,15 +75,15 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
-import Breadcrumb from "../../../components/elements/Breadcrumb";
-import Create from "./Create";
-import Edit from "./Edit";
-import Table from "../../../components/elements/Table";
-import Dropdown from "../../../components/elements/Dropdown";
-import Filters from "../../../components/elements/Filters";
-import Confirm from "../../../components/elements/Confirm";
-import Button from "../../../components/form/Button";
+import { mapGetters, mapActions } from 'vuex';
+import Breadcrumb from '../../../components/elements/Breadcrumb.vue';
+import Create from './Create.vue';
+import Edit from './Edit.vue';
+import Table from '../../../components/elements/Table.vue';
+import Dropdown from '../../../components/elements/Dropdown.vue';
+import Filters from '../../../components/elements/Filters.vue';
+import Confirm from '../../../components/elements/Confirm.vue';
+import Button from '../../../components/form/Button.vue';
 
 export default {
   name: 'UsersIndex',
@@ -114,9 +114,9 @@ export default {
         {
           field: 'actions',
           classes: 'w-24',
-        }
+        },
       ],
-    }
+    };
   },
 
   computed: {
@@ -127,24 +127,24 @@ export default {
   methods: {
     ...mapActions('Users', ['fetchUsers', 'activateUser', 'deactivateUser', 'removeUser', 'setUsersQuery']),
 
-    setQuery: function (args) {
-      this.setUsersQuery(args)
-      this.fetchUsers()
+    setQuery(args) {
+      this.setUsersQuery(args);
+      this.fetchUsers();
     },
 
-    confirmRemove: function (user) {
-      this.removeUser(user)
-    }
+    confirmRemove(user) {
+      this.removeUser(user);
+    },
   },
 
   created() {
-    this.setUsersQuery({})
-    this.fetchUsers()
+    this.setUsersQuery({});
+    this.fetchUsers();
 
-    if(this.editMe) {
+    if (this.editMe) {
       _.delay(() => {
-        this.$refs.edit.data = this.editMe
-      }, 300)
+        this.$refs.edit.data = this.editMe;
+      }, 300);
     }
   },
 
@@ -157,6 +157,6 @@ export default {
     Filters,
     Confirm,
     Button,
-  }
-}
+  },
+};
 </script>

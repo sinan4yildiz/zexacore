@@ -1,9 +1,9 @@
 <template>
   <section>
-    <header class="flex justify-between flex-wrap items-center mb-4">
+    <header class="flex flex-wrap justify-between items-center mb-4">
       <!-- Page header -->
       <div class="w-3/4 md:w-48 xl:w-84">
-        <h1 class="mb-2 text-2xl lg:text-3xl font-lighter leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('categories.heading.index') }}</h1>
+        <h1 class="mb-2 text-2xl lg:text-3xl leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('categories.heading.index') }}</h1>
         <Breadcrumb></Breadcrumb>
       </div>
 
@@ -16,36 +16,36 @@
     <ContentTypeBar :current="contentType" @change="changeContentType($event)"/>
 
     <Table :meta="categories.meta" :columns="columns" @query="setQuery($event)" v-sortable="{handle: 'td:first-child', onUpdate: orderCategories}">
-      <tr v-for="category in categories.data" v-bind:data-id="category.id" has-action="true" has-sorting="true">
-        <td class="bg-gray-50 text-gray-500 hover:text-gray-700 text-center cursor-move transition duration-150 ease-in-out">
+      <tr v-for="category in categories.data" :key="category.id" :data-id="category.id" has-action="true" has-sorting="true">
+        <td class="text-center text-gray-500 hover:text-gray-700 bg-gray-50 transition duration-150 ease-in-out cursor-move">
           <svg class="w-4 h-4">
             <use xlink:href="#icon-6dots-solid"></use>
           </svg>
         </td>
-        <td class="px-6 py-4">
-          <button type="button" @click="changeParent(category.id)" class="text-sm font-bold text-gray-900 hover:text-blue-600 focus:outline-none transition duration-150 ease-in-out">
+        <td class="py-4 px-6">
+          <button type="button" @click="changeParent(category.id)" class="text-sm font-bold text-gray-900 hover:text-blue-600 transition duration-150 ease-in-out focus:outline-none">
             {{ category.translation.title }}
           </button>
-          <div v-if="category.translation.description_plain" class="text-xs leading-5 font-light text-gray-600">
+          <div v-if="category.translation.description_plain" class="text-xs font-light leading-5 text-gray-600">
             {{ category.translation.description_plain }}
           </div>
         </td>
-        <td class="px-6 py-4 text-center">
+        <td class="py-4 px-6 text-center">
           <ul>
-            <li v-for="(language) in languages.data" class="inline-block mr-1 lg:m-0.5 cursor-pointer">
+            <li v-for="language in languages.data" :key="language.id" class="inline-block lg:m-0.5 mr-1 cursor-pointer">
               <RouterLink :to="{name: 'categories.edit', params: {id: category.id, language: language.code}}" class="block leading-4">
-                <svg class="w-6 h-5 hover:opacity-100 transition duration-150 ease-in-out" v-bind:class="{'opacity-50': !hasTranslation(category, language.code)}">
-                  <use v-bind:xlink:href="'#flag-' + language.code"></use>
+                <svg class="w-6 h-5 hover:opacity-100 transition duration-150 ease-in-out" :class="{'opacity-50': !hasTranslation(category, language.code)}">
+                  <use :xlink:href="'#flag-' + language.code"></use>
                 </svg>
               </RouterLink>
             </li>
           </ul>
         </td>
-        <td class="px-6 py-4">
-          <span v-if="category.is_active" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-md bg-green-100 text-green-900">{{ $t('common.active') }}</span>
-          <span v-else class="px-2 inline-flex text-xs leading-5 font-semibold rounded-md bg-red-100 text-red-600">{{ $t('common.inactive') }}</span>
+        <td class="py-4 px-6">
+          <span v-if="category.is_active" class="inline-flex px-2 text-xs font-semibold leading-5 text-green-900 bg-green-100 rounded-md">{{ $t('common.active') }}</span>
+          <span v-else class="inline-flex px-2 text-xs font-semibold leading-5 text-red-600 bg-red-100 rounded-md">{{ $t('common.inactive') }}</span>
         </td>
-        <td class="px-6 py-4 text-right text-sm leading-5 font-medium">
+        <td class="py-4 px-6 text-sm font-medium leading-5 text-right">
           <Dropdown width="w-48" class="inline-block">
             <template #toggler>
               <Button theme="action" size="large" icon="3dots-solid"/>
@@ -70,14 +70,13 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
-import Breadcrumb from "../../../components/elements/Breadcrumb"
-import Table from "../../../components/elements/Table"
-import Dropdown from "../../../components/elements/Dropdown"
-import Filters from "../../../components/elements/Filters"
-import Confirm from "../../../components/elements/Confirm"
-import Button from "../../../components/form/Button"
-import ContentTypeBar from "../../../components/elements/ContentTypeBar"
+import { mapActions, mapGetters } from 'vuex';
+import Breadcrumb from '../../../components/elements/Breadcrumb.vue';
+import Table from '../../../components/elements/Table.vue';
+import Dropdown from '../../../components/elements/Dropdown.vue';
+import Confirm from '../../../components/elements/Confirm.vue';
+import Button from '../../../components/form/Button.vue';
+import ContentTypeBar from '../../../components/elements/ContentTypeBar.vue';
 
 export default {
   name: 'CategoriesIndex',
@@ -107,9 +106,9 @@ export default {
         {
           field: 'actions',
           classes: 'w-24',
-        }
+        },
       ],
-    }
+    };
   },
 
   computed: {
@@ -120,42 +119,44 @@ export default {
   methods: {
     ...mapActions('Categories', ['fetchCategories', 'fetchParent', 'activateCategory', 'deactivateCategory', 'removeCategory', 'orderCategories', 'setCategoriesQuery', 'setContentType', 'clearCategories', 'clearParent']),
 
-    hasTranslation: function (item, code) {
-      return _.map(item.translations, 'language_code').includes(code)
+    hasTranslation(item, code) {
+      return _.map(item.translations, 'language_code').includes(code);
     },
 
-    changeContentType: function (item) {
-      if(item) {
-        this.clearParent()
-        this.clearCategories()
-        this.setContentType(item)
+    changeContentType(item) {
+      if (item) {
+        this.clearParent();
+        this.clearCategories();
+        this.setContentType(item);
       }
 
-      this.setQuery()
+      this.setQuery();
     },
 
-    changeParent: function (id) {
-      this.clearCategories()
+    changeParent(id) {
+      this.clearCategories();
 
-      if(id == 0) {
-        this.clearParent()
-        return this.setQuery({parent_id: 0, content_type_id: this.contentType.id})
+      if (id === 0) {
+        this.clearParent();
+        return this.setQuery({ parent_id: 0, content_type_id: this.contentType.id });
       }
 
       this.fetchParent(id)
-          .then((response) => {
-            this.setQuery({parent_id: this.parent.id, content_type_id: 0})
-          })
+        .then(() => {
+          this.setQuery({ parent_id: this.parent.id, content_type_id: 0 });
+        });
+
+      return null;
     },
 
-    setQuery: function (args) {
-      this.setCategoriesQuery(args)
-      this.fetchCategories()
+    setQuery(args) {
+      this.setCategoriesQuery(args);
+      this.fetchCategories();
     },
 
-    confirmRemove: function (category) {
-      this.removeCategory(category)
-    }
+    confirmRemove(category) {
+      this.removeCategory(category);
+    },
   },
 
   components: {
@@ -163,9 +164,8 @@ export default {
     Breadcrumb,
     Table,
     Dropdown,
-    Filters,
     Confirm,
     Button,
-  }
-}
+  },
+};
 </script>

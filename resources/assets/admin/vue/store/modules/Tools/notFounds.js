@@ -1,50 +1,56 @@
-const state = {
-    notFounds: {},
-    query: {},
-}
+const defState = {
+  notFounds: {},
+  query: {},
+};
 
 const getters = {
-    notFounds: (state) => state.notFounds,
-}
+  notFounds: (state) => state.notFounds,
+};
 
 const actions = {
-    async fetchNotFounds({commit, state}) {
-        await axios.get('not-founds', {
-                       params: state.query
-                   })
-                   .then(response => {
-                       commit('mutateAll', response.data);
-                   });
-    },
-    async removeNotFound({commit, dispatch}, notFound) {
-        await axios.delete('not-founds/remove/' + notFound.id)
-                   .then((response) => {
-                       dispatch('fetchNotFounds')
-                   });
-    },
-    setNotFoundsQuery({commit}, query) {
-        commit('mutateQuery', _.cloneDeep(query))
-    },
-}
+  async fetchNotFounds(context) {
+    await axios
+      .get('not-founds', {
+        params: context.state.query,
+      })
+      .then((response) => {
+        context.commit('SET_LIST', response.data);
+      });
+  },
+  async removeNotFound(context, notFound) {
+    await axios
+      .delete(`not-founds/remove/${notFound.id}`)
+      .then(() => {
+        context.dispatch('fetchNotFounds');
+      });
+  },
+  setNotFoundsQuery(context, query) {
+    context.commit('SET_QUERY', _.cloneDeep(query));
+  },
+};
 
 const mutations = {
-    mutateAll: (state, notFounds) => (state.notFounds = notFounds),
-    mutateUpdated: (state, updated) => {
-        const index = state.notFounds.data.findIndex(notFound => notFound.id === updated.data.id);
+  SET_LIST(state, notFounds) {
+    state.notFounds = notFounds;
+  },
 
-        if(index !== -1) {
-            state.notFounds.data.splice(index, 1, updated.data);
-        }
-    },
-    mutateQuery: (state, query) => {
-        state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
-    },
-}
+  SET_UPDATED(state, updated) {
+    const index = state.notFounds.data.findIndex((notFound) => notFound.id === updated.data.id);
+
+    if (index !== -1) {
+      state.notFounds.data.splice(index, 1, updated.data);
+    }
+  },
+
+  SET_QUERY(state, query) {
+    state.query = _.pickBy(_.size(query) ? Object.assign(state.query, query) : {}, _.identity);
+  },
+};
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+  namespaced: true,
+  state: defState,
+  getters,
+  actions,
+  mutations,
+};

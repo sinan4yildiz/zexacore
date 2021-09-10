@@ -1,8 +1,8 @@
 <template>
   <div>
-    <ul class="flex items-center rounded-lg shadow bg-white p-3">
-      <li v-for="(tab, index) in tabs">
-        <button @click="handle(index)" type="button" v-bind:class="classes(index)" class="px-6 py-3 leading-4 rounded-lg focus:outline-none transition duration-150 ease-in-out">
+    <ul class="flex items-center p-3 bg-white rounded-lg shadow">
+      <li v-for="(tab, index) in tabs" :key="index">
+        <button @click="handle(index)" type="button" :class="classes(index)" class="py-3 px-6 leading-4 rounded-lg transition duration-150 ease-in-out focus:outline-none">
           {{ $t('maintenance.tabs.' + tab.name) }}
         </button>
       </li>
@@ -15,55 +15,53 @@
 
 <script>
 export default {
-  name: "TabGroup",
+  name: 'TabGroup',
 
   props: {
-    active: String
+    active: String,
   },
 
   data() {
     return {
       tabs: Array,
-      activeIndex: 0
-    }
+      activeIndex: 0,
+    };
   },
 
   methods: {
-    classes: function (index) {
-      let c = []
+    classes(index) {
+      const c = [];
 
-      if(index == this.activeIndex) {
-        c.push('text-indigo-600 bg-indigo-100')
+      if (index === this.activeIndex) {
+        c.push('text-indigo-600 bg-indigo-100');
       } else {
-        c.push('text-gray-600 hover:text-indigo-600')
+        c.push('text-gray-600 hover:text-indigo-600');
       }
 
-      return c.join(' ')
+      return c.join(' ');
     },
 
-    handle: function (index) {
-      this.activeIndex = index
+    handle(index) {
+      this.activeIndex = index;
 
       this.tabs.forEach((tabItem, i) => {
-        tabItem.active = (i === index)
+        tabItem.active = (i === index);
 
-        if(i == index) {
-          tabItem.$emit('action')
+        if (i === index) {
+          tabItem.$emit('action');
         }
-      })
-    }
+      });
+    },
   },
 
   mounted() {
-    this.tabs = this.$children
+    this.tabs = this.$children;
 
-    if(this.active) {
-      this.handle(_.findIndex(this.tabs, (i) => {
-        return i.name == this.active
-      }))
+    if (this.active) {
+      this.handle(this.tabs.findIndex((i) => i.name === this.active));
     } else {
-      this.handle(this.activeIndex)
+      this.handle(this.activeIndex);
     }
-  }
-}
+  },
+};
 </script>

@@ -1,9 +1,9 @@
 <template>
-  <div v-on-clickaway="close" class="field w-full relative" v-bind:class="classes">
+  <div class="relative w-full" :class="classes" v-on-clickaway="close">
     <label v-if="label"
            :for="name"
-           v-bind:class="{'required': required}"
-           class="block text-sm font-medium leading-5 text-gray-700 mb-1 ml-1 select-none">{{ label }}</label>
+           :class="{'required': required}"
+           class="block mb-1 ml-1 text-sm font-medium leading-5 text-gray-700 select-none">{{ label }}</label>
     <div class="relative">
       <input v-model="inputKeyword"
              type="text"
@@ -13,10 +13,10 @@
              @keyup="search"
              @focusin="isOpen = true"
              v-bind="attr"
-             v-bind:class="{'has-error': error, 'rounded-tl-md rounded-tr-md rounded-bl-none rounded-br-none': selectedItems.length, 'rounded-md': !selectedItems.length}"
-             class="form-input block w-full px-4 py-3 text-sm border border-gray-400 focus:border-blue-400 focus:shadow-outline-blue shadow-sm transition duration-150 ease-in-out pr-12"
+             :class="{'has-error': error, 'rounded-tl-md rounded-tr-md rounded-bl-none rounded-br-none': selectedItems.length, 'rounded-md': !selectedItems.length}"
+             class="block py-3 px-4 pr-12 w-full text-sm border border-gray-400 focus:border-blue-400 shadow-sm transition duration-150 ease-in-out form-input focus:shadow-outline-blue"
              autocomplete="off">
-      <label :for="name" class="flex items-center absolute top-0 right-0 bottom-0 px-4 py-3 text-gray-400">
+      <label :for="name" class="flex absolute top-0 right-0 bottom-0 items-center py-3 px-4 text-gray-400">
         <svg class="w-5 h-5 transition duration-300 ease-out">
           <use xlink:href="#icon-search-solid"></use>
         </svg>
@@ -29,13 +29,13 @@
         leave-active-class="transition ease-in duration-75 transform"
         leave-class="opacity-100 scale-100"
         leave-to-class="opacity-0 scale-95">
-      <div v-if="isOpen && results !== false" class="origin-top-left absolute left-0 right-0 mt-2 shadow-lg rounded-md z-10">
-        <ul v-if="results.length" class="rounded-md bg-white py-2 shadow-xs">
-          <li v-for="(item, index) in results">
-            <button @click="select(item)" type="button" class="flex items-center w-full px-4 py-2 text-sm leading-5 text-left hover:bg-gray-100 focus:bg-gray-200 focus:outline-none transition duration-150 ease-in-out">
-              <span v-for="(parent) in item.parents" class="text-gray-600">
+      <div v-if="isOpen && results !== false" class="absolute right-0 left-0 z-10 mt-2 rounded-md shadow-lg origin-top-left">
+        <ul v-if="results.length" class="py-2 bg-white rounded-md shadow-xs">
+          <li v-for="(item, index) in results" :key="index">
+            <button @click="select(item)" type="button" class="flex items-center py-2 px-4 w-full text-sm leading-5 text-left hover:bg-gray-100 focus:bg-gray-200 transition duration-150 ease-in-out focus:outline-none">
+              <span v-for="(parent, index) in item.parents" :key="index" class="text-gray-600">
                 {{ parent.text }}
-                <svg class="w-3.5 h-3.5 fill-current ml-3 transform -translate-x-2 -rotate-90">
+                <svg class="ml-3 w-3.5 h-3.5 transform -rotate-90 -translate-x-2 fill-current">
                   <use xlink:href="#icon-chevron-solid"></use>
                 </svg>
               </span>
@@ -43,120 +43,118 @@
             </button>
           </li>
         </ul>
-        <div v-else class="px-4 py-3 text-sm text-gray-600 leading-5 text-left rounded-md bg-white py-2 shadow-xs">{{ $t('message.nothing_found') }}</div>
+        <div v-else class="py-3 px-4 text-sm leading-5 text-left text-gray-600 bg-white rounded-md shadow-xs">{{ $t('message.nothing_found') }}</div>
       </div>
     </transition>
-    <ul v-if="selectedItems.length" class="bg-gray-50 border border-gray-400 border-t-0 py-2.5 rounded-bl-md rounded-br-md leading-4">
-      <li v-for="(item, index) in selectedItems" class="flex items-ecnter justify-between relative px-4 py-2.5 text-gray-700 hover:text-black hover:bg-white cursor-default transition duration-150 ease-in-out">
-        <button @click="remove(index)" type="button" class="text-sm focus:outline-none hover:line-through hover:text-red-400">{{ item.text }}</button>
-        <button v-if="index > 0" type="button" @click="primary(index)" class="absolute top-0 right-0 bottom-0 px-4 text-gray-500 hover:text-blue-500 focus:outline-none transition duration-150 ease-in-out" title="Make primary">
+    <ul v-if="selectedItems.length" class="py-2.5 leading-4 bg-gray-50 rounded-br-md rounded-bl-md border border-t-0 border-gray-400">
+      <li v-for="(item, index) in selectedItems" :key="index" class="flex relative justify-between items-center py-2.5 px-4 text-gray-700 hover:text-black hover:bg-white transition duration-150 ease-in-out cursor-default">
+        <button @click="remove(index)" type="button" class="text-sm hover:text-red-400 hover:line-through focus:outline-none">{{ item.text }}</button>
+        <button v-if="index > 0" type="button" @click="primary(index)" class="absolute top-0 right-0 bottom-0 px-4 text-gray-500 hover:text-blue-500 transition duration-150 ease-in-out focus:outline-none" title="Make primary">
           <svg class="w-4 h-4 fill-current">
             <use xlink:href="#icon-arrow-up-solid"></use>
           </svg>
         </button>
       </li>
     </ul>
-    <p v-if="error" v-text="error" class="mt-1 ml-1 text-red-600 text-xs"></p>
+    <p v-if="error" v-text="error" class="mt-1 ml-1 text-xs text-red-600"></p>
   </div>
 </template>
 
 <script>
-import {mixin as clickaway} from "vue-clickaway"
+import { mixin as clickaway } from 'vue-clickaway';
 
 export default {
-  name: "MultiSelect",
+  name: 'MultiSelect',
 
   props: ['name', 'label', 'action', 'params', 'placeholder', 'selecteds', 'attr', 'required', 'classes', 'errors'],
 
-  data: function () {
+  data() {
     return {
       results: false,
       isOpen: false,
       inputKeyword: null,
       selectedItems: this.selecteds || [],
-    }
+    };
   },
 
   computed: {
-    error: function () {
-      if(this.errors[this.name]) {
+    error() {
+      if (this.errors[this.name]) {
         return this.errors[this.name][0];
       }
+
+      return null;
     },
-  },
-
-  created() {
-    this.emit()
-  },
-
-  watch: {
-    /*selecteds: function (n, o) {
-      this.selectedItems = this.selecteds
-    },*/
-
-    params: function (n, o) {
-      if(!_.isEqual(n, o)) {
-        this.results = false
-        this.inputKeyword = null
-        this.emit()
-      }
-    }
   },
 
   methods: {
     search: _.debounce(function () {
-      if(!this.inputKeyword) {
-        return this.close()
+      if (!this.inputKeyword) {
+        return this.close();
       }
 
-      this.$store.dispatch(this.action, _.merge({keyword: this.inputKeyword}, this.params))
-          .then((results) => {
-            this.results = results
-            this.isOpen = true
-          })
+      this.$store.dispatch(this.action, { keyword: this.inputKeyword, ...this.params })
+        .then((results) => {
+          this.results = results;
+          this.isOpen = true;
+        });
+
+      return null;
     }, 250),
 
-    select: function (item) {
-      this.inputKeyword = null
+    select(item) {
+      this.inputKeyword = null;
 
-      if(!_.map(this.selectedItems, 'value').includes(item.value)) {
+      if (!this.selectedItems.some((existing) => existing.value === item.value)) {
         this.selectedItems.push({
           value: item.value,
           text: item.text,
-        })
+        });
       }
 
-      this.emit()
-      this.close()
+      this.emit();
+      this.close();
     },
 
-    primary: function (index) {
-      _.swap(this.selectedItems, index, 0)
-      this.emit()
+    primary(index) {
+      this.$swap(this.selectedItems, index, 0);
+      this.emit();
     },
 
-    remove: function (index) {
-      this.selectedItems.splice(index, 1)
-      this.emit()
+    remove(index) {
+      this.selectedItems.splice(index, 1);
+      this.emit();
     },
 
-    clear: function () {
-      this.inputKeyword = null
-      this.selectedItems = []
-      this.emit()
+    clear() {
+      this.inputKeyword = null;
+      this.selectedItems = [];
+      this.emit();
     },
 
-    close: function () {
-      this.isOpen = false
+    close() {
+      this.isOpen = false;
     },
 
-    emit: function () {
-      this.$emit('input', this.selectedItems.flatMap(i => i.value))
-    }
+    emit() {
+      this.$emit('input', this.selectedItems.flatMap((i) => i.value));
+    },
+  },
+
+  watch: {
+    params() {
+      this.results = false;
+      this.inputKeyword = null;
+      this.emit();
+    },
+  },
+
+  created() {
+    this.emit();
   },
 
   mixins: [
-    clickaway
+    clickaway,
   ],
-}
+};
 </script>

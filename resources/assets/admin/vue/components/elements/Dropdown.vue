@@ -1,6 +1,6 @@
 <template>
-  <div class="dropdown relative" v-bind:class="{'open': isOpen}" v-on-clickaway="close">
-    <div @click="toggle" class="block select-none cursor-pointer">
+  <div class="relative dropdown" :class="{'open': isOpen}" v-on-clickaway="close">
+    <div @click="toggle" class="block cursor-pointer select-none">
       <slot name="toggler"></slot>
     </div>
     <transition
@@ -11,9 +11,9 @@
         leave-class="opacity-100 scale-100"
         leave-to-class="opacity-0 scale-95">
       <div v-if="isOpen"
-           v-bind:class="classes()"
+           :class="classes()"
            @click="keepOpen === false ? close() : null">
-        <div class="rounded-md bg-white shadow-xs text-left">
+        <div class="text-left bg-white rounded-md shadow-xs">
           <slot name="content"></slot>
         </div>
       </div>
@@ -22,10 +22,10 @@
 </template>
 
 <script>
-import {mixin as clickaway} from "vue-clickaway"
+import { mixin as clickaway } from 'vue-clickaway';
 
 export default {
-  name: "Dropdown",
+  name: 'Dropdown',
 
   props: {
     width: {
@@ -43,41 +43,41 @@ export default {
     responsive: {
       type: Boolean,
       default: false,
-    }
+    },
   },
 
   data() {
     return {
-      isOpen: false
-    }
+      isOpen: false,
+    };
   },
 
   methods: {
-    toggle: function () {
-      this.isOpen = !this.isOpen
+    toggle() {
+      this.isOpen = !this.isOpen;
     },
 
-    classes: function () {
-      let c = ['absolute mt-2 shadow-lg rounded-md z-30']
+    classes() {
+      const c = ['absolute mt-2 shadow-lg rounded-md z-30'];
 
-      c.push(this.width)
+      c.push(this.width);
 
-      if(this.orientation == 'left') {
-        c.push('origin-top-left left-0')
+      if (this.orientation === 'left') {
+        c.push('origin-top-left left-0');
       } else {
-        c.push('origin-top-right right-0')
+        c.push('origin-top-right right-0');
       }
 
-      return c
+      return c;
     },
 
-    close: function () {
-      this.isOpen = false
-    }
+    close() {
+      this.isOpen = false;
+    },
   },
 
   mixins: [
-    clickaway
+    clickaway,
   ],
-}
+};
 </script>

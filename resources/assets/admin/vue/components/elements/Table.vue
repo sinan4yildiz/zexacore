@@ -1,33 +1,34 @@
 <template>
   <article>
-    <table class="shadow rounded-lg min-w-full divide-y divide-gray-300 table-fixed table-responsive">
+    <!-- Table -->
+    <table class="min-w-full rounded-lg divide-y divide-gray-300 shadow table-fixed table-responsive">
       <thead>
       <tr>
-        <th v-for="(column, index) in columns"
+        <th v-for="(column, index) in columns" :key="index"
             @click="handleSorting(column)"
-            v-bind:class="columnClasses(column, index)"
+            :class="columnClasses(column, index)"
             scope="col"
-            class="px-6 pt-3.5 pb-3 bg-gray-50 text-left text-xs leading-5 font-medium text-gray-600 uppercase whitespace-no-wrap tracking-wider">
+            class="px-6 pt-3.5 pb-3 text-xs font-medium tracking-wider leading-5 text-left text-gray-600 uppercase bg-gray-50 whitespace-no-wrap">
           <div v-if="loading && column.title" class="py-1 min-w-20">
             <div class="bone thin"></div>
           </div>
           <div v-else>
             <span v-if="column.title" class="mr-2">{{ column.title }}</span>
             <svg v-if="column.field && column.field == (meta && meta.sorting.sorted)" class="w-4 h-4">
-              <use v-bind:xlink:href="'#icon-sort-' + meta.sorting.ordered"></use>
+              <use :xlink:href="'#icon-sort-' + meta.sorting.ordered"></use>
             </svg>
           </div>
         </th>
       </tr>
       </thead>
-      <tbody v-bind:class="{'loading': loading}" class="bg-white divide-y divide-gray-300">
+      <tbody :class="{'loading': loading}" class="bg-white divide-y divide-gray-300">
       <tr v-if="meta && !meta.total" class="nothing">
-        <td v-bind:colspan="columns.length" class="px-6 py-5 text-sm text-center bg-white text-gray-700 font-light leading-6 whitespace-no-wrap">
+        <td :colspan="columns.length" class="py-5 px-6 text-sm font-light leading-6 text-center text-gray-700 bg-white whitespace-no-wrap">
           {{ $t('message.no_results') }}
         </td>
       </tr>
-      <tr v-else-if="loading" v-for="n in 3">
-        <td v-for="column in columns.length" class="px-6 py-4">
+      <tr v-else-if="loading" v-for="n in 5" :key="n">
+        <td v-for="(index) in columns.length" :key="index" class="py-4 px-6">
           <div class="bone"></div>
         </td>
       </tr>
@@ -36,19 +37,20 @@
     </table>
 
     <!-- Pagination -->
-    <div v-if="meta && meta.total" class="grid grid-cols-2 gap-4 mt-5 px-2">
+    <div v-if="meta && meta.total" class="grid grid-cols-2 gap-4 px-2 mt-5">
       <!-- Pages -->
-      <nav v-if="meta.last_page > 1" class="col-span-2 md:col-span-1 md:order-last text-center md:text-right mt-4 md:mt-0 whitespace-no-wrap md:whitespace-normal p-1 md:p-0 overflow-x-auto md:overflow-visible">
-        <button v-if="page.label > 0" v-for="(page, index) in meta.links" type="button"
+      <nav v-if="meta.last_page > 1" class="md:overflow-visible overflow-x-auto md:order-last col-span-2 md:col-span-1 p-1 md:p-0 mt-4 md:mt-0 text-center md:text-right md:whitespace-normal whitespace-no-wrap">
+        <button v-for="(page, index) in pages" :key="page.label" type="button"
                 @click="handlePagination(page)"
-                class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-600 hover:text-blue-600 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 transition ease-in-out duration-150" v-bind:class="{'rounded-l-md': index == 1, 'rounded-r-md': index == meta.links.length - 2, 'bg-gray-50 text-blue-600 hover:text-blue-600': page.active, 'cursor-default': !page.url}">
+                class="inline-flex relative focus:z-10 items-center py-2 px-4 -ml-px text-sm font-medium text-gray-600 hover:text-blue-600 bg-white active:bg-gray-100 border border-gray-300 focus:border-blue-300 transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue"
+                :class="{'rounded-l-md': index == 0, 'rounded-r-md': index == pages.length - 1, 'font-bold text-blue-600 hover:text-blue-600': page.active, 'cursor-default': !page.url}">
           {{ page.label }}
         </button>
       </nav>
 
       <!-- Result info -->
       <div v-html="$t('common.showing_meta', {from: meta.from, to: meta.to, total: meta.total})"
-           class="col-span-2 md:col-span-1 text-sm text-gray-600 font-light text-center md:text-left mt-4 md:mt-0">
+           class="col-span-2 md:col-span-1 mt-4 md:mt-0 text-sm font-light text-center md:text-left text-gray-600">
       </div>
     </div>
   </article>
@@ -56,85 +58,81 @@
 
 <script>
 export default {
-  name: "Table",
+  name: 'Table',
 
   props: ['meta', 'columns'],
 
   data() {
-    return {}
+    return {};
   },
 
   computed: {
-    loading: function () {
-      return _.isEmpty(this.meta)
+    pages() {
+      return this.meta.links.filter((page) => page.label > 0);
+    },
+
+    loading() {
+      return this.meta === undefined;
     },
   },
 
   methods: {
-    isSortable: function (column) {
-      return this.meta ? _.includes(this.meta.sorting.sortable, column.field) : false
+    isSortable(column) {
+      return this.meta ? this.meta.sorting.sortable.includes(column.field) : false;
     },
 
-    columnClasses: function (column, index) {
-      let classes = [column.classes]
+    columnClasses(column, index) {
+      const classes = [column.classes];
 
-      if(this.isSortable(column)) {
-        classes.push('cursor-pointer hover:text-gray-800 select-none')
+      if (this.isSortable(column)) {
+        classes.push('cursor-pointer hover:text-gray-800 select-none');
       }
-      if(index == 0) {
-        classes.push('rounded-tl-lg')
+      if (index === 0) {
+        classes.push('rounded-tl-lg');
       }
-      if(index == this.columns.length - 1) {
-        classes.push('rounded-tr-lg')
+      if (index === this.columns.length - 1) {
+        classes.push('rounded-tr-lg');
       }
 
-      return classes
+      return classes;
     },
 
-    handleSorting: function (column) {
-      if(this.isSortable(column)) {
-        return this.$emit('query', {
+    handleSorting(column) {
+      if (this.isSortable(column)) {
+        this.$emit('query', {
           sorted: column.field,
-          ordered: this.meta.sorting.ordered == 'desc' ? 'asc' : 'desc'
-        })
+          ordered: this.meta.sorting.ordered === 'desc' ? 'asc' : 'desc',
+        });
       }
     },
 
-    handlePagination: function (page) {
-      /*
-      * @TODO try vue's scroll behaviour
-      *
-      * */
-      this.$scroll()
+    handlePagination(page) {
+      this.$scroll();
 
-      return this.$emit('query', {page: page.label})
+      return this.$emit('query', { page: page.label });
     },
 
-    handleCellLabels: function () {
-      if(_.isObject(this.$slots.default)) {
+    handleCellLabels() {
+      if (this.$slots.default instanceof Object) {
         this.$slots.default.forEach((row) => {
-
-          let cells = _.filter(row.children, (item) => {
-            if(item.tag == 'td')
-              return item
-          })
+          const cells = row.children.filter((item) => item.tag === 'td');
 
           cells.forEach((cell, i) => {
-            if(this.columns[i].title) {
-              cell.elm.setAttribute('label', this.columns[i].title)
+            if (this.columns[i].title) {
+              cell.elm.setAttribute('label', this.columns[i].title);
             }
-          })
-        })
+          });
+        });
       }
-    }
+    },
   },
 
   updated() {
-    this.handleCellLabels()
+    this.handleCellLabels();
   },
 
   mounted() {
-    this.handleCellLabels()
-  }
-}
+    this.handleCellLabels();
+  },
+};
 </script>

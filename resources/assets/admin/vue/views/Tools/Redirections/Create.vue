@@ -1,8 +1,8 @@
 <template>
   <Modal size="lg" @close="close" ref="modal">
-    <form @submit.prevent="create" class="bg-white shadow overflow-hidden rounded-lg">
-      <div class="bg-gray-50 px-5 py-4 flex border-b border-gray-300">{{ $t('redirections.heading.create') }}</div>
-      <ul class="bg-white px-5 py-6">
+    <form @submit.prevent="create" class="overflow-hidden bg-white rounded-lg shadow">
+      <div class="flex py-4 px-5 bg-gray-50 border-b border-gray-300">{{ $t('redirections.heading.create') }}</div>
+      <ul class="py-6 px-5 bg-white">
         <li class="mb-4">
           <InputGroup name="from" :label="$t('label.source')" :placeholder="$t('placeholder.uri')" v-model="form.from" :required="true" @input="handleFrom($event)" :errors="errors">
             <template #prepend>
@@ -14,7 +14,7 @@
           <Input name="to" :label="$t('label.target')" :placeholder="$t('placeholder.url')" :required="true" @input="form.to = $event" :errors="errors"/>
         </li>
       </ul>
-      <div class="bg-gray-50 px-5 py-4 flex border-t border-gray-300">
+      <div class="flex py-4 px-5 bg-gray-50 border-t border-gray-300">
         <Button type="submit" theme="blue" :label="$t('common.create')" icon="plus" ref="createButton"/>
         <Button @click="close" theme="default" :label="$t('common.cancel')" class="ml-3"/>
       </div>
@@ -23,21 +23,21 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
-import {mixin as clickaway} from "vue-clickaway"
-import Input from "../../../components/form/Input"
-import InputGroup from "../../../components/form/InputGroup"
-import Button from "../../../components/form/Button"
-import Modal from "../../../components/elements/Modal"
+import { mapActions, mapGetters } from 'vuex';
+import { mixin as clickaway } from 'vue-clickaway';
+import Input from '../../../components/form/Input.vue';
+import InputGroup from '../../../components/form/InputGroup.vue';
+import Button from '../../../components/form/Button.vue';
+import Modal from '../../../components/elements/Modal.vue';
 
 export default {
-  name: "RedirectionCreate",
+  name: 'RedirectionCreate',
 
   data() {
     return {
       form: {},
       errors: {},
-    }
+    };
   },
 
   computed: {
@@ -47,35 +47,35 @@ export default {
   methods: {
     ...mapActions('Redirections', ['createRedirection']),
 
-    create: function () {
-      this.$refs.createButton.loading = true
+    create() {
+      this.$refs.createButton.loading = true;
 
       this.createRedirection(this.form)
-          .then((response) => {
-            this.$snackbar(this.$t('message.created'))
-            this.$emit('created')
-            this.close()
-          })
-          .catch(error => {
-            this.errors = error.errors
+        .then(() => {
+          this.$snackbar(this.$t('message.created'));
+          this.$emit('created');
+          this.close();
+        })
+        .catch((error) => {
+          this.errors = error.errors;
 
-            _.delay(() => {
-              this.$refs.createButton.loading = false
-            }, 500)
-          })
+          _.delay(() => {
+            this.$refs.createButton.loading = false;
+          }, 500);
+        });
     },
 
-    handleFrom: function (url) {
-      if(url) {
-        this.form.from = url.replace(this.config.url.base, '')
+    handleFrom(url) {
+      if (url) {
+        this.form.from = url.replace(this.config.url.base, '');
       }
     },
 
-    close: function () {
-      this.errors = {}
-      this.form = {}
-      this.$refs.modal.isOpen = false
-    }
+    close() {
+      this.errors = {};
+      this.form = {};
+      this.$refs.modal.isOpen = false;
+    },
   },
 
   components: {
@@ -86,7 +86,7 @@ export default {
   },
 
   mixins: [
-    clickaway
+    clickaway,
   ],
-}
+};
 </script>

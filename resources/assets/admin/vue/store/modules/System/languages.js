@@ -1,99 +1,111 @@
-const state = {
-    languages: {},
-    query: {},
-}
+const defState = {
+  languages: {},
+  query: {},
+};
 
 const getters = {
-    languages: (state) => state.languages,
-}
+  languages: (state) => state.languages,
+};
 
 const actions = {
-    async fetchLanguages({commit, state}) {
-        await axios.get('languages', {
-                       params: state.query
-                   })
-                   .then(response => {
-                       commit('mutateAll', response.data);
-                   });
-    },
-    createLanguage({commit, dispatch}, language) {
-        return new Promise((resolve, reject) => {
-            axios.post('languages/create', language)
-                 .then(response => {
-                     dispatch('fetchLanguages')
-                     resolve(response.data.data)
-                 })
-                 .catch(error => {
-                     reject(error.response.data)
-                 });
+  async fetchLanguages(context) {
+    await axios
+      .get('languages', {
+        params: context.state.query,
+      })
+      .then((response) => {
+        context.commit('SET_LIST', response.data);
+      });
+  },
+  createLanguage(context, language) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post('languages/create', language)
+        .then((response) => {
+          context.dispatch('fetchLanguages');
+          resolve(response.data.data);
         })
-    },
-    updateLanguage({commit}, language) {
-        return new Promise((resolve, reject) => {
-            axios.put('languages/update/' + language.id, language)
-                 .then(response => {
-                     commit('mutateUpdated', response.data);
-                     resolve(response.data.data)
-                 })
-                 .catch(error => {
-                     reject(error.response.data)
-                 });
+        .catch((error) => {
+          reject(error.response.data);
+        });
+    });
+  },
+  updateLanguage(context, language) {
+    return new Promise((resolve, reject) => {
+      axios
+        .put(`languages/update/${language.id}`, language)
+        .then((response) => {
+          context.commit('SET_UPDATED', response.data);
+          resolve(response.data.data);
         })
-    },
-    async activateLanguage({commit}, language) {
-        await axios.patch('languages/activate/' + language.id)
-                   .then(response => {
-                       commit('mutateUpdated', response.data);
-                   });
-    },
-    async deactivateLanguage({commit}, language) {
-        await axios.patch('languages/deactivate/' + language.id)
-                   .then(response => {
-                       commit('mutateUpdated', response.data);
-                   });
-    },
-    async orderLanguages({commit}, ordered) {
-        var orderData = _.map(ordered.to.rows, (e, i) => {
-            return {id: e.getAttribute('data-id'), order: i + 1}
-        })
+        .catch((error) => {
+          reject(error.response.data);
+        });
+    });
+  },
+  async activateLanguage(context, language) {
+    await axios
+      .patch(`languages/activate/${language.id}`)
+      .then((response) => {
+        context.commit('SET_UPDATED', response.data);
+      });
+  },
+  async deactivateLanguage(context, language) {
+    await axios
+      .patch(`languages/deactivate/${language.id}`)
+      .then((response) => {
+        context.commit('SET_UPDATED', response.data);
+      });
+  },
+  async orderLanguages(context, ordered) {
+    const orderData = _.map(ordered.to.rows, (e, i) => ({
+      id: e.getAttribute('data-id'), order: i + 1,
+    }));
 
-        await axios.patch('languages/order', {orders: orderData})
-                   .then((response) => {
-                       commit('mutateOrdered', ordered)
-                   });
-    },
-    async removeLanguage({commit, dispatch}, language) {
-        await axios.delete('languages/remove/' + language.id)
-                   .then((response) => {
-                       dispatch('fetchLanguages')
-                   });
-    },
-    setLanguagesQuery({commit}, query) {
-        commit('mutateQuery', _.cloneDeep(query))
-    },
-}
+    await axios
+      .patch('languages/order', { orders: orderData })
+      .then(() => {
+        /* context.commit('SET_ORDER', ordered); */
+      });
+  },
+  async removeLanguage(context, language) {
+    await axios
+      .delete(`languages/remove/${language.id}`)
+      .then(() => {
+        context.dispatch('fetchLanguages');
+      });
+  },
+  setLanguagesQuery(context, query) {
+    context.commit('SET_QUERY', _.cloneDeep(query));
+  },
+};
 
 const mutations = {
-    mutateAll: (state, languages) => (state.languages = languages),
-    mutateUpdated: (state, updated) => {
-        const index = state.languages.data.findIndex(language => language.id === updated.data.id);
+  SET_LIST(state, languages) {
+    state.languages = languages;
+  },
 
-        if(index !== -1) {
-            state.languages.data.splice(index, 1, updated.data);
-        }
-    },
-    mutateOrdered: (state, ordered) => {
-        /*_.swap(state.languages.data, ordered.oldIndex, ordered.newIndex)*/
-    },
-    mutateQuery: (state, query) => {
-        state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
-    },
-}
+  SET_UPDATED: (state, updated) => {
+    const index = state.languages.data.findIndex((language) => language.id === updated.data.id);
+
+    if (index !== -1) {
+      state.languages.data.splice(index, 1, updated.data);
+    }
+  },
+
+  /* SET_ORDER: (state, ordered) => {
+   _.swap(state.languages.data, ordered.oldIndex, ordered.newIndex)
+   }, */
+
+  SET_QUERY: (state, query) => {
+    state.query = _.pickBy(_.size(query) ? Object.assign(state.query, query) : {}, _.identity);
+  },
+};
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+  namespaced: true,
+  state: defState,
+  getters,
+  actions,
+  mutations,
+};

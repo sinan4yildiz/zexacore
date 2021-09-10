@@ -9,9 +9,9 @@
               v-if="parent.route"
               :to="{name: parent.route}"
               @click="checkNavigation()"
-              class="flex items-center w-full py-3 text-gray-600 hover:text-black transition duration-150 ease-in-out">
-            <svg class="w-7 h-7 mr-4 text-gray-500">
-              <use v-bind:xlink:href="'#icon-' + parent.icon"></use>
+              class="flex items-center py-3 w-full text-gray-600 hover:text-black transition duration-150 ease-in-out">
+            <svg class="mr-4 w-7 h-7 text-gray-500">
+              <use :xlink:href="'#icon-' + parent.icon"></use>
             </svg>
             {{ parent.title }}
           </RouterLink>
@@ -20,26 +20,26 @@
           <button
               v-else
               @click="checkNavigation(i)"
-              v-bind:class="{'active': parent.active, 'exact-active': parent.exactActive}"
+              :class="{'active': parent.active, 'exact-active': parent.exactActive}"
               type="button"
-              class="flex items-center w-full py-3 text-left text-gray-600 hover:text-black focus:outline-none active:text-blue-600 transition duration-150 ease-in-out">
-            <svg class="w-7 h-7 mr-4 text-gray-500 transition duration-300 ease-in-out">
-              <use v-bind:xlink:href="'#icon-' + parent.icon"></use>
+              class="flex items-center py-3 w-full text-left text-gray-600 hover:text-black active:text-blue-600 transition duration-150 ease-in-out focus:outline-none">
+            <svg class="mr-4 w-7 h-7 text-gray-500 transition duration-300 ease-in-out">
+              <use :xlink:href="'#icon-' + parent.icon"></use>
             </svg>
             {{ parent.title }}
-            <svg class="w-5 h-5 ml-4 lg:ml-auto mt-px fill-current text-gray-500 transition duration-300 ease-in-out">
+            <svg class="mt-px ml-4 lg:ml-auto w-5 h-5 text-gray-500 transition duration-300 ease-in-out fill-current">
               <use xlink:href="#icon-chevron-solid"></use>
             </svg>
           </button>
 
           <!-- Children -->
-          <ul v-if="parent.children" class="hidden pl-11 pb-6">
-            <li v-for="child in parent.children" class="block">
+          <ul v-if="parent.children" class="hidden pb-6 pl-11">
+            <li v-for="(child, index) in parent.children" :key="index" class="block">
               <RouterLink
                   v-if="child.route"
                   :to="{name: child.route}"
                   @click="checkNavigation()"
-                  class="block w-full pt-1 pb-2 text-gray-600 hover:text-black">
+                  class="block pt-1 pb-2 w-full text-gray-600 hover:text-black">
                 <span class="inline-block border-b border-transparent transition duration-150 ease-in-out">{{ child.title }}</span>
               </RouterLink>
             </li>
@@ -52,143 +52,131 @@
 
 <script>
 export default {
-  name: "Sidebar",
+  name: 'Sidebar',
 
   data() {
     return {
       navigation: [
         {
           title: this.$t('dashboard.heading'),
-          route: "dashboard",
-          icon: "home-solid",
+          route: 'dashboard',
+          icon: 'home-solid',
         },
         {
           title: this.$t('sidebar.content'),
-          icon: "content-solid",
+          icon: 'content-solid',
           children: [
             {
               title: this.$t('articles.heading.index'),
-              route: "articles",
+              route: 'articles',
             },
             {
               title: this.$t('pages.heading.index'),
-              route: "pages",
+              route: 'pages',
             },
             {
               title: this.$t('uploads.heading.index'),
-              route: "uploads",
+              route: 'uploads',
             },
-          ]
+          ],
         },
         {
           title: this.$t('messages.heading.index'),
-          icon: "envelope-solid",
-          route: "messages",
+          icon: 'envelope-solid',
+          route: 'messages',
         },
         {
           title: this.$t('sidebar.structure'),
-          icon: "grid-solid",
+          icon: 'grid-solid',
           children: [
             {
               title: this.$t('categories.heading.index'),
-              route: "categories",
+              route: 'categories',
             },
             {
               title: this.$t('content_types.heading.index'),
-              route: "content_types",
+              route: 'content_types',
             },
-          ]
+          ],
         },
         {
           title: this.$t('sidebar.people'),
-          icon: "users-solid",
+          icon: 'users-solid',
           children: [
             {
               title: this.$t('users.heading.index'),
-              route: "users",
+              route: 'users',
             },
             {
               title: this.$t('activities.heading.index'),
-              route: "activities",
+              route: 'activities',
             },
-          ]
+          ],
         },
         {
           title: this.$t('sidebar.tools'),
-          icon: "cube-solid",
+          icon: 'cube-solid',
           children: [
             {
               title: this.$t('redirections.heading.index'),
-              route: "redirections",
+              route: 'redirections',
             },
             {
               title: this.$t('not_founds.heading.index'),
-              route: "not_founds",
+              route: 'not_founds',
             },
             {
               title: this.$t('slugs.heading.index'),
-              route: "slugs",
+              route: 'slugs',
             },
-          ]
+          ],
         },
         {
           title: this.$t('sidebar.system'),
-          icon: "cog-solid",
+          icon: 'cog-solid',
           children: [
             {
               title: this.$t('settings.heading.index'),
-              route: "settings",
+              route: 'settings',
             },
             {
               title: this.$t('languages.heading.index'),
-              route: "languages",
+              route: 'languages',
             },
             {
               title: this.$t('maintenance.heading.index'),
-              route: "maintenance",
+              route: 'maintenance',
             },
-          ]
+          ],
         },
-      ]
-    }
+      ],
+    };
   },
 
   methods: {
-    checkNavigation: function (index = null) {
+    checkNavigation(index = null) {
       this.navigation = this.navigation.map((parent, i) => {
-        parent.active = index === i ? !parent.active : false
+        parent.active = index === i ? !parent.active : false;
 
-        if(!index && parent.children) {
-          let active = parent.children.find((child) => {
-            let parsed = this.$route.name.split('.')
+        if (!index && parent.children) {
+          const active = parent.children.find((child) => child.route === this.$route.name || this.$route.name.split('.')[0] === child.route);
 
-            return child.route === this.$route.name || parsed[0] === child.route
-          })
-
-          parent.exactActive = active ? true : false
-
-          parent.active = active ? true : false
+          parent.active = parent.exactActive = active;
         }
 
-        return parent
-      })
+        return parent;
+      });
     },
   },
 
   watch: {
     $route() {
-      this.checkNavigation()
-
-      /*
-      * @TODO try vue's scroll behaviour
-      *
-      * */
-      this.$scroll(this.$root.$el)
-    }
+      this.checkNavigation();
+    },
   },
 
   mounted() {
-    this.checkNavigation()
-  }
-}
+    this.checkNavigation();
+  },
+};
 </script>

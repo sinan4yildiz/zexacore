@@ -1,34 +1,37 @@
-const state = {
-    results: {},
-}
+const defState = {
+  results: {},
+};
 
 const getters = {
-    results: (state) => state.results,
-}
+  results: (state) => state.results,
+};
 
 const actions = {
-    fetchResults({commit}, keyword) {
-        return new Promise((resolve, reject) => {
-            axios.get('search', {params: {keyword: keyword}})
-                 .then(response => {
-                     commit('mutateResults', response.data)
-                     resolve(response.data)
-                 })
-                 .catch(error => {
-                     reject(error.response.data)
-                 });
+  fetchResults(context, keyword) {
+    return new Promise((resolve, reject) => {
+      axios
+        .get('search', { params: { keyword } })
+        .then((response) => {
+          context.commit('SET_RESULTS', response.data);
+          resolve(response.data);
         })
-    },
-}
+        .catch((error) => {
+          reject(error.response.data);
+        });
+    });
+  },
+};
 
 const mutations = {
-    mutateResults: (state, results) => (state.results = results),
-}
+  SET_RESULTS(state, data) {
+    state.results = data;
+  },
+};
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+  namespaced: true,
+  state: defState,
+  getters,
+  actions,
+  mutations,
+};

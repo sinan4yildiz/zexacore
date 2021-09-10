@@ -1,74 +1,82 @@
-const state = {
-    redirections: {},
-    query: {},
-}
+const defState = {
+  redirections: {},
+  query: {},
+};
 
 const getters = {
-    redirections: (state) => state.redirections,
-}
+  redirections: (state) => state.redirections,
+};
 
 const actions = {
-    async fetchRedirections({commit, state}) {
-        await axios.get('redirections', {
-                       params: state.query
-                   })
-                   .then(response => {
-                       commit('mutateAll', response.data);
-                   });
-    },
-    createRedirection({commit, dispatch}, redirection) {
-        return new Promise((resolve, reject) => {
-            axios.post('redirections/create', redirection)
-                 .then(response => {
-                     dispatch('fetchRedirections')
-                     resolve(response.data.data)
-                 })
-                 .catch(error => {
-                     reject(error.response.data)
-                 });
+  async fetchRedirections(context) {
+    await axios
+      .get('redirections', {
+        params: context.state.query,
+      })
+      .then((response) => {
+        context.commit('SET_LIST', response.data);
+      });
+  },
+  createRedirection(context, redirection) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post('redirections/create', redirection)
+        .then((response) => {
+          context.dispatch('fetchRedirections');
+          resolve(response.data.data);
         })
-    },
-    updateRedirection({commit}, redirection) {
-        return new Promise((resolve, reject) => {
-            axios.put('redirections/update/' + redirection.id, redirection)
-                 .then(response => {
-                     commit('mutateUpdated', response.data);
-                     resolve(response.data.data)
-                 })
-                 .catch(error => {
-                     reject(error.response.data)
-                 });
+        .catch((error) => {
+          reject(error.response.data);
+        });
+    });
+  },
+  updateRedirection(context, redirection) {
+    return new Promise((resolve, reject) => {
+      axios
+        .put(`redirections/update/${redirection.id}`, redirection)
+        .then((response) => {
+          context.commit('SET_UPDATED', response.data);
+          resolve(response.data.data);
         })
-    },
-    async removeRedirection({commit, dispatch}, redirection) {
-        await axios.delete('redirections/remove/' + redirection.id)
-                   .then((response) => {
-                       dispatch('fetchRedirections')
-                   });
-    },
-    setRedirectionsQuery({commit}, query) {
-        commit('mutateQuery', _.cloneDeep(query))
-    },
-}
+        .catch((error) => {
+          reject(error.response.data);
+        });
+    });
+  },
+  async removeRedirection(context, redirection) {
+    await axios
+      .delete(`redirections/remove/${redirection.id}`)
+      .then(() => {
+        context.dispatch('fetchRedirections');
+      });
+  },
+  setRedirectionsQuery(context, query) {
+    context.commit('SET_QUERY', _.cloneDeep(query));
+  },
+};
 
 const mutations = {
-    mutateAll: (state, redirections) => (state.redirections = redirections),
-    mutateUpdated: (state, updated) => {
-        const index = state.redirections.data.findIndex(redirection => redirection.id === updated.data.id);
+  SET_LIST(state, redirections) {
+    state.redirections = redirections;
+  },
 
-        if(index !== -1) {
-            state.redirections.data.splice(index, 1, updated.data);
-        }
-    },
-    mutateQuery: (state, query) => {
-        state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
-    },
-}
+  SET_UPDATED(state, updated) {
+    const index = state.redirections.data.findIndex((redirection) => redirection.id === updated.data.id);
+
+    if (index !== -1) {
+      state.redirections.data.splice(index, 1, updated.data);
+    }
+  },
+
+  SET_QUERY(state, query) {
+    state.query = _.pickBy(_.size(query) ? Object.assign(state.query, query) : {}, _.identity);
+  },
+};
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+  namespaced: true,
+  state: defState,
+  getters,
+  actions,
+  mutations,
+};

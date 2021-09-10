@@ -1,116 +1,132 @@
-const state = {
-    contentType: {},
-    contentTypes: {},
-    query: {},
-}
+const defState = {
+  contentType: {},
+  contentTypes: {},
+  query: {},
+};
 
 const getters = {
-    contentType: (state) => state.contentType,
-    contentTypes: (state) => state.contentTypes,
-}
+  contentType: (state) => state.contentType,
+  contentTypes: (state) => state.contentTypes,
+};
 
 const actions = {
-    async getContentType({commit, state}, id) {
-        await axios.get('content-types/' + id)
-                   .then(response => {
-                       commit('mutateSingle', response.data);
-                   });
-    },
-    fetchContentTypes({commit, state}) {
-        return new Promise((resolve) => {
-            axios.get('content-types', {
-                     params: state.query
-                 })
-                 .then(response => {
-                     commit('mutateAll', response.data);
-                     resolve(response.data.data)
-                 });
+  async getContentType(context, id) {
+    await axios
+      .get(`content-types/${id}`)
+      .then((response) => {
+        context.commit('SET_SINGLE', response.data);
+      });
+  },
+  fetchContentTypes(context) {
+    return new Promise((resolve) => {
+      axios
+        .get('content-types', {
+          params: context.state.query,
         })
-    },
-    createContentType({commit, dispatch}, contentType) {
-        return new Promise((resolve, reject) => {
-            axios.post('content-types/create', contentType)
-                 .then(response => {
-                     dispatch('fetchContentTypes')
-                     resolve(response.data.data)
-                 })
-                 .catch(error => {
-                     reject(error.response.data)
-                 });
+        .then((response) => {
+          context.commit('SET_LIST', response.data);
+          resolve(response.data.data);
+        });
+    });
+  },
+  createContentType(context, contentType) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post('content-types/create', contentType)
+        .then((response) => {
+          context.dispatch('fetchContentTypes');
+          resolve(response.data.data);
         })
-    },
-    updateContentType({commit}, contentType) {
-        return new Promise((resolve, reject) => {
-            axios.put('content-types/update/' + contentType.id, contentType)
-                 .then(response => {
-                     commit('mutateUpdated', response.data)
-                     resolve(response.data.data)
-                 })
-                 .catch(error => {
-                     reject(error.response.data)
-                 });
+        .catch((error) => {
+          reject(error.response.data);
+        });
+    });
+  },
+  updateContentType(context, contentType) {
+    return new Promise((resolve, reject) => {
+      axios
+        .put(`content-types/update/${contentType.id}`, contentType)
+        .then((response) => {
+          context.commit('SET_UPDATED', response.data);
+          resolve(response.data.data);
         })
-    },
-    async activateContentType({commit}, contentType) {
-        await axios.patch('content-types/activate/' + contentType.id)
-                   .then(response => {
-                       commit('mutateUpdated', response.data);
-                   });
-    },
-    async deactivateContentType({commit}, contentType) {
-        await axios.patch('content-types/deactivate/' + contentType.id)
-                   .then(response => {
-                       commit('mutateUpdated', response.data);
-                   });
-    },
-    async orderContentTypes({commit}, ordered) {
-        var orderData = _.map(ordered.to.rows, (e, i) => {
-            return {id: e.getAttribute('data-id'), order: i + 1}
-        })
+        .catch((error) => {
+          reject(error.response.data);
+        });
+    });
+  },
+  async activateContentType(context, contentType) {
+    await axios
+      .patch(`content-types/activate/${contentType.id}`)
+      .then((response) => {
+        context.commit('SET_UPDATED', response.data);
+      });
+  },
+  async deactivateContentType(context, contentType) {
+    await axios
+      .patch(`content-types/deactivate/${contentType.id}`)
+      .then((response) => {
+        context.commit('SET_UPDATED', response.data);
+      });
+  },
+  async orderContentTypes(context, ordered) {
+    const orderData = _.map(ordered.to.rows, (e, i) => ({
+      id: e.getAttribute('data-id'), order: i + 1,
+    }));
 
-        await axios.patch('content-types/order', {orders: orderData})
-                   .then((response) => {
-                       commit('mutateOrdered', ordered)
-                   });
-    },
-    async removeContentType({commit, dispatch}, contentType) {
-        await axios.delete('content-types/remove/' + contentType.id)
-                   .then((response) => {
-                       dispatch('fetchContentTypes')
-                   });
-    },
-    clearContentType({commit}) {
-        commit('mutateSingle', {});
-    },
-    setContentTypesQuery({commit}, query) {
-        commit('mutateQuery', _.cloneDeep(query))
-    },
-}
+    await axios
+      .patch('content-types/order', { orders: orderData })
+      .then(() => {
+        /* context.commit('SET_ORDER', ordered); */
+      });
+  },
+  async removeContentType(context, contentType) {
+    await axios
+      .delete(`content-types/remove/${contentType.id}`)
+      .then(() => {
+        context.dispatch('fetchContentTypes');
+      });
+  },
+  clearContentType(context) {
+    context.commit('SET_SINGLE', {});
+  },
+  setContentTypesQuery(context, query) {
+    context.commit('SET_QUERY', _.cloneDeep(query));
+  },
+};
 
 const mutations = {
-    mutateAll: (state, contentTypes) => (state.contentTypes = contentTypes),
-    mutateSingle: (state, contentType) => (state.contentType = contentType),
-    mutateUpdated: (state, updated) => {
-        if(state.contentTypes.data) {
-            const index = state.contentTypes.data.findIndex(contentType => contentType.id === updated.data.id);
+  SET_LIST(state, contentTypes) {
+    state.contentTypes = contentTypes;
+  },
 
-            if(index !== -1) {
-                state.contentTypes.data.splice(index, 1, updated.data);
-            }
-        }
-    },
-    mutateOrdered: (state, ordered) => {
-        /*_.move(state.contentTypes.data, ordered.oldIndex, ordered.newIndex)*/
-    },
-    mutateQuery: (state, query) => {
-        state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
-    },
-}
+  SET_SINGLE(state, contentType) {
+    state.contentType = contentType;
+  },
+
+  SET_UPDATED(state, updated) {
+    if (state.contentTypes.data) {
+      const index = state.contentTypes.data.findIndex((contentType) => contentType.id === updated.data.id);
+
+      if (index !== -1) {
+        state.contentTypes.data.splice(index, 1, updated.data);
+      }
+    }
+  },
+
+  /* SET_ORDER(state, ordered) {
+   _.move(state.contentTypes.data, ordered.oldIndex, ordered.newIndex)
+   }, */
+
+  SET_QUERY(state, query) {
+    state.query = _.pickBy(_.size(query) ? Object.assign(state.query, query) : {}, _.identity);
+  },
+};
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+  namespaced: true,
+  state: defState,
+  getters,
+  actions,
+  mutations,
+};

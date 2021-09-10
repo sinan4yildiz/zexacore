@@ -1,5 +1,5 @@
 <template>
-  <section class="flex items-center flex-col justify-center text-center py-20 lg:py-40">
+  <section class="flex flex-col justify-center items-center py-20 lg:py-40 text-center">
     <div class="mb-8">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1074.389 428.749" class="w-48 lg:w-84">
         <defs/>
@@ -27,7 +27,7 @@
         <path fill="none" stroke="#3f3d56" stroke-miterlimit="10" d="M20.385 367.236a13.667 13.667 0 102.635-10.708l6.092 9.17-8.324-4.867a13.544 13.544 0 00-.403 6.405z"/>
       </svg>
     </div>
-    <div class="font-light text-gray-800 px-6 lg:px-12 leading-7">
+    <div class="px-6 lg:px-12 font-light leading-7 text-gray-800">
       {{ $t('not_found.text') }}
     </div>
     <RouterLink :to="{name: 'dashboard'}" class="mt-10 lg:mt-24 text-blue-600 border-blue-600">
@@ -41,7 +41,7 @@ export default {
   name: 'ErrorNotFound',
 
   data() {
-    return {}
+    return {};
   },
 
   methods: {},
@@ -49,6 +49,6 @@ export default {
   created() {
   },
 
-  components: {}
-}
+  components: {},
+};
 </script>

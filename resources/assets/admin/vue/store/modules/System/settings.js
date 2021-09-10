@@ -1,29 +1,30 @@
-const state = {}
+const defState = {};
 
-const getters = {}
+const getters = {};
 
 const actions = {
-    updateSettings({commit}, settings) {
-        return new Promise((resolve, reject) => {
-            axios.put('settings/update', settings)
-                 .then(response => {
-                     commit('App/SET_SETTINGS', response.data, {root: true})
+  updateSettings(context, settings) {
+    return new Promise((resolve, reject) => {
+      axios
+        .put('settings/update', settings)
+        .then((response) => {
+          context.commit('App/SET_SETTINGS', response.data, { root: true });
 
-                     resolve(response.data)
-                 })
-                 .catch(error => {
-                     reject(error.response.data)
-                 });
+          resolve(response.data);
         })
-    },
-}
+        .catch((error) => {
+          reject(error.response.data);
+        });
+    });
+  },
+};
 
-const mutations = {}
+const mutations = {};
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+  namespaced: true,
+  state: defState,
+  getters,
+  actions,
+  mutations,
+};

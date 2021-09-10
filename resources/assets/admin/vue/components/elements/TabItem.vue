@@ -6,16 +6,16 @@
 
 <script>
 export default {
-  name: "TabItem",
+  name: 'TabItem',
 
   props: {
-    name: String
+    name: String,
   },
 
   data() {
     return {
-      active: this._uid == _.head(this.$parent.$children)._uid
-    }
+      active: this._uid === this.$parent.$children[0]._uid,
+    };
   },
-}
+};
 </script>

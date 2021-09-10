@@ -1,37 +1,41 @@
-const state = {
-    activities: {},
-    query: {},
-}
+const defState = {
+  activities: {},
+  query: {},
+};
 
 const getters = {
-    activities: (state) => state.activities,
-}
+  activities: (state) => state.activities,
+};
 
 const actions = {
-    async fetchActivities({commit, state}) {
-        await axios.get('activities', {
-                       params: state.query
-                   })
-                   .then(response => {
-                       commit('mutateAll', response.data);
-                   });
-    },
-    setActivitiesQuery({commit}, query) {
-        commit('mutateQuery', _.cloneDeep(query))
-    },
-}
+  async fetchActivities(context) {
+    await axios
+      .get('activities', {
+        params: context.state.query,
+      })
+      .then((response) => {
+        context.commit('SET_LIST', response.data);
+      });
+  },
+  setActivitiesQuery(context, query) {
+    context.commit('SET_QUERY', _.cloneDeep(query));
+  },
+};
 
 const mutations = {
-    mutateAll: (state, activities) => (state.activities = activities),
-    mutateQuery: (state, query) => {
-        state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
-    },
-}
+  SET_LIST(state, activities) {
+    state.activities = activities;
+  },
+
+  SET_QUERY: (state, query) => {
+    state.query = _.pickBy(_.size(query) ? Object.assign(state.query, query) : {}, _.identity);
+  },
+};
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+  namespaced: true,
+  state: defState,
+  getters,
+  actions,
+  mutations,
+};

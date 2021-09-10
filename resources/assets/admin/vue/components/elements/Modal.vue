@@ -7,8 +7,8 @@
         leave-active-class="transition ease-in duration-75 transform"
         leave-class="opacity-100 scale-100"
         leave-to-class="opacity-0 scale-95">
-      <div v-if="isOpen" class="fixed z-10 inset-0 overflow-y-auto">
-        <div class="flex items-center justify-center min-h-screen p-4 xl:p-0">
+      <div v-if="isOpen" class="overflow-y-auto fixed inset-0 z-10">
+        <div class="flex justify-center items-center p-4 xl:p-0 min-h-screen">
 
           <!-- Overlay -->
           <div class="fixed inset-0">
@@ -17,8 +17,8 @@
 
           <!-- Content -->
           <div v-on-clickaway="close"
-               v-bind:class="modalClasses()"
-               class="inline-block align-bottom bg-white rounded-lg shadow-xl text-left transform transition-all md:my-8 md:align-middle w-full" role="dialog">
+               :class="modalClasses()"
+               class="inline-block md:my-8 w-full text-left align-bottom md:align-middle bg-white rounded-lg shadow-xl transition-all transform" role="dialog">
             <slot></slot>
           </div>
         </div>
@@ -28,43 +28,41 @@
 </template>
 
 <script>
-import {mixin as clickaway} from "vue-clickaway"
+import { mixin as clickaway } from 'vue-clickaway';
 
 export default {
-  name: "Modal",
+  name: 'Modal',
 
   props: ['open', 'size'],
 
   data() {
     return {
       isOpen: false,
-    }
+    };
   },
 
   methods: {
-    modalClasses: function () {
+    modalClasses() {
       switch (this.size) {
         case 'sm':
-          return 'max-w-md'
-          break
+          return 'max-w-md';
 
         case 'md':
-          return 'max-w-xl'
-          break
+          return 'max-w-xl';
 
         default:
-          return ['max-w-2xl']
+          return ['max-w-2xl'];
       }
     },
 
-    close: function () {
-      this.isOpen = false
-      this.$emit('close')
-    }
+    close() {
+      this.isOpen = false;
+      this.$emit('close');
+    },
   },
 
   mixins: [
-    clickaway
+    clickaway,
   ],
-}
+};
 </script>

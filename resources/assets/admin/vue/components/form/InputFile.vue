@@ -4,18 +4,18 @@
 
 <script>
 export default {
-  name: "InputFile",
+  name: 'InputFile',
 
   props: ['name', 'multiple'],
 
-  data: function () {
-    return {}
+  data() {
+    return {};
   },
 
   methods: {
-    clear: function () {
-      this.$el.value = null
-    }
-  }
-}
+    clear() {
+      this.$el.value = null;
+    },
+  },
+};
 </script>

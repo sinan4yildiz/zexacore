@@ -1,62 +1,68 @@
-const state = {
-    slugs: {},
-    query: {},
-}
+const defState = {
+  slugs: {},
+  query: {},
+};
 
 const getters = {
-    slugs: (state) => state.slugs,
-}
+  slugs: (state) => state.slugs,
+};
 
 const actions = {
-    fetchSlugs({commit, state}) {
-        return new Promise((resolve, reject) => {
-            axios.get('slugs/', {
-                     params: state.query
-                 })
-                 .then(response => {
-                     commit('mutateAll', response.data);
-                     resolve(response.data.data)
-                 })
-                 .catch(error => {
-                     reject(error.response.data)
-                 });
+  fetchSlugs(context) {
+    return new Promise((resolve, reject) => {
+      axios
+        .get('slugs/', {
+          params: context.state.query,
         })
-    },
-    updateSlug({commit}, slug) {
-        return new Promise((resolve, reject) => {
-            axios.put('slugs/update/' + slug.id, slug)
-                 .then(response => {
-                     commit('mutateUpdated', response.data);
-                     resolve(response.data.data)
-                 })
-                 .catch(error => {
-                     reject(error.response.data)
-                 });
+        .then((response) => {
+          context.commit('SET_LIST', response.data);
+          resolve(response.data.data);
         })
-    },
-    setSlugsQuery({commit}, query) {
-        commit('mutateQuery', _.cloneDeep(query))
-    },
-}
+        .catch((error) => {
+          reject(error.response.data);
+        });
+    });
+  },
+  updateSlug(context, slug) {
+    return new Promise((resolve, reject) => {
+      axios
+        .put(`slugs/update/${slug.id}`, slug)
+        .then((response) => {
+          context.commit('SET_UPDATED', response.data);
+          resolve(response.data.data);
+        })
+        .catch((error) => {
+          reject(error.response.data);
+        });
+    });
+  },
+  setSlugsQuery(context, query) {
+    context.commit('SET_QUERY', _.cloneDeep(query));
+  },
+};
 
 const mutations = {
-    mutateAll: (state, slugs) => (state.slugs = slugs),
-    mutateUpdated: (state, updated) => {
-        const index = state.slugs.data.findIndex(slug => slug.id === updated.data.id);
+  SET_LIST(state, slugs) {
+    state.slugs = slugs;
+  },
 
-        if(index !== -1) {
-            state.slugs.data.splice(index, 1, updated.data);
-        }
-    },
-    mutateQuery: (state, query) => {
-        state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
-    },
-}
+  SET_UPDATED(state, updated) {
+    const index = state.slugs.data.findIndex((slug) => slug.id === updated.data.id);
+
+    if (index !== -1) {
+      state.slugs.data.splice(index, 1, updated.data);
+    }
+  },
+
+  SET_QUERY(state, query) {
+    state.query = _.pickBy(_.size(query) ? Object.assign(state.query, query) : {}, _.identity);
+  },
+};
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+  namespaced: true,
+  state: defState,
+  getters,
+  actions,
+  mutations,
+};

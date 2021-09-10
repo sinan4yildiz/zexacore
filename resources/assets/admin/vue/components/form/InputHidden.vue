@@ -4,18 +4,18 @@
 
 <script>
 export default {
-  name: "InputHidden",
+  name: 'InputHidden',
 
   props: ['name', 'value'],
 
-  data: function () {
+  data() {
     return {
       inputValue: this.value,
-    }
+    };
   },
 
   created() {
-    this.$emit('input', this.inputValue)
+    this.$emit('input', this.inputValue);
   },
-}
+};
 </script>

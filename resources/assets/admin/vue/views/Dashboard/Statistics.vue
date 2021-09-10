@@ -1,57 +1,55 @@
 <template>
-  <div class="bg-white shadow rounded-lg">
+  <div class="bg-white rounded-lg shadow">
     <div class="pt-4 pl-4 text-xs text-gray-600">{{ $t('dashboard.widgets.statistics') }}</div>
     <div v-if="chart">
       <apexchart type="area" height="350" :options="chart.options" :series="chart.series"/>
     </div>
     <div v-else class="p-6 db-height-m">
-      <div v-for="n in 9" class="flex items-center mb-5.5">
-        <div class="bone thin w-8 mr-6"></div>
-        <div class="bone line flex-grow"></div>
+      <div v-for="n in 9" :key="n" class="flex items-center mb-5.5">
+        <div class="mr-6 w-8 bone thin"></div>
+        <div class="flex-grow bone line"></div>
       </div>
       <div class="flex justify-around pb-3">
-        <div v-for="n in $screen.lg ? 16 : 6" class="bone thin w-7"></div>
+        <div v-for="n in $screen.lg ? 16 : 6" :key="n" class="w-7 bone thin"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
-import VueApexCharts from 'vue-apexcharts'
+import { mapActions, mapGetters } from 'vuex';
+import VueApexCharts from 'vue-apexcharts';
 
 export default {
   name: 'DashboardStatistics',
 
   data() {
-    return {}
+    return {};
   },
 
   computed: {
     ...mapGetters('Dashboard', ['statistics']),
 
-    chart: function () {
-      if(_.isEmpty(this.statistics)) {
-        return false
-      } else {
+    chart() {
+      if (Object.keys(this.statistics).length) {
         return {
           series: [
             {
               name: this.$t('dashboard.sessions'),
-              data: _.map(this.statistics.series, 'sessions')
+              data: _.map(this.statistics.series, 'sessions'),
             },
             {
               name: this.$t('dashboard.page_views'),
-              data: _.map(this.statistics.series, 'pageviews')
-            }
+              data: _.map(this.statistics.series, 'pageviews'),
+            },
           ],
           options: {
             chart: {
               toolbar: {
-                show: false
+                show: false,
               },
               zoom: {
-                enabled: false
+                enabled: false,
               },
               animations: {
                 enabled: true,
@@ -62,9 +60,9 @@ export default {
                 },
                 dynamicAnimation: {
                   enabled: true,
-                  speed: 250
-                }
-              }
+                  speed: 250,
+                },
+              },
             },
             colors: ['#23D092', '#3283FD'],
             stroke: {
@@ -75,8 +73,8 @@ export default {
               borderColor: '#EDF2F7',
               padding: {
                 left: 15,
-                right: 0
-              }
+                right: 0,
+              },
             },
             xaxis: {
               categories: this.statistics.labels,
@@ -97,7 +95,7 @@ export default {
               },
               tooltip: {
                 enabled: false,
-              }
+              },
             },
             yaxis: {
               tickAmount: 8,
@@ -110,28 +108,28 @@ export default {
               },
             },
             dataLabels: {
-              enabled: false
+              enabled: false,
             },
             fill: {
-              type: "gradient",
+              type: 'gradient',
               gradient: {
-                type: "vertical",
+                type: 'vertical',
                 shadeIntensity: 1,
                 inverseColors: !1,
-                opacityFrom: .45,
-                opacityTo: .05,
-                stops: [45, 100]
-              }
+                opacityFrom: 0.45,
+                opacityTo: 0.05,
+                stops: [45, 100],
+              },
             },
             tooltip: {
               style: {
                 fontSize: '12px',
-                fontFamily: 'Muli'
+                fontFamily: 'Muli',
               },
               y: {
-                formatter: function (value) {
-                  return new Intl.NumberFormat().format(value)
-                }
+                formatter(value) {
+                  return new Intl.NumberFormat().format(value);
+                },
               },
             },
             legend: {
@@ -139,15 +137,15 @@ export default {
               horizontalAlign: 'right',
               floating: true,
               fontFamily: 'Muli',
-              offsetY: -17,
+              offsetY: 0,
               offsetX: 0,
               labels: {
                 colors: '#718096',
               },
               itemMargin: {
                 horizontal: 0,
-                vertical: 0
-              }
+                vertical: 0,
+              },
             },
             responsive: [
               {
@@ -156,7 +154,7 @@ export default {
                   xaxis: {
                     tickAmount: 10,
                   },
-                }
+                },
               },
               {
                 breakpoint: 767,
@@ -164,7 +162,7 @@ export default {
                   xaxis: {
                     tickAmount: 5,
                   },
-                }
+                },
               },
               {
                 breakpoint: 440,
@@ -172,13 +170,15 @@ export default {
                   xaxis: {
                     tickAmount: 3,
                   },
-                }
+                },
               },
-            ]
-          }
-        }
+            ],
+          },
+        };
       }
-    }
+
+      return false;
+    },
   },
 
   methods: {
@@ -186,13 +186,13 @@ export default {
   },
 
   created() {
-    if(_.isEmpty(this.statistics)) {
-      this.fetchStatistics()
+    if (!Object.keys(this.statistics).length) {
+      this.fetchStatistics();
     }
   },
 
   components: {
     apexchart: VueApexCharts,
-  }
-}
+  },
+};
 </script>

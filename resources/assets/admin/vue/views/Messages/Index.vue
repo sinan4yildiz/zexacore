@@ -1,9 +1,9 @@
 <template>
   <section>
-    <header class="flex justify-between flex-wrap items-center mb-4">
+    <header class="flex flex-wrap justify-between items-center mb-4">
       <!-- Page header -->
       <div class="w-3/4 md:w-48 xl:w-84">
-        <h1 class="mb-2 text-2xl lg:text-3xl font-lighter leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('messages.heading.index') }}</h1>
+        <h1 class="mb-2 text-2xl lg:text-3xl leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('messages.heading.index') }}</h1>
         <Breadcrumb></Breadcrumb>
       </div>
 
@@ -12,8 +12,8 @@
     </header>
 
     <Table :meta="messages.meta" :columns="columns" @query="setQuery($event)">
-      <tr v-for="message in messages.data" has-action="true">
-        <td @click="readMessage(message)" v-bind:class="{'text-blue-600': message.unread, 'text-gray-900': !message.unread}" class="px-6 py-4 hover:text-blue-600 cursor-pointer transition duration-150 ease-in-out bg-gradient-to-r hover:from-gray-100 via-white hover:to-white">
+      <tr v-for="message in messages.data" :key="message.id" has-action="true">
+        <td @click="readMessage(message)" :class="{'text-blue-600': message.unread, 'text-gray-900': !message.unread}" class="py-4 px-6 hover:text-blue-600 bg-gradient-to-r hover:from-gray-100 via-white hover:to-white transition duration-150 ease-in-out cursor-pointer">
           <div class="text-sm font-bold">
             {{ message.subject }}
           </div>
@@ -21,10 +21,10 @@
             {{ message.name }}
           </div>
         </td>
-        <td class="px-6 py-4 text-sm leading-5 text-gray-500">
-          <time v-bind:title="message.created_at_raw">{{ message.created_at }}</time>
+        <td class="py-4 px-6 text-sm leading-5 text-gray-500">
+          <time :title="message.created_at_raw">{{ message.created_at }}</time>
         </td>
-        <td class="px-6 py-4 text-right text-sm leading-5 font-medium">
+        <td class="py-4 px-6 text-sm font-medium leading-5 text-right">
           <Dropdown width="w-48" class="inline-block">
             <template #toggler>
               <Button theme="action" size="large" icon="3dots-solid"/>
@@ -49,14 +49,14 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
-import Breadcrumb from "../../components/elements/Breadcrumb"
-import Details from "./Details"
-import Table from "../../components/elements/Table"
-import Dropdown from "../../components/elements/Dropdown"
-import Filters from "../../components/elements/Filters"
-import Confirm from "../../components/elements/Confirm"
-import Button from "../../components/form/Button"
+import { mapActions, mapGetters } from 'vuex';
+import Breadcrumb from '../../components/elements/Breadcrumb.vue';
+import Details from './Details.vue';
+import Table from '../../components/elements/Table.vue';
+import Dropdown from '../../components/elements/Dropdown.vue';
+import Filters from '../../components/elements/Filters.vue';
+import Confirm from '../../components/elements/Confirm.vue';
+import Button from '../../components/form/Button.vue';
 
 export default {
   name: 'MessagesIndex',
@@ -76,39 +76,39 @@ export default {
         {
           field: 'actions',
           classes: 'w-24',
-        }
+        },
       ],
-    }
+    };
   },
 
   computed: {
-    ...mapGetters('Messages', ['messages'])
+    ...mapGetters('Messages', ['messages']),
   },
 
   methods: {
     ...mapActions('Messages', ['fetchMessages', 'markAsReadMessage', 'markAsUneadMessage', 'removeMessage', 'setMessagesQuery']),
 
-    readMessage: function (message) {
-      this.$refs.messageDetails.details = message
+    readMessage(message) {
+      this.$refs.messageDetails.details = message;
 
-      if(message.unread) {
-        this.markAsReadMessage(message)
+      if (message.unread) {
+        this.markAsReadMessage(message);
       }
     },
 
-    setQuery: function (args) {
-      this.setMessagesQuery(args)
-      this.fetchMessages()
+    setQuery(args) {
+      this.setMessagesQuery(args);
+      this.fetchMessages();
     },
 
-    confirmRemove: function (message) {
-      this.removeMessage(message)
-    }
+    confirmRemove(message) {
+      this.removeMessage(message);
+    },
   },
 
   created() {
-    this.setMessagesQuery({})
-    this.fetchMessages()
+    this.setMessagesQuery({});
+    this.fetchMessages();
   },
 
   components: {
@@ -119,6 +119,6 @@ export default {
     Filters,
     Confirm,
     Button,
-  }
-}
+  },
+};
 </script>

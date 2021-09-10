@@ -1,13 +1,13 @@
 <template>
-  <section class="min-h-screen flex items-center justify-center px-4 pt-6 pb-24 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full">
+  <section class="flex justify-center items-center px-4 sm:px-6 lg:px-8 pt-6 pb-24 min-h-screen">
+    <div class="w-full max-w-md">
 
       <!-- Logo -->
-      <svg class="block w-28 sm:w-34 h-24 sm:h-28 mx-auto mb-8">
+      <svg class="block mx-auto mb-8 w-28 sm:w-34 h-24 sm:h-28">
         <use xlink:href="#logo-vertical"></use>
       </svg>
 
-      <form @submit.prevent="login" class="bg-white shadow-sm rounded-lg py-10 px-6 sm:py-16 sm:px-12" method="post">
+      <form @submit.prevent="login" class="py-10 sm:py-16 px-6 sm:px-12 bg-white rounded-lg shadow-sm" method="post">
 
         <!-- Email -->
         <div class="mb-4">
@@ -20,15 +20,15 @@
         </div>
 
         <!-- Remember and forgotten password -->
-        <div class="mb-4 flex items-center justify-between">
+        <div class="flex justify-between items-center mb-4">
           <div class="flex items-center">
-            <input type="checkbox" name="remember" id="remember" class="form-checkbox border-gray-400 h-4 w-4 text-blue-600 transition duration-150 ease-in-out focus:border-blue-600 focus:shadow-outline-blue">
-            <label for="remember" class="ml-2 block text-sm leading-5 text-gray-600 hover:text-gray-700 select-none">
+            <input type="checkbox" name="remember" id="remember" class="w-4 h-4 text-blue-600 border-gray-400 focus:border-blue-600 transition duration-150 ease-in-out form-checkbox focus:shadow-outline-blue">
+            <label for="remember" class="block ml-2 text-sm leading-5 text-gray-600 hover:text-gray-700 select-none">
               {{ $t('auth.login.remember_me') }}
             </label>
           </div>
           <div class="text-sm leading-5">
-            <RouterLink :to="{hash: '#'}" class="font-medium text-sm text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+            <RouterLink :to="{hash: '#'}" class="text-sm font-medium text-blue-600 hover:text-blue-500 focus:underline transition duration-150 ease-in-out focus:outline-none">
               {{ $t('auth.login.forgotten_password') }}
             </RouterLink>
           </div>
@@ -41,7 +41,7 @@
       <!-- View website -->
       <div class="mt-5 ml-2">
         <a :href="config.url.base" class="inline-flex items-center text-sm text-gray-500 hover:text-blue-600 transition duration-150 ease-in-out">
-          <svg class="text-gray-500 w-6 h-4 mr-2">
+          <svg class="mr-2 w-6 h-4 text-gray-500">
             <use xlink:href="#icon-arrow-left"></use>
           </svg>
           {{ $t('common.view_website') }}
@@ -52,9 +52,9 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
-import Input from "../../components/form/Input"
-import Button from "../../components/form/Button"
+import { mapActions, mapGetters } from 'vuex';
+import Input from '../../components/form/Input.vue';
+import Button from '../../components/form/Button.vue';
 
 export default {
   name: 'Login',
@@ -63,38 +63,38 @@ export default {
     return {
       form: {},
       errors: {},
-    }
+    };
   },
 
   computed: {
     ...mapGetters('App', ['config']),
-    ...mapGetters('Auth', ['isAuthenticated'])
+    ...mapGetters('Auth', ['isAuthenticated']),
   },
 
   methods: {
     ...mapActions('Auth', ['userLogin']),
 
-    login: function () {
-      this.$refs.loginButton.loading = true
+    login() {
+      this.$refs.loginButton.loading = true;
 
       this.userLogin(this.form)
-          .catch(error => {
-            if(error.response.status == 401) {
-              this.$snackbar(error.response.data.error, 'error')
-            } else {
-              this.errors = error.response.data.errors
-            }
+        .catch((error) => {
+          if (error.response.status === 401) {
+            this.$snackbar(error.response.data.error, 'error');
+          } else {
+            this.errors = error.response.data.errors;
+          }
 
-            _.delay(() => {
-              this.$refs.loginButton.loading = false
-            }, 500)
-          })
+          _.delay(() => {
+            this.$refs.loginButton.loading = false;
+          }, 500);
+        });
     },
   },
 
   components: {
     Button,
-    Input
-  }
-}
+    Input,
+  },
+};
 </script>

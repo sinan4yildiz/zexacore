@@ -1,31 +1,31 @@
 <template>
   <section>
-    <header class="flex justify-between flex-wrap items-center mb-4">
+    <header class="flex flex-wrap justify-between items-center mb-4">
       <!-- Page header -->
       <div class="w-3/4 md:w-48 xl:w-84">
-        <h1 class="mb-2 text-2xl lg:text-3xl font-lighter leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('not_founds.heading.index') }}</h1>
+        <h1 class="mb-2 text-2xl lg:text-3xl leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('not_founds.heading.index') }}</h1>
         <Breadcrumb></Breadcrumb>
       </div>
 
-      <div class="flex items-center flex-grow md:flex-grow-0 md:ml-auto mt-3 md:mt-0">
+      <div class="flex flex-grow md:flex-grow-0 items-center mt-3 md:mt-0 md:ml-auto">
         <!-- Filters -->
         <Filters :search="true" @apply="setQuery($event)"/>
       </div>
     </header>
 
     <Table :meta="notFounds.meta" :columns="columns" @query="setQuery($event)">
-      <tr v-for="notFound in notFounds.data" has-action="true">
-        <td class="px-6 py-4">
+      <tr v-for="notFound in notFounds.data" :key="notFound.id" has-action="true">
+        <td class="py-4 px-6">
           <div class="text-sm font-bold text-gray-900 break-all">/{{ notFound.uri }}</div>
-          <a v-if="notFound.redirection" v-bind:href="notFound.redirection.to" target="_blank" class="inline-block text-xs leading-5 break-all text-gray-600 hover:text-blue-400 whitespace-normal">{{ notFound.redirection.to }}</a>
+          <a v-if="notFound.redirection" :href="notFound.redirection.to" target="_blank" class="inline-block text-xs leading-5 text-gray-600 hover:text-blue-400 whitespace-normal break-all">{{ notFound.redirection.to }}</a>
         </td>
-        <td class="px-6 py-4 text-center">
+        <td class="py-4 px-6 text-center">
           <span class="text-sm text-gray-600">{{ notFound.count }}</span>
         </td>
-        <td class="px-6 py-4 text-sm text-gray-500">
-          <time v-bind:title="notFound.updated_at_raw">{{ notFound.updated_at }}</time>
+        <td class="py-4 px-6 text-sm text-gray-500">
+          <time :title="notFound.updated_at_raw">{{ notFound.updated_at }}</time>
         </td>
-        <td class="px-6 py-4 text-right text-sm font-medium">
+        <td class="py-4 px-6 text-sm font-medium text-right">
           <Dropdown width="w-48" class="inline-block">
             <template #toggler>
               <Button theme="action" size="large" icon="3dots-solid"/>
@@ -51,14 +51,14 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
-import Breadcrumb from "../../../components/elements/Breadcrumb"
-import Table from "../../../components/elements/Table"
-import Dropdown from "../../../components/elements/Dropdown"
-import Filters from "../../../components/elements/Filters"
-import Confirm from "../../../components/elements/Confirm"
-import Button from "../../../components/form/Button"
-import Redirect from "../../../views/Tools/Redirections/Create"
+import { mapActions, mapGetters } from 'vuex';
+import Breadcrumb from '../../../components/elements/Breadcrumb.vue';
+import Table from '../../../components/elements/Table.vue';
+import Dropdown from '../../../components/elements/Dropdown.vue';
+import Filters from '../../../components/elements/Filters.vue';
+import Confirm from '../../../components/elements/Confirm.vue';
+import Button from '../../../components/form/Button.vue';
+import Redirect from '../Redirections/Create.vue';
 
 export default {
   name: 'NotFoundsIndex',
@@ -83,31 +83,31 @@ export default {
         {
           field: 'actions',
           classes: 'w-24',
-        }
+        },
       ],
-    }
+    };
   },
 
   computed: {
-    ...mapGetters('NotFounds', ['notFounds'])
+    ...mapGetters('NotFounds', ['notFounds']),
   },
 
   methods: {
     ...mapActions('NotFounds', ['fetchNotFounds', 'removeNotFound', 'setNotFoundsQuery']),
 
-    setQuery: function (args) {
-      this.setNotFoundsQuery(args)
-      this.fetchNotFounds()
+    setQuery(args) {
+      this.setNotFoundsQuery(args);
+      this.fetchNotFounds();
     },
 
-    confirmRemove: function (notFound) {
-      this.removeNotFound(notFound)
-    }
+    confirmRemove(notFound) {
+      this.removeNotFound(notFound);
+    },
   },
 
   created() {
-    this.setNotFoundsQuery({})
-    this.fetchNotFounds()
+    this.setNotFoundsQuery({});
+    this.fetchNotFounds();
   },
 
   components: {
@@ -118,6 +118,6 @@ export default {
     Confirm,
     Button,
     Redirect,
-  }
-}
+  },
+};
 </script>

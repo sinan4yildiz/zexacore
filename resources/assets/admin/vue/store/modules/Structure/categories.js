@@ -1,164 +1,196 @@
-const state = {
-    category: {},
-    categories: {},
-    contentType: {},
-    parent: {},
-    query: {},
-}
+const defState = {
+  category: {},
+  categories: {},
+  contentType: {},
+  parent: {},
+  query: {},
+};
 
 const getters = {
-    category: (state) => state.category,
-    categories: (state) => state.categories,
-    contentType: (state) => state.contentType,
-    parent: (state) => state.parent,
-}
+  category: (state) => state.category,
+  categories: (state) => state.categories,
+  contentType: (state) => state.contentType,
+  parent: (state) => state.parent,
+};
 
 const actions = {
-    fetchCategory({commit, state}, id) {
-        return new Promise((resolve) => {
-            axios.get('categories/' + id)
-                 .then(response => {
-                     commit('mutateSingle', response.data);
-                     resolve(response.data.data)
-                 });
-        })
-    },
-    fetchParent({commit, state}, id) {
-        return new Promise((resolve) => {
-            axios.get('categories/parent/' + id)
-                 .then(response => {
-                     commit('mutateParent', response.data);
-                     resolve(response.data.data)
-                 });
-        })
-    },
-    async fetchCategories({commit, state}) {
-        await axios.get('categories', {
-                       params: state.query
-                   })
-                   .then(response => {
-                       commit('mutateAll', response.data);
-                   });
-    },
-    createCategory({commit, dispatch}, category) {
-        return new Promise((resolve, reject) => {
-            axios.post('categories/create', category)
-                 .then(response => {
-                     dispatch('fetchCategories')
-                     resolve(response.data.data)
-                 })
-                 .catch(error => {
-                     reject(error.response.data)
-                 });
-        })
-    },
-    updateCategory({commit}, category) {
-        return new Promise((resolve, reject) => {
-            axios.put('categories/update/' + category.id, category)
-                 .then(response => {
-                     commit('mutateUpdated', response.data);
-                     resolve(response.data.data)
-                 })
-                 .catch(error => {
-                     reject(error.response.data)
-                 });
-        })
-    },
-    categoryAutocomplete({}, params) {
-        return new Promise((resolve) => {
-            axios.get('categories/autocomplete', {
-                     params: params
-                 })
-                 .then(response => {
-                     resolve(response.data.data)
-                 });
-        })
-    },
-    async activateCategory({commit}, category) {
-        await axios.patch('categories/activate/' + category.id)
-                   .then(response => {
-                       commit('mutateUpdated', response.data);
-                   });
-    },
-    async deactivateCategory({commit}, category) {
-        await axios.patch('categories/deactivate/' + category.id)
-                   .then(response => {
-                       commit('mutateUpdated', response.data);
-                   });
-    },
-    async orderCategories({commit}, ordered) {
-        var orderData = _.map(ordered.to.rows, (e, i) => {
-            return {id: e.getAttribute('data-id'), order: i + 1}
-        })
+  fetchCategory(context, id) {
+    return new Promise((resolve) => {
+      axios
+        .get(`categories/${id}`)
+        .then((response) => {
+          context.commit('SET_SINGLE', response.data);
+          resolve(response.data.data);
+        });
+    });
+  },
 
-        await axios.patch('categories/order', {orders: orderData})
-                   .then((response) => {
-                       commit('mutateOrdered', ordered)
-                   });
-    },
-    async removeCategory({commit, dispatch}, category) {
-        await axios.delete('categories/remove/' + category.id)
-                   .then((response) => {
-                       dispatch('fetchCategories')
-                   });
-    },
-    clearCategories({commit}) {
-        commit('mutateAll', {});
-    },
-    clearCategory({commit}) {
-        commit('mutateSingle', {});
-    },
-    clearParent({commit}) {
-        commit('mutateParent', {});
-    },
-    setCategoriesQuery({commit}, query) {
-        commit('mutateQuery', _.cloneDeep(query))
-    },
-    setContentType({commit}, contentType) {
-        commit('mutateContentType', contentType)
-    },
-}
+  fetchParent(context, id) {
+    return new Promise((resolve) => {
+      axios
+        .get(`categories/parent/${id}`)
+        .then((response) => {
+          context.commit('SET_PARENT', response.data);
+          resolve(response.data.data);
+        });
+    });
+  },
+
+  async fetchCategories(context) {
+    await axios
+      .get('categories', {
+        params: context.state.query,
+      })
+      .then((response) => {
+        context.commit('SET_LIST', response.data);
+      });
+  },
+
+  createCategory(context, category) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post('categories/create', category)
+        .then((response) => {
+          context.dispatch('fetchCategories');
+          resolve(response.data.data);
+        })
+        .catch((error) => {
+          reject(error.response.data);
+        });
+    });
+  },
+
+  updateCategory(context, category) {
+    return new Promise((resolve, reject) => {
+      axios
+        .put(`categories/update/${category.id}`, category)
+        .then((response) => {
+          context.commit('SET_UPDATED', response.data);
+          resolve(response.data.data);
+        })
+        .catch((error) => {
+          reject(error.response.data);
+        });
+    });
+  },
+
+  categoryAutocomplete(context, params) {
+    return new Promise((resolve) => {
+      axios
+        .get('categories/autocomplete', { params })
+        .then((response) => {
+          resolve(response.data.data);
+        });
+    });
+  },
+
+  async activateCategory(context, category) {
+    await axios
+      .patch(`categories/activate/${category.id}`)
+      .then((response) => {
+        context.commit('SET_UPDATED', response.data);
+      });
+  },
+
+  async deactivateCategory(context, category) {
+    await axios
+      .patch(`categories/deactivate/${category.id}`)
+      .then((response) => {
+        context.commit('SET_UPDATED', response.data);
+      });
+  },
+
+  async orderCategories(context, ordered) {
+    const orderData = _.map(ordered.to.rows, (e, i) => ({
+      id: e.getAttribute('data-id'), order: i + 1,
+    }));
+
+    await axios
+      .patch('categories/order', { orders: orderData })
+      .then(() => {
+        /* context.commit('SET_ORDER', ordered); */
+      });
+  },
+
+  async removeCategory(context, category) {
+    await axios
+      .delete(`categories/remove/${category.id}`)
+      .then(() => {
+        context.dispatch('fetchCategories');
+      });
+  },
+
+  clearCategories(context) {
+    context.commit('SET_LIST', {});
+  },
+
+  clearCategory(context) {
+    context.commit('SET_SINGLE', {});
+  },
+
+  clearParent(context) {
+    context.commit('SET_PARENT', {});
+  },
+
+  setCategoriesQuery(context, query) {
+    context.commit('SET_QUERY', _.cloneDeep(query));
+  },
+
+  setContentType(context, contentType) {
+    context.commit('SET_CONTENT_TYPE', contentType);
+  },
+};
 
 const mutations = {
-    mutateAll: (state, categories) => (state.categories = categories),
-    mutateSingle: (state, category) => (state.category = category),
-    mutateUpdated: (state, updated) => {
-        if(state.categories.data) {
-            const p = state.categories.data.findIndex(category => category.parent_id === updated.data.parent_id)
+  SET_LIST(state, categories) {
+    state.categories = categories;
+  },
 
-            if(p === -1) {
-                state.categories.data = state.categories.data.filter(category => category.id !== updated.data.id)
-            }
+  SET_SINGLE(state, category) {
+    state.category = category;
+  },
 
-            const i = state.categories.data.findIndex(category => category.id === updated.data.id)
+  SET_UPDATED(state, updated) {
+    if (state.categories.data) {
+      const p = state.categories.data.findIndex((category) => category.parent_id === updated.data.parent_id);
 
-            if(i !== -1) {
-                state.categories.data.splice(i, 1, updated.data)
-            }
-        }
-    },
-    mutateOrdered: (state, ordered) => {
-        /*_.move(state.categories.data, ordered.oldIndex, ordered.newIndex)*/
-    },
-    mutateQuery: (state, query) => {
-        state.query = _.pickBy(_.size(query) ? _.merge(state.query, query) : {}, _.identity)
+      if (p === -1) {
+        state.categories.data = state.categories.data.filter((category) => category.id !== updated.data.id);
+      }
 
-        if(state.contentType) {
-            state.query['content_type_id'] = state.contentType.id
-        }
-    },
-    mutateParent: (state, parent) => {
-        state.parent = parent.data
-    },
-    mutateContentType: (state, contentType) => {
-        state.contentType = contentType
-    },
-}
+      const i = state.categories.data.findIndex((category) => category.id === updated.data.id);
+
+      if (i !== -1) {
+        state.categories.data.splice(i, 1, updated.data);
+      }
+    }
+  },
+
+  /* SET_ORDER(state, ordered) {
+   _.move(state.categories.data, ordered.oldIndex, ordered.newIndex)
+   }, */
+
+  SET_QUERY(state, query) {
+    state.query = _.pickBy(_.size(query) ? Object.assign(state.query, query) : {}, _.identity);
+
+    if (state.contentType) {
+      state.query.content_type_id = state.contentType.id;
+    }
+  },
+
+  SET_PARENT(state, parent) {
+    state.parent = parent.data;
+  },
+
+  SET_CONTENT_TYPE(state, contentType) {
+    state.contentType = contentType;
+  },
+};
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+  namespaced: true,
+  state: defState,
+  getters,
+  actions,
+  mutations,
+};
