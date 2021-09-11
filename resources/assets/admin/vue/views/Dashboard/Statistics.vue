@@ -1,9 +1,15 @@
 <template>
   <div class="bg-white rounded-lg shadow">
+
+    <!-- Heading -->
     <div class="pt-4 pl-4 text-xs text-gray-600">{{ $t('dashboard.widgets.statistics') }}</div>
+
+    <!-- Chart -->
     <div v-if="chart">
       <apexchart type="area" height="350" :options="chart.options" :series="chart.series"/>
     </div>
+
+    <!-- Skeleton -->
     <div v-else class="p-6 db-height-m">
       <div v-for="n in 9" :key="n" class="flex items-center mb-5.5">
         <div class="mr-6 w-8 bone thin"></div>
@@ -13,6 +19,7 @@
         <div v-for="n in $screen.lg ? 16 : 6" :key="n" class="w-7 bone thin"></div>
       </div>
     </div>
+
   </div>
 </template>
 

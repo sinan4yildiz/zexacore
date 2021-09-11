@@ -1,8 +1,11 @@
 <template>
   <div class="relative dropdown" :class="{'open': isOpen}" v-on-clickaway="close">
+
+    <!-- Toggler -->
     <div @click="toggle" class="block cursor-pointer select-none">
       <slot name="toggler"></slot>
     </div>
+
     <transition
         enter-active-class="transition ease-out duration-100 transform"
         enter-class="opacity-0 scale-95"
@@ -10,13 +13,14 @@
         leave-active-class="transition ease-in duration-75 transform"
         leave-class="opacity-100 scale-100"
         leave-to-class="opacity-0 scale-95">
-      <div v-if="isOpen"
-           :class="classes()"
-           @click="keepOpen === false ? close() : null">
+
+      <!-- Body -->
+      <div v-if="isOpen" :class="classes()" @click="keepOpen === false ? close() : null">
         <div class="text-left bg-white rounded-md shadow-xs">
-          <slot name="content"></slot>
+          <slot name="body"></slot>
         </div>
       </div>
+
     </transition>
   </div>
 </template>
@@ -32,14 +36,18 @@ export default {
       type: String,
       default: 'w-56',
     },
+
     orientation: {
       type: String,
       default: 'right',
     },
+
+    /* Keeps open even the body clicked */
     keepOpen: {
       type: Boolean,
       default: false,
     },
+
     responsive: {
       type: Boolean,
       default: false,

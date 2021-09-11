@@ -1,26 +1,37 @@
 <template>
   <article>
     <div class="grid grid-cols-2 gap-6">
+
       <!-- Backups -->
       <div class="col-span-full xl:col-span-1 pt-5 bg-white rounded-lg shadow">
+
+        <!-- Header -->
         <div class="px-5 mb-4">
           <h2 class="text-lg font-medium leading-6 text-gray-900">{{ $t('maintenance.backup.list.heading') }}</h2>
           <p class="mt-1 text-sm text-gray-500">{{ $t('maintenance.backup.list.description') }}</p>
         </div>
+
+        <!-- Card body -->
         <div v-if="Object.keys(backups).length">
+
+          <!-- List -->
           <ul v-if="backups.data.length">
             <li v-for="(backup, index) in backups.data" :key="backup.id"
                 :class="{'bg-gray-50': index % 2 == 0, 'rounded-br-lg rounded-bl-lg': index == backups.data.length - 1}"
                 class="flex justify-between py-4 px-6">
+
+              <!-- Info -->
               <div class="flex-grow">
                 <h3 class="text-sm leading-6 text-gray-700">{{ backup.name }}</h3>
                 <time :title="backup.created_at_raw" class="text-xs leading-3 text-gray-500">{{ backup.created_at }}</time>
               </div>
+
+              <!-- Actions -->
               <Dropdown width="w-32" class="inline-block -mr-2">
                 <template #toggler>
                   <Button theme="action" size="large" icon="3dots-solid"/>
                 </template>
-                <div slot="content" class="p-2">
+                <div slot="body" class="p-2">
                   <Button @click="$refs.confirmRestore.data = backup" theme="text-blue" size="compact" :label="$t('common.restore')"/>
                   <div class="my-2 border-t border-gray-200"></div>
                   <Button @click="$refs.confirmRemove.data = backup" theme="text-red" size="compact" :label="$t('common.remove')"/>
@@ -28,6 +39,8 @@
               </Dropdown>
             </li>
           </ul>
+
+          <!-- Empty state -->
           <div v-else class="py-5 text-center">
             <svg class="w-16 h-16 text-gray-400">
               <use xlink:href="#icon-archive"></use>
@@ -35,6 +48,8 @@
             <div class="my-3 text-sm text-gray-500">{{ $t('message.nothing_found') }}</div>
           </div>
         </div>
+
+        <!-- Skeleton -->
         <ul v-else>
           <li v-for="n in 2" :key="n" :class="{'bg-gray-50': n % 2 != 0}"
               class="flex justify-between items-center py-6 px-6">
@@ -67,18 +82,20 @@
       </div>
     </div>
 
-    <!-- Confirm -->
+    <!-- Confirm restore -->
     <Confirm @confirm="restore($event)" ref="confirmRestore"/>
+
+    <!-- Confirm remove -->
     <Confirm @confirm="remove($event)" ref="confirmRemove"/>
   </article>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Dropdown from '../../../components/elements/Dropdown.vue';
-import Input from '../../../components/form/Input.vue';
-import Button from '../../../components/form/Button.vue';
-import Confirm from '../../../components/elements/Confirm.vue';
+import Dropdown from '../../../components/Elements/Dropdown.vue';
+import Input from '../../../components/Form/Input.vue';
+import Button from '../../../components/Form/Button.vue';
+import Confirm from '../../../components/Elements/Confirm.vue';
 
 export default {
   name: 'MaintenanceBackup',

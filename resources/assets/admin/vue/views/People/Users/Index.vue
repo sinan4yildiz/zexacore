@@ -1,9 +1,11 @@
 <template>
   <section>
     <header class="flex flex-wrap justify-between items-center mb-4">
+
       <!-- Page header -->
       <div class="w-3/4 md:w-48 xl:w-84">
         <h1 class="mb-2 text-2xl lg:text-3xl leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('users.heading.index') }}</h1>
+
         <Breadcrumb></Breadcrumb>
       </div>
 
@@ -18,8 +20,10 @@
       </div>
     </header>
 
+    <!-- Table -->
     <Table :meta="users.meta" :columns="columns" @query="setQuery($event)">
       <tr v-for="user in users.data" :key="user.id" has-action="true">
+
         <td class="py-4 px-6">
           <div class="flex items-start">
             <div class="hidden lg:flex flex-shrink-0 justify-center items-center w-10 h-10 tracking-widest text-gray-500 bg-gray-200 rounded-3xl">
@@ -33,23 +37,28 @@
             </div>
           </div>
         </td>
+
         <td class="py-4 px-6">
           <div class="text-sm text-gray-600 break-all">{{ user.email }}</div>
         </td>
+
         <td class="py-4 px-6">
           <span v-if="user.is_active" class="inline-flex px-2 text-xs font-semibold leading-5 text-green-900 bg-green-100 rounded-md">{{ $t('common.active') }}</span>
           <span v-else class="inline-flex px-2 text-xs font-semibold leading-5 text-red-600 bg-red-100 rounded-md">{{ $t('common.inactive') }}</span>
         </td>
+
         <td class="py-4 px-6 text-sm leading-5 text-gray-500">
           <time :title="user.created_at_raw">{{ user.created_at }}</time>
         </td>
+
         <td class="py-4 px-6 text-sm font-medium leading-5 text-right">
           <button v-if="$screen.lg && user.id == me.id" @click="$refs.edit.data = user" type="button" class="text-indigo-600 hover:text-indigo-800 focus:outline-none whitespace-no-wrap">{{ $t('account.profile') }}</button>
           <Dropdown v-else width="w-48" class="inline-block">
             <template #toggler>
               <Button theme="action" size="large" icon="3dots-solid"/>
             </template>
-            <div slot="content" class="p-2">
+
+            <div slot="body" class="p-2">
               <Button @click="$refs.edit.data = user" theme="text-default" size="compact" :label="$t('common.edit')"/>
               <div v-if="user.id != me.id">
                 <Button v-if="user.is_active" @click="deactivateUser(user)" theme="text-yellow" size="compact" :label="$t('common.deactivate')"/>
@@ -60,6 +69,7 @@
             </div>
           </Dropdown>
         </td>
+
       </tr>
     </Table>
 
@@ -76,14 +86,14 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import Breadcrumb from '../../../components/elements/Breadcrumb.vue';
+import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
 import Create from './Create.vue';
 import Edit from './Edit.vue';
-import Table from '../../../components/elements/Table.vue';
-import Dropdown from '../../../components/elements/Dropdown.vue';
-import Filters from '../../../components/elements/Filters.vue';
-import Confirm from '../../../components/elements/Confirm.vue';
-import Button from '../../../components/form/Button.vue';
+import Table from '../../../components/Elements/Table.vue';
+import Dropdown from '../../../components/Elements/Dropdown.vue';
+import Filters from '../../../components/Elements/Filters.vue';
+import Confirm from '../../../components/Elements/Confirm.vue';
+import Button from '../../../components/Form/Button.vue';
 
 export default {
   name: 'UsersIndex',

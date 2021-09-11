@@ -16,11 +16,11 @@
           </div>
 
           <!-- Content -->
-          <div v-on-clickaway="close"
-               :class="modalClasses()"
+          <div v-on-clickaway="close" :class="modalClasses()"
                class="inline-block md:my-8 w-full text-left align-bottom md:align-middle bg-white rounded-lg shadow-xl transition-all transform" role="dialog">
             <slot></slot>
           </div>
+
         </div>
       </div>
     </transition>

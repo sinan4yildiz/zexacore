@@ -3,6 +3,7 @@
     <div class="py-4 px-4 sm:px-6 border-b border-gray-300">
       <div class="w-48 bone"></div>
     </div>
+
     <ul>
       <li class="sm:grid sm:grid-cols-3 sm:gap-4 items-center py-4 px-4 sm:px-6 bg-gray-50 border-b">
         <div>

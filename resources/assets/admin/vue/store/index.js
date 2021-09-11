@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-Vue.use(Vuex);
-
-// Modules
+/*
+* Modules
+*
+* */
 import App from './modules/app';
 import Utils from './modules/utils';
 import Auth from './modules/auth';
@@ -24,6 +25,16 @@ import Settings from './modules/System/settings';
 import Maintenance from './modules/System/maintenance';
 import Search from './modules/search';
 
+/*
+* Binding
+*
+* */
+Vue.use(Vuex);
+
+/*
+* Export modules
+*
+* */
 export default new Vuex.Store({
   modules: {
     App,

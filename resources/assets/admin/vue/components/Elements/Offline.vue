@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isConnected" class="py-2 text-xs font-semibold text-center text-red-600 bg-red-100">
+  <div v-if="!isOnline" class="py-3 text-xs text-center text-red-600 bg-red-100">
     {{ $t('message.offline') }}
   </div>
 </template>
@@ -10,17 +10,17 @@ export default {
 
   data() {
     return {
-      isConnected: true,
+      isOnline: true,
     };
   },
 
   created() {
     window.addEventListener('online', () => {
-      this.isConnected = true;
+      this.isOnline = true;
     });
 
     window.addEventListener('offline', () => {
-      this.isConnected = false;
+      this.isOnline = false;
     });
   },
 };

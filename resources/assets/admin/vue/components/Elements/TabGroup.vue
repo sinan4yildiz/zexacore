@@ -1,5 +1,7 @@
 <template>
   <div>
+
+    <!-- Tabs -->
     <ul class="flex items-center p-3 bg-white rounded-lg shadow">
       <li v-for="(tab, index) in tabs" :key="index">
         <button @click="handle(index)" type="button" :class="classes(index)" class="py-3 px-6 leading-4 rounded-lg transition duration-150 ease-in-out focus:outline-none">
@@ -7,9 +9,12 @@
         </button>
       </li>
     </ul>
+
+    <!-- Body -->
     <div class="mt-5">
       <slot></slot>
     </div>
+
   </div>
 </template>
 

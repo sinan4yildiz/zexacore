@@ -1,7 +1,7 @@
 <template>
   <div>
     <Button @click="$refs.inputFile.$el.click()" :theme="theme" :label="label" :icon="icon" ref="buttonFile"/>
-    <!--@TODO change $events to $event.target.x-->
+
     <InputFile @change="$emit('change', $event)" :multiple="true" ref="inputFile"/>
   </div>
 </template>

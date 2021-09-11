@@ -17,7 +17,7 @@ import App from './App.vue';
 require('./bootstrap');
 
 /*
- * Vue uses
+ * Vue bindings
  *
  * */
 Vue.use(Helpers);

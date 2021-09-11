@@ -1,9 +1,11 @@
 <template>
   <section>
     <header class="flex flex-wrap justify-between items-center mb-4">
+
       <!-- Page header -->
       <div class="w-3/4 md:w-48 xl:w-84">
         <h1 class="mb-2 text-2xl lg:text-3xl leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('articles.heading.index') }}</h1>
+
         <Breadcrumb></Breadcrumb>
       </div>
 
@@ -23,10 +25,13 @@
       </div>
     </header>
 
-    <ContentTypeBar :current="contentType" @change="changeContentType($event)"/>
+    <!-- Content type picker -->
+    <ContentTypePicker :current="contentType" @change="changeContentType($event)"/>
 
+    <!-- Table -->
     <Table :meta="articles.meta" :columns="columns" @query="setQuery($event)">
       <tr v-for="article in articles.data" :key="article.id" has-action="true">
+
         <td class="py-4 px-6 text-sm font-bold text-gray-900">
           <div>
             {{ article.title }}
@@ -35,6 +40,7 @@
             </div>
           </div>
         </td>
+
         <td class="py-4 px-6 text-center">
           <ul>
             <li v-for="language in languages.data" :key="language.id" class="inline-block lg:m-0.5 mr-1 cursor-pointer">
@@ -46,9 +52,11 @@
             </li>
           </ul>
         </td>
+
         <td class="py-4 px-6 text-sm leading-5 text-center text-gray-600">
           {{ article.views }}
         </td>
+
         <td class="py-4 px-6">
           <span v-if="article.is_active" class="inline-flex px-2 text-xs font-semibold leading-5 text-green-900 bg-green-100 rounded-md">
             {{ $t('common.active') }}
@@ -57,15 +65,18 @@
             {{ $t('common.inactive') }}
           </span>
         </td>
+
         <td class="py-4 px-6 text-sm leading-5 text-gray-500">
           <time :title="article.created_at_raw">{{ article.created_at }}</time>
         </td>
+
         <td class="py-4 px-6 text-sm font-medium leading-5 text-right">
           <Dropdown width="w-48" class="inline-block">
             <template #toggler>
               <Button theme="action" size="large" icon="3dots-solid"/>
             </template>
-            <div slot="content" class="p-2">
+
+            <div slot="body" class="p-2">
               <RouterLink :to="{name: 'articles.edit', params: {id: article.id}}">
                 <Button theme="text-default" size="compact" :label="$t('common.edit')"/>
               </RouterLink>
@@ -76,6 +87,7 @@
             </div>
           </Dropdown>
         </td>
+
       </tr>
     </Table>
 
@@ -86,14 +98,14 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/elements/Breadcrumb.vue';
-import LanguageSwitcher from '../../../components/elements/LanguageSwitcher.vue';
-import Table from '../../../components/elements/Table.vue';
-import Filters from '../../../components/elements/Filters.vue';
-import Dropdown from '../../../components/elements/Dropdown.vue';
-import Confirm from '../../../components/elements/Confirm.vue';
-import Button from '../../../components/form/Button.vue';
-import ContentTypeBar from '../../../components/elements/ContentTypeBar.vue';
+import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
+import LanguageSwitcher from '../../../components/Elements/LanguageSwitcher.vue';
+import Table from '../../../components/Elements/Table.vue';
+import Filters from '../../../components/Elements/Filters.vue';
+import Dropdown from '../../../components/Elements/Dropdown.vue';
+import Confirm from '../../../components/Elements/Confirm.vue';
+import Button from '../../../components/Form/Button.vue';
+import ContentTypePicker from '../../../components/Elements/ContentTypePicker.vue';
 
 export default {
   name: 'ArticlesIndex',
@@ -185,7 +197,7 @@ export default {
   },
 
   components: {
-    ContentTypeBar,
+    ContentTypePicker,
     Breadcrumb,
     LanguageSwitcher,
     Table,

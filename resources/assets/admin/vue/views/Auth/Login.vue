@@ -53,8 +53,8 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Input from '../../components/form/Input.vue';
-import Button from '../../components/form/Button.vue';
+import Input from '../../components/Form/Input.vue';
+import Button from '../../components/Form/Button.vue';
 
 export default {
   name: 'Login',

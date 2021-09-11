@@ -1,9 +1,14 @@
 <template>
   <div class="py-4 pr-2 pl-5 text-sm text-gray-700 bg-white rounded-lg shadow">
+
+    <!-- Logs -->
     <div v-if="logs" class="overflow-y-auto max-h-screen leading-6 whitespace-no-wrap scrollbar thick" v-html="highlightDatetime(logs)"></div>
+
+    <!-- Skeleton -->
     <div v-else class="py-2">
       <div v-for="n in 8" class="bone thin" :key="n" :class="{'mb-4': n < 8}"></div>
     </div>
+
   </div>
 </template>
 

@@ -1,10 +1,15 @@
 <template>
   <Modal @close="close" ref="modal">
     <div class="overflow-hidden bg-white rounded-lg shadow">
+
+      <!-- Header -->
       <div class="py-5 px-4 sm:px-6">
         <h3 class="text-lg font-medium leading-6 text-gray-900">{{ details.subject }}</h3>
+
         <time :title="details.created_at_raw" class="mt-1 max-w-2xl text-sm text-gray-500">{{ details.created_at }}</time>
       </div>
+
+      <!-- Body -->
       <div class="border-t border-gray-300">
         <dl>
           <div class="sm:grid sm:grid-cols-4 sm:gap-4 py-5 px-4 sm:px-6 bg-gray-50">
@@ -29,18 +34,21 @@
           </div>
         </dl>
       </div>
+
+      <!-- Actions -->
       <div class="flex py-4 px-5 border-t border-gray-300">
         <Button @click="reply" theme="blue" :label="$t('common.reply')" icon="reply"/>
         <Button @click="close" theme="default" :label="$t('common.close')" class="ml-3"/>
       </div>
+
     </div>
   </Modal>
 </template>
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway';
-import Button from '../../components/form/Button.vue';
-import Modal from '../../components/elements/Modal.vue';
+import Button from '../../components/Form/Button.vue';
+import Modal from '../../components/Elements/Modal.vue';
 
 export default {
   name: 'MessageDetails',

@@ -1,36 +1,44 @@
 <template>
   <section>
     <header class="flex flex-wrap justify-between items-center mb-4">
+
       <!-- Page header -->
       <div class="w-3/4 md:w-48 xl:w-84">
         <h1 class="mb-2 text-2xl lg:text-3xl leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('not_founds.heading.index') }}</h1>
+
         <Breadcrumb></Breadcrumb>
       </div>
 
+      <!-- Filters -->
       <div class="flex flex-grow md:flex-grow-0 items-center mt-3 md:mt-0 md:ml-auto">
-        <!-- Filters -->
         <Filters :search="true" @apply="setQuery($event)"/>
       </div>
     </header>
 
+    <!-- Table -->
     <Table :meta="notFounds.meta" :columns="columns" @query="setQuery($event)">
       <tr v-for="notFound in notFounds.data" :key="notFound.id" has-action="true">
+
         <td class="py-4 px-6">
           <div class="text-sm font-bold text-gray-900 break-all">/{{ notFound.uri }}</div>
           <a v-if="notFound.redirection" :href="notFound.redirection.to" target="_blank" class="inline-block text-xs leading-5 text-gray-600 hover:text-blue-400 whitespace-normal break-all">{{ notFound.redirection.to }}</a>
         </td>
+
         <td class="py-4 px-6 text-center">
           <span class="text-sm text-gray-600">{{ notFound.count }}</span>
         </td>
+
         <td class="py-4 px-6 text-sm text-gray-500">
           <time :title="notFound.updated_at_raw">{{ notFound.updated_at }}</time>
         </td>
+
         <td class="py-4 px-6 text-sm font-medium text-right">
           <Dropdown width="w-48" class="inline-block">
             <template #toggler>
               <Button theme="action" size="large" icon="3dots-solid"/>
             </template>
-            <div slot="content" class="p-2">
+
+            <div slot="body" class="p-2">
               <div v-if="!notFound.redirection">
                 <Button @click="$refs.createRedirection.$refs.modal.isOpen = true; $refs.createRedirection.form = {from: notFound.uri}" theme="text-blue" size="compact" :label="$t('common.redirect')"/>
                 <div class="my-2 border-t border-gray-200"></div>
@@ -39,11 +47,12 @@
             </div>
           </Dropdown>
         </td>
+
       </tr>
     </Table>
 
     <!-- Create redirection -->
-    <Redirect @created="fetchNotFounds" ref="createRedirection"/>
+    <CreateRedirection @created="fetchNotFounds" ref="createRedirection"/>
 
     <!-- Confirm remove -->
     <Confirm @confirm="confirmRemove($event)" ref="confirm"/>
@@ -52,13 +61,13 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/elements/Breadcrumb.vue';
-import Table from '../../../components/elements/Table.vue';
-import Dropdown from '../../../components/elements/Dropdown.vue';
-import Filters from '../../../components/elements/Filters.vue';
-import Confirm from '../../../components/elements/Confirm.vue';
-import Button from '../../../components/form/Button.vue';
-import Redirect from '../Redirections/Create.vue';
+import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
+import Table from '../../../components/Elements/Table.vue';
+import Dropdown from '../../../components/Elements/Dropdown.vue';
+import Filters from '../../../components/Elements/Filters.vue';
+import Confirm from '../../../components/Elements/Confirm.vue';
+import Button from '../../../components/Form/Button.vue';
+import CreateRedirection from '../Redirections/Create.vue';
 
 export default {
   name: 'NotFoundsIndex',
@@ -117,7 +126,7 @@ export default {
     Filters,
     Confirm,
     Button,
-    Redirect,
+    CreateRedirection,
   },
 };
 </script>

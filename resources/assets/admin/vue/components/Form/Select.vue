@@ -1,10 +1,15 @@
 <template>
   <div class="w-full" :class="classes">
+
+    <!-- Label -->
     <label v-if="label"
            :for="name"
            :class="{'required': required}"
            class="block mb-1 ml-1 text-sm font-medium leading-5 text-gray-700 select-none">{{ label }}</label>
+
     <div class="relative">
+
+      <!-- Select -->
       <select v-model="selectValue"
               :name="name"
               :id="name"
@@ -14,7 +19,10 @@
         <option v-if="selectPlaceholder" value="">{{ placeholder }}</option>
         <option v-for="(option, index) in options" :key="index" :value="option.value">{{ option.label }}</option>
       </select>
+
     </div>
+
+    <!-- Error -->
     <p v-if="error" v-text="error" class="mt-1 ml-1 text-xs text-red-600"></p>
   </div>
 </template>

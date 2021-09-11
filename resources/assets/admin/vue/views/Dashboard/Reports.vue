@@ -3,7 +3,10 @@
 
     <!-- TODAY -->
     <div class="col-span-2 md:col-span-1 bg-white rounded-lg shadow">
+
+      <!-- Heading -->
       <div class="pt-4 pl-4 text-xs text-gray-600">{{ $t('dashboard.widgets.today') }}</div>
+
       <div class="grid grid-cols-2 gap-2 p-4">
 
         <!-- Sessions -->
@@ -25,12 +28,16 @@
           <div class="mb-2 w-2/3 bone"></div>
           <div class="bone thin"></div>
         </div>
+
       </div>
     </div>
 
     <!-- YESTERDAY -->
     <div class="col-span-2 md:col-span-1 bg-white rounded-lg shadow">
+
+      <!-- Heading -->
       <div class="pt-4 pl-4 text-xs text-gray-600">{{ $t('dashboard.widgets.yesterday') }}</div>
+
       <div class="grid grid-cols-2 gap-2 p-4">
 
         <!-- Sessions -->
@@ -52,12 +59,16 @@
           <div class="mb-2 w-2/3 bone"></div>
           <div class="bone thin"></div>
         </div>
+
       </div>
     </div>
 
     <!-- THIS MONTH -->
     <div class="col-span-2 md:col-span-1 bg-white rounded-lg shadow">
+
+      <!-- Heading -->
       <div class="pt-4 pl-4 text-xs text-gray-600">{{ $t('dashboard.widgets.this_month') }}</div>
+
       <div class="grid grid-cols-2 gap-2 p-4">
 
         <!-- Sessions -->
@@ -79,12 +90,16 @@
           <div class="mb-2 w-2/3 bone"></div>
           <div class="bone thin"></div>
         </div>
+
       </div>
     </div>
 
     <!-- THIS YEAR -->
     <div class="col-span-2 md:col-span-1 bg-white rounded-lg shadow">
+
+      <!-- Heading -->
       <div class="pt-4 pl-4 text-xs text-gray-600">{{ $t('dashboard.widgets.this_year') }}</div>
+
       <div class="grid grid-cols-2 gap-2 p-4">
 
         <!-- Sessions -->
@@ -106,6 +121,7 @@
           <div class="mb-2 w-2/3 bone"></div>
           <div class="bone thin"></div>
         </div>
+
       </div>
     </div>
 

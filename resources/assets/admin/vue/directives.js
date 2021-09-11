@@ -13,7 +13,7 @@ const directives = {
           easing: 'cubic-bezier(1, 0, 0, 1)',
         };
 
-        window.sortable = new sortablejs.Sortable(el.querySelector('tbody'), Object.assign(binding.value, options));
+        return new sortablejs.Sortable(el.querySelector('tbody'), Object.assign(binding.value, options));
       },
     });
   },

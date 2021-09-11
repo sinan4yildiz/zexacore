@@ -1,21 +1,25 @@
 <template>
   <section>
+
     <!-- Top -->
     <div v-if="settings.analytics" class="mb-4">
-      <Reports/>
+      <Reports></Reports>
     </div>
 
     <!-- Middle -->
     <div v-if="settings.analytics" class="mb-4">
-      <Statistics/>
+      <Statistics></Statistics>
     </div>
 
     <!-- Bottom -->
     <div class="grid grid-cols-4 gap-4">
-      <Messages/>
-      <Activities/>
-      <Counts/>
+      <Messages></Messages>
+
+      <Activities></Activities>
+
+      <Counts></Counts>
     </div>
+
   </section>
 </template>
 

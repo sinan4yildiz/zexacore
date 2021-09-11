@@ -30,9 +30,9 @@
 import { mapActions, mapGetters } from 'vuex';
 import Authenticated from './layouts/Authenticated.vue';
 import Unauthenticated from './layouts/Unauthenticated.vue';
-import Offline from './components/elements/Offline.vue';
+import Offline from './components/Elements/Offline.vue';
 import SVGLib from './components/SVGLib.vue';
-import Snackbar from './components/elements/Snackbar.vue';
+import Snackbar from './components/Elements/Snackbar.vue';
 
 export default {
   name: 'App',

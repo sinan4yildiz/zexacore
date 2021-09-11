@@ -5,9 +5,13 @@
 
     <!-- Selected item -->
     <div v-if="selected" class="relative mt-3 bg-white">
+
+      <!-- Preview -->
       <div @click="browse = true" class="cursor-pointer">
         <img v-if="selected.thumbnail" :src="selected.thumbnail" :class="{'p-5': selected.extension == 'svg'}" class="w-full h-auto rounded-md shadow">
       </div>
+
+      <!-- Remove button -->
       <span class="flex absolute top-0 right-0 justify-center items-center -mt-1.5 -mr-1.5 w-11 h-11 bg-gray-50 rounded-full">
         <button type="button"
                 @click="remove"
@@ -17,6 +21,7 @@
           </svg>
         </button>
       </span>
+
     </div>
 
     <!-- Uploads modal -->
@@ -29,6 +34,7 @@
         leave-to-class="opacity-0 scale-95">
       <div v-if="browse" class="overflow-y-auto fixed inset-0 z-10">
         <div class="flex justify-center items-end p-4 xl:p-0 min-h-screen">
+
           <!-- Overlay -->
           <div class="fixed inset-0">
             <div class="absolute inset-0 bg-gray-800 opacity-50"></div>
@@ -38,6 +44,7 @@
           <div v-on-clickaway="close" class="inline-block p-4 md:p-10 pb-24 md:my-10 w-full max-w-6xl min-h-180 text-left sm:align-middle bg-gray-200 rounded-xl shadow-xl transition-all transform">
             <Uploads :browse="true" :kind="kind" @select="select($event)"/>
           </div>
+
         </div>
       </div>
     </transition>

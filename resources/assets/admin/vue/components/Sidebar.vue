@@ -1,6 +1,10 @@
 <template>
   <aside class="min-h-screen">
+
+    <!-- Navigation -->
     <nav class="block w-full">
+
+      <!-- Parent -->
       <ul>
         <li v-for="(parent, i) in navigation" :key="i">
 
@@ -13,6 +17,7 @@
             <svg class="mr-4 w-7 h-7 text-gray-500">
               <use :xlink:href="'#icon-' + parent.icon"></use>
             </svg>
+
             {{ parent.title }}
           </RouterLink>
 
@@ -26,7 +31,9 @@
             <svg class="mr-4 w-7 h-7 text-gray-500 transition duration-300 ease-in-out">
               <use :xlink:href="'#icon-' + parent.icon"></use>
             </svg>
+
             {{ parent.title }}
+
             <svg class="mt-px ml-4 lg:ml-auto w-5 h-5 text-gray-500 transition duration-300 ease-in-out fill-current">
               <use xlink:href="#icon-chevron-solid"></use>
             </svg>
@@ -47,6 +54,7 @@
         </li>
       </ul>
     </nav>
+
   </aside>
 </template>
 

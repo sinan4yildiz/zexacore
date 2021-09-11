@@ -14,7 +14,6 @@ const actions = {
    *
    * */
   async initApp(context) {
-
     // Set config
     context.commit('SET_CONFIG', window.appConfig);
 

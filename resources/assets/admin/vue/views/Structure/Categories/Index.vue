@@ -1,9 +1,11 @@
 <template>
   <section>
     <header class="flex flex-wrap justify-between items-center mb-4">
+
       <!-- Page header -->
       <div class="w-3/4 md:w-48 xl:w-84">
         <h1 class="mb-2 text-2xl lg:text-3xl leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('categories.heading.index') }}</h1>
+
         <Breadcrumb></Breadcrumb>
       </div>
 
@@ -13,15 +15,19 @@
       </RouterLink>
     </header>
 
-    <ContentTypeBar :current="contentType" @change="changeContentType($event)"/>
+    <!-- Content type picker -->
+    <ContentTypePicker :current="contentType" @change="changeContentType($event)"/>
 
+    <!-- Table -->
     <Table :meta="categories.meta" :columns="columns" @query="setQuery($event)" v-sortable="{handle: 'td:first-child', onUpdate: orderCategories}">
       <tr v-for="category in categories.data" :key="category.id" :data-id="category.id" has-action="true" has-sorting="true">
+
         <td class="text-center text-gray-500 hover:text-gray-700 bg-gray-50 transition duration-150 ease-in-out cursor-move">
           <svg class="w-4 h-4">
             <use xlink:href="#icon-6dots-solid"></use>
           </svg>
         </td>
+
         <td class="py-4 px-6">
           <button type="button" @click="changeParent(category.id)" class="text-sm font-bold text-gray-900 hover:text-blue-600 transition duration-150 ease-in-out focus:outline-none">
             {{ category.translation.title }}
@@ -30,6 +36,7 @@
             {{ category.translation.description_plain }}
           </div>
         </td>
+
         <td class="py-4 px-6 text-center">
           <ul>
             <li v-for="language in languages.data" :key="language.id" class="inline-block lg:m-0.5 mr-1 cursor-pointer">
@@ -41,16 +48,19 @@
             </li>
           </ul>
         </td>
+
         <td class="py-4 px-6">
           <span v-if="category.is_active" class="inline-flex px-2 text-xs font-semibold leading-5 text-green-900 bg-green-100 rounded-md">{{ $t('common.active') }}</span>
           <span v-else class="inline-flex px-2 text-xs font-semibold leading-5 text-red-600 bg-red-100 rounded-md">{{ $t('common.inactive') }}</span>
         </td>
+
         <td class="py-4 px-6 text-sm font-medium leading-5 text-right">
           <Dropdown width="w-48" class="inline-block">
             <template #toggler>
               <Button theme="action" size="large" icon="3dots-solid"/>
             </template>
-            <div slot="content" class="p-2">
+
+            <div slot="body" class="p-2">
               <RouterLink :to="{name: 'categories.edit', params: {id: category.id}}">
                 <Button theme="text-default" :label="$t('common.edit')" size="compact"/>
               </RouterLink>
@@ -61,6 +71,7 @@
             </div>
           </Dropdown>
         </td>
+
       </tr>
     </Table>
 
@@ -71,12 +82,12 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/elements/Breadcrumb.vue';
-import Table from '../../../components/elements/Table.vue';
-import Dropdown from '../../../components/elements/Dropdown.vue';
-import Confirm from '../../../components/elements/Confirm.vue';
-import Button from '../../../components/form/Button.vue';
-import ContentTypeBar from '../../../components/elements/ContentTypeBar.vue';
+import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
+import Table from '../../../components/Elements/Table.vue';
+import Dropdown from '../../../components/Elements/Dropdown.vue';
+import Confirm from '../../../components/Elements/Confirm.vue';
+import Button from '../../../components/Form/Button.vue';
+import ContentTypePicker from '../../../components/Elements/ContentTypePicker.vue';
 
 export default {
   name: 'CategoriesIndex',
@@ -160,7 +171,7 @@ export default {
   },
 
   components: {
-    ContentTypeBar,
+    ContentTypePicker,
     Breadcrumb,
     Table,
     Dropdown,

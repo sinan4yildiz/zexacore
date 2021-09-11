@@ -1,9 +1,11 @@
 <template>
   <section>
     <header class="flex flex-wrap justify-between items-center mb-4">
+
       <!-- Page header -->
       <div class="w-3/4 md:w-48 xl:w-84">
         <h1 class="mb-2 text-2xl lg:text-3xl leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('redirections.heading.index') }}</h1>
+
         <Breadcrumb></Breadcrumb>
       </div>
 
@@ -12,36 +14,43 @@
         <Button @click="$refs.create.$refs.modal.isOpen = true" theme="blue" :label="$screen.md ? $t('common.create_new') : null" icon="plus"/>
       </div>
 
+      <!-- Filters -->
       <div class="flex flex-grow md:flex-grow-0 items-center mt-3 md:mt-0 md:ml-auto">
-        <!-- Filters -->
         <Filters :search="true" @apply="setQuery($event)"/>
       </div>
     </header>
 
+    <!-- Table -->
     <Table :meta="redirections.meta" :columns="columns" @query="setQuery($event)">
       <tr v-for="redirection in redirections.data" :key="redirection.id" has-action="true">
+
         <td class="py-4 px-6">
           <div class="text-sm font-bold text-gray-900 break-all">/{{ redirection.from }}</div>
           <a :href="redirection.to" target="_blank" class="inline-block text-xs leading-5 text-gray-600 hover:text-blue-400 break-all">{{ redirection.to }}</a>
         </td>
+
         <td class="py-4 px-6 text-center">
           <span class="text-sm text-gray-600">{{ redirection.count }}</span>
         </td>
+
         <td class="py-4 px-6 text-sm text-gray-500">
           <time :title="redirection.updated_at_raw">{{ redirection.updated_at }}</time>
         </td>
+
         <td class="py-4 px-6 text-sm font-medium text-right">
           <Dropdown width="w-48" class="inline-block">
             <template #toggler>
               <Button theme="action" size="large" icon="3dots-solid"/>
             </template>
-            <div slot="content" class="p-2">
+
+            <div slot="body" class="p-2">
               <Button @click="$refs.edit.data = redirection" theme="text-default" size="compact" :label="$t('common.edit')"/>
               <div class="my-2 border-t border-gray-200"></div>
               <Button @click="$refs.confirm.data = redirection" theme="text-red" size="compact" :label="$t('common.remove')"/>
             </div>
           </Dropdown>
         </td>
+
       </tr>
     </Table>
 
@@ -58,14 +67,14 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/elements/Breadcrumb.vue';
+import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
 import Create from './Create.vue';
 import Edit from './Edit.vue';
-import Table from '../../../components/elements/Table.vue';
-import Dropdown from '../../../components/elements/Dropdown.vue';
-import Filters from '../../../components/elements/Filters.vue';
-import Confirm from '../../../components/elements/Confirm.vue';
-import Button from '../../../components/form/Button.vue';
+import Table from '../../../components/Elements/Table.vue';
+import Dropdown from '../../../components/Elements/Dropdown.vue';
+import Filters from '../../../components/Elements/Filters.vue';
+import Confirm from '../../../components/Elements/Confirm.vue';
+import Button from '../../../components/Form/Button.vue';
 
 export default {
   name: 'RedirectionsIndex',

@@ -1,23 +1,32 @@
 <template>
   <Modal size="lg" @close="close" ref="modal">
     <form @submit.prevent="create" class="overflow-hidden bg-white rounded-lg shadow">
+
+      <!-- Header -->
       <div class="flex py-4 px-5 bg-gray-50 border-b border-gray-300">{{ $t('redirections.heading.create') }}</div>
+
+      <!-- Inputs -->
       <ul class="py-6 px-5 bg-white">
         <li class="mb-4">
           <InputGroup name="from" :label="$t('label.source')" :placeholder="$t('placeholder.uri')" v-model="form.from" :required="true" @input="handleFrom($event)" :errors="errors">
+
             <template #prepend>
               {{ config.url.base.slice(0, -1) }}/
             </template>
           </InputGroup>
         </li>
+
         <li class="mb-1">
           <Input name="to" :label="$t('label.target')" :placeholder="$t('placeholder.url')" :required="true" @input="form.to = $event" :errors="errors"/>
         </li>
       </ul>
+
+      <!-- Actions -->
       <div class="flex py-4 px-5 bg-gray-50 border-t border-gray-300">
         <Button type="submit" theme="blue" :label="$t('common.create')" icon="plus" ref="createButton"/>
         <Button @click="close" theme="default" :label="$t('common.cancel')" class="ml-3"/>
       </div>
+
     </form>
   </Modal>
 </template>
@@ -25,10 +34,10 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { mixin as clickaway } from 'vue-clickaway';
-import Input from '../../../components/form/Input.vue';
-import InputGroup from '../../../components/form/InputGroup.vue';
-import Button from '../../../components/form/Button.vue';
-import Modal from '../../../components/elements/Modal.vue';
+import Input from '../../../components/Form/Input.vue';
+import InputGroup from '../../../components/Form/InputGroup.vue';
+import Button from '../../../components/Form/Button.vue';
+import Modal from '../../../components/Elements/Modal.vue';
 
 export default {
   name: 'RedirectionCreate',

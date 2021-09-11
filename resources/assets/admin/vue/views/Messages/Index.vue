@@ -1,9 +1,11 @@
 <template>
   <section>
     <header class="flex flex-wrap justify-between items-center mb-4">
+
       <!-- Page header -->
       <div class="w-3/4 md:w-48 xl:w-84">
         <h1 class="mb-2 text-2xl lg:text-3xl leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('messages.heading.index') }}</h1>
+
         <Breadcrumb></Breadcrumb>
       </div>
 
@@ -11,8 +13,10 @@
       <Filters :search="true" :filters="['date-start', 'date-end']" @apply="setQuery($event)" class="mt-3 md:mt-0"/>
     </header>
 
+    <!-- Table -->
     <Table :meta="messages.meta" :columns="columns" @query="setQuery($event)">
       <tr v-for="message in messages.data" :key="message.id" has-action="true">
+
         <td @click="readMessage(message)" :class="{'text-blue-600': message.unread, 'text-gray-900': !message.unread}" class="py-4 px-6 hover:text-blue-600 bg-gradient-to-r hover:from-gray-100 via-white hover:to-white transition duration-150 ease-in-out cursor-pointer">
           <div class="text-sm font-bold">
             {{ message.subject }}
@@ -21,15 +25,18 @@
             {{ message.name }}
           </div>
         </td>
+
         <td class="py-4 px-6 text-sm leading-5 text-gray-500">
           <time :title="message.created_at_raw">{{ message.created_at }}</time>
         </td>
+
         <td class="py-4 px-6 text-sm font-medium leading-5 text-right">
           <Dropdown width="w-48" class="inline-block">
             <template #toggler>
               <Button theme="action" size="large" icon="3dots-solid"/>
             </template>
-            <div slot="content" class="p-2">
+
+            <div slot="body" class="p-2">
               <Button v-if="message.unread" @click="markAsReadMessage(message)" theme="text-blue" size="compact" :label="$t('messages.mark_read')"/>
               <Button v-else @click="markAsUneadMessage(message)" theme="text-default" size="compact" :label="$t('messages.mark_unread')"/>
               <div class="my-2 border-t border-gray-200"></div>
@@ -37,6 +44,7 @@
             </div>
           </Dropdown>
         </td>
+
       </tr>
     </Table>
 
@@ -50,13 +58,13 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../components/elements/Breadcrumb.vue';
+import Breadcrumb from '../../components/Elements/Breadcrumb.vue';
 import Details from './Details.vue';
-import Table from '../../components/elements/Table.vue';
-import Dropdown from '../../components/elements/Dropdown.vue';
-import Filters from '../../components/elements/Filters.vue';
-import Confirm from '../../components/elements/Confirm.vue';
-import Button from '../../components/form/Button.vue';
+import Table from '../../components/Elements/Table.vue';
+import Dropdown from '../../components/Elements/Dropdown.vue';
+import Filters from '../../components/Elements/Filters.vue';
+import Confirm from '../../components/Elements/Confirm.vue';
+import Button from '../../components/Form/Button.vue';
 
 export default {
   name: 'MessagesIndex',

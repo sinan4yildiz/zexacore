@@ -1,14 +1,21 @@
 <template>
   <button @click="$emit('click')" :type="type || 'button'" :class="buttonClasses" :disabled="loading">
+
+    <!-- Loading -->
     <span v-if="loading" :class="{'-ml-1.5 mr-2': label}" class="inline-block w-5 h-5 text-center">
       <svg class="w-3.5 h-3.5 animate-spin-fast">
         <use xlink:href="#icon-loading"></use>
       </svg>
     </span>
+
+    <!-- Icon -->
     <svg v-else-if="icon" :class="iconClasses">
       <use :xlink:href="'#icon-' + icon"></use>
     </svg>
+
+    <!-- Label -->
     <slot>{{ label }}</slot>
+
   </button>
 </template>
 

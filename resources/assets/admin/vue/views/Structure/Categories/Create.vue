@@ -1,11 +1,17 @@
 <template>
   <section>
     <header class="md:flex md:items-center mb-5">
+
+      <!-- Page header -->
       <div class="mb-4 md:mb-0">
         <h1 class="mb-2 text-2xl lg:text-3xl leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('categories.heading.create') }}</h1>
+
         <Breadcrumb></Breadcrumb>
       </div>
+
+      <!-- Actions -->
       <div class="flex justify-between items-center md:ml-auto">
+
         <!-- Back -->
         <RouterLink :to="{name: 'categories'}" class="mr-4">
           <Button theme="neutral" :label="$t('common.back')" icon="arrow-left"/>
@@ -17,22 +23,28 @@
     </header>
 
     <article class="overflow-hidden bg-white rounded-lg shadow">
-      <LanguageBar @input="form.language_code = $event"/>
+
+      <!-- Language picker -->
+      <LanguagePicker @input="form.language_code = $event"/>
+
       <ul>
         <li class="xl:grid xl:grid-cols-3 xl:gap-4 items-center py-4 px-4 xl:px-6 bg-gray-50 border-b">
           <div>
             <label for="content_type_id" class="block text-sm font-medium text-gray-800 required">{{ $t('label.content_type') }}</label>
             <p class="text-xs text-gray-550">{{ $t('tip.content_type') }}</p>
           </div>
+
           <div class="xl:col-span-2 mt-2 xl:mt-0 mb-1 xl:mb-0">
             <Select name="content_type_id" placeholder="Select content type" :options="contentTypeOptions" :selected="contentType.id" @input="form.content_type_id = $event" :errors="errors"/>
           </div>
         </li>
+
         <li v-if="form.content_type_id" class="xl:grid xl:grid-cols-3 xl:gap-4 items-center py-4 px-4 xl:px-6 bg-gray-50 border-b">
           <div>
             <label for="parent_id" class="block text-sm font-medium text-gray-800">{{ $t('label.parent_category') }}</label>
             <p class="text-xs text-gray-550">{{ $t('tip.parent_category') }}</p>
           </div>
+
           <div class="xl:col-span-2 mt-2 xl:mt-0 mb-1 xl:mb-0">
             <Autocomplete :keyword="parent && parent.translation ? parent.translation.title : null"
                           :value="parent ? parent.id : null"
@@ -44,48 +56,59 @@
                           :errors="errors"/>
           </div>
         </li>
+
         <li class="xl:grid xl:grid-cols-3 xl:gap-4 items-center py-4 px-4 xl:px-6 bg-gray-50 border-b">
           <div>
             <label for="title" class="block text-sm font-medium text-gray-800 required">{{ $t('label.title') }}</label>
             <p class="text-xs text-gray-550">{{ $t('tip.title') }}</p>
           </div>
+
           <div class="xl:col-span-2 mt-2 xl:mt-0 mb-1 xl:mb-0">
             <Input name="title" :placeholder="$t('label.title')" @input="form.title = $event" :errors="errors"/>
           </div>
         </li>
+
         <li class="items-center py-4 px-4 xl:px-6 bg-gray-50 border-b">
           <label for="content" class="block text-sm font-medium text-gray-800">{{ $t('label.description') }}</label>
+
           <div class="xl:col-span-2 mt-1 mb-1 xl:mb-0">
             <Textarea name="description" :placeholder="$t('label.description')" :attr="{rows: 10}" @input="form.description = $event" :errors="errors"/>
           </div>
         </li>
+
         <li class="xl:grid xl:grid-cols-3 xl:gap-4 items-center py-4 px-4 xl:px-6 bg-gray-50 border-b">
           <div>
             <label for="meta_title" class="block text-sm font-medium text-gray-800">{{ $t('label.meta_title') }}</label>
             <p class="text-xs text-gray-550">{{ $t('tip.meta_title') }}</p>
           </div>
+
           <div class="xl:col-span-2 mt-2 xl:mt-0 mb-1 xl:mb-0">
             <Input name="meta_title" :placeholder="$t('label.meta_title')" @input="form.meta_title = $event" :errors="errors"/>
           </div>
         </li>
+
         <li class="xl:grid xl:grid-cols-3 xl:gap-4 items-center py-4 px-4 xl:px-6 bg-gray-50 border-b">
           <div>
             <label for="meta_description" class="block text-sm font-medium text-gray-800">{{ $t('label.meta_description') }}</label>
             <p class="text-xs text-gray-550">{{ $t('tip.meta_description') }}</p>
           </div>
+
           <div class="xl:col-span-2 mt-2 xl:mt-0 mb-1 xl:mb-0">
             <Input name="meta_description" :placeholder="$t('label.meta_description')" @input="form.meta_description = $event" :errors="errors"/>
           </div>
         </li>
+
         <li v-if="settings.meta_keywords == 1" class="xl:grid xl:grid-cols-3 xl:gap-4 items-center py-4 px-4 xl:px-6 bg-gray-50 border-b">
           <div>
             <label for="meta_keywords" class="block text-sm font-medium text-gray-800">{{ $t('label.meta_keywords') }}</label>
             <p class="text-xs text-gray-550">{{ $t('tip.meta_keywords') }}</p>
           </div>
+
           <div class="xl:col-span-2 mt-2 xl:mt-0 mb-1 xl:mb-0">
             <Input name="meta_keywords" :placeholder="$t('label.meta_keywords')" @input="form.meta_keywords = $event" :errors="errors"/>
           </div>
         </li>
+
         <li class="xl:grid xl:grid-cols-3 xl:gap-4 items-center py-4 px-4 xl:px-6 bg-gray-50 border-b">
           <div>
             <label for="slug" class="block text-sm font-medium text-gray-800">{{ $t('label.slug') }}</label>
@@ -94,35 +117,39 @@
               <span class="hidden sm:block truncate">{{ config.url.base }}<strong class="text-gray-800">{{ form.slug || $slugify($t('label.slug')) }}</strong></span>
             </p>
           </div>
+
           <div class="xl:col-span-2 mt-2 xl:mt-0 mb-1 xl:mb-0">
             <Slug name="slug" :placeholder="$t('label.slug')" source="#title" @input="form.slug = $event" v-model="form.slug" :errors="errors"/>
           </div>
         </li>
+
         <li class="xl:grid xl:grid-cols-3 xl:gap-4 items-center py-4 px-4 xl:px-6 bg-gray-50">
           <div>
             <label for="is_active" class="block text-sm font-medium text-gray-800">{{ $t('label.status') }}</label>
             <p class="text-xs text-gray-550">{{ $t('tip.status') }}</p>
           </div>
+
           <div class="xl:col-span-2 mt-2 xl:mt-0 mb-1 xl:mb-0">
             <Switcher name="is_active" :label="[$t('common.active'), $t('common.inactive')]" :checked="true" @input="form.is_active = $event" :errors="errors"/>
           </div>
         </li>
       </ul>
+
     </article>
   </section>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/elements/Breadcrumb.vue';
-import Input from '../../../components/form/Input.vue';
-import Autocomplete from '../../../components/form/Autocomplete.vue';
-import Slug from '../../../components/form/Slug.vue';
-import Textarea from '../../../components/form/Textarea.vue';
-import Select from '../../../components/form/Select.vue';
-import Button from '../../../components/form/Button.vue';
-import Switcher from '../../../components/form/Switcher.vue';
-import LanguageBar from '../../../components/form/LanguageBar.vue';
+import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
+import Input from '../../../components/Form/Input.vue';
+import Autocomplete from '../../../components/Form/Autocomplete.vue';
+import Slug from '../../../components/Form/Slug.vue';
+import Textarea from '../../../components/Form/Textarea.vue';
+import Select from '../../../components/Form/Select.vue';
+import Button from '../../../components/Form/Button.vue';
+import Switcher from '../../../components/Form/Switcher.vue';
+import LanguagePicker from '../../../components/Form/LanguagePicker.vue';
 
 export default {
   name: 'CategoryCreate',
@@ -186,7 +213,7 @@ export default {
     Select,
     Button,
     Switcher,
-    LanguageBar,
+    LanguagePicker,
   },
 };
 </script>

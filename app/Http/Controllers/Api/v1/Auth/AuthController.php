@@ -73,6 +73,7 @@ class AuthController extends Controller
     {
         return response()->json([
             'token'    => $this->token ?? JWTAuth::getToken()->get(),
+            /*'expires_in' => auth('api')->factory()->getTTL() * 60,*/
             'user'     => auth('api')->user(),
             'settings' => config('settings')
         ]);

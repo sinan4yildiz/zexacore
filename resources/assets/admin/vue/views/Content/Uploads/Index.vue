@@ -1,9 +1,11 @@
 <template>
   <section>
     <header class="flex flex-wrap justify-between items-center mb-4">
+
       <!-- Page header -->
       <div v-if="!browse" class="w-3/4 md:w-48 xl:w-84">
         <h1 class="mb-2 text-2xl lg:text-3xl leading-8 lg:leading-9 text-gray-800 truncate">{{ $t('uploads.heading.index') }}</h1>
+
         <Breadcrumb></Breadcrumb>
       </div>
 
@@ -16,7 +18,8 @@
           <template #toggler>
             <Button theme="default" :label="$screen.md ? $t('common.folder') : null" icon="folder-new"/>
           </template>
-          <template #content>
+
+          <template #body>
             <form @submit.prevent="createFolderSubmit" class="mt-1" autocomplete="off">
               <div class="p-4 bg-gray-50 rounded-tl-md rounded-tr-md">
                 <Slug name="name" :placeholder="$t('placeholder.folder')" @input="folderForm.name = $event" :errors="folderFormErrors"/>
@@ -39,6 +42,7 @@
 
     <!-- Content -->
     <div class="mb-4 bg-white rounded-lg shadow">
+
       <!-- Directory breadcrumb -->
       <div class="overflow-hidden py-1 px-4 text-sm text-gray-600 bg-gray-50 rounded-tl-lg rounded-tr-lg border-b border-gray-300">
         <ul class="flex overflow-x-auto items-center py-2 whitespace-no-wrap">
@@ -47,6 +51,7 @@
               {{ $t('files.root') }}
             </button>
           </li>
+
           <li v-for="(dir, index) in directory.split('/').filter(i => i)" :key="index" class="flex items-center">
             <svg class="w-4 h-4 transform -rotate-90 translate-x-2 fill-current">
               <use xlink:href="#icon-chevron-solid"></use>
@@ -58,31 +63,47 @@
 
       <!-- Items -->
       <div v-if="items.data">
+
         <!-- Files -->
         <ul v-if="Object.keys(items.data).length" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-10 gap-1 md:gap-2 p-2 md:p-4">
           <li v-for="(item, index) in items.data" :key="index">
             <Dropdown width="w-full" orientation="left">
+
+              <!-- File thumb -->
               <template #toggler>
                 <button @dblclick="itemSelect(item)" type="button" :title="item.name" class="block pb-2 w-full text-center hover:bg-gray-100 focus:bg-gray-200 rounded-lg transition duration-150 ease-in-out focus:outline-none">
+
+                  <!-- Folder -->
                   <svg v-if="item.type == 'dir'" class="w-20 h-20 text-blue-400">
                     <use xlink:href="#icon-folder-solid"></use>
                   </svg>
+
+                  <!-- Thumbnail image -->
                   <div v-else-if="item.thumbnail" class="flex justify-center items-center h-20">
                     <img :src="item.thumbnail" class="uploaded-item-thumbnail">
                   </div>
+
+                  <!-- Extension icon -->
                   <svg v-else class="w-20 h-20">
                     <use :xlink:href="'#file-' + item.extension"></use>
                   </svg>
+
+                  <!-- File name -->
                   <h3 class="block px-4 w-full text-xs text-gray-800 truncate whitespace-no-wrap">{{ item.name }}</h3>
                 </button>
               </template>
-              <div slot="content" class="p-2">
+
+              <!-- Actions -->
+              <div slot="body" class="p-2">
                 <Button v-if="item.type == 'dir' || browse" @click="itemSelect(item)" theme="text-default" size="compact"
                         :label="item.type == 'dir' ? $t('common.open') : $t('common.select')"/>
+
                 <a v-if="item.preview" :href="item.preview" target="_blank">
                   <Button theme="text-default" size="compact" :label="$t('common.preview')"/>
                 </a>
+
                 <div v-if="item.type == 'dir' || browse || item.preview" class="my-2 border-t border-gray-200"></div>
+
                 <Button @click="$refs.confirm.data = item" theme="text-red" size="compact" :label="$t('common.remove')"/>
               </div>
             </Dropdown>
@@ -100,23 +121,7 @@
     </div>
 
     <!-- Pagination -->
-    <div v-if="items.meta && items.meta.total" class="grid grid-cols-2 gap-4 px-2 mt-5">
-      <!-- Pages @TODO convert paginations into a component -->
-      <div v-if="items.meta.last_page > 1" class="md:order-last col-span-2 md:col-span-1 mt-4 md:mt-0 text-center md:text-right">
-        <nav class="inline-flex relative z-0 shadow-sm">
-          <button v-for="(page, index) in items.meta.links.filter((page) => page.label > 0)" :key="page.label" type="button"
-                  @click="handlePagination(page)"
-                  class="inline-flex relative focus:z-10 items-center py-2 px-4 -ml-px text-sm font-medium leading-5 text-gray-600 hover:text-gray-500 bg-white active:bg-gray-100 border border-gray-300 focus:border-blue-300 transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue" :class="{'rounded-l-md': index == 0, 'rounded-r-md': index == items.meta.links.length - 3, 'bg-gray-50 text-blue-600 hover:text-blue-600': page.active, 'cursor-default': !page.url}">
-            {{ page.label }}
-          </button>
-        </nav>
-      </div>
-
-      <!-- Result info -->
-      <div v-html="$t('common.showing_meta', {from: items.meta.from, to: items.meta.to, total: items.meta.total})"
-           class="col-span-2 md:col-span-1 mt-4 md:mt-0 text-sm font-light text-center md:text-left text-gray-600">
-      </div>
-    </div>
+    <Pagination :meta="items.meta" :scroll="!browse" @change="setQuery($event)"></Pagination>
 
     <!-- Confirm remove -->
     <Confirm @confirm="confirmRemove($event)" ref="confirm"/>
@@ -124,14 +129,15 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/elements/Breadcrumb.vue';
-import Dropdown from '../../../components/elements/Dropdown.vue';
-import Filters from '../../../components/elements/Filters.vue';
-import Confirm from '../../../components/elements/Confirm.vue';
-import Button from '../../../components/form/Button.vue';
-import Slug from '../../../components/form/Slug.vue';
-import SkeletonUploads from '../../../components/skeletons/Uploads.vue';
-import ButtonFile from '../../../components/form/ButtonFile.vue';
+import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
+import Dropdown from '../../../components/Elements/Dropdown.vue';
+import Filters from '../../../components/Elements/Filters.vue';
+import Confirm from '../../../components/Elements/Confirm.vue';
+import Pagination from '../../../components/Elements/Pagination.vue';
+import Button from '../../../components/Form/Button.vue';
+import Slug from '../../../components/Form/Slug.vue';
+import SkeletonUploads from '../../../components/Skeletons/Uploads.vue';
+import ButtonFile from '../../../components/Form/ButtonFile.vue';
 
 export default {
   name: 'UploadsIndex',
@@ -201,10 +207,6 @@ export default {
     },
 
     handlePagination(page) {
-      if (!this.browse) {
-        this.$scroll();
-      }
-
       this.setQuery({ page: page.label });
     },
 
@@ -253,6 +255,7 @@ export default {
   },
 
   components: {
+    Pagination,
     ButtonFile,
     Breadcrumb,
     Dropdown,
