@@ -28,10 +28,10 @@ Although it is still under development, you can see the admin panel using the fo
     - ```git clone https://github.com/sinan4yildiz/zexacore.git .```
     - ```chgrp 99 public (as root user)```
     - ```chmod 750 public```
+    - ```composer install --optimize-autoloader --no-dev```
     - ```php artisan key:generate```
     - ```php artisan jwt:secret```
     - ```php artisan migration:fresh --seed```
-    - ```composer install --optimize-autoloader --no-dev```
     - ```npm install```
     - ```npm run dev```
 
