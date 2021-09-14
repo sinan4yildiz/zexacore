@@ -53,8 +53,8 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway';
-import Uploads from '../../views/Content/Uploads/Index.vue';
-import Button from './Button.vue';
+import Uploads from '@/views/Content/Uploads/Index';
+import Button from './Button';
 
 export default {
   name: 'File',

@@ -17,7 +17,7 @@
 
 </body>
 <script type="text/javascript">
-  window.appConfig = {
+  const appConfig = {
     url: {
       base: '{{ env('APP_URL') }}',
       api: '{{ env('APP_URL') . 'api' }}',

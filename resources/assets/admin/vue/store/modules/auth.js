@@ -44,6 +44,9 @@ const mutations = {
     state.me = data.user;
     state.token = data.token;
 
+    // Mutate app settings
+    this.commit('App/SET_SETTINGS', data.settings);
+
     // Set auth request header
     window.axios.defaults.headers.common.Authorization = `Bearer ${state.token}`;
 

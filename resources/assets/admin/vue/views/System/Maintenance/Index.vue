@@ -62,13 +62,13 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import Button from '../../../components/Form/Button.vue';
-import Backup from './Backup.vue';
-import Logs from './Logs.vue';
-import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
-import TabGroup from '../../../components/Elements/TabGroup.vue';
-import TabItem from '../../../components/Elements/TabItem.vue';
-import Switcher from '../../../components/Form/Switcher.vue';
+import Button from '@/components/Form/Button';
+import Breadcrumb from '@/components/Elements/Breadcrumb';
+import TabGroup from '@/components/Elements/TabGroup';
+import TabItem from '@/components/Elements/TabItem';
+import Switcher from '@/components/Form/Switcher';
+import Backup from './Backup';
+import Logs from './Logs';
 
 export default {
   name: 'MaintenanceIndex',

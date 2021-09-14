@@ -4,49 +4,49 @@
  * */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import i18n from './i18n';
+import i18n from '@/i18n';
 
 /*
  * Views
  *
  * */
-import LoginIndex from './views/Auth/Login.vue';
-import DashboardIndex from './views/Dashboard/Index.vue';
+import LoginIndex from '@/views/Auth/Login';
+import DashboardIndex from '@/views/Dashboard/Index';
 
-import ArticlesIndex from './views/Content/Articles/Index.vue';
-import ArticlesCreate from './views/Content/Articles/Create.vue';
-import ArticlesEdit from './views/Content/Articles/Edit.vue';
+import ArticlesIndex from '@/views/Content/Articles/Index';
+import ArticlesCreate from '@/views/Content/Articles/Create';
+import ArticlesEdit from '@/views/Content/Articles/Edit';
 
-import PagesIndex from './views/Content/Pages/Index.vue';
-import PagesCreate from './views/Content/Pages/Create.vue';
-import PagesEdit from './views/Content/Pages/Edit.vue';
+import PagesIndex from '@/views/Content/Pages/Index';
+import PagesCreate from '@/views/Content/Pages/Create';
+import PagesEdit from '@/views/Content/Pages/Edit';
 
-import UploadsIndex from './views/Content/Uploads/Index.vue';
-import MessagesIndex from './views/Messages/Index.vue';
+import UploadsIndex from '@/views/Content/Uploads/Index';
+import MessagesIndex from '@/views/Messages/Index';
 
-import CategoriesIndex from './views/Structure/Categories/Index.vue';
-import CategoriesCreate from './views/Structure/Categories/Create.vue';
-import CategoriesEdit from './views/Structure/Categories/Edit.vue';
+import CategoriesIndex from '@/views/Structure/Categories/Index';
+import CategoriesCreate from '@/views/Structure/Categories/Create';
+import CategoriesEdit from '@/views/Structure/Categories/Edit';
 
-import ContentTypesIndex from './views/Structure/ContentTypes/Index.vue';
-import ContentTypesCreate from './views/Structure/ContentTypes/Create.vue';
-import ContentTypesEdit from './views/Structure/ContentTypes/Edit.vue';
+import ContentTypesIndex from '@/views/Structure/ContentTypes/Index';
+import ContentTypesCreate from '@/views/Structure/ContentTypes/Create';
+import ContentTypesEdit from '@/views/Structure/ContentTypes/Edit';
 
-import UsersIndex from './views/People/Users/Index.vue';
-import ActivitiesIndex from './views/People/Activities/Index.vue';
-import SlugsIndex from './views/Tools/Slugs/Index.vue';
-import RedirectionsIndex from './views/Tools/Redirections/Index.vue';
-import NotFoundsIndex from './views/Tools/NotFounds/Index.vue';
-import SettingsIndex from './views/System/Settings/Index.vue';
-import LanguagesIndex from './views/System/Languages/Index.vue';
-import MaintenanceIndex from './views/System/Maintenance/Index.vue';
-import NotFound from './views/Errors/NotFound.vue';
+import UsersIndex from '@/views/People/Users/Index';
+import ActivitiesIndex from '@/views/People/Activities/Index';
+import SlugsIndex from '@/views/Tools/Slugs/Index';
+import RedirectionsIndex from '@/views/Tools/Redirections/Index';
+import NotFoundsIndex from '@/views/Tools/NotFounds/Index';
+import SettingsIndex from '@/views/System/Settings/Index';
+import LanguagesIndex from '@/views/System/Languages/Index';
+import MaintenanceIndex from '@/views/System/Maintenance/Index';
+import NotFound from '@/views/Errors/NotFound';
 
 /*
  * Routes
  *
  * */
-const Routes = [
+const routes = [
 
   /*
    * Auth
@@ -351,9 +351,9 @@ const Routes = [
  * */
 Vue.use(VueRouter);
 
-const Router = new VueRouter({
-  base: window.appConfig.url.admin.replace(window.location.origin, ''),
-  routes: Routes,
+const router = new VueRouter({
+  base: appConfig.url.admin.replace(window.location.origin, ''),
+  routes,
   mode: 'history',
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
@@ -363,4 +363,4 @@ const Router = new VueRouter({
   },
 });
 
-export default Router;
+export default router;

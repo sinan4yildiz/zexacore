@@ -41,9 +41,9 @@
 <script>
 import { mapActions } from 'vuex';
 import { mixin as clickaway } from 'vue-clickaway';
-import Input from '../../../components/Form/Input.vue';
-import Button from '../../../components/Form/Button.vue';
-import Modal from '../../../components/Elements/Modal.vue';
+import Input from '@/components/Form/Input';
+import Button from '@/components/Form/Button';
+import Modal from '@/components/Elements/Modal';
 
 export default {
   name: 'UserCreate',

@@ -28,11 +28,11 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Authenticated from './layouts/Authenticated.vue';
-import Unauthenticated from './layouts/Unauthenticated.vue';
-import Offline from './components/Elements/Offline.vue';
-import SVGLib from './components/SVGLib.vue';
-import Snackbar from './components/Elements/Snackbar.vue';
+import Unauthenticated from '@/layouts/Unauthenticated';
+import Snackbar from '@/components/Elements/Snackbar';
+import Authenticated from '@/layouts/Authenticated';
+import Offline from '@/components/Elements/Offline';
+import SVGLib from '@/components/SVGLib';
 
 export default {
   name: 'App',
@@ -72,16 +72,6 @@ export default {
      *
      * */
     this.initApp();
-
-    /*
-     * Set settings on login
-     *
-     * */
-    this.$store.subscribe((mutation) => {
-      if (mutation.type === 'Auth/SET_AUTH') {
-        this.$store.commit('App/SET_SETTINGS', mutation.payload.settings);
-      }
-    });
 
     /*
      * Verify authentication

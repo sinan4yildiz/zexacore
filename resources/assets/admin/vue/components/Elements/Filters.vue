@@ -66,8 +66,8 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway';
-import Button from '../Form/Button.vue';
-import Dropdown from './Dropdown.vue';
+import Button from '../Form/Button';
+import Dropdown from './Dropdown';
 
 export default {
   name: 'Filters',

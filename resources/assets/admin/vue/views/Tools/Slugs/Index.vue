@@ -56,12 +56,12 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
-import Edit from './Edit.vue';
-import Table from '../../../components/Elements/Table.vue';
-import Dropdown from '../../../components/Elements/Dropdown.vue';
-import Filters from '../../../components/Elements/Filters.vue';
-import Button from '../../../components/Form/Button.vue';
+import Breadcrumb from '@/components/Elements/Breadcrumb';
+import Table from '@/components/Elements/Table';
+import Dropdown from '@/components/Elements/Dropdown';
+import Filters from '@/components/Elements/Filters';
+import Button from '@/components/Form/Button';
+import Edit from './Edit';
 
 export default {
   name: 'SlugsIndex',

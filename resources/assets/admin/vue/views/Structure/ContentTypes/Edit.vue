@@ -141,15 +141,15 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
-import Input from '../../../components/Form/Input.vue';
-import InputHidden from '../../../components/Form/InputHidden.vue';
-import Slug from '../../../components/Form/Slug.vue';
-import Textarea from '../../../components/Form/Textarea.vue';
-import Button from '../../../components/Form/Button.vue';
-import Switcher from '../../../components/Form/Switcher.vue';
-import LanguagePicker from '../../../components/Form/LanguagePicker.vue';
-import SkeletonFormWide from '../../../components/Skeletons/FormWide.vue';
+import Breadcrumb from '@/components/Elements/Breadcrumb';
+import Input from '@/components/Form/Input';
+import InputHidden from '@/components/Form/InputHidden';
+import Slug from '@/components/Form/Slug';
+import Textarea from '@/components/Form/Textarea';
+import Button from '@/components/Form/Button';
+import Switcher from '@/components/Form/Switcher';
+import LanguagePicker from '@/components/Form/LanguagePicker';
+import SkeletonFormWide from '@/components/Skeletons/FormWide';
 
 export default {
   name: 'ContentTypeEdit',

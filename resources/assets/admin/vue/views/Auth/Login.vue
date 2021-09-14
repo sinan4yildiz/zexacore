@@ -53,8 +53,8 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Input from '../../components/Form/Input.vue';
-import Button from '../../components/Form/Button.vue';
+import Button from '@/components/Form/Button';
+import Input from '@/components/Form/Input';
 
 export default {
   name: 'Login',
@@ -68,7 +68,6 @@ export default {
 
   computed: {
     ...mapGetters('App', ['config']),
-    ...mapGetters('Auth', ['isAuthenticated']),
   },
 
   methods: {

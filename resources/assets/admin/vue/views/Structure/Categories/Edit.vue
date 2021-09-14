@@ -136,16 +136,16 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
-import Autocomplete from '../../../components/Form/Autocomplete.vue';
-import Button from '../../../components/Form/Button.vue';
-import Input from '../../../components/Form/Input.vue';
-import InputHidden from '../../../components/Form/InputHidden.vue';
-import LanguagePicker from '../../../components/Form/LanguagePicker.vue';
-import Slug from '../../../components/Form/Slug.vue';
-import Switcher from '../../../components/Form/Switcher.vue';
-import Textarea from '../../../components/Form/Textarea.vue';
-import SkeletonFormWide from '../../../components/Skeletons/FormWide.vue';
+import Breadcrumb from '@/components/Elements/Breadcrumb';
+import Autocomplete from '@/components/Form/Autocomplete';
+import Button from '@/components/Form/Button';
+import Input from '@/components/Form/Input';
+import InputHidden from '@/components/Form/InputHidden';
+import LanguagePicker from '@/components/Form/LanguagePicker';
+import Slug from '@/components/Form/Slug';
+import Switcher from '@/components/Form/Switcher';
+import Textarea from '@/components/Form/Textarea';
+import SkeletonFormWide from '@/components/Skeletons/FormWide';
 
 export default {
   name: 'CategoryEdit',

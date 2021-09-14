@@ -28,10 +28,10 @@
 <script>
 import { mixin as clickaway } from 'vue-clickaway';
 import { mapActions } from 'vuex';
-import Modal from '../../../components/Elements/Modal.vue';
-import Button from '../../../components/Form/Button.vue';
-import InputHidden from '../../../components/Form/InputHidden.vue';
-import Slug from '../../../components/Form/Slug.vue';
+import Modal from '@/components/Elements/Modal';
+import Button from '@/components/Form/Button';
+import InputHidden from '@/components/Form/InputHidden';
+import Slug from '@/components/Form/Slug';
 
 export default {
   name: 'SlugEdit',

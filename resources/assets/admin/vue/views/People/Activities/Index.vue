@@ -39,9 +39,9 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
-import Table from '../../../components/Elements/Table.vue';
-import Filters from '../../../components/Elements/Filters.vue';
+import Breadcrumb from '@/components/Elements/Breadcrumb';
+import Table from '@/components/Elements/Table';
+import Filters from '@/components/Elements/Filters';
 
 export default {
   name: 'ActivitiesIndex',

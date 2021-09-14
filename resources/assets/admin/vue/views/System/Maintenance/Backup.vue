@@ -92,10 +92,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Dropdown from '../../../components/Elements/Dropdown.vue';
-import Input from '../../../components/Form/Input.vue';
-import Button from '../../../components/Form/Button.vue';
-import Confirm from '../../../components/Elements/Confirm.vue';
+import Dropdown from '@/components/Elements/Dropdown';
+import Input from '@/components/Form/Input';
+import Button from '@/components/Form/Button';
+import Confirm from '@/components/Elements/Confirm';
 
 export default {
   name: 'MaintenanceBackup',

@@ -186,18 +186,18 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
-import Input from '../../../components/Form/Input.vue';
-import InputHidden from '../../../components/Form/InputHidden.vue';
-import Autocomplete from '../../../components/Form/Autocomplete.vue';
-import MultiSelect from '../../../components/Form/MultiSelect.vue';
-import File from '../../../components/Form/File.vue';
-import Slug from '../../../components/Form/Slug.vue';
-import Textarea from '../../../components/Form/Textarea.vue';
-import Button from '../../../components/Form/Button.vue';
-import Switcher from '../../../components/Form/Switcher.vue';
-import LanguagePicker from '../../../components/Form/LanguagePicker.vue';
-import SkeletonFormDivided from '../../../components/Skeletons/FormDivided.vue';
+import Breadcrumb from '@/components/Elements/Breadcrumb';
+import Input from '@/components/Form/Input';
+import InputHidden from '@/components/Form/InputHidden';
+import Autocomplete from '@/components/Form/Autocomplete';
+import MultiSelect from '@/components/Form/MultiSelect';
+import File from '@/components/Form/File';
+import Slug from '@/components/Form/Slug';
+import Textarea from '@/components/Form/Textarea';
+import Button from '@/components/Form/Button';
+import Switcher from '@/components/Form/Switcher';
+import LanguagePicker from '@/components/Form/LanguagePicker';
+import SkeletonFormDivided from '@/components/Skeletons/FormDivided';
 
 export default {
   name: 'ArticleEdit',

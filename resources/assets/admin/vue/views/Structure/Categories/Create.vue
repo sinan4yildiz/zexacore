@@ -141,15 +141,15 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
-import Input from '../../../components/Form/Input.vue';
-import Autocomplete from '../../../components/Form/Autocomplete.vue';
-import Slug from '../../../components/Form/Slug.vue';
-import Textarea from '../../../components/Form/Textarea.vue';
-import Select from '../../../components/Form/Select.vue';
-import Button from '../../../components/Form/Button.vue';
-import Switcher from '../../../components/Form/Switcher.vue';
-import LanguagePicker from '../../../components/Form/LanguagePicker.vue';
+import Breadcrumb from '@/components/Elements/Breadcrumb';
+import Input from '@/components/Form/Input';
+import Autocomplete from '@/components/Form/Autocomplete';
+import Slug from '@/components/Form/Slug';
+import Textarea from '@/components/Form/Textarea';
+import Select from '@/components/Form/Select';
+import Button from '@/components/Form/Button';
+import Switcher from '@/components/Form/Switcher';
+import LanguagePicker from '@/components/Form/LanguagePicker';
 
 export default {
   name: 'CategoryCreate',

@@ -72,13 +72,13 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
-import Create from './Create.vue';
-import Edit from './Edit.vue';
-import Table from '../../../components/Elements/Table.vue';
-import Dropdown from '../../../components/Elements/Dropdown.vue';
-import Confirm from '../../../components/Elements/Confirm.vue';
-import Button from '../../../components/Form/Button.vue';
+import Breadcrumb from '@/components/Elements/Breadcrumb';
+import Create from './Create';
+import Edit from './Edit';
+import Table from '@/components/Elements/Table';
+import Dropdown from '@/components/Elements/Dropdown';
+import Confirm from '@/components/Elements/Confirm';
+import Button from '@/components/Form/Button';
 
 export default {
   name: 'LanguagesIndex',

@@ -4,12 +4,12 @@
  * */
 import Vue from 'vue';
 import VueScreen from 'vue-screen';
-import Helpers from './helpers';
-import router from './router';
-import store from './store/index';
-import Directives from './directives';
-import i18n from './i18n/index';
-import App from './App.vue';
+import Helpers from '@/helpers';
+import router from '@/router';
+import store from '@/store/index';
+import Directives from '@/directives';
+import i18n from '@/i18n/index';
+import App from '@/App';
 
 /*
  * Bootstrap

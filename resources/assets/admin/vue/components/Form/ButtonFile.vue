@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import Button from './Button.vue';
-import InputFile from './InputFile.vue';
+import Button from './Button';
+import InputFile from './InputFile';
 
 export default {
   name: 'ButtonFile',

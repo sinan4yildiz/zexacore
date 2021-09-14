@@ -1,5 +1,5 @@
 <template>
-  <aside class="min-h-screen">
+  <aside>
 
     <!-- Navigation -->
     <nav class="block w-full">

@@ -71,7 +71,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Details from '../Messages/Details.vue';
+import Details from '../Messages/Details';
 
 export default {
   name: 'DashboardMessages',

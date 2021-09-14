@@ -39,10 +39,10 @@
 <script>
 import { mapActions } from 'vuex';
 import { mixin as clickaway } from 'vue-clickaway';
-import Input from '../../../components/Form/Input.vue';
-import InputHidden from '../../../components/Form/InputHidden.vue';
-import Button from '../../../components/Form/Button.vue';
-import Modal from '../../../components/Elements/Modal.vue';
+import Input from '@/components/Form/Input';
+import InputHidden from '@/components/Form/InputHidden';
+import Button from '@/components/Form/Button';
+import Modal from '@/components/Elements/Modal';
 
 export default {
   name: 'LanguageEdit',

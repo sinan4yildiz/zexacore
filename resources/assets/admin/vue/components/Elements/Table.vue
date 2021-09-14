@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import Pagination from './Pagination.vue';
+import Pagination from './Pagination';
 
 export default {
   name: 'Table',

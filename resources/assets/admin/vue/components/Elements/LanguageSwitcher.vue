@@ -29,8 +29,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Dropdown from './Dropdown.vue';
-import Button from '../Form/Button.vue';
+import Dropdown from './Dropdown';
+import Button from '../Form/Button';
 
 export default {
   name: 'LanguageSwitcher',

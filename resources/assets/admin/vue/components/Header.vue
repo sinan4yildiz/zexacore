@@ -96,10 +96,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import RequestRegulator from './Elements/RequestRegulator.vue';
-import Dropdown from './Elements/Dropdown.vue';
-import Button from './Form/Button.vue';
-import Search from './Search.vue';
+import RequestRegulator from './Elements/RequestRegulator';
+import Dropdown from './Elements/Dropdown';
+import Button from './Form/Button';
+import Search from './Search';
 
 export default {
   name: 'Header',

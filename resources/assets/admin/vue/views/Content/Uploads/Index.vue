@@ -129,15 +129,15 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
-import Dropdown from '../../../components/Elements/Dropdown.vue';
-import Filters from '../../../components/Elements/Filters.vue';
-import Confirm from '../../../components/Elements/Confirm.vue';
-import Pagination from '../../../components/Elements/Pagination.vue';
-import Button from '../../../components/Form/Button.vue';
-import Slug from '../../../components/Form/Slug.vue';
-import SkeletonUploads from '../../../components/Skeletons/Uploads.vue';
-import ButtonFile from '../../../components/Form/ButtonFile.vue';
+import Breadcrumb from '@/components/Elements/Breadcrumb';
+import Dropdown from '@/components/Elements/Dropdown';
+import Filters from '@/components/Elements/Filters';
+import Confirm from '@/components/Elements/Confirm';
+import Pagination from '@/components/Elements/Pagination';
+import Button from '@/components/Form/Button';
+import Slug from '@/components/Form/Slug';
+import SkeletonUploads from '@/components/Skeletons/Uploads';
+import ButtonFile from '@/components/Form/ButtonFile';
 
 export default {
   name: 'UploadsIndex',

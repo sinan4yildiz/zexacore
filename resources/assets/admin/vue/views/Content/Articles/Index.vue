@@ -98,14 +98,14 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
-import LanguageSwitcher from '../../../components/Elements/LanguageSwitcher.vue';
-import Table from '../../../components/Elements/Table.vue';
-import Filters from '../../../components/Elements/Filters.vue';
-import Dropdown from '../../../components/Elements/Dropdown.vue';
-import Confirm from '../../../components/Elements/Confirm.vue';
-import Button from '../../../components/Form/Button.vue';
-import ContentTypePicker from '../../../components/Elements/ContentTypePicker.vue';
+import Breadcrumb from '@/components/Elements/Breadcrumb';
+import LanguageSwitcher from '@/components/Elements/LanguageSwitcher';
+import Table from '@/components/Elements/Table';
+import Filters from '@/components/Elements/Filters';
+import Dropdown from '@/components/Elements/Dropdown';
+import Confirm from '@/components/Elements/Confirm';
+import Button from '@/components/Form/Button';
+import ContentTypePicker from '@/components/Elements/ContentTypePicker';
 
 export default {
   name: 'ArticlesIndex',

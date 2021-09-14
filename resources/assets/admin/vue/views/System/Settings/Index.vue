@@ -262,12 +262,12 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
-import Input from '../../../components/Form/Input.vue';
-import Select from '../../../components/Form/Select.vue';
-import Textarea from '../../../components/Form/Textarea.vue';
-import Switcher from '../../../components/Form/Switcher.vue';
-import Button from '../../../components/Form/Button.vue';
+import Breadcrumb from '@/components/Elements/Breadcrumb';
+import Input from '@/components/Form/Input';
+import Select from '@/components/Form/Select';
+import Textarea from '@/components/Form/Textarea';
+import Switcher from '@/components/Form/Switcher';
+import Button from '@/components/Form/Button';
 
 export default {
   name: 'SettingsIndex',

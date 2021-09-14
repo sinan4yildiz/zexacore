@@ -177,17 +177,17 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Breadcrumb from '../../../components/Elements/Breadcrumb.vue';
-import Autocomplete from '../../../components/Form/Autocomplete.vue';
-import MultiSelect from '../../../components/Form/MultiSelect.vue';
-import Input from '../../../components/Form/Input.vue';
-import File from '../../../components/Form/File.vue';
-import Slug from '../../../components/Form/Slug.vue';
-import Textarea from '../../../components/Form/Textarea.vue';
-import Select from '../../../components/Form/Select.vue';
-import Button from '../../../components/Form/Button.vue';
-import Switcher from '../../../components/Form/Switcher.vue';
-import LanguagePicker from '../../../components/Form/LanguagePicker.vue';
+import Breadcrumb from '@/components/Elements/Breadcrumb';
+import Autocomplete from '@/components/Form/Autocomplete';
+import MultiSelect from '@/components/Form/MultiSelect';
+import Input from '@/components/Form/Input';
+import File from '@/components/Form/File';
+import Slug from '@/components/Form/Slug';
+import Textarea from '@/components/Form/Textarea';
+import Select from '@/components/Form/Select';
+import Button from '@/components/Form/Button';
+import Switcher from '@/components/Form/Switcher';
+import LanguagePicker from '@/components/Form/LanguagePicker';
 
 export default {
   name: 'ArticleCreate',

@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import Button from '../Form/Button.vue';
-import Modal from './Modal.vue';
+import Button from '../Form/Button';
+import Modal from './Modal';
 
 export default {
   name: 'Confirm',

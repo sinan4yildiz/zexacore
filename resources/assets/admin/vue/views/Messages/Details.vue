@@ -47,8 +47,8 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway';
-import Button from '../../components/Form/Button.vue';
-import Modal from '../../components/Elements/Modal.vue';
+import Button from '@/components/Form/Button';
+import Modal from '@/components/Elements/Modal';
 
 export default {
   name: 'MessageDetails',
