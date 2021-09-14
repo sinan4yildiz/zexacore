@@ -13,8 +13,12 @@ Although it is still under development, you can see the admin panel using the fo
 
 ## Tech Stack
 - Laravel 8
-- Vue.js 2.x
-- TailwindCSS 1.9.x
+- Vue & Vuex
+- TailwindCSS
+- Jest
+- ESLint
+- JWT Auth
+- REST API
 
 ## Installation
 - Change document root from public_html to public_html/public
@@ -25,13 +29,14 @@ Although it is still under development, you can see the admin panel using the fo
     - ```chgrp 99 public (as root user)```
     - ```chmod 750 public```
     - ```php artisan key:generate```
+    - ```php artisan jwt:secret```
     - ```php artisan migration:fresh --seed```
     - ```composer install --optimize-autoloader --no-dev```
     - ```npm install```
-    - ```npm production```
+    - ```npm run dev```
 
 ## Notes
-- Front side is not developed yet.
+- Frontend has not yet been developed.
 - Feel free to have it and develop for any purpose.
 - There might still be some bugs. If you notice anything please open an issue.
 - If you have a suggestion please let me know.
