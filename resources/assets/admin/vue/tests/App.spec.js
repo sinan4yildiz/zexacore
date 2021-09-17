@@ -38,7 +38,6 @@ describe('App', () => {
   *
   * */
   test('The app container should be rendered correctly', async () => {
-
     // Skip the verifying step
     await wrapper.setData({ verifying: false });
 
@@ -49,15 +48,7 @@ describe('App', () => {
   * Check if the unauthenticated layout rendered
   *
   * */
-  test('The authentication component should be rendered correctly', async () => {
-    expect(wrapper.findAllComponents(Login)).toHaveLength(1);
-  });
-
-  /*
-  * Check if the unauthenticated layout rendered
-  *
-  * */
-  test('The authentication component should be rendered correctly', async () => {
+  test('The authentication component should be rendered correctly', () => {
     expect(wrapper.findAllComponents(Login)).toHaveLength(1);
   });
 });
