@@ -31,14 +31,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(UrlGenerator $url)
     {
         /**
-         * Handle SSL
-         */
-        if (env('APP_SSL')) {
-            $url->forceScheme('https');
-        }
-
-
-        /**
          * Paginate a standard Laravel Collection.
          *
          * @param  int  $perPage
