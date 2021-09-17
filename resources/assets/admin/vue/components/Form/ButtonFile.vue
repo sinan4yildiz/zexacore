@@ -19,8 +19,6 @@ export default {
     return {};
   },
 
-  methods: {},
-
   components: {
     Button,
     InputFile,

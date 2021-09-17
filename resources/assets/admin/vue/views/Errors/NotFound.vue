@@ -51,11 +51,6 @@ export default {
     return {};
   },
 
-  methods: {},
-
-  created() {
-  },
-
   components: {},
 };
 </script>

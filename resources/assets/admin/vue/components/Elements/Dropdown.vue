@@ -15,7 +15,7 @@
         leave-to-class="opacity-0 scale-95">
 
       <!-- Body -->
-      <div v-if="isOpen" :class="classes()" @click="keepOpen === false ? close() : null">
+      <div v-if="isOpen" :class="classes" @click="keepOpen === false ? close() : null">
         <div class="text-left bg-white rounded-md shadow-xs">
           <slot name="body"></slot>
         </div>
@@ -60,11 +60,7 @@ export default {
     };
   },
 
-  methods: {
-    toggle() {
-      this.isOpen = !this.isOpen;
-    },
-
+  computed: {
     classes() {
       const c = ['absolute mt-2 shadow-lg rounded-md z-30'];
 
@@ -77,6 +73,12 @@ export default {
       }
 
       return c;
+    },
+  },
+
+  methods: {
+    toggle() {
+      this.isOpen = !this.isOpen;
     },
 
     close() {

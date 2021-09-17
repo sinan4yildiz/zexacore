@@ -30,22 +30,22 @@ export default {
     return {
       tabs: Array,
       activeIndex: 0,
+
+      classes(index) {
+        const c = [];
+
+        if (index === this.activeIndex) {
+          c.push('text-indigo-600 bg-indigo-100');
+        } else {
+          c.push('text-gray-600 hover:text-indigo-600');
+        }
+
+        return c.join(' ');
+      },
     };
   },
 
   methods: {
-    classes(index) {
-      const c = [];
-
-      if (index === this.activeIndex) {
-        c.push('text-indigo-600 bg-indigo-100');
-      } else {
-        c.push('text-gray-600 hover:text-indigo-600');
-      }
-
-      return c.join(' ');
-    },
-
     handle(index) {
       this.activeIndex = index;
 

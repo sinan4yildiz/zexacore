@@ -60,7 +60,27 @@ export default {
   props: ['meta', 'columns'],
 
   data() {
-    return {};
+    return {
+      isSortable(column) {
+        return this.meta ? this.meta.sorting.sortable.includes(column.field) : false;
+      },
+
+      columnClasses(column, index) {
+        const classes = [column.classes];
+
+        if (this.isSortable(column)) {
+          classes.push('cursor-pointer hover:text-gray-800 select-none');
+        }
+        if (index === 0) {
+          classes.push('rounded-tl-lg');
+        }
+        if (index === this.columns.length - 1) {
+          classes.push('rounded-tr-lg');
+        }
+
+        return classes;
+      },
+    };
   },
 
   computed: {
@@ -70,26 +90,6 @@ export default {
   },
 
   methods: {
-    isSortable(column) {
-      return this.meta ? this.meta.sorting.sortable.includes(column.field) : false;
-    },
-
-    columnClasses(column, index) {
-      const classes = [column.classes];
-
-      if (this.isSortable(column)) {
-        classes.push('cursor-pointer hover:text-gray-800 select-none');
-      }
-      if (index === 0) {
-        classes.push('rounded-tl-lg');
-      }
-      if (index === this.columns.length - 1) {
-        classes.push('rounded-tr-lg');
-      }
-
-      return classes;
-    },
-
     handleSorting(column) {
       if (this.isSortable(column)) {
         this.$emit('query', {

@@ -72,8 +72,6 @@ export default {
     };
   },
 
-  computed: {},
-
   methods: {
     select(item) {
       this.selected = item;

@@ -44,8 +44,6 @@ export default {
     };
   },
 
-  computed: {},
-
   methods: {
     ...mapActions('Slugs', ['updateSlug']),
 
