@@ -19,6 +19,7 @@ Although it is still under development, you can see the admin panel using the fo
 - ESLint
 - JWT Auth
 - REST API
+- Airbnb JS Style Guide
 
 ## Installation
 - Change document root from public_html to public_html/public
@@ -44,4 +45,4 @@ Although it is still under development, you can see the admin panel using the fo
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
-❤️ Code with passion!
+Code with passion ❤️
