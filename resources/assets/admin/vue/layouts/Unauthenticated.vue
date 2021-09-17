@@ -28,10 +28,10 @@ export default {
     * Logged out users should not see the authenticated views.
     *
     * Check if the current route requires auth.
-    * If yes, redirect to the dashboard.
+    * If yes, redirect to login.
     *
     * */
-    if (this.$route.meta.requiresAuth === true && !this.isAuthenticated) {
+    if (this.$route.meta.requiresAuth === true) {
       this.$router.push({ name: 'login' });
     }
   },

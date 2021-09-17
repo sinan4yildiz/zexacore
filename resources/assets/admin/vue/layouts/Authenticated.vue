@@ -72,10 +72,10 @@ export default {
     * Logged in users should not see the unauthenticated views.
     *
     * Check if the current route requires auth.
-    * If no, redirect to the dashboard.
+    * If no, redirect to dashboard.
     *
     * */
-    if (this.$route.meta.requiresAuth === false && this.isAuthenticated) {
+    if (this.$route.meta.requiresAuth === false) {
       this.$router.push({ name: 'dashboard' });
     }
   },
@@ -88,7 +88,6 @@ export default {
     Header,
     Footer,
     Sidebar,
-
   },
 };
 </script>
