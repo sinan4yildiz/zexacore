@@ -27,7 +27,7 @@
 
           <!-- Status active/inactive -->
           <div v-if="filters.includes('status')" class="px-4 mb-3">
-            <label for="filter-status" lass="block mb-1 ml-1 text-xs leading-5 text-gray-700">{{ $t('common.status') }}</label>
+            <label for="filter-status" class="block mb-1 ml-1 text-xs leading-5 text-gray-700">{{ $t('common.status') }}</label>
 
             <select name="status" id="filter-status" class="block py-2 px-3 w-full text-sm bg-white rounded-md border border-gray-300 focus:border-blue-300 shadow-sm transition duration-150 ease-in-out focus:outline-none form-select focus:shadow-outline-blue">
               <option value="">{{ $t('common.all') }}</option>
@@ -89,7 +89,7 @@ export default {
       deep: true,
     },
 
-    keyword: _.debounce(() => {
+    keyword: _.debounce(function () {
       if (this.keyword !== null) {
         this.apply();
       }
