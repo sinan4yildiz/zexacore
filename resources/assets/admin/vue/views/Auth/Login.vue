@@ -1,5 +1,5 @@
 <template>
-  <section class="flex justify-center items-center px-4 sm:px-6 lg:px-8 pt-6 pb-24 min-h-screen">
+  <section class="flex justify-center items-center px-8 pt-6 pb-24 min-h-screen">
     <div class="w-full max-w-md">
 
       <!-- Logo -->
