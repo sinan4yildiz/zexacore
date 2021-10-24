@@ -9,6 +9,7 @@
 
 .idea
 /vendor
+/bootstrap/cache/*
 
 .env
 .env.backup
